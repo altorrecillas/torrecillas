@@ -460,12 +460,13 @@ canvas {
       <button class="touch-btn" ontouchstart="pacDir(1,0)" onclick="pacDir(1,0)">→</button>
     </div>
   </div>
-  <div class="touch-controls" id="tetris-touch" style="display:none;flex-direction:row;gap:10px;justify-content:center">
-    <button class="touch-btn" ontouchstart="tetMove(-1)" onclick="tetMove(-1)">←</button>
-    <button class="touch-btn" ontouchstart="tetRotate()" onclick="tetRotate()">↻</button>
-    <button class="touch-btn" ontouchstart="tetMove(1)" onclick="tetMove(1)">→</button>
-    <button class="touch-btn" ontouchstart="tetDrop()" onclick="tetDrop()" style="background:rgba(162,89,255,.2)">▼</button>
-    <button class="touch-btn" ontouchstart="tetHardDrop()" onclick="tetHardDrop()" style="font-size:1rem;width:64px">⬇⬇</button>
+  <div class="touch-controls" id="tetris-touch" style="display:none;flex-direction:column;gap:8px;align-items:center;padding:8px 10px 14px">
+    <div class="touch-row">
+      <button class="touch-btn" ontouchstart="tetMove(-1)" onclick="tetMove(-1)" style="width:70px">←</button>
+      <button class="touch-btn" ontouchstart="tetRotate()" onclick="tetRotate()" style="width:70px;background:rgba(162,89,255,.25);font-size:1.4rem">↻</button>
+      <button class="touch-btn" ontouchstart="tetMove(1)" onclick="tetMove(1)" style="width:70px">→</button>
+    </div>
+    <button class="touch-tap-btn" ontouchstart="tetHardDrop()" onclick="tetHardDrop()" style="background:linear-gradient(135deg,#a259ff,#4af0ff);max-width:240px">⬇ CAER</button>
   </div>
 </div>
 
