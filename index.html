@@ -438,35 +438,35 @@ canvas {
     </div>
   </div>
   <div class="touch-controls" id="snake-touch">
-    <div class="touch-row"><button class="touch-btn" ontouchstart="snakeDir('U')" onclick="snakeDir('U')">↑</button></div>
+    <div class="touch-row"><button class="touch-btn" ontouchstart="event.preventDefault();snakeDir('U')" onclick="snakeDir('U')">↑</button></div>
     <div class="touch-row">
-      <button class="touch-btn" ontouchstart="snakeDir('L')" onclick="snakeDir('L')">←</button>
-      <button class="touch-btn" ontouchstart="snakeDir('D')" onclick="snakeDir('D')">↓</button>
-      <button class="touch-btn" ontouchstart="snakeDir('R')" onclick="snakeDir('R')">→</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();snakeDir('L')" onclick="snakeDir('L')">←</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();snakeDir('D')" onclick="snakeDir('D')">↓</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();snakeDir('R')" onclick="snakeDir('R')">→</button>
     </div>
   </div>
   <div class="touch-controls" id="flappy-touch" style="display:none">
-    <button class="touch-tap-btn" ontouchstart="flappyTap()" onclick="flappyTap()">🐦 VOLAR</button>
+    <button class="touch-tap-btn" ontouchstart="event.preventDefault();flappyTap()" onclick="flappyTap()">🐦 VOLAR</button>
   </div>
   <div class="touch-controls" id="arkanoid-touch" style="display:none;flex-direction:row;gap:14px">
     <button class="touch-btn" style="width:84px" ontouchstart="arkTouchL(true)" ontouchend="arkTouchL(false)" onmousedown="arkTouchL(true)" onmouseup="arkTouchL(false)">◀◀</button>
     <button class="touch-btn" style="width:84px" ontouchstart="arkTouchR(true)" ontouchend="arkTouchR(false)" onmousedown="arkTouchR(true)" onmouseup="arkTouchR(false)">▶▶</button>
   </div>
   <div class="touch-controls" id="pacman-touch" style="display:none">
-    <div class="touch-row"><button class="touch-btn" ontouchstart="pacDir(0,-1)" onclick="pacDir(0,-1)">↑</button></div>
+    <div class="touch-row"><button class="touch-btn" ontouchstart="event.preventDefault();pacDir(0,-1)" onclick="pacDir(0,-1)">↑</button></div>
     <div class="touch-row">
-      <button class="touch-btn" ontouchstart="pacDir(-1,0)" onclick="pacDir(-1,0)">←</button>
-      <button class="touch-btn" ontouchstart="pacDir(0,1)" onclick="pacDir(0,1)">↓</button>
-      <button class="touch-btn" ontouchstart="pacDir(1,0)" onclick="pacDir(1,0)">→</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();pacDir(-1,0)" onclick="pacDir(-1,0)">←</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();pacDir(0,1)" onclick="pacDir(0,1)">↓</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();pacDir(1,0)" onclick="pacDir(1,0)">→</button>
     </div>
   </div>
   <div class="touch-controls" id="tetris-touch" style="display:none;flex-direction:column;gap:8px;align-items:center;padding:8px 10px 14px">
     <div class="touch-row">
-      <button class="touch-btn" ontouchstart="tetMove(-1)" onclick="tetMove(-1)" style="width:70px">←</button>
-      <button class="touch-btn" ontouchstart="tetRotate()" onclick="tetRotate()" style="width:70px;background:rgba(162,89,255,.25);font-size:1.4rem">↻</button>
-      <button class="touch-btn" ontouchstart="tetMove(1)" onclick="tetMove(1)" style="width:70px">→</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();tetMove(-1)" onclick="tetMove(-1)" style="width:70px">←</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();tetRotate()" onclick="tetRotate()" style="width:70px;background:rgba(162,89,255,.25);font-size:1.4rem">↻</button>
+      <button class="touch-btn" ontouchstart="event.preventDefault();tetMove(1)" onclick="tetMove(1)" style="width:70px">→</button>
     </div>
-    <button class="touch-tap-btn" ontouchstart="tetHardDrop()" onclick="tetHardDrop()" style="background:linear-gradient(135deg,#a259ff,#4af0ff);max-width:240px">⬇ CAER</button>
+    <button class="touch-tap-btn" ontouchstart="event.preventDefault();tetHardDrop()" onclick="tetHardDrop()" style="background:linear-gradient(135deg,#a259ff,#4af0ff);max-width:240px">⬇ CAER</button>
   </div>
 </div>
 
