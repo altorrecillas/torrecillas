@@ -831,11 +831,11 @@ window.snakeDir=snakeDir;
 let flappyRAF=null, flappyState='idle', bird, pipes, flappyScore, flappyLastTs=0, flappyPipeAccum=0;
 // Physics matching original Flappy Bird (288x512 reference, scaled to px/s)
 // Original: gravity=0.25/frame, jump=-9/frame, pipeSpeed=3/frame at 60fps
-const FLAP_GRAVITY = 900;    // 0.25 * 60 * 60  px/s²
-const FLAP_IMPULSE = -540;   // -9 * 60          px/s
-const FLAP_PSPEED_BASE = 180;// 3 * 60           px/s  (base speed)
-const PGAP_BASE = 0.27;      // ~150px/512px gap (original)
-const PWR = 0.17;            // ~52px/288px pipe width (original)
+const FLAP_GRAVITY = 900;
+const FLAP_IMPULSE = -400;   // reduced bounce feel
+const FLAP_PSPEED_BASE = 180;
+const PGAP_BASE = 0.27;
+const PWR = 0.17;
 
 // Progressive difficulty — closer to original feel
 function flappyDifficulty(){
@@ -925,8 +925,8 @@ function drawFlappy(ts){
   const pw=W*PWR;
   pipes.forEach(p=>{
     ctx.save(); setShadow(16,'#4af0ff');
-    // Pipes move so their gradient x changes — use fixed colour on low-end
-    ctx.fillStyle=PERF_LOW?'#1a8aaa':linGrad(p.x,0,p.x+pw,0,[0,'#0a4a6a',.4,'#1a8aaa',1,'#083040']);
+    // Use a fixed vertical gradient (y only) so the cache key never changes with pipe movement
+    ctx.fillStyle=linGrad(0,0,pw,0,[0,'#0a4a6a',.4,'#1a8aaa',1,'#083040']);
     ctx.beginPath(); ctx.roundRect(p.x,0,pw,p.top-8,4); ctx.fill();
     ctx.beginPath(); ctx.roundRect(p.x-4,p.top-16,pw+8,16,4); ctx.fill();
     ctx.beginPath(); ctx.roundRect(p.x,p.bot+8,pw,H-p.bot-8,4); ctx.fill();
@@ -1415,17 +1415,6 @@ function drawPacman(now){
     ctx.beginPath(); ctx.arc(px-pr*0.25,py-pr*0.25,pr*0.45,0,Math.PI*2); ctx.fill();
   }
   clearShadow(); ctx.restore();
-  if(pacFreezeMsg){
-    const mx=pacFreezeMsg.x*cw+cw/2, my=pacFreezeMsg.y*ch+ch/2;
-    ctx.save();
-    ctx.font=`bold ${ch*.9}px 'Baloo 2',sans-serif`;
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    setShadow(20,pacFreezeMsg.color); ctx.fillStyle=pacFreezeMsg.color;
-    const elapsed=(now-(pacFreezeUntil-1200))/1200;
-    ctx.globalAlpha=Math.max(0,1-elapsed*1.2);
-    ctx.fillText(pacFreezeMsg.text,mx,my-ch*elapsed*1.5);
-    clearShadow(); ctx.restore();
-  }
 }
 function pacDir(dc,dr){ pacman.nextDc=dc; pacman.nextDr=dr; }
 window.pacDir=pacDir;
