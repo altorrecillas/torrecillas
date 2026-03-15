@@ -776,11 +776,21 @@ window.snakeDir=snakeDir;
 //  FLAPPY BIRD
 // ══════════════════════════════════════════════
 let flappyRAF=null, flappyState='idle', bird, pipes, flappyScore, flappyLastTs=0, flappyPipeAccum=0;
-// Physics in px/s (converted from original 60fps values: multiply per-frame values by 60)
-const FLAP_GRAVITY=1260;   // 0.35 * 60 * 60  px/s²
-const FLAP_IMPULSE=-390;   // -6.5 * 60        px/s (instant velocity on tap)
-const FLAP_PSPEED=132;     // 2.2 * 60         px/s pipe speed
-const PGAP=.32, PWR=.12;
+// Physics matching original Flappy Bird (288x512 reference, scaled to px/s)
+// Original: gravity=0.25/frame, jump=-9/frame, pipeSpeed=3/frame at 60fps
+const FLAP_GRAVITY = 900;    // 0.25 * 60 * 60  px/s²
+const FLAP_IMPULSE = -540;   // -9 * 60          px/s
+const FLAP_PSPEED_BASE = 180;// 3 * 60           px/s  (base speed)
+const PGAP_BASE = 0.27;      // ~150px/512px gap (original)
+const PWR = 0.17;            // ~52px/288px pipe width (original)
+
+// Progressive difficulty — closer to original feel
+function flappyDifficulty(){
+  const s = flappyScore;
+  const speedMult = 1 + Math.min(s * 0.018, 0.55); // max +55% speed at score ~30
+  const gapMult   = 1 - Math.min(s * 0.008, 0.22); // gap shrinks up to -22% at score ~27
+  return { speed: FLAP_PSPEED_BASE * speedMult, gap: PGAP_BASE * gapMult };
+}
 
 function initFlappy(){
   document.getElementById('flappy-touch').style.display='flex';
@@ -789,39 +799,51 @@ function initFlappy(){
 }
 function resetFlappy(){
   const W=canvas.width, H=canvas.height;
-  bird={x:W*.2, y:H*.45, vy:0, r:H*.04};
+  bird={x:W*.2, y:H*.45, vy:0, r:H*.028}; // slightly smaller hitbox (original ~2.3%)
   pipes=[]; flappyScore=0; setScore(0); flappyLastTs=0; flappyPipeAccum=0;
 }
 function startFlappy(){ flappyState='playing'; spawnPipe(); flappyRAF=requestAnimationFrame(flappyLoop); }
 function spawnPipe(){
-  const W=canvas.width,H=canvas.height;
-  const gap=H*PGAP, top=H*.15+Math.random()*(H*.45);
+  const W=canvas.width, H=canvas.height;
+  const { gap: gapFrac } = flappyDifficulty();
+  const gap = H * gapFrac;
+  // Original: top of gap between 20%-65% of screen height
+  const top = H * 0.15 + Math.random() * (H * 0.50);
   pipes.push({x:W, top, bot:top+gap, counted:false});
 }
 function flappyLoop(ts){
   if(flappyState!=='playing') return;
   flappyRAF=requestAnimationFrame(flappyLoop);
   if(!flappyLastTs) flappyLastTs=ts;
-  const dt=Math.min((ts-flappyLastTs)/1000, 0.05); // seconds, capped at 50ms
+  const dt=Math.min((ts-flappyLastTs)/1000, 0.05);
   flappyLastTs=ts;
-  const W=canvas.width,H=canvas.height;
+  const W=canvas.width, H=canvas.height;
+  const { speed: pSpeed } = flappyDifficulty();
 
-  bird.vy+=FLAP_GRAVITY*dt;
-  bird.y+=bird.vy*dt;
+  bird.vy += FLAP_GRAVITY * dt;
+  bird.y  += bird.vy * dt;
 
-  // spawn pipe every time bird would have traveled 72% of screen width
-  const pipeInterval=W*0.72/FLAP_PSPEED; // seconds
-  flappyPipeAccum+=dt;
-  if(flappyPipeAccum>=pipeInterval){ flappyPipeAccum-=pipeInterval; spawnPipe(); }
+  // Spawn: original spawned every ~1.5s regardless of speed (fixed rhythm)
+  const pipeInterval = 1.55;
+  flappyPipeAccum += dt;
+  if(flappyPipeAccum >= pipeInterval){ flappyPipeAccum -= pipeInterval; spawnPipe(); }
 
-  const pw=W*PWR;
-  pipes.forEach(p=>p.x-=FLAP_PSPEED*dt);
-  pipes=pipes.filter(p=>p.x+pw>-10);
-  pipes.forEach(p=>{ if(!p.counted&&p.x+pw<bird.x-bird.r){ p.counted=true; flappyScore++; setScore(flappyScore); } });
-  if(bird.y-bird.r<0||bird.y+bird.r>H){ flappyDie(); return; }
+  const pw = W * PWR;
+  pipes.forEach(p => p.x -= pSpeed * dt);
+  pipes = pipes.filter(p => p.x + pw > -10);
+  pipes.forEach(p => {
+    if(!p.counted && p.x + pw < bird.x - bird.r){
+      p.counted = true; flappyScore++; setScore(flappyScore);
+    }
+  });
+
+  // Ground and ceiling
+  if(bird.y - bird.r < 0 || bird.y + bird.r > H){ flappyDie(); return; }
+
+  // Pipe collision
   for(const p of pipes){
-    if(bird.x+bird.r>p.x&&bird.x-bird.r<p.x+pw){
-      if(bird.y-bird.r<p.top||bird.y+bird.r>p.bot){ flappyDie(); return; }
+    if(bird.x + bird.r > p.x && bird.x - bird.r < p.x + pw){
+      if(bird.y - bird.r < p.top || bird.y + bird.r > p.bot){ flappyDie(); return; }
     }
   }
   drawFlappy(ts);
