@@ -83,11 +83,15 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 .start-item:hover .si-desc{color:#ddd}
 .start-separator{height:1px;background:#d0d0d0;margin:4px 10px}
 .start-footer{background:linear-gradient(180deg,#3c7de0,#2456b8);padding:6px 10px;display:flex;justify-content:flex-end;gap:8px}
-.start-footer-btn{padding:4px 12px;background:linear-gradient(180deg,#e07030,#c05020);color:#fff;border:1px solid #903810;border-radius:3px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px}
-.start-footer-btn:hover{background:linear-gradient(180deg,#f08040,#d06030)}
+.start-footer-btn{padding:4px 12px;background:linear-gradient(180deg,#d04040,#a02020);color:#fff;border:1px solid #801010;border-radius:3px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px;font-weight:bold}
+.start-footer-btn:hover{background:linear-gradient(180deg,#e05050,#b03030)}
+.start-footer-btn canvas{display:block}
 
 /* WINDOWS */
-.window{position:absolute;background:#ece9d8;border:2px solid #0054e3;border-radius:8px 8px 0 0;box-shadow:3px 3px 10px rgba(0,0,0,.4);min-width:300px;min-height:200px;display:flex;flex-direction:column;z-index:100}
+.window{position:absolute;background:#ece9d8;border:2px solid #0054e3;border-radius:8px 8px 0 0;box-shadow:3px 3px 10px rgba(0,0,0,.4);min-width:280px;min-height:180px;display:flex;flex-direction:column;z-index:100}
+.window .resize-handle{position:absolute;bottom:0;right:0;width:16px;height:16px;cursor:nwse-resize;z-index:10}
+.window .resize-handle::before{content:'';position:absolute;bottom:3px;right:3px;width:8px;height:8px;border-right:2px solid #888;border-bottom:2px solid #888}
+.window .resize-handle::after{content:'';position:absolute;bottom:7px;right:7px;width:4px;height:4px;border-right:2px solid #888;border-bottom:2px solid #888}
 .window.minimized{display:none!important}
 .window.focused{z-index:200}
 .window-titlebar{background:linear-gradient(180deg,#0997ff 0%,#0053e0 8%,#0050d8 20%,#0060e8 40%,#0070f0 60%,#0058e0 80%,#0048c8 95%,#0040b8 100%);padding:3px 5px 3px 8px;display:flex;align-items:center;justify-content:space-between;border-radius:6px 6px 0 0;cursor:default;height:28px}
@@ -99,6 +103,8 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 .window-controls button{width:21px;height:21px;border:1px solid rgba(0,0,0,.3);border-radius:3px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;text-shadow:1px 1px 1px rgba(0,0,0,.3)}
 .btn-minimize{background:linear-gradient(180deg,#3c8cf0 0%,#2070d8 100%)}
 .btn-maximize{background:linear-gradient(180deg,#3c8cf0 0%,#2070d8 100%)}
+.btn-restart{background:linear-gradient(180deg,#40c040 0%,#208020 100%)}
+.btn-restart:hover{background:linear-gradient(180deg,#50d050 0%,#309030 100%)}
 .btn-close{background:linear-gradient(180deg,#e08050 0%,#c05030 100%)}
 .btn-close:hover{background:linear-gradient(180deg,#f09060 0%,#d06040 100%)}
 .window-menubar{background:#ece9d8;border-bottom:1px solid #aca899;padding:2px 4px;display:flex;gap:2px}
@@ -192,10 +198,12 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 /* Responsive */
 @media(max-width:600px){
   #start-menu{width:100%;border-radius:0}
-  .window.game-window{width:100%!important;left:0!important;top:0!important;height:calc(100% - 36px)!important;border-radius:0}
-  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(100% - 56px)!important;border-radius:8px 8px 0 0;touch-action:none}
+  .window.game-window{width:calc(100% - 16px)!important;left:8px!important;top:8px!important;height:calc(100% - 52px)!important;border-radius:8px}
+  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(100% - 72px)!important;top:15%;border-radius:8px}
+  .window .resize-handle{display:none}
   .game-container{padding:4px}
   .game-container canvas{max-width:95vw;max-height:38vh}
+  #flappy-canvas{max-height:55vh!important}
   .game-info{font-size:11px;margin:2px 0;gap:8px}
   .game-controls{font-size:8px;margin-top:2px;display:none}
   .game-btn{padding:3px 10px;font-size:10px;margin:2px}
@@ -246,8 +254,13 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
     </button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons">&#128266; &#128266;</div>
+      <div id="tray-icons"><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()">&#128266;</span> &#128246; &#128737;</div>
       <div id="clock"></div>
+    </div>
+    <div id="volume-popup" style="display:none;position:fixed;bottom:40px;right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
+      <div style="font-size:9px;color:#444;font-weight:bold">Volumen</div>
+      <input type="range" id="volume-slider" min="0" max="100" value="50" style="writing-mode:vertical-lr;direction:rtl;height:100px;width:20px" oninput="setMasterVolume(this.value)">
+      <div id="volume-val" style="font-size:9px;color:#333">50%</div>
     </div>
   </div>
   <div id="start-menu">
@@ -322,7 +335,7 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
       </div>
     </div>
     <div class="start-footer">
-      <button class="start-footer-btn" onclick="shutDown()">&#9211; Apagar</button>
+      <button class="start-footer-btn" onclick="shutDown()"><canvas id="shutdown-icon" width="16" height="16"></canvas> Apagar</button>
     </div>
   </div>
 </div>
@@ -335,6 +348,72 @@ let windowIdCounter = 0;
 let openWindows = {};
 let gameInstances = {};
 
+// ========== AUDIO SYSTEM ==========
+let masterVolume = 0.5;
+let audioCtx = null;
+
+function getAudioCtx(){
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq,dur,type='square',vol=1){
+  try{
+    const ctx=getAudioCtx();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.type=type;
+    osc.frequency.value=freq;
+    gain.gain.value=vol*masterVolume;
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime+dur);
+  }catch(e){}
+}
+
+function sfxEat(){playTone(600,0.08,'square',0.6);setTimeout(()=>playTone(800,0.08,'square',0.5),50);}
+function sfxDie(){playTone(200,0.3,'sawtooth',0.5);setTimeout(()=>playTone(150,0.4,'sawtooth',0.4),100);}
+function sfxRotate(){playTone(400,0.05,'square',0.3);}
+function sfxDrop(){playTone(300,0.1,'square',0.4);}
+function sfxLine(){playTone(500,0.1,'square',0.5);setTimeout(()=>playTone(700,0.1,'square',0.4),80);}
+function sfxFlap(){playTone(500,0.06,'sine',0.4);}
+function sfxScore(){playTone(880,0.08,'sine',0.5);}
+function sfxHit(){playTone(150,0.2,'sawtooth',0.5);}
+function sfxBrick(){playTone(600,0.06,'square',0.4);}
+function sfxWin(){playTone(523,0.15,'sine',0.5);setTimeout(()=>playTone(659,0.15,'sine',0.5),150);setTimeout(()=>playTone(784,0.2,'sine',0.5),300);}
+
+function toggleVolumePopup(){
+  const p=document.getElementById('volume-popup');
+  if(p.style.display==='none'||!p.style.display){
+    p.style.display='flex';
+    document.getElementById('volume-slider').value=masterVolume*100;
+    document.getElementById('volume-val').textContent=Math.round(masterVolume*100)+'%';
+  }else{
+    p.style.display='none';
+  }
+}
+
+function setMasterVolume(v){
+  masterVolume=v/100;
+  document.getElementById('volume-val').textContent=Math.round(v)+'%';
+  const volIcon=document.getElementById('tray-volume');
+  if(v==0)volIcon.textContent='🔇';
+  else if(v<30)volIcon.textContent='🔈';
+  else if(v<70)volIcon.textContent='🔉';
+  else volIcon.textContent='🔊';
+  localStorage.setItem('tos-volume',v);
+}
+
+document.addEventListener('click',(e)=>{
+  const vp=document.getElementById('volume-popup');
+  const tv=document.getElementById('tray-volume');
+  if(vp&&vp.style.display==='flex'&&!vp.contains(e.target)&&tv&&!tv.contains(e.target)){
+    vp.style.display='none';
+  }
+});
+
 function updateClock(){
   const now=new Date();
   const h=now.getHours().toString().padStart(2,'0');
@@ -343,6 +422,10 @@ function updateClock(){
 }
 setInterval(updateClock,1000);
 updateClock();
+
+// Load saved volume
+const savedVol=localStorage.getItem('tos-volume');
+if(savedVol!==null){masterVolume=savedVol/100;}
 
 // Boot sequence
 setTimeout(()=>{
@@ -447,9 +530,24 @@ function drawStartMenuIcons(){
   document.querySelectorAll('.msn-avatar-start').forEach(c=>{
     drawMSNAvatar(c.id||c.parentElement.appendChild(Object.assign(document.createElement('canvas'),{id:'msn-start-'+Math.random(),width:36,height:36})).id,36);
   });
-  // Draw start menu avatar
   const sa=document.querySelector('.start-avatar canvas');
   if(sa){sa.width=36;sa.height=36;drawMSNAvatarSmall(sa);}
+  drawShutdownIcon();
+}
+
+function drawShutdownIcon(){
+  const c=document.getElementById('shutdown-icon');
+  if(!c)return;
+  c.width=16;c.height=16;
+  const ctx=c.getContext('2d');
+  // Red circle (power symbol style)
+  ctx.fillStyle='#d04030';
+  ctx.beginPath();ctx.arc(8,9,5.5,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.lineCap='round';
+  // Vertical line at top
+  ctx.beginPath();ctx.moveTo(8,2);ctx.lineTo(8,7);ctx.stroke();
+  // Arc
+  ctx.beginPath();ctx.arc(8,9,4,0.85*Math.PI,0.15*Math.PI);ctx.stroke();
 }
 
 function drawMSNAvatarSmall(canvas){
@@ -648,7 +746,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   win.style.height=height+'px';
   if(isMobile&&!opts.className?.includes('game-window')){
     win.style.left='10px';
-    win.style.top='10px';
+    win.style.top='15%';
   }else{
     win.style.left=(80+Math.random()*200)+'px';
     win.style.top=(30+Math.random()*100)+'px';
@@ -659,10 +757,13 @@ function createWindow(title,icon,width,height,content,opts={}){
   const cls=opts.className||'';
   win.className='window focused '+cls;
 
+  const isGame=opts.className?.includes('game-window');
+
   win.innerHTML=`
     <div class="window-titlebar">
       <div class="window-title"><span class="wt-icon">${icon}</span>${title}</div>
       <div class="window-controls">
+        ${isGame?'<button class="btn-restart" onclick="restartGameWindow(\''+id+'\')" title="Reiniciar">&#8635;</button>':''}
         <button class="btn-minimize" onclick="minimizeWindow('${id}')">_</button>
         <button class="btn-maximize" onclick="toggleMaximize('${id}')">&#9723;</button>
         <button class="btn-close" onclick="closeWindow('${id}')">X</button>
@@ -676,6 +777,8 @@ function createWindow(title,icon,width,height,content,opts={}){
 
   // Drag
   makeDraggable(win,win.querySelector('.window-titlebar'));
+  // Resize
+  makeResizable(win);
 
   // Focus
   win.onmousedown=()=>focusWindow(id);
@@ -785,6 +888,42 @@ function makeDraggable(win,handle){
   },{passive:false});
   document.addEventListener('mouseup',()=>{dragging=false;});
   document.addEventListener('touchend',()=>{dragging=false;});
+}
+
+function makeResizable(win){
+  const handle=document.createElement('div');
+  handle.className='resize-handle';
+  win.appendChild(handle);
+  let resizing=false,ox,oy,ow,oh;
+  handle.onmousedown=(e)=>{
+    resizing=true;
+    ox=e.clientX;oy=e.clientY;
+    ow=win.offsetWidth;oh=win.offsetHeight;
+    e.preventDefault();e.stopPropagation();
+  };
+  handle.ontouchstart=(e)=>{
+    resizing=true;
+    ox=e.touches[0].clientX;oy=e.touches[0].clientY;
+    ow=win.offsetWidth;oh=win.offsetHeight;
+    e.preventDefault();e.stopPropagation();
+  };
+  document.addEventListener('mousemove',(e)=>{
+    if(!resizing)return;
+    const nw=Math.max(280,ow+(e.clientX-ox));
+    const nh=Math.max(180,oh+(e.clientY-oy));
+    win.style.width=nw+'px';
+    win.style.height=nh+'px';
+  });
+  document.addEventListener('touchmove',(e)=>{
+    if(!resizing)return;
+    const nw=Math.max(280,ow+(e.touches[0].clientX-ox));
+    const nh=Math.max(180,oh+(e.touches[0].clientY-oy));
+    win.style.width=nw+'px';
+    win.style.height=nh+'px';
+    e.preventDefault();
+  },{passive:false});
+  document.addEventListener('mouseup',()=>{resizing=false;});
+  document.addEventListener('touchend',()=>{resizing=false;});
 }
 
 // ========== SPECIAL WINDOWS ==========
@@ -1424,7 +1563,7 @@ function openGame(game){
 
 // ========== SNAKE GAME ==========
 function initSnakeGame(){
-  const w=400,h=420;
+  const w=440,h=500;
   const content=`<div class="game-container" id="snake-game-area">
     <div class="game-info"><span>Puntos: <b id="snake-score">0</b></span><span>Record: <b id="snake-high">0</b></span></div>
     <canvas id="snake-canvas" width="360" height="360"></canvas>
@@ -1442,9 +1581,8 @@ function initSnakeGame(){
         <div class="tbtn-empty"></div>
       </div>
     </div>
-    <button class="game-btn" onclick="restartSnake()">Reiniciar</button>
   </div>`;
-  const winId=createWindow('Snake','&#127807;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  const winId=createWindow('Snake','&#127807;',w,h,content,{className:'game-window',statusbar:true,onCreated:(id)=>{
     const canvas=document.getElementById('snake-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -1467,12 +1605,14 @@ function initSnakeGame(){
       const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
       if(head.x<0||head.x>=cols||head.y<0||head.y>=rows||snake.some(s=>s.x===head.x&&s.y===head.y)){
         gameOver=true;
+        sfxDie();
         if(score>highScore)highScore=score;
         document.getElementById('snake-high').textContent=highScore;
         return;
       }
       snake.unshift(head);
       if(head.x===food.x&&head.y===food.y){
+        sfxEat();
         score++;
         document.getElementById('snake-score').textContent=score;
         placeFood();
@@ -1557,6 +1697,9 @@ function initSnakeGame(){
 function restartSnake(){
   document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}));
 }
+function restartGameWindow(id){
+  document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}));
+}
 let _snakeDirFn=null;
 function snakeDir(d){
   if(_snakeDirFn)_snakeDirFn(d);
@@ -1600,7 +1743,6 @@ function initTetrisGame(){
         <div class="tbtn-empty"></div>
       </div>
     </div>
-    <button class="game-btn" onclick="document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}))">Reiniciar</button>
   </div>`;
   createWindow('Tetris','&#127922;',w,h,content,{className:'game-window',onCreated:(id)=>{
     const canvas=document.getElementById('tetris-canvas');
@@ -1682,12 +1824,13 @@ function initTetrisGame(){
         }
       }
       if(cleared){
+        sfxLine();
         lines+=cleared;
         score+=[0,100,300,500,800][cleared]*level;
         level=Math.floor(lines/10)+1;
         dropInterval=Math.max(50,500-level*40);
         updateUI();
-      }
+      }else{sfxDrop();}
       spawnPiece();
     }
     function drop(){
@@ -1697,6 +1840,7 @@ function initTetrisGame(){
     }
     function hardDrop(){
       while(isValid(curPiece,curX,curY+1))curY++;
+      sfxDrop();
       lock();
     }
     function drawNext(){
@@ -1811,7 +1955,7 @@ function initTetrisGame(){
 
 // ========== FLAPPY BIRD GAME ==========
 function initFlappyGame(){
-  const w=360,h=480;
+  const w=380,h=560;
   const content=`<div class="game-container" id="flappy-game-area">
     <div class="game-info"><span>Puntos: <b id="flappy-score">0</b></span><span>Record: <b id="flappy-high">0</b></span></div>
     <canvas id="flappy-canvas" width="300" height="400"></canvas>
@@ -1821,7 +1965,6 @@ function initFlappyGame(){
         <div class="tbtn-action green" ontouchstart="event.preventDefault();flappyDir('flap')">Volar</div>
       </div>
     </div>
-    <button class="game-btn" onclick="restartFlappy()">Reiniciar</button>
   </div>`;
   createWindow('Flappy Bird','&#128038;',w,h,content,{className:'game-window',onCreated:(id)=>{
     const canvas=document.getElementById('flappy-canvas');
@@ -1832,7 +1975,7 @@ function initFlappyGame(){
 
     function reset(){
       bird={x:60,y:200,vy:0,radius:12};
-      pipes=[];score=0;gameOver=false;started=false;frameCount=0;
+      pipes=[];score=0;gameOver=false;started=false;frameCount=0;pipeTimer=0;
       document.getElementById('flappy-score').textContent='0';
     }
     function addPipe(){
@@ -1843,22 +1986,26 @@ function initFlappyGame(){
     function flap(){
       if(gameOver)return;
       if(!started){started=true;addPipe();}
-      bird.vy=-6;
+      bird.vy=-5.5;
+      sfxFlap();
     }
+    let lastTime=0;
+    let pipeTimer=0;
     function update(){
       if(!started||gameOver)return;
       frameCount++;
-      bird.vy+=0.35;
+      bird.vy+=0.28;
       bird.y+=bird.vy;
-      if(bird.y-bird.radius<0||bird.y+bird.radius>H){gameOver=true;endGame();return;}
-      if(frameCount%90===0)addPipe();
+      if(bird.y-bird.radius<0||bird.y+bird.radius>H){gameOver=true;endGame();sfxHit();return;}
+      pipeTimer++;
+      if(pipeTimer>=120){pipeTimer=0;addPipe();}
       for(let i=pipes.length-1;i>=0;i--){
-        pipes[i].x-=2.5;
+        pipes[i].x-=2;
         if(pipes[i].x+50<0)pipes.splice(i,1);
         const p=pipes[i];
-        if(!p.scored&&p.x+50<bird.x){p.scored=true;score++;document.getElementById('flappy-score').textContent=score;}
+        if(!p.scored&&p.x+50<bird.x){p.scored=true;score++;document.getElementById('flappy-score').textContent=score;sfxScore();}
         if(bird.x+bird.radius>p.x&&bird.x-bird.radius<p.x+50){
-          if(bird.y-bird.radius<p.top||bird.y+bird.radius>p.top+p.gap){gameOver=true;endGame();return;}
+          if(bird.y-bird.radius<p.top||bird.y+bird.radius>p.top+p.gap){gameOver=true;endGame();sfxHit();return;}
         }
       }
     }
@@ -1952,7 +2099,7 @@ function restartFlappy(){document.dispatchEvent(new KeyboardEvent('keydown',{key
 
 // ========== ARKANOID GAME ==========
 function initArkanoidGame(){
-  const w=420,h=500;
+  const w=460,h=560;
   const content=`<div class="game-container" id="arkanoid-game-area">
     <div class="game-info"><span>Puntos: <b id="arkanoid-score">0</b></span><span>Vidas: <b id="arkanoid-lives">3</b></span></div>
     <canvas id="arkanoid-canvas" width="380" height="400"></canvas>
@@ -1970,7 +2117,6 @@ function initArkanoidGame(){
         <div class="tbtn-empty"></div>
       </div>
     </div>
-    <button class="game-btn" onclick="restartArkanoid()">Reiniciar</button>
   </div>`;
   createWindow('Arkanoid','&#127950;',w,h,content,{className:'game-window',onCreated:(id)=>{
     const canvas=document.getElementById('arkanoid-canvas');
@@ -2026,12 +2172,13 @@ function initArkanoidGame(){
         if(!b.alive)continue;
         if(ball.x+ball.r>b.x&&ball.x-ball.r<b.x+brickW&&ball.y+ball.r>b.y&&ball.y-ball.r<b.y+brickH){
           ball.dy*=-1;
+          sfxBrick();
           b.hits--;
           if(b.hits<=0){b.alive=false;score+=10;}
           else{score+=5;}
           updateArkanoidUI();
           // Check win
-          if(bricks.every(row=>row.every(br=>!br.alive))){gameOver=true;score+=1000;updateArkanoidUI();}
+          if(bricks.every(row=>row.every(br=>!br.alive))){gameOver=true;score+=1000;updateArkanoidUI();sfxWin();}
         }
       }
     }
