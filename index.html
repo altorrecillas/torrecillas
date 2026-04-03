@@ -197,7 +197,7 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 
 /* Responsive */
 @media(max-width:600px){
-  #start-menu{width:100%;border-radius:0}
+  #start-menu{width:calc(100% - 10px);left:0;right:10px;border-radius:8px 0 0 0}
   .window.game-window{width:calc(100% - 16px)!important;left:8px!important;top:8px!important;height:calc(100% - 52px)!important;border-radius:8px}
   .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(100% - 72px)!important;top:15%;border-radius:8px}
   .window .resize-handle{display:none}
