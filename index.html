@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Torrecillas OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none}
 body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif;height:100vh;width:100vw}
@@ -201,12 +204,13 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 
 /* SNAKE: Professional gaming D-pad */
 #new-snake-game .touch-controls {
-  display: block;
+  display: none;
   width: 100%;
   padding: 10px 0 14px;
   background: linear-gradient(180deg, rgba(0,8,20,0) 0%, rgba(0,8,20,0.97) 18%);
-  border-top: 1px solid rgba(0,255,136,0.12);
+  border-top: none;
   position: relative;
+  flex-shrink: 0;
 }
 #new-snake-game .touch-controls::before {
   content: '';
@@ -306,10 +310,21 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 #new-snake-game .stat-value { font-size: 16px; font-weight: bold; color: #00ff88; }
 #new-snake-game #canvasContainer {
   position: relative; border-radius: 8px; overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 255, 100, 0.1);
-  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 24px rgba(0,255,100,0.12), 0 0 1px rgba(0,255,100,0.25);
+  border: 1px solid rgba(0,255,136,0.15);
   flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
-  width: 100%;
+  width: 100%; background: #0d0d24;
+}
+@media(max-width:600px){
+  #new-snake-game #canvasContainer {
+    flex: 1 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
 }
 #new-snake-game canvas { display: block; background: #0d0d24; }
 #new-snake-game #overlay {
@@ -384,11 +399,1075 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
   #new-snake-game .stat-value { font-size: 14px; }
 }
 
+
+/* ══ TETRIS: Professional gaming — mismo estilo que Snake ══ */
+#new-tetris-game .touch-controls {
+  display: none; width: 100%; padding: 10px 0 14px;
+  background: linear-gradient(180deg, rgba(0,8,20,0) 0%, rgba(0,8,40,0.97) 18%);
+  border-top: 1px solid rgba(0,200,255,0.12); position: relative;
+  flex-shrink: 0; align-items: center; justify-content: center;
+}
+#new-tetris-game .touch-controls::before {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,200,255,0.45), transparent);
+}
+#new-tetris-game .touch-controls .touch-dpad {
+  display: grid;
+  grid-template-columns: 66px 66px 66px; grid-template-rows: 66px 66px 66px; gap: 6px;
+}
+#new-tetris-game .touch-controls .tbtn {
+  width: 66px; height: 66px; font-size: 26px;
+  background: linear-gradient(150deg, rgba(0,200,255,0.07) 0%, rgba(0,12,20,0.92) 100%);
+  border: 1px solid rgba(0,200,255,0.22); border-radius: 14px;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(0,200,255,0.04);
+  color: rgba(0,200,255,0.88); text-shadow: 0 0 10px rgba(0,200,255,0.55);
+  transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.07s ease;
+  position: relative; overflow: hidden;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; user-select: none;
+}
+#new-tetris-game .touch-controls .tbtn::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 42%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+  border-radius: 14px 14px 0 0; pointer-events: none;
+}
+#new-tetris-game .touch-controls .tbtn:active,
+#new-tetris-game .touch-controls .tbtn.pressed {
+  background: linear-gradient(150deg, rgba(0,200,255,0.22) 0%, rgba(0,50,80,0.95) 100%);
+  border-color: #00c8ff;
+  box-shadow: 0 0 22px rgba(0,200,255,0.45), 0 0 50px rgba(0,200,255,0.12), inset 0 0 14px rgba(0,200,255,0.12);
+  transform: scale(0.90); color: #00c8ff;
+  text-shadow: 0 0 18px rgba(0,200,255,1), 0 0 30px rgba(0,200,255,0.5);
+}
+#new-tetris-game .touch-controls .tbtn.tbtn-empty {
+  background: transparent !important; border: none !important;
+  box-shadow: none !important; transform: none !important; pointer-events: none;
+}
+#new-tetris-game .touch-controls .tbtn.rotate-btn {
+  background: linear-gradient(150deg, rgba(160,80,255,0.1) 0%, rgba(20,5,40,0.92) 100%);
+  border: 1px solid rgba(170,100,255,0.28);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(150,80,255,0.06);
+  color: rgba(180,120,255,0.9); text-shadow: 0 0 10px rgba(160,100,255,0.6);
+}
+#new-tetris-game .touch-controls .tbtn.rotate-btn:active,
+#new-tetris-game .touch-controls .tbtn.rotate-btn.pressed {
+  background: linear-gradient(150deg, rgba(180,100,255,0.28) 0%, rgba(50,15,90,0.95) 100%);
+  border-color: #cc88ff;
+  box-shadow: 0 0 22px rgba(170,100,255,0.5), 0 0 50px rgba(150,80,255,0.14), inset 0 0 14px rgba(150,80,255,0.14);
+  transform: scale(0.90); color: #dd99ff;
+  text-shadow: 0 0 18px rgba(220,160,255,1), 0 0 30px rgba(170,100,255,0.5);
+}
+#new-tetris-game .touch-controls .tbtn.hard-drop-btn {
+  background: linear-gradient(150deg, rgba(255,140,50,0.1) 0%, rgba(40,10,0,0.92) 100%);
+  border: 1px solid rgba(255,150,70,0.28);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(255,130,50,0.06);
+  color: rgba(255,160,80,0.9); text-shadow: 0 0 10px rgba(255,130,50,0.6); font-size: 18px;
+}
+#new-tetris-game .touch-controls .tbtn.hard-drop-btn:active,
+#new-tetris-game .touch-controls .tbtn.hard-drop-btn.pressed {
+  background: linear-gradient(150deg, rgba(255,150,70,0.28) 0%, rgba(80,25,0,0.95) 100%);
+  border-color: #ff9040;
+  box-shadow: 0 0 22px rgba(255,130,50,0.5), 0 0 50px rgba(255,100,30,0.14), inset 0 0 14px rgba(255,100,30,0.14);
+  transform: scale(0.90); color: #ffb870;
+  text-shadow: 0 0 18px rgba(255,200,100,1), 0 0 30px rgba(255,130,50,0.5);
+}
+#new-tetris-game {
+  box-sizing: border-box; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  font-family: 'Rajdhani', sans-serif; background: #0a0a1a;
+  color: #fff; overflow: hidden; position: relative;
+}
+#new-tetris-game header {
+  display: flex; justify-content: space-between;
+  width: 100%; padding: 5px; z-index: 2; flex-shrink: 0;
+}
+#new-tetris-game .stat-box {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 4px 10px; text-align: center; min-width: 60px;
+}
+#new-tetris-game .stat-label {
+  font-size: 8px; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); letter-spacing: 1px;
+}
+#new-tetris-game .stat-value { font-size: 16px; font-weight: bold; color: #00c8ff; }
+#new-tetris-game #tetris-play-area {
+  flex: 1; min-height: 0; display: flex; align-items: flex-start;
+  justify-content: center; width: 100%; gap: 8px; padding: 4px; flex-shrink: 1;
+}
+#new-tetris-game #tetris-canvas-wrap {
+  position: relative; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 0 24px rgba(0,200,255,0.1), 0 0 1px rgba(0,200,255,0.3);
+  border: 1px solid rgba(0,200,255,0.15); flex-shrink: 0;
+  background: #0d0d24;
+}
+#new-tetris-game #tetris-canvas-wrap canvas { display: block; background: #0d0d24; }
+#new-tetris-game #tetris-side-panel {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; padding-top: 4px; flex-shrink: 0;
+}
+#new-tetris-game .tetris-panel-label {
+  font-size: 8px; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); letter-spacing: 1.5px;
+}
+#new-tetris-game #tetris-next-wrap {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(0,200,255,0.18);
+  border-radius: 6px; overflow: hidden; box-shadow: 0 0 12px rgba(0,200,255,0.06);
+}
+#new-tetris-game #tetris-next-wrap canvas { display: block; }
+#new-tetris-game .tetris-restart-btn {
+  font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700;
+  padding: 6px 10px; border: 1px solid rgba(0,200,255,0.3); border-radius: 20px;
+  cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s;
+  background: rgba(0,200,255,0.07); color: rgba(0,200,255,0.75);
+  -webkit-tap-highlight-color: transparent;
+}
+#new-tetris-game .tetris-restart-btn:hover {
+  background: rgba(0,200,255,0.16); border-color: #00c8ff; color: #00c8ff;
+}
+#new-tetris-game #tetris-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background: rgba(10,10,26,0.92); backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px); z-index: 10; transition: opacity 0.3s;
+}
+#new-tetris-game #tetris-overlay.hidden { opacity: 0; pointer-events: none; }
+#new-tetris-game .tetris-overlay-title {
+  font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; margin-bottom: 5px;
+  background: linear-gradient(135deg, #00c8ff, #aa66ff, #00f0f0);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#new-tetris-game .tetris-overlay-subtitle {
+  color: rgba(255,255,255,0.5); font-size: 11px;
+  margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;
+}
+#new-tetris-game .tetris-overlay-score {
+  color: #00c8ff; font-size: 14px; margin-bottom: 8px;
+  font-weight: bold; font-family: 'Rajdhani', sans-serif;
+}
+#new-tetris-game .tetris-btn {
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+  padding: 9px 28px; border: none; border-radius: 20px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 2px; transition: all 0.2s; margin: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+#new-tetris-game .tetris-btn-primary {
+  background: linear-gradient(135deg, #00c8ff, #0090cc); color: #0a0a1a;
+  box-shadow: 0 2px 12px rgba(0,200,255,0.35);
+}
+#new-tetris-game .tetris-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,200,255,0.45); }
+#new-tetris-game .tetris-btn-primary:active { transform: scale(0.97); }
+#new-tetris-game #tetris-key-hints {
+  margin-top: 12px; color: rgba(255,255,255,0.25); font-size: 10px;
+  font-family: 'Courier New', monospace; letter-spacing: 0.5px; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; width: 90%; line-height: 1.8;
+}
+@media(max-width:600px) {
+  #new-tetris-game #tetris-key-hints { display: none; }
+  #new-tetris-game .stat-box { padding: 2px 6px; min-width: 48px; }
+  #new-tetris-game .stat-value { font-size: 13px; }
+  #new-tetris-game header { padding: 3px 4px; }
+  #new-tetris-game #tetris-play-area { gap: 5px; padding: 2px; }
+}
+
+/* ══ FLAPPY BIRD: Professional gaming — mismo estilo que Snake/Tetris ══ */
+#new-flappy-game {
+  box-sizing: border-box; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  font-family: 'Rajdhani', sans-serif; background: #0a0a1a;
+  color: #fff; overflow: hidden; position: relative;
+}
+#new-flappy-game header {
+  display: flex; justify-content: space-between;
+  width: 100%; padding: 5px; z-index: 2; flex-shrink: 0;
+}
+#new-flappy-game .stat-box {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 4px 14px; text-align: center; min-width: 70px;
+}
+#new-flappy-game .stat-label {
+  font-size: 8px; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); letter-spacing: 1px;
+}
+#new-flappy-game .stat-value { font-size: 16px; font-weight: bold; color: #ffd700; }
+#new-flappy-game .stat-value.record-val { color: #ffaa00; }
+/* Canvas wrap */
+#new-flappy-game #flappy-canvas-wrap {
+  position: relative; flex: 1; min-height: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; padding: 0; overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 28px rgba(255,215,0,0.12), 0 0 1px rgba(255,215,0,0.25);
+  border: 1px solid rgba(255,215,0,0.15);
+  background: #0d0d24;
+}
+#new-flappy-game #flappy-canvas-wrap canvas {
+  display: block; background: #0d0d24;
+  max-width: 100%; max-height: 100%;
+}
+/* Overlay */
+#new-flappy-game #flappy-overlay {
+  position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border-radius: 10px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background: rgba(5,8,20,0.88); backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); z-index: 10; transition: opacity 0.3s;
+}
+#new-flappy-game #flappy-overlay.hidden { opacity: 0; pointer-events: none; }
+#new-flappy-game .flappy-overlay-title {
+  font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; margin-bottom: 4px;
+  background: linear-gradient(135deg, #ffd700, #ff9900, #ffd700);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#new-flappy-game .flappy-overlay-subtitle {
+  color: rgba(255,255,255,0.45); font-size: 11px;
+  margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px;
+}
+#new-flappy-game .flappy-overlay-score {
+  color: #ffd700; font-size: 15px; margin-bottom: 10px;
+  font-weight: bold; font-family: 'Rajdhani', sans-serif; display: none;
+}
+#new-flappy-game .flappy-btn {
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+  padding: 9px 28px; border: none; border-radius: 20px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 2px; transition: all 0.2s; margin: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+#new-flappy-game .flappy-btn-primary {
+  background: linear-gradient(135deg, #ffd700, #ff9900); color: #0a0a1a;
+  box-shadow: 0 2px 14px rgba(255,215,0,0.4);
+}
+#new-flappy-game .flappy-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,215,0,0.5); }
+#new-flappy-game .flappy-btn-primary:active { transform: scale(0.97); }
+#new-flappy-game #flappy-key-hints {
+  margin-top: 12px; color: rgba(255,255,255,0.22); font-size: 10px;
+  font-family: 'Courier New', monospace; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 10px; width: 85%; line-height: 1.8;
+}
+/* Touch controls — big flap area */
+#new-flappy-game .flappy-touch-area {
+  width: 100%; padding: 12px 0 16px; flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(0,8,20,0) 0%, rgba(0,8,40,0.97) 18%);
+  border-top: 1px solid rgba(255,215,0,0.1);
+  position: relative; display: none;
+  flex-direction: column; align-items: center; gap: 8px;
+}
+#new-flappy-game .flappy-touch-area::before {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.4), transparent);
+}
+#new-flappy-game .flap-btn {
+  width: 160px; height: 64px;
+  background: linear-gradient(150deg, rgba(255,215,0,0.1) 0%, rgba(30,20,0,0.92) 100%);
+  border: 1px solid rgba(255,215,0,0.28); border-radius: 32px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 14px rgba(255,200,0,0.06);
+  color: rgba(255,215,0,0.9); font-size: 22px; font-family: 'Orbitron', sans-serif;
+  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(255,215,0,0.6);
+  transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.07s ease;
+  position: relative; overflow: hidden; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+}
+#new-flappy-game .flap-btn::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0));
+  border-radius: 32px 32px 0 0; pointer-events: none;
+}
+#new-flappy-game .flap-btn:active,
+#new-flappy-game .flap-btn.pressed {
+  background: linear-gradient(150deg, rgba(255,215,0,0.28) 0%, rgba(60,40,0,0.95) 100%);
+  border-color: #ffd700;
+  box-shadow: 0 0 26px rgba(255,215,0,0.5), 0 0 60px rgba(255,180,0,0.14), inset 0 0 16px rgba(255,215,0,0.14);
+  transform: scale(0.93); color: #ffd700;
+  text-shadow: 0 0 20px rgba(255,215,0,1), 0 0 35px rgba(255,180,0,0.6);
+}
+@media(max-width:600px) {
+  #new-flappy-game .flappy-touch-area { display: flex; }
+  #new-flappy-game #flappy-key-hints { display: none; }
+  #new-flappy-game .stat-box { padding: 2px 8px; min-width: 55px; }
+  #new-flappy-game .stat-value { font-size: 13px; }
+  #new-flappy-game header { padding: 3px 4px; }
+}
+
+/* ══ ARKANOID: Professional gaming — mismo estilo que Snake/Tetris/Flappy ══ */
+#new-arkanoid-game {
+  box-sizing: border-box; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  font-family: 'Rajdhani', sans-serif; background: #0a0a1a;
+  color: #fff; overflow: hidden; position: relative;
+}
+#new-arkanoid-game header {
+  display: flex; justify-content: space-between;
+  width: 100%; padding: 5px; z-index: 2; flex-shrink: 0;
+}
+#new-arkanoid-game .stat-box {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 4px 14px; text-align: center; min-width: 70px;
+}
+#new-arkanoid-game .stat-label {
+  font-size: 8px; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); letter-spacing: 1px;
+}
+#new-arkanoid-game .stat-value { font-size: 16px; font-weight: bold; color: #ff5577; }
+#new-arkanoid-game .stat-value.lives-val { color: #ff88aa; letter-spacing: 3px; font-size: 14px; }
+/* Canvas wrap */
+#new-arkanoid-game #arkanoid-canvas-wrap {
+  position: relative; flex: 1; min-height: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; padding: 0; overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 28px rgba(255,85,119,0.12), 0 0 1px rgba(255,85,119,0.25);
+  border: 1px solid rgba(255,85,119,0.15);
+  background: #0d0d24;
+}
+#new-arkanoid-game #arkanoid-canvas-wrap canvas {
+  display: block; background: #0d0d24;
+  max-width: 100%; max-height: 100%;
+}
+/* Overlay */
+#new-arkanoid-game #arkanoid-overlay {
+  position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border-radius: 10px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background: rgba(5,8,20,0.90); backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); z-index: 10; transition: opacity 0.3s;
+}
+#new-arkanoid-game #arkanoid-overlay.hidden { opacity: 0; pointer-events: none; }
+#new-arkanoid-game .arkanoid-overlay-title {
+  font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; margin-bottom: 4px;
+  background: linear-gradient(135deg, #ff5577, #aa44ff, #ff5577);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#new-arkanoid-game .arkanoid-overlay-subtitle {
+  color: rgba(255,255,255,0.45); font-size: 11px;
+  margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px;
+}
+#new-arkanoid-game .arkanoid-overlay-score {
+  color: #ff5577; font-size: 15px; margin-bottom: 10px;
+  font-weight: bold; font-family: 'Rajdhani', sans-serif; display: none;
+}
+#new-arkanoid-game .arkanoid-btn {
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+  padding: 9px 28px; border: none; border-radius: 20px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 2px; transition: all 0.2s; margin: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+#new-arkanoid-game .arkanoid-btn-primary {
+  background: linear-gradient(135deg, #ff5577, #cc2255); color: #fff;
+  box-shadow: 0 2px 14px rgba(255,85,119,0.4);
+}
+#new-arkanoid-game .arkanoid-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,85,119,0.5); }
+#new-arkanoid-game .arkanoid-btn-primary:active { transform: scale(0.97); }
+#new-arkanoid-game #arkanoid-key-hints {
+  margin-top: 12px; color: rgba(255,255,255,0.22); font-size: 10px;
+  font-family: 'Courier New', monospace; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 10px; width: 85%; line-height: 1.8;
+}
+/* Touch controls — 3 buttons: left, launch, right */
+#new-arkanoid-game .arkanoid-touch-area {
+  width: 100%; padding: 12px 0 16px; flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(0,8,20,0) 0%, rgba(20,0,8,0.97) 18%);
+  border-top: 1px solid rgba(255,85,119,0.1);
+  position: relative; display: none;
+  flex-direction: row; align-items: center; justify-content: center; gap: 10px;
+}
+#new-arkanoid-game .arkanoid-touch-area::before {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,85,119,0.4), transparent);
+}
+/* Left / Right movement buttons */
+#new-arkanoid-game .ark-btn {
+  width: 78px; height: 66px;
+  background: linear-gradient(150deg, rgba(255,85,119,0.07) 0%, rgba(20,0,8,0.92) 100%);
+  border: 1px solid rgba(255,85,119,0.22); border-radius: 14px;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(255,85,119,0.04);
+  color: rgba(255,85,119,0.88); font-size: 26px;
+  text-shadow: 0 0 10px rgba(255,85,119,0.55);
+  transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.07s ease;
+  position: relative; overflow: hidden; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+}
+#new-arkanoid-game .ark-btn::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 42%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+  border-radius: 14px 14px 0 0; pointer-events: none;
+}
+#new-arkanoid-game .ark-btn:active,
+#new-arkanoid-game .ark-btn.pressed {
+  background: linear-gradient(150deg, rgba(255,85,119,0.22) 0%, rgba(60,0,20,0.95) 100%);
+  border-color: #ff5577;
+  box-shadow: 0 0 22px rgba(255,85,119,0.45), 0 0 50px rgba(255,85,119,0.12), inset 0 0 14px rgba(255,85,119,0.12);
+  transform: scale(0.90); color: #ff5577;
+  text-shadow: 0 0 18px rgba(255,85,119,1), 0 0 30px rgba(255,85,119,0.5);
+}
+/* Launch button — purple accent, wider */
+#new-arkanoid-game .ark-btn.launch-btn {
+  width: 100px;
+  background: linear-gradient(150deg, rgba(160,80,255,0.1) 0%, rgba(20,5,40,0.92) 100%);
+  border: 1px solid rgba(170,100,255,0.28);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(150,80,255,0.06);
+  color: rgba(180,120,255,0.9); font-size: 20px;
+  text-shadow: 0 0 10px rgba(160,100,255,0.6);
+  font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
+}
+#new-arkanoid-game .ark-btn.launch-btn:active,
+#new-arkanoid-game .ark-btn.launch-btn.pressed {
+  background: linear-gradient(150deg, rgba(180,100,255,0.28) 0%, rgba(50,15,90,0.95) 100%);
+  border-color: #cc88ff;
+  box-shadow: 0 0 22px rgba(170,100,255,0.5), 0 0 50px rgba(150,80,255,0.14), inset 0 0 14px rgba(150,80,255,0.14);
+  transform: scale(0.90); color: #dd99ff;
+  text-shadow: 0 0 18px rgba(220,160,255,1), 0 0 30px rgba(170,100,255,0.5);
+}
+@media(max-width:600px) {
+  #new-arkanoid-game .arkanoid-touch-area { display: flex; }
+  #new-arkanoid-game #arkanoid-key-hints { display: none; }
+  #new-arkanoid-game .stat-box { padding: 2px 8px; min-width: 55px; }
+  #new-arkanoid-game .stat-value { font-size: 13px; }
+  #new-arkanoid-game header { padding: 3px 4px; }
+}
+
+/* ══ SPACE INVADERS: Professional gaming — mismo estilo que el resto ══ */
+#new-invaders-game {
+  box-sizing: border-box; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  font-family: 'Rajdhani', sans-serif; background: #0a0a1a;
+  color: #fff; overflow: hidden; position: relative;
+}
+#new-invaders-game header {
+  display: flex; justify-content: space-between;
+  width: 100%; padding: 5px; z-index: 2; flex-shrink: 0;
+}
+#new-invaders-game .stat-box {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 4px 10px; text-align: center; min-width: 60px;
+}
+#new-invaders-game .stat-label {
+  font-size: 8px; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); letter-spacing: 1px;
+}
+#new-invaders-game .stat-value { font-size: 16px; font-weight: bold; color: #66ff33; }
+#new-invaders-game .stat-value.lives-val { letter-spacing: 2px; font-size: 13px; }
+#new-invaders-game #invaders-canvas-wrap {
+  position: relative; flex: 1; min-height: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; padding: 0; overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 28px rgba(102,255,51,0.1), 0 0 1px rgba(102,255,51,0.2);
+  border: 1px solid rgba(102,255,51,0.12);
+  background: #0d0d24;
+}
+@media(max-width:600px){
+  #new-invaders-game #invaders-canvas-wrap {
+    flex: 1 !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+}
+#new-invaders-game #invaders-canvas-wrap canvas {
+  display: block; background: #0d0d24;
+  max-width: 100%; max-height: 100%;
+  box-sizing: border-box;
+}
+#new-invaders-game #invaders-overlay {
+  position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border-radius: 8px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  background: rgba(5,8,20,0.90); backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); z-index: 10; transition: opacity 0.3s;
+}
+#new-invaders-game #invaders-overlay.hidden { opacity: 0; pointer-events: none; }
+#new-invaders-game .invaders-overlay-title {
+  font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; margin-bottom: 4px;
+  background: linear-gradient(135deg, #66ff33, #00aaff, #66ff33);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#new-invaders-game .invaders-overlay-subtitle {
+  color: rgba(255,255,255,0.45); font-size: 11px;
+  margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px;
+}
+#new-invaders-game .invaders-overlay-score {
+  color: #66ff33; font-size: 15px; margin-bottom: 10px;
+  font-weight: bold; font-family: 'Rajdhani', sans-serif; display: none;
+}
+#new-invaders-game .invaders-btn {
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+  padding: 9px 28px; border: none; border-radius: 20px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 2px; transition: all 0.2s; margin: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+#new-invaders-game .invaders-btn-primary {
+  background: linear-gradient(135deg, #66ff33, #33cc00); color: #0a0a1a;
+  box-shadow: 0 2px 14px rgba(102,255,51,0.4);
+}
+#new-invaders-game .invaders-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(102,255,51,0.5); }
+#new-invaders-game .invaders-btn-primary:active { transform: scale(0.97); }
+#new-invaders-game #invaders-key-hints {
+  margin-top: 12px; color: rgba(255,255,255,0.22); font-size: 10px;
+  font-family: 'Courier New', monospace; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 10px; width: 85%; line-height: 1.8;
+}
+/* Touch controls — same 3-button row as Arkanoid */
+#new-invaders-game .invaders-touch-area {
+  width: 100%; padding: 12px 0 16px; flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(0,8,20,0) 0%, rgba(0,12,0,0.97) 18%);
+  border-top: 1px solid rgba(102,255,51,0.1); position: relative;
+  display: none; flex-direction: row; align-items: center; justify-content: center; gap: 10px;
+}
+#new-invaders-game .invaders-touch-area::before {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102,255,51,0.4), transparent);
+}
+#new-invaders-game .inv-btn {
+  width: 78px; height: 66px;
+  background: linear-gradient(150deg, rgba(102,255,51,0.07) 0%, rgba(0,12,0,0.92) 100%);
+  border: 1px solid rgba(102,255,51,0.22); border-radius: 14px;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(102,255,51,0.04);
+  color: rgba(102,255,51,0.88); font-size: 26px;
+  text-shadow: 0 0 10px rgba(102,255,51,0.55);
+  transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.07s ease;
+  position: relative; overflow: hidden; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+}
+#new-invaders-game .inv-btn::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 42%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+  border-radius: 14px 14px 0 0; pointer-events: none;
+}
+#new-invaders-game .inv-btn:active, #new-invaders-game .inv-btn.pressed {
+  background: linear-gradient(150deg, rgba(102,255,51,0.22) 0%, rgba(0,40,0,0.95) 100%);
+  border-color: #66ff33;
+  box-shadow: 0 0 22px rgba(102,255,51,0.45), 0 0 50px rgba(102,255,51,0.12), inset 0 0 14px rgba(102,255,51,0.12);
+  transform: scale(0.90); color: #66ff33;
+  text-shadow: 0 0 18px rgba(102,255,51,1), 0 0 30px rgba(102,255,51,0.5);
+}
+#new-invaders-game .inv-btn.fire-btn {
+  width: 100px;
+  background: linear-gradient(150deg, rgba(255,80,80,0.12) 0%, rgba(40,0,0,0.92) 100%);
+  border: 1px solid rgba(255,100,80,0.28);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 10px rgba(255,80,50,0.06);
+  color: rgba(255,110,80,0.9); text-shadow: 0 0 10px rgba(255,80,50,0.6);
+  font-size: 22px;
+}
+#new-invaders-game .inv-btn.fire-btn:active, #new-invaders-game .inv-btn.fire-btn.pressed {
+  background: linear-gradient(150deg, rgba(255,100,80,0.28) 0%, rgba(80,10,0,0.95) 100%);
+  border-color: #ff6644;
+  box-shadow: 0 0 22px rgba(255,80,50,0.5), 0 0 50px rgba(255,80,50,0.14), inset 0 0 14px rgba(255,80,50,0.14);
+  transform: scale(0.90); color: #ff9977;
+  text-shadow: 0 0 18px rgba(255,150,100,1), 0 0 30px rgba(255,80,50,0.5);
+}
+@media(max-width:600px) {
+  #new-invaders-game .invaders-touch-area { display: flex; }
+  #new-invaders-game #invaders-key-hints { display: none; }
+  #new-invaders-game .stat-box { padding: 2px 6px; min-width: 48px; }
+  #new-invaders-game .stat-value { font-size: 13px; }
+  #new-invaders-game header { padding: 3px 4px; }
+}
+
+/* ══════════════════════════════════════════════════════
+   GAME RESPONSIVE LAYOUT — Mobile & Desktop
+══════════════════════════════════════════════════════ */
+
+/* Game window body: sin scroll, flex para propagar altura */
+.game-window .window-body {
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #0a0a1a !important;
+}
+
+/* Snake: canvas con límites y escalado */
+#new-snake-game canvas {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+}
+
+/* Tetris: canvas-wrap puede crecer/encoger, canvas escala */
+#new-tetris-game #tetris-canvas-wrap {
+  flex: 1 !important; min-width: 0 !important; min-height: 0 !important;
+  align-self: stretch !important;
+}
+#new-tetris-game #tetris-canvas-wrap canvas {
+  max-width: 100%; max-height: 100%; display: block;
+}
+
+/* ── Desktop (>600px): canvas escala para llenar espacio ── */
+@media(min-width:601px) {
+  #new-snake-game canvas,
+  #new-flappy-game #flappy-canvas-wrap canvas,
+  #new-arkanoid-game #arkanoid-canvas-wrap canvas,
+  #new-invaders-game #invaders-canvas-wrap canvas {
+    width: 100%; height: 100%; object-fit: contain;
+  }
+  /* Tetris desktop: resizeCanvas() controla las dimensiones */
+  #new-tetris-game #tetris-canvas-wrap canvas {
+    width: auto; height: auto; max-width: 100%; max-height: 100%;
+  }
+  /* Touch controls ocultos en escritorio */
+  #new-snake-game .touch-controls,
+  #new-tetris-game .touch-controls { display: none !important; }
+  #new-flappy-game .flappy-touch-area,
+  #new-arkanoid-game .arkanoid-touch-area,
+  #new-invaders-game .invaders-touch-area { display: none !important; }
+  /* Canvas-wraps: overflow oculto para limpieza */
+  #new-snake-game #canvasContainer,
+  #new-flappy-game #flappy-canvas-wrap,
+  #new-arkanoid-game #arkanoid-canvas-wrap,
+  #new-invaders-game #invaders-canvas-wrap { overflow: hidden; }
+}
+
+/* ── Móvil (≤600px): todo cabe sin scroll ── */
+@media(max-width:600px) {
+  /* Game window: sin scroll */
+  .game-window .window-body { overflow: hidden !important; }
+
+  /* ── Altura máxima universal para todos los canvas-wrap ──
+     Fórmula: 100svh - taskbar(36) - titlebar(26) - header(26) - touch-controls(70) - márgenes(12) */
+  #new-flappy-game #flappy-canvas-wrap,
+  #new-arkanoid-game #arkanoid-canvas-wrap,
+  #new-invaders-game #invaders-canvas-wrap,
+  #ms-canvas-wrap {
+    max-height: calc(100svh - 170px) !important;
+  }
+  /* Snake: el dpad ocupa ~152px (3×46px + gaps + padding), reservar más espacio */
+  #new-snake-game #canvasContainer {
+    max-height: calc(100svh - 240px) !important;
+  }
+  /* Tetris: el dpad horizontal ocupa 54px, canvas-wrap limitado para que quepa */
+  #new-tetris-game #tetris-canvas-wrap {
+    max-height: calc(100svh - 150px) !important;
+  }
+  /* Asegurar que todos los contenedores de juego son flex-column sin overflow */
+  #new-snake-game, #new-flappy-game, #new-arkanoid-game,
+  #new-invaders-game, #new-ms-game, #new-tetris-game {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    height: 100% !important;
+  }
+  /* Asegurar flex-shrink:0 en TODOS los controles táctiles */
+  #new-snake-game .touch-controls,
+  #new-flappy-game .flappy-touch-area,
+  #new-arkanoid-game .arkanoid-touch-area,
+  #new-invaders-game .invaders-touch-area,
+  #new-ms-game .ms-touch-bar,
+  #new-tetris-game .touch-controls {
+    flex-shrink: 0 !important;
+  }
+
+  /* Touch controls visibles */
+  #new-snake-game .touch-controls { display: block !important; }
+  #new-tetris-game .touch-controls { display: flex !important; }
+  #new-flappy-game .flappy-touch-area { display: flex !important; }
+  #new-arkanoid-game .arkanoid-touch-area { display: flex !important; }
+  #new-invaders-game .invaders-touch-area { display: flex !important; }
+
+  /* Canvas: altura máxima para que quede espacio a los controles */
+  #new-snake-game canvas {
+    width: auto !important; height: auto !important;
+    max-width: 100% !important; max-height: 100% !important;
+    object-fit: contain !important;
+  }
+  /* Flappy, Arkanoid, Invaders, Tetris: JS controla el tamaño CSS del canvas */
+  #new-flappy-game #flappy-canvas-wrap canvas,
+  #new-arkanoid-game #arkanoid-canvas-wrap canvas,
+  #new-invaders-game #invaders-canvas-wrap canvas,
+  #new-tetris-game #tetris-canvas-wrap canvas {
+    max-width: 100% !important; max-height: 100% !important;
+    display: block !important;
+  }
+
+  /* Botones táctiles compactos - Snake */
+  #new-snake-game .touch-controls .touch-dpad {
+    display: grid !important;
+    grid-template-columns: 46px 46px 46px !important;
+    grid-template-rows: 46px 46px 46px !important;
+    gap: 4px !important;
+  }
+  #new-snake-game .touch-controls .tbtn {
+    width: 46px !important; height: 46px !important; font-size: 18px !important;
+  }
+  #new-snake-game .touch-controls { padding: 2px 0 4px !important; flex-shrink: 0 !important; }
+
+  /* Flappy: botón volar compacto */
+  #new-flappy-game .flap-btn {
+    width: 140px !important; height: 48px !important;
+    font-size: 16px !important; letter-spacing: 1px !important;
+  }
+  #new-flappy-game .flappy-touch-area {
+    padding: 6px 0 8px !important;
+    height: 62px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Arkanoid & Invaders: botones compactos */
+  #new-arkanoid-game .ark-btn {
+    width: 62px !important; height: 52px !important; font-size: 22px !important;
+  }
+  #new-arkanoid-game .ark-btn.launch-btn { width: 88px !important; font-size: 14px !important; }
+  #new-arkanoid-game .ark-btn-icon { font-size: 18px !important; }
+  #new-arkanoid-game .ark-btn-label { font-size: 9px !important; letter-spacing: 1px !important; }
+  /* Invaders: botones compactos para liberar espacio al canvas */
+  #new-invaders-game .inv-btn {
+    width: 72px !important; height: 50px !important; font-size: 22px !important;
+  }
+  #new-invaders-game .inv-btn.fire-btn { width: 88px !important; font-size: 24px !important; }
+  #new-arkanoid-game .arkanoid-touch-area {
+    padding: 6px 0 8px !important; gap: 8px !important;
+    height: 66px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+  #new-invaders-game .invaders-touch-area {
+    padding: 6px 0 8px !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    height: 66px !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+  }
+
+  /* ═══ TETRIS MOBILE LAYOUT — controles en fila horizontal ═══ */
+
+  /* Touch-controls como barra horizontal fija de 60px */
+  #new-tetris-game .touch-controls {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 3px 8px !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    height: 54px !important;
+    box-sizing: border-box !important;
+  }
+  /* Dpad en fila, sin grid */
+  #new-tetris-game .touch-controls .touch-dpad {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  /* Ocultar celdas vacías del dpad */
+  #new-tetris-game .touch-controls .touch-dpad .tbtn-empty {
+    display: none !important;
+  }
+  /* Botones en fila un poco más compactos */
+  #new-tetris-game .touch-controls .tbtn {
+    width: 46px !important; height: 46px !important; font-size: 20px !important;
+  }
+
+  /* Play area ocupa el espacio restante */
+  #new-tetris-game #tetris-play-area {
+    align-items: stretch !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 2px 4px !important;
+  }
+  /* Canvas-wrap: flex centrado para que el canvas quede centrado */
+  #new-tetris-game #tetris-canvas-wrap {
+    flex: 1 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    position: relative !important;
+  }
+  /* Canvas: tamaño controlado por JS (resizeCanvas), sin CSS que interfiera */
+  #new-tetris-game #tetris-canvas-wrap canvas {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+  /* Panel lateral compacto */
+  #new-tetris-game #tetris-next-wrap canvas { width: 60px !important; height: 60px !important; }
+  #new-tetris-game #tetris-side-panel { gap: 3px !important; padding-top: 2px !important; }
+  #new-tetris-game .tetris-restart-btn { padding: 4px 7px !important; font-size: 7px !important; }
+
+  /* Headers más pequeños */
+  #new-snake-game #header,
+  #new-tetris-game header,
+  #new-flappy-game header,
+  #new-arkanoid-game header,
+  #new-invaders-game header { padding: 2px 4px !important; }
+  #new-snake-game .stat-value,
+  #new-tetris-game .stat-value,
+  #new-flappy-game .stat-value,
+  #new-arkanoid-game .stat-value,
+  #new-invaders-game .stat-value { font-size: 13px !important; }
+}
+
+/* ── Extra pequeño (≤380px): reducir aún más ── */
+@media(max-width:380px) {
+  #new-snake-game canvas,
+  #new-flappy-game #flappy-canvas-wrap canvas,
+  #new-arkanoid-game #arkanoid-canvas-wrap canvas {
+    max-height: 100% !important;
+  }
+  /* Invaders y Tetris: JS gestiona el tamaño, solo garantizamos que no desborde */
+  #new-invaders-game #invaders-canvas-wrap canvas,
+  #new-tetris-game #tetris-canvas-wrap canvas {
+    max-width: 100% !important; max-height: 100% !important;
+  }
+  /* Invaders touch-area aún más compacta en pantallas muy pequeñas */
+  #new-invaders-game .invaders-touch-area {
+    height: 58px !important; padding: 4px 0 6px !important;
+  }
+  #new-invaders-game .inv-btn { width: 62px !important; height: 44px !important; font-size: 20px !important; }
+  #new-invaders-game .inv-btn.fire-btn { width: 76px !important; }
+  #new-snake-game .touch-controls .touch-dpad {
+    grid-template-columns: 46px 46px 46px !important;
+    grid-template-rows: 46px 46px 46px !important; gap: 4px !important;
+  }
+  #new-tetris-game .touch-controls .tbtn {
+    width: 38px !important; height: 38px !important; font-size: 16px !important;
+  }
+  #new-tetris-game .touch-controls { gap: 5px !important; height: 54px !important; }
+  #new-snake-game .touch-controls .tbtn,
+  #new-tetris-game .touch-controls .tbtn { width: 46px !important; height: 46px !important; font-size: 18px !important; }
+  #new-arkanoid-game .ark-btn, #new-invaders-game .inv-btn { width: 54px !important; height: 46px !important; }
+  #new-arkanoid-game .ark-btn.launch-btn, #new-invaders-game .inv-btn.fire-btn { width: 72px !important; }
+  #new-flappy-game .flap-btn { width: 120px !important; height: 46px !important; font-size: 14px !important; }
+}
+
+/* ══════════════════════════════════════════════════════
+   MEJORAS VISUALES ESCRITORIO — Canvas rendering
+══════════════════════════════════════════════════════ */
+
+/* Background canvas Tetris */
+#new-tetris-game #tetris-canvas-wrap canvas { background: #0d0d24; }
+
+/* Scanline CRT sutil sobre todos los wraps de juego */
+#new-snake-game #canvasContainer::after,
+#new-flappy-game #flappy-canvas-wrap::after,
+#new-arkanoid-game #arkanoid-canvas-wrap::after,
+#new-invaders-game #invaders-canvas-wrap::after,
+#new-tetris-game #tetris-canvas-wrap::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.04) 2px,
+    rgba(0,0,0,0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+/* Vignette darkness en las esquinas del canvas */
+#new-snake-game #canvasContainer::before,
+#new-flappy-game #flappy-canvas-wrap::before,
+#new-arkanoid-game #arkanoid-canvas-wrap::before,
+#new-invaders-game #invaders-canvas-wrap::before,
+#new-tetris-game #tetris-canvas-wrap::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+/* Overlays por encima del scanline + vignette */
+#new-snake-game #overlay,
+#new-tetris-game #tetris-overlay,
+#new-flappy-game #flappy-overlay,
+#new-arkanoid-game #arkanoid-overlay,
+#new-invaders-game #invaders-overlay { z-index: 15 !important; }
+
+/* Canvas rendering quality — smooth escalado CSS */
+#new-snake-game canvas,
+#new-flappy-game #flappy-canvas-wrap canvas,
+#new-arkanoid-game #arkanoid-canvas-wrap canvas,
+#new-invaders-game #invaders-canvas-wrap canvas,
+#new-tetris-game #tetris-canvas-wrap canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+}
+
+/* Flappy canvas-wrap: fondo sky por si hay letterbox */
+#new-flappy-game #flappy-canvas-wrap {
+  background: linear-gradient(180deg, #4dc9f6 0%, #87ceeb 100%) !important;
+}
+
+/* Smooth border glow animation on all wraps */
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1.0; }
+}
+
+/* Tamaño mínimo del canvas en escritorio para que no quede pequeño */
+@media(min-width:601px) {
+  #new-snake-game #canvasContainer,
+  #new-flappy-game #flappy-canvas-wrap,
+  #new-arkanoid-game #arkanoid-canvas-wrap,
+  #new-invaders-game #invaders-canvas-wrap { min-height: 200px; }
+  #new-tetris-game #tetris-canvas-wrap { min-height: 120px; min-width: 60px; }
+  /* Flappy canvas overlay: ajustar posición para que no tape la barra */
+  #new-flappy-game #flappy-overlay { inset: 0; }
+}
+
+/* ── Arkanoid launch-btn: layout vertical (icono + texto) ── */
+#new-arkanoid-game .ark-btn.launch-btn {
+  flex-direction: column; gap: 0px; padding: 4px 6px;
+}
+#new-arkanoid-game .ark-btn-icon {
+  font-size: 20px; line-height: 1; pointer-events: none;
+}
+#new-arkanoid-game .ark-btn-label {
+  font-size: 8px; font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  font-weight: 700; line-height: 1; pointer-events: none;
+  opacity: 0.85;
+}
+
+/* ── Flappy btn: layout vertical ── */
+#new-flappy-game .flap-btn {
+  flex-direction: column; gap: 0; padding: 6px 10px;
+}
+#new-flappy-game .flap-btn-icon { font-size: 22px; line-height: 1; pointer-events: none; }
+#new-flappy-game .flap-btn-label {
+  font-size: 9px; font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
+  line-height: 1; pointer-events: none; opacity: 0.85;
+}
+
+/* ══════════════════════════════════════════════════════
+   BUSCAMINAS CSS
+══════════════════════════════════════════════════════ */
+#new-ms-game {
+  box-sizing:border-box; width:100%; height:100%;
+  display:flex; flex-direction:column; align-items:center;
+  font-family:'Rajdhani',sans-serif; background:#0a0a1a;
+  color:white; overflow:hidden; position:relative;
+}
+#new-ms-game header {
+  display:flex; justify-content:space-between; align-items:center;
+  width:100%; padding:5px 8px; flex-shrink:0;
+  border-bottom:1px solid rgba(0,200,255,0.12); z-index:2;
+}
+#new-ms-game .stat-box {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px; padding:4px 10px; text-align:center; min-width:64px;
+}
+#new-ms-game .stat-label { font-size:8px; text-transform:uppercase; color:rgba(255,255,255,0.45); letter-spacing:1px; }
+#new-ms-game .stat-value { font-size:16px; font-weight:bold; color:#00ffcc; font-family:'Orbitron',monospace; }
+.ms-reset-btn {
+  background:rgba(0,200,255,0.1); border:1px solid rgba(0,200,255,0.3);
+  border-radius:50%; width:40px; height:40px; font-size:20px;
+  cursor:pointer; color:white; display:flex; align-items:center;
+  justify-content:center; transition:all 0.2s; flex-shrink:0;
+}
+.ms-reset-btn:hover { background:rgba(0,200,255,0.25); transform:scale(1.1); }
+#ms-diff-row {
+  display:flex; gap:6px; padding:5px 8px; flex-shrink:0; width:100%;
+}
+.ms-diff-btn {
+  flex:1; padding:5px 4px; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(0,200,255,0.2); border-radius:6px;
+  color:rgba(255,255,255,0.45); font-family:'Orbitron',sans-serif;
+  font-size:9px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;
+}
+.ms-diff-btn.active {
+  background:rgba(0,200,255,0.15); border-color:rgba(0,200,255,0.5);
+  color:#00ffcc; box-shadow:0 0 10px rgba(0,200,255,0.2);
+}
+.ms-diff-btn:hover:not(.active) { background:rgba(0,200,255,0.08); color:rgba(255,255,255,0.7); }
+#ms-canvas-wrap {
+  position:relative; flex:1; min-height:0;
+  display:flex; align-items:center; justify-content:center;
+  width:100%; overflow:hidden; border-radius:8px; background:#0d0d24;
+  border:1px solid rgba(0,200,255,0.15);
+  box-shadow:0 0 28px rgba(0,200,255,0.08), 0 0 1px rgba(0,200,255,0.2);
+}
+#ms-canvas-wrap canvas {
+  display:block; background:#0d0d24; max-width:100%; max-height:100%;
+  cursor:pointer; image-rendering:auto;
+}
+/* CRT + vignette sobre el tablero */
+#ms-canvas-wrap::after {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(0deg,transparent 0px,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);
+  pointer-events:none; z-index:2; border-radius:inherit;
+}
+#ms-canvas-wrap::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.3) 100%);
+  pointer-events:none; z-index:2; border-radius:inherit;
+}
+/* Overlay */
+#ms-overlay {
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  background:rgba(10,10,26,0.92); backdrop-filter:blur(5px);
+  z-index:15; transition:opacity 0.3s; border-radius:8px;
+}
+#ms-overlay.hidden { opacity:0; pointer-events:none; }
+.ms-ov-title {
+  font-family:'Orbitron',sans-serif; font-size:22px; font-weight:900;
+  background:linear-gradient(135deg,#00ffcc,#00aaff,#66ff33);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; margin-bottom:6px; text-align:center;
+}
+.ms-ov-sub { color:rgba(255,255,255,0.5); font-size:11px; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+.ms-ov-score { color:#00ffcc; font-size:14px; margin-bottom:14px; display:none; font-family:'Orbitron',monospace; }
+.ms-ov-btn {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
+  padding:10px 30px; border:none; border-radius:8px; cursor:pointer;
+  background:linear-gradient(135deg,#00ffcc,#0099cc); color:#0a0a1a;
+  box-shadow:0 0 20px rgba(0,255,200,0.35); margin-bottom:8px; letter-spacing:1px;
+  transition:all 0.2s;
+}
+.ms-ov-btn:hover { transform:scale(1.04); box-shadow:0 0 28px rgba(0,255,200,0.5); }
+.ms-key-hint { font-size:9px; color:rgba(255,255,255,0.28); letter-spacing:1px; text-align:center; padding:0 10px; }
+/* Touch bar - oculto en escritorio */
+#ms-touch-bar {
+  display:none; width:100%; padding:8px 10px 12px; flex-shrink:0;
+  border-top:1px solid rgba(0,200,255,0.1);
+  background:linear-gradient(180deg,rgba(0,8,20,0) 0%,rgba(0,8,30,0.97) 18%);
+  flex-direction:column; align-items:center; gap:4px;
+}
+.ms-flag-toggle {
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  background:rgba(0,200,255,0.1); border:1px solid rgba(0,200,255,0.3);
+  border-radius:12px; padding:8px 32px; cursor:pointer;
+  color:#00ffcc; font-family:'Orbitron',sans-serif; transition:all 0.2s;
+}
+.ms-flag-toggle.flag-active { background:rgba(255,170,0,0.15); border-color:rgba(255,170,0,0.4); color:#ffaa00; }
+#ms-toggle-icon { font-size:20px; line-height:1; pointer-events:none; }
+#ms-toggle-label { font-size:9px; letter-spacing:1.5px; font-weight:700; pointer-events:none; }
+
+/* Escalado en escritorio */
+@media(min-width:601px) {
+  #ms-canvas-wrap canvas { width:100%; height:100%; object-fit:contain; }
+}
+/* Móvil */
+@media(max-width:600px) {
+  #ms-touch-bar { display:flex !important; }
+  #ms-canvas-wrap canvas { width:auto !important; height:auto !important; max-width:100% !important; max-height:100% !important; object-fit:contain !important; }
+  #ms-canvas-wrap { height:100% !important; overflow:hidden !important; }
+}
 /* Responsive */
 @media(max-width:600px){
   #start-menu{width:calc(100% - 10px);left:0;right:10px;border-radius:8px 0 0 0}
-  .window.game-window{width:calc(100% - 16px)!important;left:8px!important;top:8px!important;height:calc(100% - 52px)!important;border-radius:8px}
-  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(100% - 72px)!important;top:15%;border-radius:8px}
+  .window.game-window{width:calc(100% - 16px)!important;left:8px!important;top:8px!important;bottom:44px!important;height:auto!important;max-height:calc(100svh - 52px)!important;border-radius:8px}
+  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(100svh - 72px)!important;top:15%;border-radius:8px}
   .window .resize-handle{display:none}
   .game-container{padding:4px}
   .game-container canvas{max-width:95vw;max-height:38vh}
@@ -530,6 +1609,14 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
           <div class="si-icon">&#127950;</div>
           <div><div class="si-label">Arkanoid</div><div class="si-desc">Rompe los ladrillos</div></div>
         </div>
+        <div class="start-item" onclick="openGame('spaceinvaders')">
+          <div class="si-icon">&#128126;</div>
+          <div><div class="si-label">Space Invaders</div><div class="si-desc">Defiende la Tierra</div></div>
+        </div>
+                <div class="start-item" onclick="openGame('minesweeper')">
+          <div class="si-icon">&#128163;</div>
+          <div><div class="si-label">Buscaminas</div><div class="si-desc">Despeja el campo</div></div>
+        </div>
         <div class="start-separator"></div>
         <div class="start-item" onclick="openCalculator()">
           <div class="si-icon">&#128290;</div>
@@ -566,6 +1653,10 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
         <div class="start-item" onclick="openGame('arkanoid')">
           <div class="si-icon">&#127950;</div>
           <div><div class="si-label">Arkanoid</div></div>
+        </div>
+        <div class="start-item" onclick="openGame('spaceinvaders')">
+          <div class="si-icon">&#128126;</div>
+          <div><div class="si-label">Space Invaders</div></div>
         </div>
         <div class="start-separator"></div>
         <div class="start-item" onclick="openCalculator()">
@@ -912,6 +2003,16 @@ function initDesktop(){
       c.className='tetris-icon';c.width=44;c.height=44;
       drawTetrisIcon(c);
       iconDiv.appendChild(c);
+    }else if(app.icon==='invaders-icon'){
+      const c=document.createElement('canvas');
+      c.className='invaders-icon';c.width=44;c.height=44;
+      drawInvadersIcon(c);
+      iconDiv.appendChild(c);
+    }else if(app.icon==='ms-icon'){
+      const c=document.createElement('canvas');
+      c.className='ms-icon';c.width=44;c.height=44;
+      drawMinesweeperIcon(c);
+      iconDiv.appendChild(c);
     }else{
       iconDiv.innerHTML=app.icon;
     }
@@ -967,6 +2068,48 @@ function drawTetrisIcon(canvas){
 }
 
 // Start menu
+function drawInvadersIcon(canvas){
+  const ctx=canvas.getContext('2d');
+  const s=canvas.width;
+  // Dark background
+  ctx.fillStyle='#0a0a1a';
+  ctx.beginPath();ctx.roundRect(0,0,s,s,s*0.1);ctx.fill();
+  // Stars
+  ctx.fillStyle='rgba(255,255,255,0.4)';
+  [[4,4],[10,12],[36,8],[40,20],[6,30],[38,38]].forEach(([x,y])=>ctx.fillRect(x/44*s,y/44*s,1,1));
+  // Alien body — green pixel art
+  ctx.fillStyle='#66ff33';
+  const px=s/44;
+  const alien=[
+    [0,0,0,0,1,0,0,1,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0],
+    [0,0,1,1,0,1,1,0,1,1,0,0],
+    [0,1,1,1,1,1,1,1,1,1,1,0],
+    [0,1,0,1,1,1,1,1,1,0,1,0],
+    [0,1,0,1,0,0,0,0,1,0,1,0],
+    [0,0,0,0,1,1,1,1,0,0,0,0],
+    [0,0,1,1,0,0,0,0,1,1,0,0],
+  ];
+  const offX=(s-12*px*1.2)/2;
+  const offY=s*0.08;
+  alien.forEach((row,r)=>row.forEach((cell,c)=>{
+    if(cell){
+      ctx.shadowColor='#66ff33';ctx.shadowBlur=3;
+      ctx.fillRect(offX+c*px*1.2,offY+r*px*1.8,px*1.1,px*1.6);
+    }
+  }));
+  ctx.shadowBlur=0;
+  // Player ship at bottom — white
+  ctx.fillStyle='rgba(200,255,200,0.9)';
+  const sy=s*0.85,sh=s*0.06,sw=s*0.35;
+  ctx.fillRect(s/2-sw/2,sy,sw,sh);
+  ctx.fillRect(s/2-s*0.04,sy-s*0.08,s*0.08,s*0.08);
+  // Bullet
+  ctx.fillStyle='#66ff33';ctx.shadowColor='#66ff33';ctx.shadowBlur=4;
+  ctx.fillRect(s/2-px/2,s*0.62,px*1.5,s*0.1);
+  ctx.shadowBlur=0;
+}
+
 function toggleStartMenu(){
   document.getElementById('start-menu').classList.toggle('show');
 }
@@ -1071,7 +2214,7 @@ function toggleMaximize(id){
     win.style.left='0';
     win.style.top='0';
     win.style.width='100%';
-    win.style.height='calc(100% - 36px)';
+    win.style.height='calc(100svh - 36px)';
     info.maximized=true;
   }
 }
@@ -1804,12 +2947,14 @@ function openGame(game){
     case 'tetris':initTetrisGame();break;
     case 'flappy':initFlappyGame();break;
     case 'arkanoid':initArkanoidGame();break;
+    case 'spaceinvaders':initSpaceInvadersGame();break;
+    case 'minesweeper':initMinesweeperGame();break;
   }
 }
 
 // ========== SNAKE GAME (NEW VERSION) ==========
 function initSnakeGame(){
-  const w=440,h=520;
+  const w=580,h=640;
   
   // HTML Structure for the new high-quality game
   const content = `
@@ -1867,8 +3012,9 @@ function initSnakeGame(){
   
   createWindow('Snake','&#127807;',w,h,content,{className:'game-window',statusbar:true,onCreated:(id)=>{
     // === NEW SNAKE GAME LOGIC ===
-    const COLS = 30;
-    const ROWS = 20;
+    const isMobileGame = window.innerWidth <= 600;
+    const COLS = isMobileGame ? 20 : 30;
+    const ROWS = isMobileGame ? 22 : 20;
     const container = document.getElementById('new-snake-game');
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
@@ -1879,38 +3025,38 @@ function initSnakeGame(){
       if (!cc) return;
       const isMobile = window.innerWidth <= 600;
 
-      let maxW, maxH;
+      let availW, availH;
       if (isMobile) {
-        // On mobile calculate available height from window, reserving space for:
-        // taskbar(36) + window top offset(8) + titlebar(26) + stats header(40) + dpad(234) + buffer(8)
-        const reserved = 36 + 8 + 26 + 40 + 234 + 8;
-        maxH = window.innerHeight - reserved;
-        maxW = window.innerWidth - 20;
+        // Medir desde el juego completo, restando header y touch-controls explícitamente
+        // para evitar el bug de timing donde cc.clientHeight incluye el espacio táctil
+        const gameEl  = document.getElementById('new-snake-game');
+        const headerEl = document.querySelector('#new-snake-game #header');
+        const touchEl  = document.querySelector('#new-snake-game .touch-controls');
+        const gameH   = gameEl  ? gameEl.clientHeight  : (window.innerHeight - 62);
+        const headerH = headerEl ? headerEl.offsetHeight : 26;
+        const touchH  = touchEl  ? Math.max(touchEl.offsetHeight, 155) : 155;
+        availW = (gameEl ? gameEl.clientWidth : window.innerWidth) - 8;
+        availH = Math.max(60, gameH - headerH - touchH - 70);
       } else {
-        maxW = cc.clientWidth - 4;
-        maxH = cc.clientHeight - 4;
+        canvas.style.width = '0'; canvas.style.height = '0';
+        availW = cc.clientWidth  || (window.innerWidth - 16);
+        availH = cc.clientHeight || (window.innerHeight - 100);
+        canvas.style.width = ''; canvas.style.height = '';
       }
 
-      CELL = Math.floor(Math.min(maxW / COLS, maxH / ROWS));
-      if (CELL < 8) CELL = 8;
-      if (CELL > 25) CELL = 25;
+      if (availW < 10 || availH < 10) return;
+
+      CELL = Math.floor(Math.min(availW / COLS, availH / ROWS));
+      if (CELL < 8)  CELL = 8;
+      if (CELL > (isMobile ? 15 : 32)) CELL = isMobile ? 15 : 32;
       canvas.width  = COLS * CELL;
       canvas.height = ROWS * CELL;
 
-      // On mobile: shrink container to exact canvas size so keyboard sits flush below
-      if (isMobile) {
-        cc.style.flex   = 'none';
-        cc.style.height = canvas.height + 'px';
-        cc.style.width  = canvas.width  + 'px';
-        cc.style.alignSelf = 'flex-start';
-        cc.style.margin = '0 auto';
-      } else {
-        cc.style.flex   = '1';
-        cc.style.height = '';
-        cc.style.width  = '100%';
-        cc.style.alignSelf = '';
-        cc.style.margin = '';
-      }
+      cc.style.flex      = '1';
+      cc.style.height    = '';
+      cc.style.width     = '100%';
+      cc.style.alignSelf = '';
+      cc.style.margin    = '';
     }
     
     let snake = [];
@@ -2401,37 +3547,61 @@ function arkanoidDir(d){
 
 // ========== TETRIS GAME ==========
 function initTetrisGame(){
-  const w=370,h=520;
-  const content=`<div class="game-container" id="tetris-game-area">
-    <div class="game-info"><span>L&iacute;neas: <b id="tetris-lines">0</b></span><span>Puntos: <b id="tetris-score">0</b></span><span>Nivel: <b id="tetris-level">1</b></span></div>
-    <div style="display:flex;align-items:flex-start;gap:8px">
-      <canvas id="tetris-canvas" width="200" height="400"></canvas>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
-        <div style="color:#0f0;font-family:'Courier New',monospace;font-size:11px">Siguiente</div>
-        <canvas id="tetris-next" width="80" height="80" style="border:2px solid #444;border-radius:2px"></canvas>
-        <button id="tetris-restart-btn" style="margin-top:8px;padding:4px 10px;background:linear-gradient(180deg,#3c8cf0,#2070d8);color:#fff;border:1px solid #1050a0;border-radius:3px;font-size:11px;cursor:pointer;font-weight:bold;font-family:Tahoma,sans-serif" onclick="document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}))">Reiniciar</button>
+  const w=580,h=660;
+  const content=`
+    <div id="new-tetris-game">
+      <header>
+        <div class="stat-box">
+          <div class="stat-label">L&iacute;neas</div>
+          <div class="stat-value" id="tetris-lines">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Puntos</div>
+          <div class="stat-value" id="tetris-score">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Nivel</div>
+          <div class="stat-value" id="tetris-level">1</div>
+        </div>
+      </header>
+      <div id="tetris-play-area">
+        <div id="tetris-canvas-wrap">
+          <canvas id="tetris-canvas" width="200" height="400"></canvas>
+          <div id="tetris-overlay">
+            <div class="tetris-overlay-title">&#127922; TETRIS</div>
+            <div class="tetris-overlay-subtitle">El cl&aacute;sico de bloques</div>
+            <div class="tetris-overlay-score" id="tetris-overlay-score" style="display:none;"></div>
+            <button class="tetris-btn tetris-btn-primary" id="tetris-start-btn">Jugar</button>
+            <div id="tetris-key-hints">&#8592; &#8594; Mover &nbsp;&#124;&nbsp; &#8593; Rotar &nbsp;&#124;&nbsp; &#8595; Bajar &nbsp;&#124;&nbsp; Espacio: Ca&iacute;da instant&aacute;nea</div>
+          </div>
+        </div>
+        <div id="tetris-side-panel">
+          <div class="tetris-panel-label">Siguiente</div>
+          <div id="tetris-next-wrap">
+            <canvas id="tetris-next" width="80" height="80"></canvas>
+          </div>
+          <button class="tetris-restart-btn" id="tetris-restart-btn">&#8635; Reset</button>
+        </div>
       </div>
-    </div>
-    <div class="game-controls">&#8592;&#8594; Mover | &#8593; Rotar | &#8595; Bajar | Espacio: Caer</div>
-    <div class="touch-controls">
-      <div class="touch-dpad">
-        <div class="tbtn-empty"></div>
-        <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('rotate')">&#8635;</div>
-        <div class="tbtn-empty"></div>
-        <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('left')">&#9664;</div>
-        <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('down')">&#9660;</div>
-        <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('right')">&#9654;</div>
-        <div class="tbtn-empty"></div>
-        <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('drop')">&#9660;&#9660;</div>
-        <div class="tbtn-empty"></div>
+      <div class="touch-controls">
+        <div class="touch-dpad">
+          <div class="tbtn-empty"></div>
+          <div class="tbtn rotate-btn" ontouchstart="event.preventDefault();tetrisDir('rotate')" onclick="tetrisDir('rotate')">&#8635;</div>
+          <div class="tbtn-empty"></div>
+          <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('left')" onclick="tetrisDir('left')">&#9664;</div>
+          <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('down')" onclick="tetrisDir('down')">&#9660;</div>
+          <div class="tbtn" ontouchstart="event.preventDefault();tetrisDir('right')" onclick="tetrisDir('right')">&#9654;</div>
+          <div class="tbtn-empty"></div>
+          <div class="tbtn hard-drop-btn" ontouchstart="event.preventDefault();tetrisDir('drop')" onclick="tetrisDir('drop')">&#9660;&#9660;</div>
+          <div class="tbtn-empty"></div>
+        </div>
       </div>
-    </div>
-  </div>`;
+    </div>`;
   createWindow('Tetris','&#127922;',w,h,content,{className:'game-window',onCreated:(id)=>{
     const canvas=document.getElementById('tetris-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
-    const COLS=10,ROWS=20,SZ=20;
+    const COLS=10,ROWS=20; let SZ=20;
     const SHAPES=[
       [[1,1,1,1]],
       [[1,1],[1,1]],
@@ -2450,6 +3620,8 @@ function initTetrisGame(){
       updateUI();
       nextPiece=null;nextColor=null;
       spawnPiece();
+      const ov=document.getElementById('tetris-overlay');
+      if(ov){ov._gameOverShown=false;const t=ov.querySelector('.tetris-overlay-title');if(t){t.style.background='linear-gradient(135deg,#00c8ff,#aa66ff,#00f0f0)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='\u{1F3B2} TETRIS';}}
     }
     function updateUI(){
       const sl=document.getElementById('tetris-score');
@@ -2530,7 +3702,7 @@ function initTetrisGame(){
       const nc=document.getElementById('tetris-next');
       if(!nc)return;
       const nctx=nc.getContext('2d');
-      nctx.fillStyle='#111';nctx.fillRect(0,0,80,80);
+      nctx.fillStyle='#0d0d24';nctx.fillRect(0,0,80,80);
       if(!nextPiece)return;
       const nsz=16;
       const rows=nextPiece.length,cols=nextPiece[0].length;
@@ -2546,9 +3718,9 @@ function initTetrisGame(){
       }
     }
     function draw(){
-      ctx.fillStyle='#111';ctx.fillRect(0,0,200,400);
+      ctx.fillStyle='#0d0d24';ctx.fillRect(0,0,canvas.width,canvas.height);
       // Grid
-      ctx.strokeStyle='#1a1a1a';
+      ctx.strokeStyle='rgba(0,200,255,0.06)';
       for(let r=0;r<=ROWS;r++){ctx.beginPath();ctx.moveTo(0,r*SZ);ctx.lineTo(COLS*SZ,r*SZ);ctx.stroke();}
       for(let c=0;c<=COLS;c++){ctx.beginPath();ctx.moveTo(c*SZ,0);ctx.lineTo(c*SZ,ROWS*SZ);ctx.stroke();}
       // Board
@@ -2583,11 +3755,19 @@ function initTetrisGame(){
         }
       }
       if(gameOver){
-        ctx.fillStyle='rgba(0,0,0,.75)';ctx.fillRect(0,0,200,400);
-        ctx.fillStyle='#f44';ctx.font='bold 24px Courier New';ctx.textAlign='center';
-        ctx.fillText('GAME OVER',100,190);
-        ctx.fillStyle='#fff';ctx.font='14px Courier New';
-        ctx.fillText('Puntos: '+score,100,220);
+        const ov=document.getElementById('tetris-overlay');
+        if(ov&&!ov._gameOverShown){
+          ov._gameOverShown=true;
+          const t=ov.querySelector('.tetris-overlay-title');
+          const s=ov.querySelector('.tetris-overlay-subtitle');
+          const sc=document.getElementById('tetris-overlay-score');
+          const btn=document.getElementById('tetris-start-btn');
+          if(t){t.style.background='linear-gradient(135deg,#ff4466,#ff8844)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='GAME OVER';}
+          if(s)s.textContent='Sigue intent\u00e1ndolo';
+          if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+' \u2014 L\u00edneas: '+lines;}
+          if(btn)btn.textContent='Reintentar';
+          ov.classList.remove('hidden');
+        }
       }
     }
     function gameLoop(){
@@ -2595,6 +3775,47 @@ function initTetrisGame(){
       if(now-lastDrop>=dropInterval){drop();lastDrop=now;}
       draw();
     }
+    // Responsive canvas sizing — mide el wrap directamente para evitar overflow
+    function resizeCanvas(){
+      const wrap=document.getElementById('tetris-canvas-wrap');
+      if(!wrap)return;
+      const isMobile=window.innerWidth<=600;
+
+      let availW, availH;
+      if(isMobile){
+        // Medir desde el juego completo restando header y touch explícitamente
+        // para evitar el bug de timing (igual que Snake)
+        const gameEl   = document.getElementById('new-tetris-game');
+        const headerEl = document.querySelector('#new-tetris-game header');
+        const touchEl  = document.querySelector('#new-tetris-game .touch-controls');
+        const sideEl   = document.getElementById('tetris-side-panel');
+        const gameH    = gameEl   ? gameEl.clientHeight  : (window.innerHeight-62);
+        const gameW    = gameEl   ? gameEl.clientWidth   : (window.innerWidth-16);
+        const headerH  = headerEl ? headerEl.offsetHeight : 26;
+        const touchH   = touchEl  ? Math.max(touchEl.offsetHeight, 60) : 60;
+        const sideW    = sideEl   ? (sideEl.offsetWidth||80) : 80;
+        availW = Math.max(40, gameW - sideW - 16);
+        availH = Math.max(60, gameH - headerH - touchH - 70);
+      } else {
+        canvas.style.width='0'; canvas.style.height='0';
+        availW = wrap.clientWidth;
+        availH = wrap.clientHeight;
+        canvas.style.width=''; canvas.style.height='';
+        if(availW<10||availH<10)return;
+      }
+
+      const cellW=Math.floor(availW/COLS);
+      const cellH=Math.floor(availH/ROWS);
+      SZ=Math.max(10,Math.min(cellW,cellH,isMobile?17:30));
+      canvas.width =COLS*SZ;
+      canvas.height=ROWS*SZ;
+    }
+    // Llamar varias veces para que el layout mobile se asiente
+    resizeCanvas();
+    setTimeout(()=>{resizeCanvas();draw();},50);
+    setTimeout(()=>{resizeCanvas();draw();},250);
+    const _resizeObs=new ResizeObserver(()=>{resizeCanvas();draw();});
+    _resizeObs.observe(document.getElementById('new-tetris-game'));
     reset();
     lastDrop=Date.now()+dropInterval;
     interval=setInterval(gameLoop,30);
@@ -2611,75 +3832,92 @@ function initTetrisGame(){
       else if(e.key===' '){hardDrop();lastDrop=Date.now();e.preventDefault();}
     }
     document.addEventListener('keydown',handleKey);
-    let tsx=0,tsy=0,tst=0,touchRestarted=false;
-    canvas.ontouchstart=(e)=>{
-      if(gameOver){e.preventDefault();clearInterval(interval);reset();lastDrop=Date.now()+999999;interval=setInterval(gameLoop,30);touchRestarted=true;return;}
-      touchRestarted=false;
-      e.preventDefault();tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;tst=Date.now();
-    };
-    canvas.ontouchend=(e)=>{
+
+    // ── Touch swipe on canvas ──
+    let tsx=0,tsy=0,tst=0;
+    canvas.addEventListener('touchstart',(e)=>{
       e.preventDefault();
-      if(touchRestarted)return;
+      tsx=e.touches[0].clientX; tsy=e.touches[0].clientY; tst=Date.now();
+    },{passive:false});
+    canvas.addEventListener('touchend',(e)=>{
+      e.preventDefault();
       const dx=e.changedTouches[0].clientX-tsx;
       const dy=e.changedTouches[0].clientY-tsy;
       const dt=Date.now()-tst;
-      if(dt<200&&Math.abs(dx)<15&&Math.abs(dy)<15){_tetrisDirFn('rotate');return;}
+      if(dt<220&&Math.abs(dx)<20&&Math.abs(dy)<20){_tetrisDirFn('rotate');return;}
       if(Math.abs(dy)>Math.abs(dx)&&dy>30){_tetrisDirFn('drop');return;}
       if(Math.abs(dx)>Math.abs(dy)){_tetrisDirFn(dx>0?'right':'left');}
       else if(dy>20){_tetrisDirFn('down');}
-    };
-    canvas.ontouchmove=(e)=>{e.preventDefault();};
+    },{passive:false});
+    canvas.addEventListener('touchmove',(e)=>{e.preventDefault();},{passive:false});
+
+    // ── D-pad handler ──
     _tetrisDirFn=(d)=>{
+      if(gameOver)return;
       if(d==='left'&&isValid(curPiece,curX-1,curY))curX--;
       else if(d==='right'&&isValid(curPiece,curX+1,curY))curX++;
       else if(d==='down'){drop();lastDrop=Date.now();}
       else if(d==='rotate'){const rot=rotate(curPiece);if(isValid(rot,curX,curY))curPiece=rot;}
       else if(d==='drop'){hardDrop();lastDrop=Date.now();}
     };
-    canvas.ontouchstart=(e)=>{
-      if(gameOver){e.preventDefault();clearInterval(interval);reset();lastDrop=Date.now()+999999;interval=setInterval(gameLoop,30);touchRestarted=true;return;}
-      touchRestarted=false;
-      e.preventDefault();tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;tst=Date.now();
-    };
-    canvas.ontouchstart=(e)=>{
-      if(gameOver){e.preventDefault();clearInterval(interval);reset();lastDrop=Date.now()+999999;interval=setInterval(gameLoop,30);return;}
-      e.preventDefault();tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;tst=Date.now();
-    };
-    canvas.addEventListener('click',(e)=>{
-      if(!gameOver)return;
-      const rect=canvas.getBoundingClientRect();
-      const mx=(e.clientX-rect.left)*(200/rect.width);
-      const my=(e.clientY-rect.top)*(400/rect.height);
-      if(mx>=55&&mx<=145&&my>=230&&my<=258){document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}));}
-    });
-    canvas.onclick=(e)=>{
-      if(!gameOver)return;
-      const rect=canvas.getBoundingClientRect();
-      const mx=(e.clientX-rect.left)*(200/rect.width);
-      const my=(e.clientY-rect.top)*(400/rect.height);
-      if(mx>=55&&mx<=145&&my>=230&&my<=258){clearInterval(interval);reset();lastDrop=Date.now()+999999;interval=setInterval(gameLoop,30);}
-    };
-    canvas.ontouchstart=(e)=>{
-      if(gameOver){e.preventDefault();clearInterval(interval);reset();lastDrop=Date.now();interval=setInterval(gameLoop,30);return;}
-      e.preventDefault();tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;tst=Date.now();
-    };
-    gameInstances[id]={destroy:()=>{clearInterval(interval);document.removeEventListener('keydown',handleKey);canvas.onclick=null;_tetrisDirFn=null;}};
+
+    // ── Start / Restart ──
+    function startGame(){
+      clearInterval(interval);
+      reset();
+      const ov=document.getElementById('tetris-overlay');
+      if(ov){
+        const sc=document.getElementById('tetris-overlay-score');
+        if(sc)sc.style.display='none';
+        ov.classList.add('hidden');
+        ov._gameOverShown=false;
+      }
+      lastDrop=Date.now()+999999;
+      interval=setInterval(gameLoop,30);
+    }
+    const startBtn=document.getElementById('tetris-start-btn');
+    if(startBtn) startBtn.addEventListener('click',startGame);
+    const restartBtn=document.getElementById('tetris-restart-btn');
+    if(restartBtn) restartBtn.addEventListener('click',startGame);
+
+    gameInstances[id]={destroy:()=>{clearInterval(interval);document.removeEventListener('keydown',handleKey);_tetrisDirFn=null;if(typeof _resizeObs!=='undefined')_resizeObs.disconnect();}};
   }});
 }
 
 // ========== FLAPPY BIRD GAME ==========
 function initFlappyGame(){
-  const w=380,h=560;
-  const content=`<div class="game-container" id="flappy-game-area">
-    <div class="game-info"><span>Puntos: <b id="flappy-score">0</b></span><span>Record: <b id="flappy-high">0</b></span></div>
-    <canvas id="flappy-canvas" width="300" height="400"></canvas>
-    <div class="game-controls">Espacio o Click para volar</div>
-    <div class="touch-controls">
-      <div class="touch-actions">
-        <div class="tbtn-action green" ontouchstart="event.preventDefault();flappyDir('flap')">Volar</div>
+  const w=520,h=660;
+  const content=`
+    <div id="new-flappy-game">
+      <header>
+        <div class="stat-box">
+          <div class="stat-label">Puntos</div>
+          <div class="stat-value" id="flappy-score">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">R&eacute;cord</div>
+          <div class="stat-value record-val" id="flappy-high">0</div>
+        </div>
+      </header>
+      <div id="flappy-canvas-wrap">
+        <canvas id="flappy-canvas" width="300" height="400"></canvas>
+        <div id="flappy-overlay">
+          <div class="flappy-overlay-title">&#128038; FLAPPY</div>
+          <div class="flappy-overlay-subtitle">Vuela entre las tuber&iacute;as</div>
+          <div class="flappy-overlay-score" id="flappy-overlay-score"></div>
+          <button class="flappy-btn flappy-btn-primary" id="flappy-start-btn">Jugar</button>
+          <div id="flappy-key-hints">Espacio &nbsp;/&nbsp; Click &nbsp;/&nbsp; Toca para volar &nbsp;&mdash;&nbsp; R: reiniciar</div>
+        </div>
       </div>
-    </div>
-  </div>`;
+      <div class="flappy-touch-area">
+        <div class="flap-btn" id="flap-touch-btn"
+          ontouchstart="event.preventDefault();flappyDir('flap')"
+          onclick="flappyDir('flap')">
+          <span class="flap-btn-icon">&#128038;</span>
+          <span class="flap-btn-label">VOLAR</span>
+        </div>
+      </div>
+    </div>`;
   createWindow('Flappy Bird','&#128038;',w,h,content,{className:'game-window',onCreated:(id)=>{
     const canvas=document.getElementById('flappy-canvas');
     if(!canvas)return;
@@ -2692,6 +3930,10 @@ function initFlappyGame(){
       pipes=[];score=0;gameOver=false;started=false;frameCount=0;pipeTimer=0;
       document.getElementById('flappy-score').textContent='0';
     }
+    function showStartOverlay(){
+      const ov=document.getElementById('flappy-overlay');
+      if(ov){ ov._goShown=false; ov.classList.remove('hidden'); }
+    }
     function addPipe(){
       const gap=110,minTop=40,maxTop=H-gap-40;
       const topH=Math.random()*(maxTop-minTop)+minTop;
@@ -2699,7 +3941,12 @@ function initFlappyGame(){
     }
     function flap(){
       if(gameOver)return;
-      if(!started){started=true;addPipe();}
+      if(!started){
+        started=true; addPipe();
+        // Hide overlay if still visible (player tapped canvas directly)
+        const ov=document.getElementById('flappy-overlay');
+        if(ov){ ov.classList.add('hidden'); ov._goShown=false; }
+      }
       bird.vy=-5.5;
       sfxFlap();
     }
@@ -2725,7 +3972,8 @@ function initFlappyGame(){
     }
     function endGame(){
       if(score>highScore)highScore=score;
-      document.getElementById('flappy-high').textContent=highScore;
+      const hEl=document.getElementById('flappy-high');
+      if(hEl)hEl.textContent=highScore;
     }
     function draw(){
       // Sky
@@ -2771,77 +4019,146 @@ function initFlappyGame(){
       ctx.fillStyle='#FFA500';
       ctx.beginPath();ctx.ellipse(-3,3,7,4,-.3,0,Math.PI*2);ctx.fill();
       ctx.restore();
-      if(!started){
-        ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(0,0,W,H);
-        ctx.fillStyle='#fff';ctx.font='bold 22px Courier New';ctx.textAlign='center';
-        ctx.fillText('FLAPPY BIRD',W/2,H/2-30);
-        ctx.font='14px Courier New';
-        ctx.fillText('Pulsa Espacio o Click',W/2,H/2+10);
-      }
+      // overlay handles start screen
       if(gameOver){
-        ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);
-        ctx.fillStyle='#f44';ctx.font='bold 28px Courier New';ctx.textAlign='center';
-        ctx.fillText('GAME OVER',W/2,H/2-30);
-        ctx.fillStyle='#fff';ctx.font='16px Courier New';
-        ctx.fillText('Puntos: '+score,W/2,H/2+5);
-        const bx=W/2-50,by=H/2+20,bw=100,bh=30;
-        ctx.fillStyle='#3c8cf0';ctx.fillRect(bx,by,bw,bh);
-        ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.strokeRect(bx,by,bw,bh);
-        ctx.fillStyle='#fff';ctx.font='bold 14px Courier New';
-        ctx.fillText('Reiniciar',W/2,H/2+40);
+        // Show overlay
+        const ov=document.getElementById('flappy-overlay');
+        if(ov&&!ov._goShown){
+          ov._goShown=true;
+          const t=ov.querySelector('.flappy-overlay-title');
+          const s=ov.querySelector('.flappy-overlay-subtitle');
+          const sc=document.getElementById('flappy-overlay-score');
+          const btn=document.getElementById('flappy-start-btn');
+          if(t){t.style.background='linear-gradient(135deg,#ff4466,#ff8844)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='GAME OVER';}
+          if(s)s.textContent='Sigue intent\u00e1ndolo';
+          if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+(score>0?' \u2014 \u00a1Nuevo r\u00e9cord!':'');}
+          if(btn)btn.textContent='Reintentar';
+          ov.classList.remove('hidden');
+        }
       }
     }
     function drawCloud(x,y,s){
       ctx.beginPath();ctx.arc(x,y,s,0,Math.PI*2);ctx.arc(x+s*.8,y-s*.3,s*.7,0,Math.PI*2);ctx.arc(x+s*1.3,y,s*.6,0,Math.PI*2);ctx.fill();
     }
     function loop(){update();draw();animId=requestAnimationFrame(loop);}
+
+    // Escalar canvas CSS para que quepa en el wrap (W=300,H=400 internos)
+    function resizeFlappyCanvas(){
+      const wrap=document.getElementById('flappy-canvas-wrap');
+      if(!wrap)return;
+      const wW=wrap.clientWidth;
+      const wH=wrap.clientHeight;
+      if(wW<10||wH<10)return;
+      const scale=Math.min(wW/W, wH/H);
+      canvas.style.width=Math.floor(W*scale)+'px';
+      canvas.style.height=Math.floor(H*scale)+'px';
+    }
+    resizeFlappyCanvas();
+    setTimeout(()=>resizeFlappyCanvas(),80);
+    setTimeout(()=>resizeFlappyCanvas(),300);
+    const _flappyResObs=new ResizeObserver(()=>resizeFlappyCanvas());
+    _flappyResObs.observe(document.getElementById('new-flappy-game'));
     reset();
+    // Show start overlay
+    setTimeout(()=>{
+      const ov=document.getElementById('flappy-overlay');
+      if(ov){ ov._goShown=false; ov.classList.remove('hidden'); }
+    },50);
     animId=requestAnimationFrame(loop);
 
     function handleKey(e){
       if(!document.getElementById('flappy-canvas')){cancelAnimationFrame(animId);document.removeEventListener('keydown',handleKey);return;}
       if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();flap();}
-      if(e.key.toLowerCase()==='r'){cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);}
+      if(e.key.toLowerCase()==='r'){
+        if(typeof startFlappy==='function') startFlappy();
+        else { cancelAnimationFrame(animId); reset(); animId=requestAnimationFrame(loop); }
+      }
     }
-    canvas.onclick=()=>{
-      if(gameOver){cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);return;}
-      flap();
-    };
-    canvas.ontouchstart=(e)=>{
-      e.preventDefault();
-      if(gameOver){cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);return;}
-      flap();
-    };
+    // Canvas click/touch → flap (not game-over restart, overlay handles that)
+    canvas.addEventListener('click',()=>{ flap(); });
+    canvas.addEventListener('touchstart',(e)=>{ e.preventDefault(); flap(); },{passive:false});
+
     document.addEventListener('keydown',handleKey);
-    _flappyDirFn=(d)=>{
-      if(d==='flap')flap();
-    };
-    gameInstances[id]={destroy:()=>{cancelAnimationFrame(animId);document.removeEventListener('keydown',handleKey);canvas.onclick=null;canvas.ontouchstart=null;_flappyDirFn=null;}};
+
+    // D-pad / touch button handler
+    _flappyDirFn=(d)=>{ if(d==='flap')flap(); };
+
+    // ── Overlay start/restart button ──
+    function startFlappy(){
+      cancelAnimationFrame(animId);
+      reset();
+      const ov=document.getElementById('flappy-overlay');
+      if(ov){
+        ov._goShown=false;
+        ov.classList.add('hidden');
+        const t=ov.querySelector('.flappy-overlay-title');
+        const s=ov.querySelector('.flappy-overlay-subtitle');
+        const sc=document.getElementById('flappy-overlay-score');
+        const btn=document.getElementById('flappy-start-btn');
+        if(t){t.style.background='linear-gradient(135deg,#ffd700,#ff9900,#ffd700)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='\u{1F426} FLAPPY';}
+        if(s)s.textContent='Vuela entre las tuber\u00edas';
+        if(sc)sc.style.display='none';
+        if(btn)btn.textContent='Jugar';
+      }
+      animId=requestAnimationFrame(loop);
+    }
+    const fStartBtn=document.getElementById('flappy-start-btn');
+    if(fStartBtn) fStartBtn.addEventListener('click', startFlappy);
+
+    // ── Flap button press animation ──
+    const flapTouchBtn=document.getElementById('flap-touch-btn');
+    if(flapTouchBtn){
+      flapTouchBtn.addEventListener('touchstart',(e)=>{ e.preventDefault(); flapTouchBtn.classList.add('pressed'); flap(); },{passive:false});
+      flapTouchBtn.addEventListener('touchend',()=>{ flapTouchBtn.classList.remove('pressed'); });
+      flapTouchBtn.addEventListener('mousedown',()=>{ flapTouchBtn.classList.add('pressed'); });
+      flapTouchBtn.addEventListener('mouseup',()=>{ flapTouchBtn.classList.remove('pressed'); });
+    }
+
+    gameInstances[id]={destroy:()=>{cancelAnimationFrame(animId);if(typeof _flappyResObs!=='undefined')_flappyResObs.disconnect();document.removeEventListener('keydown',handleKey);_flappyDirFn=null;}};
   }});
 }
 function restartFlappy(){document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}));}
 
 // ========== ARKANOID GAME ==========
 function initArkanoidGame(){
-  const w=460,h=560;
-  const content=`<div class="game-container" id="arkanoid-game-area">
-    <div class="game-info"><span>Puntos: <b id="arkanoid-score">0</b></span><span>Vidas: <b id="arkanoid-lives">3</b></span></div>
-    <canvas id="arkanoid-canvas" width="380" height="400"></canvas>
-    <div class="game-controls">Rat&oacute;n o &#8592;&#8594; para mover la paleta | Click/Espacio: Lanzar</div>
-    <div class="touch-controls">
-      <div class="touch-dpad">
-        <div class="tbtn-empty"></div>
-        <div class="tbtn" ontouchstart="event.preventDefault();arkanoidDir('launch')">&#9650;</div>
-        <div class="tbtn-empty"></div>
-        <div class="tbtn" ontouchstart="event.preventDefault();arkanoidDir('left')">&#9664;</div>
-        <div class="tbtn-empty"></div>
-        <div class="tbtn" ontouchstart="event.preventDefault();arkanoidDir('right')">&#9654;</div>
-        <div class="tbtn-empty"></div>
-        <div class="tbtn-empty"></div>
-        <div class="tbtn-empty"></div>
+  const w=600,h=680;
+  const content=`
+    <div id="new-arkanoid-game">
+      <header>
+        <div class="stat-box">
+          <div class="stat-label">Puntos</div>
+          <div class="stat-value" id="arkanoid-score">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Vidas</div>
+          <div class="stat-value lives-val" id="arkanoid-lives">&#10084;&#10084;&#10084;</div>
+        </div>
+      </header>
+      <div id="arkanoid-canvas-wrap">
+        <canvas id="arkanoid-canvas" width="380" height="400"></canvas>
+        <div id="arkanoid-overlay">
+          <div class="arkanoid-overlay-title">&#127950; ARKANOID</div>
+          <div class="arkanoid-overlay-subtitle">Rompe todos los ladrillos</div>
+          <div class="arkanoid-overlay-score" id="arkanoid-overlay-score"></div>
+          <button class="arkanoid-btn arkanoid-btn-primary" id="arkanoid-start-btn">Jugar</button>
+          <div id="arkanoid-key-hints">&#8592; &#8594; / Rat&oacute;n para mover &nbsp;&#124;&nbsp; Espacio / Click: Lanzar &nbsp;&#124;&nbsp; R: reiniciar</div>
+        </div>
       </div>
-    </div>
-  </div>`;
+      <div class="arkanoid-touch-area">
+        <div class="ark-btn" id="ark-left-btn"
+          ontouchstart="event.preventDefault();arkanoidDir('left')"
+          onclick="arkanoidDir('left')">&#9664;</div>
+        <div class="ark-btn launch-btn" id="ark-launch-btn"
+          ontouchstart="event.preventDefault();arkanoidDir('launch')"
+          onclick="arkanoidDir('launch')">
+          <span class="ark-btn-icon">&#9650;</span>
+          <span class="ark-btn-label">LANZAR</span>
+        </div>
+        <div class="ark-btn" id="ark-right-btn"
+          ontouchstart="event.preventDefault();arkanoidDir('right')"
+          onclick="arkanoidDir('right')">&#9654;</div>
+      </div>
+    </div>`;
   createWindow('Arkanoid','&#127950;',w,h,content,{className:'game-window',onCreated:(id)=>{
     const canvas=document.getElementById('arkanoid-canvas');
     if(!canvas)return;
@@ -2868,7 +4185,7 @@ function initArkanoidGame(){
       const ss=document.getElementById('arkanoid-score');
       const ls=document.getElementById('arkanoid-lives');
       if(ss)ss.textContent=score;
-      if(ls)ls.textContent=lives;
+      if(ls)ls.textContent='\u2764'.repeat(Math.max(0,lives)) + '\u2661'.repeat(Math.max(0,3-lives));
     }
     function update(){
       if(gameOver)return;
@@ -2907,7 +4224,7 @@ function initArkanoidGame(){
       }
     }
     function draw(){
-      ctx.fillStyle='#0a0a2e';ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='#0d0d24';ctx.fillRect(0,0,W,H);
       // Bricks
       for(let r=0;r<brickRows;r++)for(let c=0;c<brickCols;c++){
         const b=bricks[r][c];
@@ -2939,23 +4256,27 @@ function initArkanoidGame(){
       ctx.globalAlpha=.3;ctx.fillStyle='#4488ff';
       ctx.beginPath();ctx.arc(ball.x-ball.dx,ball.y-ball.dy,ball.r*.7,0,Math.PI*2);ctx.fill();
       ctx.globalAlpha=1;
-      if(!launched&&!gameOver){
-        ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(0,0,W,H);
-        ctx.fillStyle='#fff';ctx.font='14px Courier New';ctx.textAlign='center';
-        ctx.fillText('Click o Espacio para lanzar',W/2,H/2+50);
-      }
+      // overlay handles launch hint
       if(gameOver){
-        ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(0,0,W,H);
-        const won=bricks.every(row=>row.every(br=>!br.alive));
-        ctx.fillStyle=won?'#4f4':'#f44';ctx.font='bold 28px Courier New';ctx.textAlign='center';
-        ctx.fillText(won?'&#161;GANASTE!':'GAME OVER',W/2,H/2-20);
-        ctx.fillStyle='#fff';ctx.font='16px Courier New';
-        ctx.fillText('Puntos: '+score,W/2,H/2+15);
-        const bx=W/2-50,by=H/2+30,bw=100,bh=30;
-        ctx.fillStyle='#3c8cf0';ctx.fillRect(bx,by,bw,bh);
-        ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.strokeRect(bx,by,bw,bh);
-        ctx.fillStyle='#fff';ctx.font='bold 14px Courier New';
-        ctx.fillText('Reiniciar',W/2,H/2+50);
+        const ov=document.getElementById('arkanoid-overlay');
+        if(ov&&!ov._goShown){
+          ov._goShown=true;
+          const won=bricks.every(row=>row.every(br=>!br.alive));
+          const t=ov.querySelector('.arkanoid-overlay-title');
+          const s=ov.querySelector('.arkanoid-overlay-subtitle');
+          const sc=document.getElementById('arkanoid-overlay-score');
+          const btn=document.getElementById('arkanoid-start-btn');
+          if(won){
+            if(t){t.style.background='linear-gradient(135deg,#44ff88,#00ffcc)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='\u00a1GANASTE!';}
+            if(s)s.textContent='\u00a1Todos los ladrillos rotos!';
+          } else {
+            if(t){t.style.background='linear-gradient(135deg,#ff4466,#ff8844)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='GAME OVER';}
+            if(s)s.textContent='Sigue intent\u00e1ndolo';
+          }
+          if(sc){sc.style.display='block';sc.textContent='Puntos: '+score;}
+          if(btn)btn.textContent='Reintentar';
+          ov.classList.remove('hidden');
+        }
       }
     }
     function shadeColor(color,percent){
@@ -2966,54 +4287,889 @@ function initArkanoidGame(){
       return '#'+(0x1000000+r*0x10000+g*0x100+b).toString(16).slice(1);
     }
     function loop(){update();draw();animId=requestAnimationFrame(loop);}
+
+    // Escalar canvas CSS para que quepa en el wrap (W=380,H=400 internos)
+    function resizeArkanoidCanvas(){
+      const wrap=document.getElementById('arkanoid-canvas-wrap');
+      if(!wrap)return;
+      const wW=wrap.clientWidth;
+      const wH=wrap.clientHeight;
+      if(wW<10||wH<10)return;
+      const scale=Math.min(wW/W, wH/H);
+      canvas.style.width=Math.floor(W*scale)+'px';
+      canvas.style.height=Math.floor(H*scale)+'px';
+    }
+    resizeArkanoidCanvas();
+    setTimeout(()=>resizeArkanoidCanvas(),80);
+    setTimeout(()=>resizeArkanoidCanvas(),300);
+    const _arkResObs=new ResizeObserver(()=>resizeArkanoidCanvas());
+    _arkResObs.observe(document.getElementById('new-arkanoid-game'));
     reset();
     animId=requestAnimationFrame(loop);
 
-    canvas.onmousemove=(e)=>{
+    function launch(){
+      if(!launched&&!gameOver){
+        launched=true;
+        const angle=-Math.PI/2+(Math.random()-.5)*.8;
+        ball.dx=3.5*Math.cos(angle); ball.dy=3.5*Math.sin(angle);
+        if(ball.dy>0)ball.dy*=-1;
+        // Hide overlay if visible (started by clicking canvas)
+        const ov=document.getElementById('arkanoid-overlay');
+        if(ov){ ov.classList.add('hidden'); ov._goShown=false; }
+      }
+    }
+    canvas.addEventListener('mousemove',(e)=>{
       const rect=canvas.getBoundingClientRect();
       const mx=(e.clientX-rect.left)*(W/rect.width);
       paddle.x=Math.max(0,Math.min(W-paddle.w,mx-paddle.w/2));
-    };
-    canvas.ontouchmove=(e)=>{
+    });
+    canvas.addEventListener('touchmove',(e)=>{
       e.preventDefault();
       const rect=canvas.getBoundingClientRect();
-      const touch=e.touches[0];
-      const mx=(touch.clientX-rect.left)*(W/rect.width);
+      const mx=(e.touches[0].clientX-rect.left)*(W/rect.width);
       paddle.x=Math.max(0,Math.min(W-paddle.w,mx-paddle.w/2));
-    };
-    canvas.ontouchstart=(e)=>{
-      if(gameOver){e.preventDefault();cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);return;}
+    },{passive:false});
+    canvas.addEventListener('touchstart',(e)=>{
       e.preventDefault();
       const rect=canvas.getBoundingClientRect();
-      const touch=e.touches[0];
-      const mx=(touch.clientX-rect.left)*(W/rect.width);
+      const mx=(e.touches[0].clientX-rect.left)*(W/rect.width);
       paddle.x=Math.max(0,Math.min(W-paddle.w,mx-paddle.w/2));
       launch();
-    };
-    function launch(){
-      if(!launched&&!gameOver){launched=true;const angle=-Math.PI/2+(Math.random()-.5)*.8;ball.dx=3.5*Math.cos(angle);ball.dy=3.5*Math.sin(angle);if(ball.dy>0)ball.dy*=-1;}
-    }
-    canvas.onclick=(e)=>{
-      if(gameOver){cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);return;}
-      launch();
-    };
+    },{passive:false});
+    canvas.addEventListener('click',()=>{ launch(); });
+
     function handleKey(e){
       if(!document.getElementById('arkanoid-canvas')){cancelAnimationFrame(animId);document.removeEventListener('keydown',handleKey);return;}
-      if(e.key.toLowerCase()==='r'){cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);return;}
+      if(e.key.toLowerCase()==='r'){ if(typeof startArkanoid==='function') startArkanoid(); else {cancelAnimationFrame(animId);reset();animId=requestAnimationFrame(loop);} return; }
       if(e.key===' '){e.preventDefault();launch();}
       if(e.key==='ArrowLeft'){paddle.x=Math.max(0,paddle.x-20);}
       if(e.key==='ArrowRight'){paddle.x=Math.min(W-paddle.w,paddle.x+20);}
     }
     document.addEventListener('keydown',handleKey);
+
     _arkanoidDirFn=(d)=>{
       if(d==='left')paddle.x=Math.max(0,paddle.x-25);
       else if(d==='right')paddle.x=Math.min(W-paddle.w,paddle.x+25);
       else if(d==='launch')launch();
     };
-    gameInstances[id]={destroy:()=>{cancelAnimationFrame(animId);document.removeEventListener('keydown',handleKey);canvas.onmousemove=null;canvas.onclick=null;canvas.ontouchmove=null;canvas.ontouchstart=null;_arkanoidDirFn=null;}};
+
+    // ── Overlay start/restart ──
+    function startArkanoid(){
+      cancelAnimationFrame(animId);
+      reset();
+      const ov=document.getElementById('arkanoid-overlay');
+      if(ov){
+        ov._goShown=false; ov.classList.add('hidden');
+        const t=ov.querySelector('.arkanoid-overlay-title');
+        const s=ov.querySelector('.arkanoid-overlay-subtitle');
+        const sc=document.getElementById('arkanoid-overlay-score');
+        const btn=document.getElementById('arkanoid-start-btn');
+        if(t){t.style.background='linear-gradient(135deg,#ff5577,#aa44ff,#ff5577)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='\u{1F3B0} ARKANOID';}
+        if(s)s.textContent='Rompe todos los ladrillos';
+        if(sc)sc.style.display='none';
+        if(btn)btn.textContent='Jugar';
+      }
+      animId=requestAnimationFrame(loop);
+    }
+    const arkStartBtn=document.getElementById('arkanoid-start-btn');
+    if(arkStartBtn) arkStartBtn.addEventListener('click', startArkanoid);
+
+    // ── Touch button press animations ──
+    ['ark-left-btn','ark-launch-btn','ark-right-btn'].forEach(btnId=>{
+      const b=document.getElementById(btnId);
+      if(!b)return;
+      b.addEventListener('touchstart',(e)=>{e.preventDefault();b.classList.add('pressed');},{passive:false});
+      b.addEventListener('touchend',()=>b.classList.remove('pressed'));
+      b.addEventListener('mousedown',()=>b.classList.add('pressed'));
+      b.addEventListener('mouseup',()=>b.classList.remove('pressed'));
+    });
+
+    // Show start overlay on load
+    setTimeout(()=>{
+      const ov=document.getElementById('arkanoid-overlay');
+      if(ov){ ov._goShown=false; ov.classList.remove('hidden'); }
+    },50);
+
+    gameInstances[id]={destroy:()=>{cancelAnimationFrame(animId);if(typeof _arkResObs!=='undefined')_arkResObs.disconnect();document.removeEventListener('keydown',handleKey);_arkanoidDirFn=null;}};
   }});
 }
 function restartArkanoid(){document.dispatchEvent(new KeyboardEvent('keydown',{key:'r'}));}
+// ========== SPACE INVADERS GAME ==========
+let _invadersDirFn=null;
+function invadersDir(d){ if(_invadersDirFn)_invadersDirFn(d); }
+
+function initSpaceInvadersGame(){
+  const w=580,h=680;
+  const content=`
+    <div id="new-invaders-game">
+      <header>
+        <div class="stat-box">
+          <div class="stat-label">Puntos</div>
+          <div class="stat-value" id="invaders-score">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Oleada</div>
+          <div class="stat-value" id="invaders-wave">1</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Vidas</div>
+          <div class="stat-value lives-val" id="invaders-lives">&#128640;&#128640;&#128640;</div>
+        </div>
+      </header>
+      <div id="invaders-canvas-wrap">
+        <canvas id="invaders-canvas" width="340" height="400"></canvas>
+        <div id="invaders-overlay">
+          <div class="invaders-overlay-title">&#128126; INVADERS</div>
+          <div class="invaders-overlay-subtitle">Defiende la Tierra</div>
+          <div class="invaders-overlay-score" id="invaders-overlay-score"></div>
+          <button class="invaders-btn invaders-btn-primary" id="invaders-start-btn">Jugar</button>
+          <div id="invaders-key-hints">&#8592; &#8594; / A D Mover &nbsp;&#124;&nbsp; Espacio Disparar &nbsp;&#124;&nbsp; R: reiniciar</div>
+        </div>
+      </div>
+      <div class="invaders-touch-area">
+        <div class="inv-btn" id="inv-left-btn"
+          onclick="invadersDir('left')">&#9664;</div>
+        <div class="inv-btn fire-btn" id="inv-fire-btn"
+          onclick="invadersDir('fire')">&#128308;</div>
+        <div class="inv-btn" id="inv-right-btn"
+          onclick="invadersDir('right')">&#9654;</div>
+      </div>
+    </div>`;
+
+  createWindow('Space Invaders','&#128126;',w,h,content,{className:'game-window',onCreated:(id)=>{
+    const canvas=document.getElementById('invaders-canvas');
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    const W=340,H=400;
+
+    // ── FIX 1: Grid correctamente dimensionada para W=340 ──
+    // COLS=10, AW=24, APX=8 → offset 8 + 9*32 + 24 = 320 < 340 ✓
+    const ROWS=5,COLS=10,AW=24,AH=18,APX=8,APY=10;
+    const ALIEN_COLORS=['#ff3366','#ff6633','#ffcc00','#66ff33','#33ccff'];
+    const ALIEN_PTS=[30,20,20,10,10];
+    const PW=40,PH=12;
+
+    let player,bullets,aBullets,aliens,shields;
+    let score,lives,wave,gameOver,gameWon,started,animId;
+    let aDir=1,aMoveTimer=0,aShootTimer=0,frameCount=0;
+    let ufo=null,ufoTimer=0;
+    let waveTransition=false,waveTransTimer=0;
+    const keys={left:false,right:false};
+
+    // Starfield (static, built once)
+    const stars=[];
+    for(let i=0;i<70;i++) stars.push({x:Math.random()*W,y:Math.random()*H,s:Math.random()<0.25?2:1,b:Math.random()*0.5+0.3});
+
+    function updateUI(){
+      const ss=document.getElementById('invaders-score');
+      const ls=document.getElementById('invaders-lives');
+      const ws=document.getElementById('invaders-wave');
+      if(ss)ss.textContent=score;
+      if(ls)ls.innerHTML='&#128640;'.repeat(Math.max(0,lives))+'<span style="opacity:0.2">&#128640;</span>'.repeat(Math.max(0,3-lives));
+      if(ws)ws.textContent=wave;
+    }
+
+    function buildAliens(){
+      aliens=[];
+      for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++)
+        aliens.push({
+          x:8+c*(AW+APX), y:28+r*(AH+APY),
+          w:AW, h:AH, row:r, col:c,
+          alive:true, frame:0,
+          color:ALIEN_COLORS[r], pts:ALIEN_PTS[r]
+        });
+    }
+
+    function buildShields(){
+      shields=[];
+      // 4 shields evenly spaced, each 6x3 cells of 8px
+      [W*0.13,W*0.38,W*0.62,W*0.87].forEach(sx=>{
+        const cells=[];
+        for(let r=0;r<3;r++) for(let c=0;c<6;c++)
+          cells.push({x:Math.round(sx)-24+c*8, y:H-65+r*8, alive:true});
+        shields.push(cells);
+      });
+    }
+
+    function reset(){
+      wave=1;score=0;lives=3;gameOver=false;gameWon=false;started=false;
+      aDir=1;aMoveTimer=0;aShootTimer=0;frameCount=0;
+      ufo=null;ufoTimer=0;waveTransition=false;waveTransTimer=0;
+      player={x:W/2-PW/2, y:H-22, w:PW, h:PH, cd:0};
+      bullets=[];aBullets=[];
+      buildAliens();buildShields();updateUI();
+    }
+
+    function spawnNextWave(){
+      wave++;aDir=1;aMoveTimer=0;aShootTimer=0;
+      bullets=[];aBullets=[];ufo=null;
+      buildAliens();buildShields();updateUI();
+      waveTransition=false;waveTransTimer=0;
+    }
+
+    function shoot(){
+      if(!started||gameOver||waveTransition)return;
+      if(player.cd>0)return;
+      bullets.push({x:player.x+PW/2-1.5, y:player.y-2, w:3, h:10, dy:-10, dead:false});
+      player.cd=14;
+      sfxFlap();
+    }
+
+    function update(){
+      if(!started||gameOver)return;
+      frameCount++;
+
+      // Wave transition countdown
+      if(waveTransition){
+        waveTransTimer++;
+        if(waveTransTimer>100)spawnNextWave();
+        return;
+      }
+
+      // Player movement
+      if(player.cd>0)player.cd--;
+      if(keys.left)player.x=Math.max(0,player.x-3);
+      if(keys.right)player.x=Math.min(W-PW,player.x+3);
+
+      // Move & filter player bullets
+      bullets=bullets.filter(b=>{ b.y+=b.dy; return b.y>-b.h&&!b.dead; });
+
+      // Move & filter alien bullets
+      aBullets=aBullets.filter(b=>{ b.y+=b.dy; return b.y<H+b.h&&!b.dead; });
+
+      // Alien movement
+      const live=aliens.filter(a=>a.alive);
+      if(live.length===0){ waveTransition=true; waveTransTimer=0; return; }
+
+      // Velocidad: cuantos frames entre movimientos (mayor = más lento)
+      // Sin matar: ~41s   50% muertos: ~24s   1 alien: ~7.5s
+      const killRatio=1-(live.length/(ROWS*COLS));
+      const baseSpd=55-(wave-1)*5;           // oleada 1=55, 2=50, 3=45...
+      const spd=Math.max(2,Math.round(baseSpd*(1-killRatio*0.85)));
+
+      aMoveTimer++;
+      if(aMoveTimer>=spd){
+        aMoveTimer=0;
+        live.forEach(a=>a.frame=1-a.frame);
+
+        const step=8;   // paso horizontal reducido (era 12)
+        const minX=Math.min(...live.map(a=>a.x));
+        const maxX=Math.max(...live.map(a=>a.x+a.w));
+        let down=false;
+        if(aDir>0&&maxX+step>=W-2){aDir=-1;down=true;}
+        else if(aDir<0&&minX-step<=2){aDir=1;down=true;}
+
+        live.forEach(a=>{
+          a.x+=aDir*step;
+          if(down)a.y+=10;   // descenso reducido: 10px (era 14px)
+        });
+
+        // Clamp de seguridad tras el movimiento
+        if(!down){
+          const newMax=Math.max(...live.map(a=>a.x+a.w));
+          const newMin=Math.min(...live.map(a=>a.x));
+          if(newMax>W-1)live.forEach(a=>a.x-=(newMax-(W-1)));
+          if(newMin<1)live.forEach(a=>a.x+=(-newMin+1));
+        }
+      }
+
+      // Aliens reach player line
+      if(live.some(a=>a.y+a.h>=player.y)){
+        gameOver=true;showEndOverlay(false);sfxDie();return;
+      }
+
+      // Alien shooting
+      aShootTimer++;
+      const shootRate=Math.max(35,95-wave*8);  // ~1.5s entre disparos en oleada 1
+      if(aShootTimer>=shootRate){
+        aShootTimer=0;
+        const cols=[...new Set(live.map(a=>a.col))];
+        const col=cols[Math.floor(Math.random()*cols.length)];
+        const bottomAliens=live.filter(a=>a.col===col);
+        if(bottomAliens.length>0){
+          const shooter=bottomAliens.reduce((a,b)=>a.y>b.y?a:b);
+          aBullets.push({x:shooter.x+shooter.w/2-1.5, y:shooter.y+shooter.h, w:3, h:10, dy:1.8+wave*0.2, dead:false});
+        }
+      }
+
+      // UFO
+      ufoTimer++;
+      if(!ufo&&ufoTimer>400&&Math.random()<0.003){ufo={x:-44,y:10,w:44,h:14,dx:2.0};ufoTimer=0;}
+      if(ufo){ufo.x+=ufo.dx;if(ufo.x>W+60)ufo=null;}
+
+      // ── Player bullets vs aliens ──
+      bullets.forEach(b=>{
+        if(b.dead)return;
+        for(let i=0;i<aliens.length;i++){
+          const a=aliens[i];
+          if(!a.alive)continue;
+          if(b.x<a.x+a.w&&b.x+b.w>a.x&&b.y<a.y+a.h&&b.y+b.h>a.y){
+            a.alive=false; b.dead=true;
+            score+=a.pts+((wave-1)*5);
+            updateUI(); sfxEat(); break; // break: una bala mata un alien
+          }
+        }
+        if(b.dead)return;
+        // UFO
+        if(ufo&&b.x<ufo.x+ufo.w&&b.x+b.w>ufo.x&&b.y<ufo.y+ufo.h&&b.y+b.h>ufo.y){
+          score+=150;ufo=null;b.dead=true;updateUI();sfxWin();return;
+        }
+        // Shields
+        shields.forEach(cells=>cells.forEach(c=>{
+          if(!b.dead&&c.alive&&b.x<c.x+8&&b.x+b.w>c.x&&b.y<c.y+8&&b.y+b.h>c.y){
+            c.alive=false;b.dead=true;
+          }
+        }));
+      });
+
+      // ── Alien bullets vs player & shields ──
+      // FIX 4: guard gameOver para no procesar si ya murió
+      aBullets.forEach(b=>{
+        if(b.dead||gameOver)return;
+        if(b.x<player.x+PW&&b.x+b.w>player.x&&b.y<player.y+PH&&b.y+b.h>player.y){
+          b.dead=true;lives--;updateUI();
+          if(lives<=0){gameOver=true;showEndOverlay(false);sfxDie();}
+          else sfxHit();
+          return;
+        }
+        shields.forEach(cells=>cells.forEach(c=>{
+          if(!b.dead&&c.alive&&b.x<c.x+8&&b.x+b.w>c.x&&b.y<c.y+8&&b.y+b.h>c.y){
+            c.alive=false;b.dead=true;
+          }
+        }));
+      });
+    }
+
+    function draw(){
+      ctx.fillStyle='#0d0d24';ctx.fillRect(0,0,W,H);
+
+      // Stars
+      stars.forEach(s=>{
+        ctx.fillStyle=`rgba(255,255,255,${s.b})`;
+        ctx.fillRect(s.x,s.y,s.s,s.s);
+      });
+
+      // Ground line
+      ctx.strokeStyle='rgba(102,255,51,0.2)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(0,H-6);ctx.lineTo(W,H-6);ctx.stroke();
+
+      // Shields
+      shields.forEach(cells=>cells.forEach(c=>{
+        if(c.alive){ctx.fillStyle='rgba(102,255,51,0.8)';ctx.fillRect(c.x,c.y,7,7);}
+      }));
+
+      // Aliens
+      ctx.shadowBlur=4;
+      aliens.filter(a=>a.alive).forEach(a=>{
+        ctx.fillStyle=a.color;ctx.shadowColor=a.color;
+        drawAlienShape(a);
+      });
+      ctx.shadowBlur=0;
+
+      // UFO
+      if(ufo){
+        ctx.fillStyle='#ff3366';ctx.shadowColor='#ff3366';ctx.shadowBlur=10;
+        ctx.beginPath();
+        ctx.ellipse(ufo.x+ufo.w/2,ufo.y+ufo.h*0.65,ufo.w/2,ufo.h*0.55,0,0,Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle='rgba(255,220,220,0.75)';
+        ctx.beginPath();
+        ctx.ellipse(ufo.x+ufo.w/2,ufo.y+ufo.h*0.28,ufo.w*0.28,ufo.h*0.32,0,0,Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur=0;
+        ctx.fillStyle='#ffcc00';ctx.font='bold 8px Orbitron,sans-serif';ctx.textAlign='center';
+        ctx.fillText('+150',ufo.x+ufo.w/2,ufo.y-3);
+      }
+
+      // Player
+      ctx.fillStyle='#66ff33';ctx.shadowColor='#66ff33';ctx.shadowBlur=7;
+      ctx.fillRect(player.x+PW/2-4,player.y-7,8,8);    // cannon
+      ctx.fillRect(player.x+4,player.y,PW-8,PH-3);
+      ctx.fillRect(player.x,player.y+4,PW,PH-8);
+      ctx.shadowBlur=0;
+
+      // Player bullets
+      ctx.shadowColor='#66ff33';ctx.shadowBlur=8;
+      bullets.filter(b=>!b.dead).forEach(b=>{
+        const g=ctx.createLinearGradient(b.x,b.y,b.x,b.y+b.h);
+        g.addColorStop(0,'#ffffff');g.addColorStop(0.4,'#66ff33');g.addColorStop(1,'#22aa00');
+        ctx.fillStyle=g;ctx.fillRect(b.x,b.y,b.w,b.h);
+      });
+      ctx.shadowBlur=0;
+
+      // Alien bullets
+      aBullets.filter(b=>!b.dead).forEach(b=>{
+        ctx.shadowColor='#ff6633';ctx.shadowBlur=5;
+        const g=ctx.createLinearGradient(b.x,b.y,b.x,b.y+b.h);
+        g.addColorStop(0,'#ffaa00');g.addColorStop(1,'#ff3300');
+        ctx.fillStyle=g;ctx.fillRect(b.x,b.y,b.w,b.h);
+      });
+      ctx.shadowBlur=0;
+
+      // Wave transition message
+      if(waveTransition){
+        ctx.fillStyle='rgba(0,0,0,0.55)';ctx.fillRect(0,H/2-26,W,52);
+        ctx.shadowColor='#66ff33';ctx.shadowBlur=14;
+        ctx.fillStyle='#66ff33';ctx.font='bold 16px Orbitron,monospace';ctx.textAlign='center';
+        ctx.fillText('OLEADA '+(wave+1)+'  EN CAMINO...',W/2,H/2+5);
+        ctx.shadowBlur=0;
+      }
+    }
+
+    function drawAlienShape(a){
+      const x=a.x,y=a.y,w=AW,h=AH,f=a.frame,r=a.row;
+      if(r===0){
+        // Top: small bug
+        ctx.fillRect(x+6,y+2,w-12,h-5);
+        ctx.fillRect(x+2,y+5,4,h-9);ctx.fillRect(x+w-6,y+5,4,h-9);
+        if(f===0){ctx.fillRect(x,y+8,4,4);ctx.fillRect(x+w-4,y+8,4,4);}
+        else{ctx.fillRect(x+1,y+12,3,4);ctx.fillRect(x+w-4,y+12,3,4);}
+      } else if(r<=2){
+        // Middle: crab
+        ctx.fillRect(x+4,y+2,w-8,h-4);ctx.fillRect(x+2,y+4,w-4,h-8);
+        ctx.fillRect(x+6,y,5,4);ctx.fillRect(x+w-11,y,5,4);
+        if(f===0){ctx.fillRect(x,y+6,4,6);ctx.fillRect(x+w-4,y+6,4,6);}
+        else{ctx.fillRect(x+2,y+10,4,5);ctx.fillRect(x+w-6,y+10,4,5);}
+      } else {
+        // Bottom: squid
+        ctx.fillRect(x+5,y+2,w-10,h-4);ctx.fillRect(x+2,y+4,w-4,h-6);
+        ctx.fillRect(x+3,y,4,4);ctx.fillRect(x+w-7,y,4,4);
+        if(f===0){ctx.fillRect(x,y+10,5,4);ctx.fillRect(x+w-5,y+10,5,4);}
+        else{ctx.fillRect(x+2,y+8,4,4);ctx.fillRect(x+w-6,y+8,4,4);}
+      }
+    }
+
+    function showEndOverlay(won){
+      const ov=document.getElementById('invaders-overlay');
+      if(!ov||ov._goShown)return;
+      ov._goShown=true;
+      const t=ov.querySelector('.invaders-overlay-title');
+      const s=ov.querySelector('.invaders-overlay-subtitle');
+      const sc=document.getElementById('invaders-overlay-score');
+      const btn=document.getElementById('invaders-start-btn');
+      if(won){
+        if(t){t.style.background='linear-gradient(135deg,#44ff88,#00ffcc)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='\u00a1VICTORIA!';}
+        if(s)s.textContent='\u00a1Tierra salvada!';
+      }else{
+        if(t){t.style.background='linear-gradient(135deg,#ff4466,#ff8844)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='GAME OVER';}
+        if(s)s.textContent='La Tierra ha ca\u00eddo...';
+      }
+      if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+' \u2014 Oleada '+wave;}
+      if(btn)btn.textContent='Reintentar';
+      ov.classList.remove('hidden');
+    }
+
+    function startInvaders(){
+      cancelAnimationFrame(animId);
+      reset();
+      const ov=document.getElementById('invaders-overlay');
+      if(ov){
+        ov._goShown=false;ov.classList.add('hidden');
+        const t=ov.querySelector('.invaders-overlay-title');
+        const s=ov.querySelector('.invaders-overlay-subtitle');
+        const sc=document.getElementById('invaders-overlay-score');
+        const btn=document.getElementById('invaders-start-btn');
+        if(t){t.style.background='linear-gradient(135deg,#66ff33,#00aaff,#66ff33)';t.style.webkitBackgroundClip='text';t.style.webkitTextFillColor='transparent';t.style.backgroundClip='text';t.textContent='&#128126; INVADERS';}
+        if(s)s.textContent='Defiende la Tierra';
+        if(sc)sc.style.display='none';
+        if(btn)btn.textContent='Jugar';
+      }
+      started=true;
+      animId=requestAnimationFrame(loop);
+    }
+
+    const invBtn=document.getElementById('invaders-start-btn');
+    if(invBtn)invBtn.addEventListener('click',startInvaders);
+
+    function handleKey(e){
+      if(!document.getElementById('invaders-canvas')){
+        cancelAnimationFrame(animId);
+        document.removeEventListener('keydown',handleKey);
+        document.removeEventListener('keyup',handleKeyUp);return;
+      }
+      if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a'){keys.left=true;e.preventDefault();}
+      if(e.key==='ArrowRight'||e.key.toLowerCase()==='d'){keys.right=true;e.preventDefault();}
+      if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();shoot();}
+      if(e.key.toLowerCase()==='r')startInvaders();
+    }
+    function handleKeyUp(e){
+      if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a')keys.left=false;
+      if(e.key==='ArrowRight'||e.key.toLowerCase()==='d')keys.right=false;
+    }
+    document.addEventListener('keydown',handleKey);
+    document.addEventListener('keyup',handleKeyUp);
+
+    // Touch hold for continuous movement
+    let holdInterval=null;
+    function startHold(dir){
+      stopHold();
+      if(dir==='fire'){shoot();holdInterval=setInterval(shoot,180);return;}
+      holdInterval=setInterval(()=>{
+        if(dir==='left')player.x=Math.max(0,player.x-3);
+        if(dir==='right')player.x=Math.min(W-PW,player.x+3);
+      },16);
+    }
+    function stopHold(){if(holdInterval){clearInterval(holdInterval);holdInterval=null;}}
+
+    _invadersDirFn=(d)=>{
+      if(!started||gameOver)return;
+      if(d==='left')player.x=Math.max(0,player.x-10);
+      if(d==='right')player.x=Math.min(W-PW,player.x+10);
+      if(d==='fire')shoot();
+    };
+
+    ['inv-left-btn','inv-fire-btn','inv-right-btn'].forEach((bid,i)=>{
+      const dirs=['left','fire','right'];
+      const b=document.getElementById(bid);
+      if(!b)return;
+      b.addEventListener('touchstart',(e)=>{e.preventDefault();b.classList.add('pressed');startHold(dirs[i]);},{passive:false});
+      b.addEventListener('touchend',()=>{b.classList.remove('pressed');stopHold();});
+      b.addEventListener('touchcancel',()=>{b.classList.remove('pressed');stopHold();});
+      b.addEventListener('mousedown',()=>{b.classList.add('pressed');startHold(dirs[i]);});
+      b.addEventListener('mouseup',()=>{b.classList.remove('pressed');stopHold();});
+    });
+
+    function loop(){update();draw();animId=requestAnimationFrame(loop);}
+
+    // Escalar canvas CSS para que quepa en el wrap (W=340,H=400 internos sin cambiar)
+    function resizeInvadersCanvas(){
+      const wrap=document.getElementById('invaders-canvas-wrap');
+      if(!wrap)return;
+      const wW=wrap.clientWidth;
+      const wH=wrap.clientHeight;
+      if(wW<10||wH<10)return;
+      const scale=Math.min(wW/W, wH/H);
+      const cssW=Math.floor(W*scale);
+      const cssH=Math.floor(H*scale);
+      canvas.style.width=cssW+'px';
+      canvas.style.height=cssH+'px';
+    }
+    resizeInvadersCanvas();
+    setTimeout(()=>resizeInvadersCanvas(),80);
+    setTimeout(()=>resizeInvadersCanvas(),300);
+    const _invResizeObs=new ResizeObserver(()=>resizeInvadersCanvas());
+    _invResizeObs.observe(document.getElementById('new-invaders-game'));
+    reset();
+    setTimeout(()=>{
+      const ov=document.getElementById('invaders-overlay');
+      if(ov){ov._goShown=false;ov.classList.remove('hidden');}
+    },50);
+    animId=requestAnimationFrame(loop);
+
+    gameInstances[id]={destroy:()=>{
+      cancelAnimationFrame(animId);
+      if(typeof _invResizeObs!=='undefined')_invResizeObs.disconnect();
+      document.removeEventListener('keydown',handleKey);
+      document.removeEventListener('keyup',handleKeyUp);
+      stopHold();_invadersDirFn=null;
+    }};
+  }});
+}
+
+function drawMinesweeperIcon(canvas){
+  const ctx=canvas.getContext('2d');
+  const s=canvas.width;
+  ctx.fillStyle='#0a0a1a';
+  ctx.beginPath();ctx.roundRect(0,0,s,s,s*0.1);ctx.fill();
+  const cell=s/5, ox=s*0.1, oy=s*0.1;
+  const layout=[[0,0,1,1],[1,0,2,0],[0,1,0,1],[1,1,-1,0]]; // [hidden,revealed,val,flag]
+  const numC=['','#4488ff','#00ee88','#ff4455','#9966ff'];
+  for(let r=0;r<4;r++) for(let c=0;c<4;c++){
+    const x=ox+c*cell,y=oy+r*cell;
+    const state=(r+c)%3;
+    if(state===0){
+      // Hidden
+      const g=ctx.createLinearGradient(x,y,x+cell,y+cell);
+      g.addColorStop(0,'#1e1e40');g.addColorStop(1,'#141428');
+      ctx.fillStyle=g;ctx.fillRect(x+1,y+1,cell-2,cell-2);
+      ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fillRect(x+1,y+1,cell-2,2);
+    }else if(state===1){
+      // Revealed with number
+      ctx.fillStyle='#0d0d1e';ctx.fillRect(x+1,y+1,cell-2,cell-2);
+      const n=(r*4+c)%3+1;
+      ctx.shadowColor=numC[n];ctx.shadowBlur=4;
+      ctx.fillStyle=numC[n];
+      ctx.font=`bold ${Math.round(cell*0.5)}px Orbitron,monospace`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(n,x+cell/2,y+cell/2+1);ctx.shadowBlur=0;
+    }else{
+      // Mine
+      ctx.fillStyle='#1a0a0a';ctx.fillRect(x+1,y+1,cell-2,cell-2);
+      ctx.shadowColor='#ff3366';ctx.shadowBlur=8;
+      ctx.font=`${Math.round(cell*0.6)}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('\u{1F4A3}',x+cell/2,y+cell/2);ctx.shadowBlur=0;
+    }
+  }
+  // Flag cell overlay
+  const fx=ox+3*cell,fy=oy;
+  ctx.fillStyle='#180d30';ctx.fillRect(fx+1,fy+1,cell-2,cell-2);
+  ctx.shadowColor='#ffaa00';ctx.shadowBlur=6;
+  ctx.font=`${Math.round(cell*0.6)}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('\u{1F6A9}',fx+cell/2,fy+cell/2);ctx.shadowBlur=0;
+  // Cyan corner glow
+  ctx.strokeStyle='rgba(0,200,255,0.35)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.roundRect(s*0.05,s*0.05,s*0.9,s*0.9,s*0.08);ctx.stroke();
+}
+
+// ========== BUSCAMINAS GAME ==========
+function initMinesweeperGame(){
+  const w=540,h=680;
+  const content=`
+    <div id="new-ms-game">
+      <header>
+        <div class="stat-box">
+          <div class="stat-label">&#128163; MINAS</div>
+          <div class="stat-value" id="ms-mines-disp">10</div>
+        </div>
+        <button class="ms-reset-btn" id="ms-reset-btn" title="Reiniciar">&#9786;</button>
+        <div class="stat-box">
+          <div class="stat-label">&#9201; TIEMPO</div>
+          <div class="stat-value" id="ms-timer-disp">0</div>
+        </div>
+      </header>
+      <div id="ms-diff-row">
+        <button class="ms-diff-btn active" data-diff="easy">F&#193;CIL</button>
+        <button class="ms-diff-btn" data-diff="medium">MEDIO</button>
+        <button class="ms-diff-btn" data-diff="hard">DIF&#205;CIL</button>
+      </div>
+      <div id="ms-canvas-wrap">
+        <canvas id="ms-canvas" width="288" height="288"></canvas>
+        <div id="ms-overlay">
+          <div class="ms-ov-title">&#128163; BUSCAMINAS</div>
+          <div class="ms-ov-sub">Encuentra las minas</div>
+          <div class="ms-ov-score" id="ms-ov-score"></div>
+          <button class="ms-ov-btn" id="ms-ov-start">Jugar</button>
+          <div class="ms-key-hint">Clic=Revelar &nbsp;&#124;&nbsp; Clic&#160;der.=Bandera &nbsp;&#124;&nbsp; R:reiniciar</div>
+        </div>
+      </div>
+      <div id="ms-touch-bar">
+        <button class="ms-flag-toggle" id="ms-flag-toggle">
+          <span id="ms-toggle-icon">&#128163;</span>
+          <span id="ms-toggle-label">REVELAR</span>
+        </button>
+        <div style="font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1px">Mant&#233;n pulsado = bandera</div>
+      </div>
+    </div>`;
+
+  createWindow('Buscaminas','&#128163;',w,h,content,{className:'game-window',onCreated:(id)=>{
+    const canvas=document.getElementById('ms-canvas');
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    const DIFFS={
+      easy:  {cols:9, rows:9, mines:10,cell:32,label:'F\u00e1cil'},
+      medium:{cols:12,rows:12,mines:20,cell:24,label:'Medio'},
+      hard:  {cols:16,rows:16,mines:40,cell:18,label:'Dif\u00edcil'}
+    };
+    const NC=['','#4488ff','#00ee88','#ff4455','#9966ff','#ff8833','#00ddcc','#ee44ee','#aaaaaa'];
+    let diff='easy',cols,rows,mines,cellSize;
+    let board,revealed,flagged,gameOver,won,firstClick;
+    let mineCount,timer,timerInterval,explodedR=-1,explodedC=-1,flagMode=false;
+
+    function setConfig(d){
+      diff=d;const cfg=DIFFS[d];
+      cols=cfg.cols;rows=cfg.rows;mines=cfg.mines;cellSize=cfg.cell;
+      canvas.width=cols*cellSize;canvas.height=rows*cellSize;
+    }
+    function initBoard(d){
+      if(d)setConfig(d);
+      board=[];revealed=[];flagged=[];
+      for(let r=0;r<rows;r++){
+        board.push(new Array(cols).fill(0));
+        revealed.push(new Array(cols).fill(false));
+        flagged.push(new Array(cols).fill(false));
+      }
+      gameOver=false;won=false;firstClick=true;
+      mineCount=mines;explodedR=-1;explodedC=-1;
+      clearInterval(timerInterval);timer=0;updateHdr();draw();
+    }
+    function placeMines(er,ec){
+      let placed=0;
+      while(placed<mines){
+        const r=Math.floor(Math.random()*rows),c=Math.floor(Math.random()*cols);
+        if(board[r][c]===-1)continue;
+        if(Math.abs(r-er)<=1&&Math.abs(c-ec)<=1)continue;
+        board[r][c]=-1;placed++;
+      }
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+        if(board[r][c]===-1)continue;
+        let n=0;
+        for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){
+          const nr=r+dr,nc=c+dc;
+          if(nr>=0&&nr<rows&&nc>=0&&nc<cols&&board[nr][nc]===-1)n++;
+        }
+        board[r][c]=n;
+      }
+    }
+    function reveal(r0,c0){
+      const stack=[[r0,c0]];
+      while(stack.length){
+        const[r,c]=stack.pop();
+        if(r<0||r>=rows||c<0||c>=cols)continue;
+        if(revealed[r][c]||flagged[r][c])continue;
+        revealed[r][c]=true;
+        if(board[r][c]===0)for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(dr||dc)stack.push([r+dr,c+dc]);}
+      }
+    }
+    function adjFlags(r,c){let n=0;for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const nr=r+dr,nc=c+dc;if(nr>=0&&nr<rows&&nc>=0&&nc<cols&&flagged[nr][nc])n++;}return n;}
+    function checkWin(){for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)if(!revealed[r][c]&&board[r][c]!==-1)return false;return true;}
+    function handleReveal(r,c){
+      if(gameOver||won||r<0||r>=rows||c<0||c>=cols)return;
+      if(revealed[r][c]){
+        if(board[r][c]>0&&adjFlags(r,c)===board[r][c]){
+          let hit=false;
+          for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){
+            const nr=r+dr,nc=c+dc;
+            if(nr<0||nr>=rows||nc<0||nc>=cols)continue;
+            if(!revealed[nr][nc]&&!flagged[nr][nc]){
+              if(board[nr][nc]===-1){hit=true;explodedR=nr;explodedC=nc;}
+              reveal(nr,nc);
+            }
+          }
+          if(hit){gameEnd(false);return;}
+          if(checkWin()){gameEnd(true);return;}
+          draw();
+        }
+        return;
+      }
+      if(flagged[r][c])return;
+      if(firstClick){firstClick=false;placeMines(r,c);timerInterval=setInterval(()=>{timer++;updateHdr();},1000);}
+      if(board[r][c]===-1){explodedR=r;explodedC=c;revealed[r][c]=true;gameEnd(false);return;}
+      reveal(r,c);if(checkWin()){gameEnd(true);return;}
+      draw();
+    }
+    function handleFlag(r,c){
+      if(gameOver||won||r<0||r>=rows||c<0||c>=cols||revealed[r][c])return;
+      flagged[r][c]=!flagged[r][c];mineCount+=flagged[r][c]?-1:1;updateHdr();draw();
+    }
+    function gameEnd(win){
+      (win?won:gameOver)===false;if(win)won=true;else gameOver=true;
+      clearInterval(timerInterval);
+      if(!win)for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)if(board[r][c]===-1&&!flagged[r][c])revealed[r][c]=true;
+      else for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)if(board[r][c]===-1)flagged[r][c]=true;
+      mineCount=win?0:mineCount;updateHdr();draw();setTimeout(()=>showOv(win),450);
+    }
+    function updateHdr(){
+      const m=document.getElementById('ms-mines-disp'),t=document.getElementById('ms-timer-disp');
+      if(m)m.textContent=mineCount;if(t)t.textContent=Math.min(timer,999);
+    }
+    function showOv(win){
+      const ov=document.getElementById('ms-overlay');if(!ov||ov._sh)return;ov._sh=true;
+      const tEl=ov.querySelector('.ms-ov-title'),sEl=ov.querySelector('.ms-ov-sub');
+      const scEl=document.getElementById('ms-ov-score'),btn=document.getElementById('ms-ov-start');
+      if(win){
+        if(tEl){tEl.style.background='linear-gradient(135deg,#00ffcc,#44ff88)';tEl.style.webkitBackgroundClip='text';tEl.style.webkitTextFillColor='transparent';tEl.style.backgroundClip='text';tEl.textContent='\u00a1CAMPO DESPEJADO!';}
+        if(sEl)sEl.textContent='\u00a1Has ganado!';
+      }else{
+        if(tEl){tEl.style.background='linear-gradient(135deg,#ff4466,#ff8844)';tEl.style.webkitBackgroundClip='text';tEl.style.webkitTextFillColor='transparent';tEl.style.backgroundClip='text';tEl.textContent='BOOM \ud83d\udca5';}
+        if(sEl)sEl.textContent='Has pisado una mina...';
+      }
+      if(scEl){scEl.style.display='block';scEl.textContent='Tiempo: '+timer+'s \u2014 '+DIFFS[diff].label;}
+      if(btn)btn.textContent='Reintentar';
+      ov.classList.remove('hidden');
+    }
+    function hideOv(){
+      const ov=document.getElementById('ms-overlay');if(!ov)return;ov._sh=false;ov.classList.add('hidden');
+      const tEl=ov.querySelector('.ms-ov-title'),sEl=ov.querySelector('.ms-ov-sub');
+      const scEl=document.getElementById('ms-ov-score'),btn=document.getElementById('ms-ov-start');
+      if(tEl){tEl.style.background='linear-gradient(135deg,#00ffcc,#00aaff,#66ff33)';tEl.style.webkitBackgroundClip='text';tEl.style.webkitTextFillColor='transparent';tEl.style.backgroundClip='text';tEl.textContent='\u{1F4A3} BUSCAMINAS';}
+      if(sEl)sEl.textContent='Encuentra las minas';if(scEl)scEl.style.display='none';if(btn)btn.textContent='Jugar';
+    }
+    function draw(){
+      const CW=canvas.width,CH=canvas.height;
+      ctx.fillStyle='#0d0d24';ctx.fillRect(0,0,CW,CH);
+      ctx.strokeStyle='rgba(0,200,255,0.06)';ctx.lineWidth=0.5;
+      for(let r=0;r<=rows;r++){ctx.beginPath();ctx.moveTo(0,r*cellSize);ctx.lineTo(CW,r*cellSize);ctx.stroke();}
+      for(let c=0;c<=cols;c++){ctx.beginPath();ctx.moveTo(c*cellSize,0);ctx.lineTo(c*cellSize,CH);ctx.stroke();}
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)drawCell(r,c);
+    }
+    function drawCell(r,c){
+      const x=c*cellSize,y=r*cellSize,cs=cellSize,p=1;
+      const bx=x+p,by=y+p,bw=cs-p*2,bh=cs-p*2,cx2=x+cs/2,cy2=y+cs/2;
+      const isExp=explodedR===r&&explodedC===c;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      if(!revealed[r][c]){
+        if(flagged[r][c]){
+          ctx.fillStyle='#180d30';ctx.fillRect(bx,by,bw,bh);
+          ctx.shadowColor='#ffaa00';ctx.shadowBlur=8;
+          ctx.font=`${cs*0.55}px serif`;ctx.fillStyle='#ffaa00';
+          ctx.fillText('\u{1F6A9}',cx2,cy2);ctx.shadowBlur=0;
+          if(gameOver&&board[r][c]!==-1){
+            ctx.fillStyle='rgba(255,0,0,0.6)';ctx.fillRect(bx,by,bw,bh);
+            ctx.font=`bold ${cs*0.52}px sans-serif`;ctx.fillStyle='#fff';
+            ctx.shadowColor='#f00';ctx.shadowBlur=5;ctx.fillText('\u274c',cx2,cy2);ctx.shadowBlur=0;
+          }
+        }else{
+          const g=ctx.createLinearGradient(bx,by,bx+bw,by+bh);
+          g.addColorStop(0,'#1e1e40');g.addColorStop(1,'#141428');ctx.fillStyle=g;ctx.fillRect(bx,by,bw,bh);
+          ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fillRect(bx,by,bw,2);ctx.fillRect(bx,by,2,bh);
+          ctx.fillStyle='rgba(0,0,0,0.25)';ctx.fillRect(bx,by+bh-2,bw,2);ctx.fillRect(bx+bw-2,by,2,bh);
+        }
+      }else{
+        const v=board[r][c];
+        if(v===-1){
+          ctx.fillStyle=isExp?'#3a0000':'#1a0a0a';ctx.fillRect(bx,by,bw,bh);
+          ctx.shadowColor=isExp?'#ff2200':'#ff3366';ctx.shadowBlur=isExp?18:6;
+          ctx.font=`${cs*(isExp?0.7:0.62)}px serif`;
+          ctx.fillText(isExp?'\u{1F4A5}':'\u{1F4A3}',cx2,cy2);ctx.shadowBlur=0;
+        }else{
+          ctx.fillStyle='#0d0d1e';ctx.fillRect(bx,by,bw,bh);
+          ctx.strokeStyle='rgba(0,200,255,0.04)';ctx.lineWidth=0.5;ctx.strokeRect(bx+.5,by+.5,bw-1,bh-1);
+          if(v>0){
+            ctx.shadowColor=NC[v];ctx.shadowBlur=4;ctx.fillStyle=NC[v];
+            ctx.font=`bold ${Math.round(cs*0.52)}px 'Orbitron',monospace`;
+            ctx.fillText(v,cx2,cy2+1);ctx.shadowBlur=0;
+          }
+        }
+      }
+    }
+    function canvasCoord(e){
+      const rect=canvas.getBoundingClientRect();
+      const sx=canvas.width/rect.width,sy=canvas.height/rect.height;
+      let ex,ey;
+      if(e.touches||e.changedTouches){const t=(e.touches&&e.touches[0])||(e.changedTouches[0]);ex=(t.clientX-rect.left)*sx;ey=(t.clientY-rect.top)*sy;}
+      else{ex=(e.clientX-rect.left)*sx;ey=(e.clientY-rect.top)*sy;}
+      return[Math.floor(ey/cellSize),Math.floor(ex/cellSize)];
+    }
+    canvas.addEventListener('click',e=>{const[r,c]=canvasCoord(e);flagMode?handleFlag(r,c):handleReveal(r,c);});
+    canvas.addEventListener('contextmenu',e=>{e.preventDefault();const[r,c]=canvasCoord(e);handleFlag(r,c);});
+    let tStart=0,tR=-1,tC=-1,lpFired=false,lpTimer=null;
+    canvas.addEventListener('touchstart',e=>{
+      e.preventDefault();tStart=Date.now();lpFired=false;
+      const[r,c]=canvasCoord(e);tR=r;tC=c;
+      lpTimer=setTimeout(()=>{lpFired=true;handleFlag(tR,tC);if(navigator.vibrate)navigator.vibrate(30);lpTimer=null;},450);
+    },{passive:false});
+    canvas.addEventListener('touchend',e=>{
+      e.preventDefault();if(lpTimer){clearTimeout(lpTimer);lpTimer=null;}
+      if(!lpFired&&Date.now()-tStart<400){flagMode?handleFlag(tR,tC):handleReveal(tR,tC);}
+    },{passive:false});
+    canvas.addEventListener('touchmove',e=>{e.preventDefault();if(lpTimer){clearTimeout(lpTimer);lpTimer=null;}},{passive:false});
+    canvas.addEventListener('touchcancel',()=>{if(lpTimer){clearTimeout(lpTimer);lpTimer=null;}});
+    document.querySelectorAll('#ms-diff-row .ms-diff-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('#ms-diff-row .ms-diff-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');initBoard(btn.dataset.diff);hideOv();
+      });
+    });
+    const rb=document.getElementById('ms-reset-btn');if(rb)rb.addEventListener('click',()=>{initBoard(diff);hideOv();});
+    const sb=document.getElementById('ms-ov-start');if(sb)sb.addEventListener('click',()=>{initBoard(diff);hideOv();});
+    const ft=document.getElementById('ms-flag-toggle');
+    if(ft)ft.addEventListener('click',()=>{
+      flagMode=!flagMode;ft.classList.toggle('flag-active',flagMode);
+      const ic=document.getElementById('ms-toggle-icon'),lb=document.getElementById('ms-toggle-label');
+      if(ic)ic.textContent=flagMode?'\u{1F6A9}':'\u{1F4A3}';
+      if(lb)lb.textContent=flagMode?'BANDERA':'REVELAR';
+    });
+    function onKey(e){
+      if(!document.getElementById('ms-canvas'))return;
+      if(e.key.toLowerCase()==='r'){initBoard(diff);hideOv();}
+    }
+    document.addEventListener('keydown',onKey);
+    setConfig('easy');initBoard(null);
+    setTimeout(()=>{const ov=document.getElementById('ms-overlay');if(ov){ov._sh=false;ov.classList.remove('hidden');}},50);
+    gameInstances[id]={destroy:()=>{clearInterval(timerInterval);document.removeEventListener('keydown',onKey);}};
+  }});
+}
+
 </script>
 </body>
 </html>
