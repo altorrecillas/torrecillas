@@ -991,6 +991,7 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 #new-tetris-game #tetris-canvas-wrap {
   flex: 1 !important; min-width: 0 !important; min-height: 0 !important;
   align-self: stretch !important;
+  display: flex !important; justify-content: center !important; align-items: flex-start !important;
 }
 #new-tetris-game #tetris-canvas-wrap canvas {
   max-width: 100%; max-height: 100%; display: block;
@@ -3872,7 +3873,7 @@ function initTetrisGame(){
         ov.classList.add('hidden');
         ov._gameOverShown=false;
       }
-      lastDrop=Date.now()+999999;
+      lastDrop=Date.now();
       interval=setInterval(gameLoop,30);
     }
     const startBtn=document.getElementById('tetris-start-btn');
