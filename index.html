@@ -1959,15 +1959,37 @@ function shutDown(){
 
 // Desktop icons
 const desktopApps=[
-  {id:'proyectos',label:'Proyectos',icon:'&#128193;',action:()=>openProyectos()}
+  {id:'proyectos',label:'Proyectos',icon:'&#128193;',action:()=>openProyectos()},
+  {id:'juegazos',label:'Juegazos',icon:'&#127918;',action:()=>openJuegazos()}
 ];
 
 const proyectosApps=[
-  {id:'cursa',label:'Cursa Mossos 5k',icon:'&#127939;',link:'https://cursa.torrecillas.cat'},
   {id:'woodpeckers',label:"Woodpecker's",icon:'&#127866;',link:'http://woodpeckers.es'},
-  {id:'tottori',label:'Restaurante Tottori',icon:'&#127843;',link:'https://tottorigava.es'},
-  {id:'karts',label:'Karts Racing',icon:'&#128663;',link:'https://karts.torrecillas.cat'}
+  {id:'tottori',label:'Restaurante Tottori',icon:'&#127843;',link:'https://tottorigava.es'}
 ];
+
+const juegazosApps=[
+  {id:'karts',label:'Karts Racing',icon:'&#128663;',link:'https://karts.torrecillas.cat'},
+  {id:'cursa',label:'Cursa Mossos 5k',icon:'&#127939;',link:'https://cursa.torrecillas.cat'},
+  {id:'copa',label:'Copa del mundo',icon:'&#9917;',link:'https://copadelmundo.torrecillas.cat/'}
+];
+
+function openJuegazos(){
+  let items='';
+  juegazosApps.forEach(app=>{
+    items+=`<div class="drive-item" data-link="${app.link}">
+      <div class="drive-icon">${app.icon}</div>
+      <div class="drive-label">${app.label}</div>
+    </div>`;
+  });
+  const content=`<div class="computer-content">${items}</div>`;
+  const winId=createWindow('Juegazos','&#127918;',340,260,content);
+  setTimeout(()=>{
+    document.querySelectorAll('.drive-item[data-link]').forEach(el=>{
+      el.onclick=()=>{window.open(el.dataset.link,'_blank');};
+    });
+  },50);
+}
 
 function openProyectos(){
   let items='';
