@@ -216,11 +216,11 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 .calc-fn{background:linear-gradient(180deg,#d8d8e8,#c0c0d0)}
 .calc-eq{background:linear-gradient(180deg,#4090e0,#2070c0);color:#fff}
 .calc-zero{grid-column:span 2}
-.drive-item{width:100px;text-align:center;padding:10px 6px;cursor:pointer;border-radius:3px}
+.drive-item{width:120px;text-align:center;padding:14px 8px;cursor:pointer;border-radius:3px}
 .drive-item:hover{background:#e0e8f0;border:1px solid #a0b0c8}
-.drive-item .drive-icon{font-size:36px;margin-bottom:4px}
-.drive-item .drive-label{font-size:11px;color:#222}
-.computer-content{padding:15px;display:flex;flex-wrap:wrap;gap:12px}
+.drive-item .drive-icon{font-size:48px;margin-bottom:8px}
+.drive-item .drive-label{font-size:13px;color:#222}
+.computer-content{padding:20px;display:flex;flex-wrap:wrap;gap:16px}
 
 /* SNAKE: Professional gaming D-pad */
 #new-snake-game .touch-controls {
@@ -2080,7 +2080,7 @@ function openGamesFolder(){
     </div>`;
   });
   const content=`<div class="computer-content" id="games-folder-content">${items}</div>`;
-  const sz=folderWindowSize(gamesApps.length,420,330);
+  const sz=folderWindowSize(gamesApps.length,640,460);
   const winId=createWindow('Juegos','&#128377;',sz.w,sz.h,content,{onCreated:()=>{
     document.querySelectorAll('#games-folder-content .drive-item[data-game]').forEach(el=>{
       el.onclick=()=>openGame(el.dataset.game);
@@ -2098,7 +2098,9 @@ const proyectosApps=[
 const juegazosApps=[
   {id:'karts',label:'Karts Racing',icon:'&#128663;',link:'https://karts.torrecillas.cat'},
   {id:'cursa',label:'Cursa Mossos 5k',icon:'&#127939;',link:'https://cursa.torrecillas.cat'},
-  {id:'copa',label:'Copa del mundo',icon:'&#9917;',link:'https://copadelmundo.torrecillas.cat/'}
+  {id:'copa',label:'Copa del mundo',icon:'&#9917;',link:'https://copadelmundo.torrecillas.cat/'},
+  {id:'superoffroad',label:'SuperOffRoad',icon:'&#128665;',link:'https://superoffroad.torrecillas.cat'},
+  {id:'armymoves',label:'Army Moves',icon:'&#129686;',link:'https://army.torrecillas.cat'}
 ];
 
 function openJuegazos(){
@@ -2111,7 +2113,7 @@ function openJuegazos(){
     </div>`;
   });
   const content=`<div class="computer-content" id="juegazos-folder-content">${items}</div>`;
-  const sz=folderWindowSize(juegazosApps.length,340,260);
+  const sz=folderWindowSize(juegazosApps.length,560,420);
   const winId=createWindow('Juegos AAA','&#127918;',sz.w,sz.h,content);
   placeFolderWindow(winId,sz);
   setTimeout(()=>{
@@ -2131,7 +2133,7 @@ function openProyectos(){
     </div>`;
   });
   const content=`<div class="computer-content" id="proyectos-folder-content">${items}</div>`;
-  const sz=folderWindowSize(proyectosApps.length,340,260);
+  const sz=folderWindowSize(proyectosApps.length,560,340);
   const winId=createWindow('Proyectos','&#128193;',sz.w,sz.h,content);
   placeFolderWindow(winId,sz);
   setTimeout(()=>{
