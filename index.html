@@ -1944,8 +1944,31 @@ function showSystemError(msg){
   ok.onclick=()=>{ ov.remove(); _sysErrShown=false; };
   ok.focus();
 }
-window.addEventListener('error',(e)=>{ console.error(e.error||e.message); showSystemError(e.message); });
-window.addEventListener('unhandledrejection',(e)=>{ console.error(e.reason); showSystemError((e.reason&&e.reason.message)||String(e.reason)); });
+// Solo tratamos como error del sistema los que provienen de NUESTRO propio código.
+// Las extensiones del navegador (carteras cripto como Talisman/MetaMask, etc.) inyectan
+// scripts que lanzan errores ajenos: se registran en consola pero no muestran diálogo.
+const _DOC_URL=location.href.split(/[?#]/)[0];
+function _isOwnError(filename,stack){
+  const blob=(filename||'')+' '+(stack||'');
+  if(/-extension:\/\//i.test(blob))return false;                 // chrome/moz/safari/edge-extension://
+  if(/\b(talisman|metamask|phantom|coinbase|keplr|web3|ethereum|wallet|onboarding)\b/i.test(blob))return false;
+  if(stack&&stack.indexOf(_DOC_URL)>=0)return true;              // la traza apunta a nuestro archivo
+  if(filename&&filename!==_DOC_URL)return false;                 // otro archivo (extensión/3º)
+  return true;
+}
+window.addEventListener('error',(e)=>{
+  console.error(e.error||e.message);
+  if(!e.message||e.message==='Script error.'||e.message==='Script error')return; // error cross-origin opaco
+  if(!_isOwnError(e.filename,e.error&&e.error.stack))return;
+  showSystemError(e.message);
+});
+window.addEventListener('unhandledrejection',(e)=>{
+  console.error(e.reason);
+  const reason=e.reason,stack=reason&&reason.stack,msg=(reason&&reason.message)||String(reason);
+  // Las promesas rechazadas de extensiones/terceros no llevan traza a nuestro archivo: se ignoran
+  if(!_isOwnError('',stack)||!stack||stack.indexOf(_DOC_URL)<0)return;
+  showSystemError(msg);
+});
 
 // ========== AUDIO SYSTEM ==========
 let masterVolume = 0.5;
