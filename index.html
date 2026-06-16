@@ -3365,14 +3365,15 @@ function makeStickyEl(note){
   const ta=d.querySelector('.sticky-text');
   ta.addEventListener('input',()=>{note.text=ta.value;persistStickies();});
   const del=d.querySelector('.sticky-del');
-  const remove=()=>{d.remove();persistStickies();};
-  del.onclick=remove;
+  const remove=(e)=>{ if(e){e.stopPropagation();e.preventDefault();} if(d._cleanup)d._cleanup(); d.remove(); persistStickies(); };
+  del.addEventListener('click',remove);
+  del.addEventListener('touchend',remove); // en móvil el touchstart de la barra cancela el click
   del.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();remove();}});
-  // arrastrar por la barra
+  // arrastrar por la barra (no si se toca la × de borrar)
   const bar=d.querySelector('.sticky-bar');let dx,dy,drag=false;
   const move=(cx,cy)=>{note.x=Math.max(0,Math.min(window.innerWidth-60,cx-dx));note.y=Math.max(0,Math.min(window.innerHeight-60,cy-dy));d.style.left=note.x+'px';d.style.top=note.y+'px';};
-  bar.addEventListener('mousedown',e=>{drag=true;dx=e.clientX-d.offsetLeft;dy=e.clientY-d.offsetTop;e.preventDefault();});
-  bar.addEventListener('touchstart',e=>{drag=true;dx=e.touches[0].clientX-d.offsetLeft;dy=e.touches[0].clientY-d.offsetTop;e.preventDefault();},{passive:false});
+  bar.addEventListener('mousedown',e=>{if(e.target.closest('.sticky-del'))return;drag=true;dx=e.clientX-d.offsetLeft;dy=e.clientY-d.offsetTop;e.preventDefault();});
+  bar.addEventListener('touchstart',e=>{if(e.target.closest('.sticky-del'))return;drag=true;dx=e.touches[0].clientX-d.offsetLeft;dy=e.touches[0].clientY-d.offsetTop;e.preventDefault();},{passive:false});
   const mm=e=>{if(drag)move(e.clientX,e.clientY);};
   const tm=e=>{if(drag){move(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();}};
   const up=()=>{if(drag){drag=false;persistStickies();}};
