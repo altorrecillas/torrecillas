@@ -3004,6 +3004,13 @@ function msnQuit(){
   // Tono descendente de desconexión
   playTone(659.25,0.09,'sine',0.3);setTimeout(()=>playTone(523.25,0.09,'sine',0.3),110);setTimeout(()=>playTone(392,0.14,'sine',0.3),220);
 }
+// La X de la ventana pregunta antes de cerrar (el icono sigue en la bandeja)
+function msnCloseConfirm(id){
+  xpDialog('Cerrar MSN Messenger','<div style="font-size:28px">&#128172;</div><div>¿Cerrar la conversación?<br><span style="opacity:.7">'+MSN_NICK+' seguirá conectado en el icono de la bandeja.</span></div>',[
+    {label:'Sí, cerrar',primary:true,action:()=>closeWindow(id)},
+    {label:'Cancelar'}
+  ]);
+}
 function msnQuitConfirm(){
   xpDialog('Salir de MSN Messenger','<div style="font-size:28px">&#128172;</div><div>¿Seguro que quieres salir? '+MSN_NICK+' dejará de escribirte y su icono desaparecerá de la bandeja.<br><span style="opacity:.7">(Puedes volver a abrirlo desde el menú Inicio cuando quieras.)</span></div>',[
     {label:'Sí, salir',primary:true,action:msnQuit},
@@ -3063,7 +3070,10 @@ function openMSN(){
       <button id="msn-send" class="trash-btn">Enviar</button>
     </div>
   </div>`;
-  createWindow('MSN Messenger','&#128172;',360,470,content,{session:'msn',statusbar:false,onCreated:(id,win)=>{
+  createWindow('MSN Messenger','&#128172;',360,470,content,{session:'msn',trayOnly:true,statusbar:false,onCreated:(id,win)=>{
+    // La X no cierra a la brava: pregunta primero
+    const xbtn=win.querySelector('.btn-close');
+    if(xbtn)xbtn.onclick=()=>msnCloseConfirm(id);
     const msgs=document.getElementById('msn-msgs'),inp=document.getElementById('msn-input');
     const esc=s=>s.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
     // Emoticonos clásicos del Messenger
@@ -3537,7 +3547,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   // Accesibilidad: llevar el foco del teclado a la ventana recién abierta
   try{win.focus({preventScroll:true});}catch(e){win.focus();}
 
-  openWindows[id]={title,icon,minimized:false,maximized:false,prevBounds:null,session:opts.session||_pendingGameSession||null};
+  openWindows[id]={title,icon,minimized:false,maximized:false,prevBounds:null,session:opts.session||_pendingGameSession||null,trayOnly:!!opts.trayOnly};
   _pendingGameSession=null;
   _lastWindowId=id;
   updateTaskbar();
@@ -3614,6 +3624,7 @@ function updateTaskbar(){
   container.innerHTML='';
   Object.keys(openWindows).forEach(id=>{
     const info=openWindows[id];
+    if(info.trayOnly&&info.minimized)return; // el MSN minimizado vive solo en su icono de la bandeja
     const item=document.createElement('div');
     item.className='taskbar-item'+(id===activeWindowId&&!info.minimized?' active':'');
     item.innerHTML=`<span class="item-icon">${info.icon}</span>${info.title}`;
@@ -3817,7 +3828,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.10.1</p>
+    <p>Versi&oacute;n 0.10.2</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
