@@ -365,6 +365,28 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
   .msn-inputrow{padding-bottom:calc(34px + env(safe-area-inset-bottom,0px))}
 }
 
+/* Netscape Navigator (chrome gris noventero con biseles) */
+svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
+#ns-root{display:flex;flex-direction:column;height:100%;background:#c0c0c0;font-family:Tahoma,'MS Sans Serif',sans-serif;font-size:11px;color:#000}
+.ns-menubar{display:flex;gap:14px;padding:4px 8px;border-bottom:1px solid #808080;user-select:none;flex-wrap:wrap}
+.ns-menubar span{cursor:default;color:#444}
+.ns-menubar .ns-menu-live{cursor:pointer;color:#000}
+.ns-menubar .ns-menu-live:hover{background:#000080;color:#fff}
+.ns-toolbar{display:flex;gap:4px;padding:5px 6px;border-bottom:1px solid #808080;align-items:stretch;flex-wrap:wrap}
+.ns-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:46px;padding:3px 5px;background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;cursor:pointer;font-size:10px;user-select:none}
+.ns-btn span{font-size:13px;line-height:1}
+.ns-btn:active{border-color:#404040 #fff #fff #404040}
+.ns-btn.disabled{color:#808080;cursor:default;pointer-events:none}
+.ns-throbber{margin-left:auto;width:42px;border:2px solid;border-color:#404040 #fff #fff #404040;background:#00174d;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',serif;font-weight:bold;font-size:20px;position:relative;overflow:hidden}
+.ns-comet{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;top:-6px;right:-6px;opacity:0;box-shadow:0 0 4px #fff}
+.ns-throbber.loading .ns-comet{animation:nsComet .9s linear infinite}
+@keyframes nsComet{0%{top:-4px;right:-4px;opacity:1}100%{top:28px;right:44px;opacity:0}}
+.ns-locrow{display:flex;gap:6px;align-items:center;padding:4px 8px;border-bottom:1px solid #808080}
+#ns-url{flex:1;min-width:0;border:2px solid;border-color:#404040 #fff #fff #404040;background:#fff;padding:3px 5px;font-family:inherit;font-size:11px;outline:none}
+.ns-viewport{flex:1;background:#fff;position:relative}
+#ns-iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.ns-statusbar{display:flex;gap:8px;padding:3px 8px;border-top:1px solid #fff;background:#c0c0c0;font-size:10px;color:#222}
+
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:46px;z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
 #welcome-tip::after{content:'';position:absolute;bottom:-9px;left:26px;border:9px solid transparent;border-top-color:#ffffe1;border-bottom:none}
@@ -1976,6 +1998,10 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
           <div class="si-icon">&#128172;</div>
           <div><div class="si-label">MSN Messenger</div><div class="si-desc">Un contacto sigue en l&iacute;nea</div></div>
         </div>
+        <div class="start-item" role="button" tabindex="0" onclick="openNetscape()">
+          <div class="si-icon"><svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg></div>
+          <div><div class="si-label">Netscape Navigator</div><div class="si-desc">La web como en 1996</div></div>
+        </div>
         <div class="start-item" role="button" tabindex="0" onclick="openTerminal()">
           <div class="si-icon">&#128421;&#65039;</div>
           <div><div class="si-label">S&iacute;mbolo del sistema</div><div class="si-desc">Terminal con comandos</div></div>
@@ -2806,7 +2832,7 @@ const SESSION_OPENERS={
   proyectos:()=>openProyectos(),juegazos:()=>openJuegazos(),juegos:()=>openGamesFolder(),
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
-  papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN()
+  papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3219,6 +3245,133 @@ function openMSN(){
   }});
 }
 
+// ========== NETSCAPE NAVIGATOR (navegador retro, funcional con iframe) ==========
+const NS_ICON='<svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg>';
+const NS_HOME_URL='about:home';
+const NS_BOOKMARKS=[
+  {label:'Torrecillas OS (inicio)',url:'https://torrecillas.cat'},
+  {label:"Woodpecker's",url:'https://woodpeckers.es'},
+  {label:'Restaurante Tottori',url:'https://tottorigava.es'},
+  {label:'Miami Lounge',url:'https://miamilounge.es'},
+  {label:'SolutionCar',url:'https://solutioncar.torrecillas.cat'}
+];
+// Portada noventera servida en srcdoc (mismo origen: sus enlaces navegan vía parent.netscapeGo)
+const NS_HOME=`<!doctype html><html><head><meta charset="utf-8"><title>Inicio</title></head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ee" vlink="#551a8b" style="font-family:'Times New Roman',serif;margin:18px">
+<center>
+<h1 style="margin:4px">~ La p&aacute;gina de <font color="#00174d">TORRECILLAS</font> ~</h1>
+<p><tt>[ Optimizada para Netscape Navigator 3.0 &middot; 800x600 &middot; 256 colores ]</tt></p>
+<hr size="3">
+<table border="2" cellpadding="10" cellspacing="0" width="88%">
+<tr><td align="center" colspan="2"><b>&#11088; LO MEJOR DE MI WEB &#11088;</b></td></tr>
+<tr>
+<td align="center"><a href="#" onclick="parent.netscapeGo('https://solutioncar.torrecillas.cat');return false">&#128663; SolutionCar</a><br><small>gesti&oacute;n de veh&iacute;culos</small></td>
+<td align="center"><a href="#" onclick="parent.netscapeGo('https://woodpeckers.es');return false">&#127828; Woodpecker's</a><br><small>hamburguesas legendarias</small></td>
+</tr>
+<tr>
+<td align="center"><a href="#" onclick="parent.netscapeGo('https://tottorigava.es');return false">&#127843; Tottori</a><br><small>japon&eacute;s de Gav&agrave;</small></td>
+<td align="center"><a href="#" onclick="parent.netscapeGo('https://miamilounge.es');return false">&#127865; Miami Lounge</a><br><small>c&oacute;cteles en la Costa Dorada</small></td>
+</tr>
+</table>
+<p>&#128679; P&aacute;gina en construcci&oacute;n permanente desde 1996 &#128679;</p>
+<p>Visitas: <b><tt>0004317</tt></b></p>
+<p><a href="#" onclick="parent.netscapeGo('guestbook');return false">&#9997;&#65039; Firma mi libro de visitas</a> <small>(abre el Messenger)</small></p>
+<hr size="3">
+<p><small>Algunos sitios modernos se niegan a entrar en un marco de 1996 (cabeceras X-Frame-Options).<br>Si una p&aacute;gina sale en blanco, usa el bot&oacute;n <b>Fuera</b> para abrirla en una pesta&ntilde;a nueva.</small></p>
+</center></body></html>`;
+function _nsNormalize(u){
+  u=(u||'').trim();
+  if(!u)return null;
+  if(u==='home'||u==='inicio'||u===NS_HOME_URL)return NS_HOME_URL;
+  if(!/^https?:\/\//i.test(u))u='https://'+u.replace(/^\/+/,'');
+  return u;
+}
+let _nsGoHook=null;
+function netscapeGo(u){
+  if(u==='guestbook'){openMSN();return;}
+  if(_nsGoHook)_nsGoHook(u);
+}
+function openNetscape(){
+  closeStartMenu();
+  if(focusExisting('ns-root'))return;
+  const content=`<div id="ns-root">
+    <div class="ns-menubar"><span>Archivo</span><span>Edici&oacute;n</span><span>Ver</span><span id="ns-menu-go" class="ns-menu-live" role="button" tabindex="0">Ir</span><span id="ns-menu-bm" class="ns-menu-live" role="button" tabindex="0">Marcadores</span><span>Opciones</span><span>Ayuda</span></div>
+    <div class="ns-toolbar">
+      <div class="ns-btn disabled" id="ns-back" role="button" tabindex="0" aria-label="Atr&aacute;s"><span>&#9664;</span>Atr&aacute;s</div>
+      <div class="ns-btn disabled" id="ns-fwd" role="button" tabindex="0" aria-label="Adelante"><span>&#9654;</span>Adelante</div>
+      <div class="ns-btn" id="ns-reload" role="button" tabindex="0" aria-label="Recargar"><span>&#8635;</span>Recargar</div>
+      <div class="ns-btn" id="ns-home" role="button" tabindex="0" aria-label="Inicio"><span>&#127968;</span>Inicio</div>
+      <div class="ns-btn" id="ns-stop" role="button" tabindex="0" aria-label="Parar"><span>&#128721;</span>Parar</div>
+      <div class="ns-btn" id="ns-ext" role="button" tabindex="0" title="Abrir la direcci&oacute;n actual en una pesta&ntilde;a nueva" aria-label="Abrir fuera"><span>&#128279;</span>Fuera</div>
+      <div class="ns-throbber" id="ns-throbber">N<span class="ns-comet"></span></div>
+    </div>
+    <div class="ns-locrow"><span style="white-space:nowrap">Direcci&oacute;n:</span><input id="ns-url" autocomplete="off" spellcheck="false" aria-label="Direcci&oacute;n web"></div>
+    <div class="ns-viewport"><iframe id="ns-iframe" title="P&aacute;gina web" referrerpolicy="no-referrer"></iframe></div>
+    <div class="ns-statusbar"><span id="ns-status">Documento: listo</span><span style="margin-left:auto">&#128275; sin cifrar, como en 1996</span></div>
+  </div>`;
+  createWindow('Netscape Navigator',NS_ICON,720,520,content,{session:'netscape',statusbar:false,onCreated:(id,win)=>{
+    const frame=document.getElementById('ns-iframe');
+    const url=document.getElementById('ns-url');
+    const st=document.getElementById('ns-status');
+    const th=document.getElementById('ns-throbber');
+    let hist=[],hi=-1,cur=NS_HOME_URL;
+    const setBtns=()=>{
+      document.getElementById('ns-back').classList.toggle('disabled',hi<=0);
+      document.getElementById('ns-fwd').classList.toggle('disabled',hi>=hist.length-1);
+    };
+    const loading=(on,msg)=>{
+      th.classList.toggle('loading',on);
+      if(st)st.textContent=msg||(on?'Conectando... transfiriendo datos':'Documento: listo');
+    };
+    const show=(u)=>{
+      cur=u;
+      if(u===NS_HOME_URL){
+        frame.removeAttribute('src');
+        frame.srcdoc=NS_HOME;
+        url.value=NS_HOME_URL;
+        loading(false);
+      }else{
+        frame.removeAttribute('srcdoc');
+        loading(true);
+        frame.src=u;
+        url.value=u;
+      }
+    };
+    const go=(u,push)=>{
+      const n=_nsNormalize(u);
+      if(!n)return;
+      if(push!==false){hist=hist.slice(0,hi+1);hist.push(n);hi=hist.length-1;}
+      show(n);setBtns();
+    };
+    frame.addEventListener('load',()=>loading(false));
+    document.getElementById('ns-back').onclick=()=>{if(hi>0){hi--;show(hist[hi]);setBtns();}};
+    document.getElementById('ns-fwd').onclick=()=>{if(hi<hist.length-1){hi++;show(hist[hi]);setBtns();}};
+    document.getElementById('ns-reload').onclick=()=>show(cur);
+    document.getElementById('ns-home').onclick=()=>go(NS_HOME_URL);
+    document.getElementById('ns-stop').onclick=()=>{if(cur!==NS_HOME_URL)frame.removeAttribute('src');loading(false,'Detenido.');};
+    document.getElementById('ns-ext').onclick=()=>{if(cur&&cur!==NS_HOME_URL)window.open(cur,'_blank','noopener,noreferrer');};
+    url.addEventListener('keydown',(e)=>{if(e.key==='Enter'){e.preventDefault();go(url.value);}});
+    // Menús vivos: Marcadores e Ir reutilizan el menú contextual del sistema
+    const dropdown=(el,items)=>{const r=el.getBoundingClientRect();showContextMenu(r.left,(r.bottom||24)+2,items);};
+    document.getElementById('ns-menu-bm').onclick=(e)=>{
+      e.stopPropagation();
+      dropdown(e.target,NS_BOOKMARKS.map(b=>({icon:'&#128278;',label:b.label,action:()=>go(b.url)})));
+    };
+    document.getElementById('ns-menu-go').onclick=(e)=>{
+      e.stopPropagation();
+      dropdown(e.target,[
+        {icon:'&#9664;',label:'Atrás',action:()=>document.getElementById('ns-back').onclick()},
+        {icon:'&#9654;',label:'Adelante',action:()=>document.getElementById('ns-fwd').onclick()},
+        {sep:true},
+        {icon:'&#127968;',label:'Página de inicio',action:()=>go(NS_HOME_URL)}
+      ]);
+    };
+    _nsGoHook=(u)=>{go(u);focusWindow(id);};
+    (win._cleanups=win._cleanups||[]).push(()=>{_nsGoHook=null;});
+    go(NS_HOME_URL);
+  }});
+}
+
 // ========== PROPIEDADES DE PROYECTO (portfolio) ==========
 function openProjectProps(pid){
   const app=proyectosApps.find(p=>p.id===pid);
@@ -3305,6 +3458,7 @@ const desktopApps=[
   {id:'proyectos',label:'Proyectos',icon:'&#128193;',action:()=>openProyectos()},
   {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',action:()=>openJuegazos()},
   {id:'juegos',label:'Juegos',icon:'&#128377;',action:()=>openGamesFolder()},
+  {id:'netscape',label:'Netscape Navigator',icon:NS_ICON,action:()=>openNetscape()},
   {id:'papelera',label:'Papelera de reciclaje',icon:'&#128465;&#65039;',action:()=>openPapelera()},
   {id:'instalar',label:'Instalar app',icon:`<img src="${TOS_ICON_192}" alt="" draggable="false">`,action:()=>openInstallApp()}
 ];
@@ -3894,7 +4048,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.11.0</p>
+    <p>Versi&oacute;n 0.12.0</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -4475,7 +4629,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -4483,7 +4637,7 @@ function openTerminal(){
         case '':break;
         case 'help':print('Comandos: help, ver, dir, echo <txt>, date, cls, whoami, about, open <app>, juego <nombre>, juegos, proyectos, exit');break;
         case 'ver':print('Torrecillas OS [Versión 1.0]');break;
-        case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records');break;
+        case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records, msn, netscape');break;
         case 'proyectos':print(proyectosApps.map(p=>p.label+' — '+p.link).join('\n'));break;
         case 'crash':case 'bsod':print('Iniciando volcado de memoria...');setTimeout(showBSOD,900);break;
         case 'echo':print(a);break;
