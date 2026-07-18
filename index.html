@@ -314,6 +314,8 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 /* Iconos de escritorio arrastrables + icono de app con imagen */
 #desktop-icons{position:relative}
 .desktop-icon.dragging{opacity:.75;z-index:60}
+.desktop-icon.drop-target{background:rgba(255,80,60,.35);border:1px dashed #fff;border-radius:4px}
+#trash-items .drive-icon img{width:34px;height:34px;border-radius:8px}
 .desktop-icon .icon img{width:38px;height:38px;border-radius:9px;box-shadow:1px 1px 3px rgba(0,0,0,.35)}
 
 /* Pantalla azul (easter egg) y salvapantallas */
@@ -2686,6 +2688,25 @@ const TRASH_ITEMS=[
   {icon:'&#128027;',name:'bug_que_es_una_feature.js',size:'7 KB'}
 ];
 function trashEmptied(){ return Store.get('tos-trash')==='empty'; }
+// ---- Iconos de escritorio "eliminados" (arrastrados a la papelera) ----
+let _trashRender=null; // re-render de la papelera si está abierta
+function _deskDeleted(){ try{return JSON.parse(Store.get('tos-desk-deleted')||'[]');}catch(e){return [];} }
+function deskSendToTrash(appId){
+  if(appId==='papelera')return; // la papelera no se puede tirar a sí misma
+  const del=_deskDeleted();
+  if(!del.includes(appId))del.push(appId);
+  Store.set('tos-desk-deleted',JSON.stringify(del));
+  const pos=_iconPositions();delete pos[appId];Store.set('tos-icon-pos',JSON.stringify(pos));
+  playTone(280,0.08,'triangle',0.5);setTimeout(()=>playTone(180,0.12,'triangle',0.4),80); // papelito a la papelera
+  initDesktop();
+  if(_trashRender)_trashRender();
+}
+function deskRestoreFromTrash(appId){
+  Store.set('tos-desk-deleted',JSON.stringify(_deskDeleted().filter(x=>x!==appId)));
+  playTone(300,0.08,'sine',0.4);setTimeout(()=>playTone(520,0.1,'sine',0.4),90);
+  initDesktop();
+  if(_trashRender)_trashRender();
+}
 function openPapelera(){
   closeStartMenu();
   if(focusExisting('trash-content'))return;
@@ -2697,34 +2718,48 @@ function openPapelera(){
     </div>
     <div id="trash-items" class="computer-content" style="flex:1;overflow:auto;align-content:flex-start"></div>
   </div>`;
-  createWindow('Papelera de reciclaje','&#128465;&#65039;',560,380,content,{session:'papelera',onCreated:()=>{
+  createWindow('Papelera de reciclaje','&#128465;&#65039;',560,380,content,{session:'papelera',onCreated:(id,win)=>{
     const render=()=>{
       const empty=trashEmptied();
+      const deskDel=_deskDeleted().map(did=>desktopApps.find(a=>a.id===did)).filter(Boolean);
       const box=document.getElementById('trash-items'),st=document.getElementById('trash-status');
       if(!box)return;
-      if(empty){
+      // Primero los iconos de escritorio eliminados (restaurables), luego los archivos míticos
+      let html=deskDel.map(a=>`<div class="drive-item trash-desk" data-app="${a.id}" role="button" tabindex="0" aria-label="${a.label}" title="Doble clic para restaurar al escritorio">
+        <div class="drive-icon">${a.icon}</div>
+        <div class="drive-label">${a.label}</div>
+        <div class="trash-size">icono de escritorio</div>
+      </div>`).join('');
+      if(!empty)html+=TRASH_ITEMS.map((f,i)=>`<div class="drive-item trash-file" data-i="${i}" role="button" tabindex="0" aria-label="${f.name}">
+        <div class="drive-icon">${f.icon}</div>
+        <div class="drive-label" style="word-break:break-all">${f.name}</div>
+        <div class="trash-size">${f.size}</div>
+      </div>`).join('');
+      if(!html){
         box.innerHTML='<div class="trash-empty">La papelera está vacía.<br><span style="font-size:10px;opacity:.7">Qué sensación de orden, ¿verdad?</span></div>';
-        if(st)st.textContent='0 elementos';
       }else{
-        box.innerHTML=TRASH_ITEMS.map((f,i)=>`<div class="drive-item trash-file" data-i="${i}" role="button" tabindex="0" aria-label="${f.name}">
-          <div class="drive-icon">${f.icon}</div>
-          <div class="drive-label" style="word-break:break-all">${f.name}</div>
-          <div class="trash-size">${f.size}</div>
-        </div>`).join('');
-        if(st)st.textContent=TRASH_ITEMS.length+' elementos';
+        box.innerHTML=html;
+        box.querySelectorAll('.trash-desk').forEach(el=>{
+          el.onclick=()=>{box.querySelectorAll('.drive-item').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');};
+          el.ondblclick=()=>deskRestoreFromTrash(el.dataset.app);
+          el.addEventListener('keydown',(e)=>{if(e.key==='Enter'){e.preventDefault();deskRestoreFromTrash(el.dataset.app);}});
+        });
         box.querySelectorAll('.trash-file').forEach(el=>{
-          el.onclick=()=>{box.querySelectorAll('.trash-file').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');};
+          el.onclick=()=>{box.querySelectorAll('.drive-item').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');};
           el.ondblclick=()=>{
             const f=TRASH_ITEMS[+el.dataset.i];
             xpDialog('Error al restaurar',`<div style="font-size:28px">&#10060;</div><div>No se puede restaurar <b>${f.name}</b>:<br>el archivo se perdió en 2009 junto con el MSN Messenger.</div>`);
           };
         });
       }
+      if(st)st.textContent=(deskDel.length+(empty?0:TRASH_ITEMS.length))+' elementos';
       const vb=document.getElementById('trash-empty-btn'),rb=document.getElementById('trash-restore-btn');
-      if(vb)vb.disabled=empty;
-      if(rb)rb.disabled=!empty;
+      if(vb)vb.disabled=empty; // vaciar solo afecta a los archivos; los iconos se restauran, no se pierden
+      if(rb)rb.disabled=!empty&&!deskDel.length;
     };
     render();
+    _trashRender=render;
+    (win._cleanups=win._cleanups||[]).push(()=>{if(_trashRender===render)_trashRender=null;});
     document.getElementById('trash-empty-btn').onclick=()=>{
       if(trashEmptied())return;
       xpDialog('Confirmar eliminación',`<div style="font-size:28px">&#128465;&#65039;</div><div>¿Seguro que quieres eliminar definitivamente estos ${TRASH_ITEMS.length} elementos?<br><span style="opacity:.7">(Tranquilo: nada era importante.)</span></div>`,[
@@ -2740,6 +2775,8 @@ function openPapelera(){
     };
     document.getElementById('trash-restore-btn').onclick=()=>{
       Store.del('tos-trash');
+      Store.del('tos-desk-deleted'); // también devuelve los iconos al escritorio
+      initDesktop();
       playTone(300,0.08,'sine',0.4);
       setTimeout(()=>playTone(520,0.1,'sine',0.4),90);
       render();
@@ -3210,27 +3247,41 @@ function openProjectProps(pid){
 // ========== ICONOS DE ESCRITORIO ARRASTRABLES ==========
 function _iconPositions(){ try{return JSON.parse(Store.get('tos-icon-pos')||'{}');}catch(e){return{};} }
 function makeIconDraggable(icon,id){
-  let sx,sy,ox,oy,moved=false;
+  let sx,sy,ox,oy,moved=false,overTrash=false;
+  const trashEl=()=>document.querySelector('.desktop-icon[data-app="papelera"]');
   const move=(cx,cy)=>{
     if(!moved&&Math.hypot(cx-sx,cy-sy)<6)return;
     if(!moved){moved=true;icon.classList.add('dragging');icon.style.position='absolute';}
     const pr=icon.parentElement.getBoundingClientRect();
     icon.style.left=Math.max(0,Math.min(ox+cx-sx,pr.width-icon.offsetWidth))+'px';
     icon.style.top=Math.max(0,Math.min(oy+cy-sy,pr.height-icon.offsetHeight))+'px';
+    // Resaltar la papelera si el icono está encima (soltar ahí lo elimina)
+    const tr=trashEl();
+    if(tr&&id!=='papelera'){
+      const a=icon.getBoundingClientRect(),b=tr.getBoundingClientRect();
+      overTrash=a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+      tr.classList.toggle('drop-target',overTrash);
+    }
   };
   const mm=e=>move(e.clientX,e.clientY);
   const tm=e=>{move(e.touches[0].clientX,e.touches[0].clientY);if(moved)e.preventDefault();};
   const end=()=>{
     document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',end);
     document.removeEventListener('touchmove',tm);document.removeEventListener('touchend',end);
+    const tr=trashEl();
+    if(tr)tr.classList.remove('drop-target');
     if(moved){
-      const pos=_iconPositions();
-      pos[id]={x:parseInt(icon.style.left)||0,y:parseInt(icon.style.top)||0};
-      Store.set('tos-icon-pos',JSON.stringify(pos));
       icon.classList.remove('dragging');
       // El click que sigue al mouseup no debe abrir nada: fue un arrastre
       icon._justDragged=true;
       setTimeout(()=>{icon._justDragged=false;},0);
+      if(overTrash&&id!=='papelera'){
+        deskSendToTrash(id); // soltar sobre la papelera = eliminar del escritorio
+        return;
+      }
+      const pos=_iconPositions();
+      pos[id]={x:parseInt(icon.style.left)||0,y:parseInt(icon.style.top)||0};
+      Store.set('tos-icon-pos',JSON.stringify(pos));
     }
   };
   const begin=(cx,cy)=>{
@@ -3403,10 +3454,12 @@ function initDesktop(){
   const container=document.getElementById('desktop-icons');
   container.innerHTML='';
   const savedPos=_iconPositions();
-  // Dentro de la app instalada el icono "Instalar app" sobra
-  desktopApps.filter(app=>app.id!=='instalar'||!isStandalone()).forEach(app=>{
+  const deleted=_deskDeleted();
+  // Fuera: el icono Instalar dentro de la app instalada, y los iconos tirados a la papelera
+  desktopApps.filter(app=>(app.id!=='instalar'||!isStandalone())&&!deleted.includes(app.id)).forEach(app=>{
     const icon=document.createElement('div');
     icon.className='desktop-icon';
+    icon.dataset.app=app.id;
     const iconDiv=document.createElement('div');
     iconDiv.className='icon';
     iconDiv.innerHTML=app.icon;
@@ -3841,7 +3894,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.10.3</p>
+    <p>Versi&oacute;n 0.11.0</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -3866,6 +3919,22 @@ const WALLPAPERS=[
 // Aplica un fondo: "bliss" muestra el SVG vectorial; el resto lo oculta
 // (antes el SVG opaco tapaba cualquier fondo elegido)
 function applyWallpaper(wpId){
+  // "paint": el dibujo del usuario guardado desde Paint (data URL en Store)
+  if(wpId==='paint'){
+    const data=Store.get('tos-wp-paint');
+    if(!data)return;
+    const psvg=document.getElementById('xp-bg');
+    const pbg=document.getElementById('desktop-bg');
+    if(psvg)psvg.style.display='none';
+    if(pbg){
+      pbg.style.background='#3a6ea5'; // el shorthand resetea los longhands de otros fondos
+      pbg.style.backgroundImage='url("'+data+'")';
+      pbg.style.backgroundSize='cover';
+      pbg.style.backgroundPosition='center';
+      pbg.style.backgroundRepeat='no-repeat';
+    }
+    return;
+  }
   const wp=WALLPAPERS.find(w=>w.id===wpId);
   if(!wp)return;
   const svg=document.getElementById('xp-bg');
@@ -3904,6 +3973,9 @@ function openSettings(){
   wallpapers.forEach(w=>{
     wpHTML+=`<div class="wallpaper-option" data-wp="${w.id}" style="background:${w.css}" title="${w.label}"></div>`;
   });
+  // Si hay un dibujo de Paint guardado, aparece como fondo elegible
+  const paintWP=Store.get('tos-wp-paint');
+  if(paintWP)wpHTML+=`<div class="wallpaper-option" data-wp="paint" style="background-image:url('${paintWP}');background-size:cover;background-position:center" title="Mi dibujo de Paint"></div>`;
   const content=`<div class="settings-panel">
     <div class="settings-tabs">
       <div class="settings-tab active" data-tab="wp">&#127748; Fondo</div>
@@ -4122,6 +4194,8 @@ function resetSettings(){
   Store.del('tos-scrsv-min');
   Store.del('tos-startup-sound');
   Store.del('tos-icon-pos');
+  Store.del('tos-wp-paint');
+  Store.del('tos-desk-deleted');
   const dbg=document.getElementById('desktop-bg');
   if(dbg){dbg.style.background='';dbg.style.filter='';}
   document.getElementById('desktop').style.background='';
@@ -4534,6 +4608,7 @@ function openPaint(){
           <button class="game-btn" id="paint-undo" style="padding:2px 6px;font-size:10px;margin:0" title="Deshacer">&#8617;</button>
           <button class="game-btn" id="paint-clear" style="padding:2px 6px;font-size:10px;margin:0">Limpiar</button>
           <button class="game-btn" id="paint-save" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#40c040,#208020)">Descargar</button>
+          <button class="game-btn" id="paint-wallpaper" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#4a90d8,#1f5fa8)" title="Establecer el dibujo como fondo de escritorio">&#128444;&#65039; Fondo</button>
         </div>
       </div>
     </div>
@@ -4796,6 +4871,17 @@ function openPaint(){
       link.download='paint-dibujo-'+Date.now()+'.png';
       link.href=canvas.toDataURL('image/png');
       link.click();
+    };
+    // Establecer el dibujo como fondo de escritorio (persistido; se cambia desde Ajustes)
+    document.getElementById('paint-wallpaper').onclick=()=>{
+      try{
+        Store.set('tos-wp-paint',canvas.toDataURL('image/png'));
+        Store.set('tos-wp','paint');
+        applyWallpaper('paint');
+        const sb=document.querySelector('#'+id+' .window-statusbar');
+        if(sb)sb.textContent='¡Dibujo establecido como fondo de escritorio! (se cambia desde Ajustes)';
+        playTone(523,0.1,'sine',0.4);setTimeout(()=>playTone(784,0.14,'sine',0.4),110);
+      }catch(e){}
     };
     
     // Keyboard shortcuts
