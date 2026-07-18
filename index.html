@@ -24,6 +24,19 @@
 <meta name="twitter:title" content="Torrecillas OS — un escritorio XP en tu navegador">
 <meta name="twitter:description" content="12 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
 <meta name="twitter:image" content="https://torrecillas.cat/og.png">
+<!-- Datos estructurados para buscadores (schema.org) -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 12 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
+  {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/"},
+  {"@type":"ItemList","@id":"https://torrecillas.cat/#proyectos","name":"Proyectos","itemListElement":[
+    {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Woodpecker's","url":"https://woodpeckers.es","description":"Web oficial de la hamburguesería Woodpecker's de Gavà"}},
+    {"@type":"ListItem","position":2,"item":{"@type":"WebSite","name":"Restaurante Tottori","url":"https://tottorigava.es","description":"Web del restaurante japonés Tottori de Gavà"}},
+    {"@type":"ListItem","position":3,"item":{"@type":"WebSite","name":"Miami Lounge","url":"https://miamilounge.es","description":"Web del Miami Lounge Bar de Miami Platja"}},
+    {"@type":"ListItem","position":4,"item":{"@type":"WebApplication","name":"SolutionCar","url":"https://solutioncar.torrecillas.cat","description":"Aplicación de gestión de vehículos","applicationCategory":"BusinessApplication"}}
+  ]}
+]}
+</script>
 <!-- Instalación como app (PWA): iOS toma el icono de este archivo; el manifest se inyecta en runtime -->
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -321,6 +334,33 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 .records-table .rec-ic{width:26px;font-size:16px;text-align:center}
 .records-table .rec-val{text-align:right;font-weight:bold;color:#1a4fa0;white-space:nowrap}
 .records-table .rec-val.empty{color:#999;font-weight:normal}
+
+/* MSN Messenger (easter egg) */
+.msn-head{display:flex;align-items:center;gap:9px;padding:8px 10px;background:linear-gradient(180deg,#f4f8ff,#d7e6f9);border-bottom:1px solid #a8bcd8}
+.msn-ava{width:38px;height:38px;flex-shrink:0;border-radius:6px;background:linear-gradient(180deg,#bfe6ff,#7fb8e8);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid #7a9cc0}
+.msn-status{font-size:10px;color:#567;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#msn-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#7ebd2f;margin-right:3px}
+#msn-msgs{flex:1;overflow:auto;padding:10px;background:#fff;font-size:12px}
+.msn-line{margin-bottom:8px}
+.msn-who{color:#16569e;font-weight:bold;font-size:11px;display:block}
+.msn-line.me .msn-who{color:#8b2500}
+.msn-txt{margin:2px 0 0 8px;color:#222;line-height:1.45;word-break:break-word}
+.msn-sys{font-size:10px;color:#888;font-style:italic;margin:6px 0;text-align:center}
+.msn-typing{font-size:10px;color:#888;font-style:italic;padding:2px 0}
+.msn-inputrow{display:flex;gap:5px;padding:7px 8px;border-top:1px solid #a8bcd8;background:#e8eff9}
+#msn-input{flex:1;min-width:0;border:1px solid #9ab;border-radius:3px;padding:5px 7px;font-family:inherit;font-size:12px;outline:none}
+@keyframes msnShake{0%,100%{margin-left:0;margin-top:0}20%{margin-left:-6px;margin-top:3px}40%{margin-left:5px;margin-top:-4px}60%{margin-left:-4px;margin-top:-3px}80%{margin-left:4px;margin-top:3px}}
+.window.msn-shake{animation:msnShake .5s linear}
+/* Icono de bandeja: muñeco clásico por defecto; con mensaje sin leer alterna muñeco ↔ globo */
+#tray-msn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px}
+#tray-msn svg{display:block}
+#tray-msn .tm-balloon{display:none}
+#tray-msn.unread.alt .tm-buddy{display:none}
+#tray-msn.unread.alt .tm-balloon{display:inline}
+/* En móvil, que la barra de escritura no quede pegada a la barra de tareas */
+@media (max-width:600px){
+  .msn-inputrow{padding-bottom:calc(34px + env(safe-area-inset-bottom,0px))}
+}
 
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:46px;z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
@@ -1637,7 +1677,9 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 @media(max-width:600px){
   #start-menu{width:calc(100% - 10px);left:0;right:10px;border-radius:8px 0 0 0}
   .window.game-window{width:calc(100% - 16px)!important;left:8px!important;top:8px!important;bottom:44px!important;height:auto!important;max-height:calc(100svh - 52px)!important;border-radius:8px}
-  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(100svh - 72px)!important;top:15%;border-radius:8px}
+  /* El tope de alto descuenta el top:15% para que el pie nunca quede bajo la taskbar (36px) + 12px de aire */
+  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(85svh - 48px)!important;top:15%;border-radius:8px}
+  .window:not(.game-window).maximized{max-height:calc(100svh - 36px)!important}
   .window .resize-handle{display:none}
   .game-container{padding:4px}
   .game-container canvas{max-width:95vw;max-height:38vh}
@@ -1878,7 +1920,7 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
     </button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons"><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> &#128246; &#128737;</div>
+      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> &#128246; &#128737;</div>
       <div id="clock" style="cursor:pointer" onclick="toggleCalendar()" role="button" tabindex="0" aria-label="Fecha y hora"></div>
     </div>
     <div id="volume-popup" style="display:none;position:fixed;bottom:40px;right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
@@ -1926,6 +1968,10 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
         <div class="start-item" role="button" tabindex="0" onclick="openImageViewer()">
           <div class="si-icon">&#128444;&#65039;</div>
           <div><div class="si-label">Visor de im&aacute;genes</div><div class="si-desc">Ver im&aacute;genes con zoom</div></div>
+        </div>
+        <div class="start-item" role="button" tabindex="0" onclick="openMSN()">
+          <div class="si-icon">&#128172;</div>
+          <div><div class="si-label">MSN Messenger</div><div class="si-desc">Un contacto sigue en l&iacute;nea</div></div>
         </div>
         <div class="start-item" role="button" tabindex="0" onclick="openTerminal()">
           <div class="si-icon">&#128421;&#65039;</div>
@@ -2274,6 +2320,8 @@ function enterDesktop(){
   restoreStickies();
   try{restoreSession();}catch(e){}
   setTimeout(maybeShowWelcomeTip,1200);
+  // Alejandro_Virtual "escribe" al rato de arrancar si aún no has abierto el Messenger
+  setTimeout(()=>{if(!_msnOpenedOnce&&!document.getElementById('msn-chat'))msnSetUnread(true);},20000);
   // La campanilla de inicio necesita un gesto del usuario (política de autoplay)
   const chime=()=>playStartupChime();
   document.addEventListener('pointerdown',chime,{once:true});
@@ -2720,7 +2768,7 @@ const SESSION_OPENERS={
   proyectos:()=>openProyectos(),juegazos:()=>openJuegazos(),juegos:()=>openGamesFolder(),
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
-  papelera:()=>openPapelera(),records:()=>openRecords()
+  papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -2786,6 +2834,7 @@ function openRecords(){
     </div>
     <div style="display:flex;align-items:center;gap:8px;padding:8px 10px">
       <span id="records-foot" style="flex:1;font-size:10px;color:#555"></span>
+      <button id="records-share" class="trash-btn">&#128228; Compartir</button>
       <button id="records-clear" class="trash-btn">Borrar récords</button>
     </div>
   </div>`;
@@ -2803,8 +2852,11 @@ function openRecords(){
       if(foot)foot.textContent=any?'Los récords se guardan en este navegador.':'Aún no hay récords... ¡a jugar!';
       const btn=document.getElementById('records-clear');
       if(btn)btn.disabled=!any;
+      const sh=document.getElementById('records-share');
+      if(sh)sh.disabled=!any;
     };
     render();
+    document.getElementById('records-share').onclick=shareRecords;
     document.getElementById('records-clear').onclick=()=>{
       xpDialog('Borrar récords','<div style="font-size:28px">&#127942;</div><div>¿Seguro que quieres borrar todos los récords?<br><span style="opacity:.7">Las leyendas no se borran... pero los récords sí.</span></div>',[
         {label:'Sí, borrar',primary:true,action:()=>{RECORD_DEFS.forEach(r=>Store.del(r.key));render();}},
@@ -2812,6 +2864,23 @@ function openRecords(){
       ]);
     };
   }});
+}
+
+// Compartir los récords: Web Share si existe, portapapeles si no, y diálogo como último recurso
+function shareRecords(){
+  const have=RECORD_DEFS.map(r=>({r,v:Store.get(r.key)})).filter(x=>x.v!==null);
+  if(!have.length)return;
+  const url=location.protocol.indexOf('http')===0?location.origin+location.pathname:'https://torrecillas.cat/';
+  const text='\u{1F3C6} Mis récords en Torrecillas OS:\n'+have.map(x=>'· '+x.r.label+': '+x.v+' '+x.r.unit).join('\n')+'\n¿Los superas? '+url;
+  const done=(msg)=>{const f=document.getElementById('records-foot');if(f)f.textContent=msg;};
+  const manual=()=>xpDialog('Compartir récords','<div style="font-size:28px">\u{1F3C6}</div><div style="white-space:pre-wrap;user-select:all">'+text.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))+'</div>');
+  if(navigator.share){
+    navigator.share({title:'Mis récords en Torrecillas OS',text}).then(()=>done('¡Compartido!')).catch(()=>{});
+  }else if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>done('Copiado al portapapeles: pégalo donde quieras.')).catch(manual);
+  }else{
+    manual();
+  }
 }
 
 // ========== GLOBO DE BIENVENIDA (solo la primera visita) ==========
@@ -2829,6 +2898,226 @@ function maybeShowWelcomeTip(){
   const sb=document.getElementById('start-btn');
   if(sb)sb.addEventListener('click',done,{once:true});
   setTimeout(done,15000);
+}
+
+// ========== MSN MESSENGER (easter egg de 2004) ==========
+const MSN_NICK='Alejandro_Virtual';
+const MSN_KEYWORDS=[
+  [/hola|buenas|hey|\bey\b|holi/i,'¡Ey, cuánto tiempo! Estaba defragmentando el disco, llevo 3 horas y va por el 62% :P'],
+  [/juego|jugar|snake|tetris|buscaminas|pong|arkanoid/i,'La carpeta Juegos es oro puro. El Buscaminas en difícil es IMPOSIBLE, te lo digo yo (H)'],
+  [/proyecto|web|portfolio|trabajo/i,'Mira la carpeta Proyectos: webs de restaurantes y hasta una app para gestionar coches (Y)'],
+  [/quien eres|quién eres|eres un bot/i,'Soy Alejandro_Virtual, el clon de 2004 del creador de este OS. Él está liado con los Proyectos; yo estoy SIEMPRE en línea xD'],
+  [/musica|música|cancion|canción|escuchando|daddy|yankee|gasolina|reggaeton|reggaetón/i,'Daddy Yankee es EL MEJOR, no se discute. Me estoy bajando el Barrio Fino enterito del eMule: 7%, quedan 13 días. La Gasolina ya cayó y la llevo en bucle desde el martes (H) ¡DALE!'],
+  [/adios|adiós|chao|bye|me voy|hasta luego/i,'Vale, me piro, que mi madre quiere el teléfono y se me corta internet. ¡Nos leemos! :)'],
+  [/jaja|jeje|lol|xd/i,'jajajaja XD me parto'],
+  [/msn|messenger/i,'El Messenger de verdad cerró en 2013... pero aquí seguimos, inmortales (H)'],
+  [/record|récord|puntos|salon|salón/i,'Los récords están en el Salón de la fama del menú Inicio. Los míos eran mejores, pero se borraron con el formateo :('],
+  [/zumbido/i,'Ni se te ocurra darle al botón del rayo... ¡NI SE TE OCURRA! >:(']
+];
+const MSN_FALLBACKS=[
+  '¿Sabías que todo este OS es UN solo archivo? Ni frameworks ni nada, flipa',
+  'Cámbiate el nick a algo tipo ~x_*NiCk*_x~ que es lo que se lleva ahora',
+  'Deja el ratón quieto 3 minutos y verás el salvapantallas de estrellas ;)',
+  'Escribe "crash" en el Símbolo del sistema... tú hazme caso :P',
+  'Estoy guardando esta conversación en un .txt para imprimirla, es histórica',
+  'brb, que se me ha colgado el explorer.exe otra vez'
+];
+let _msnLastFall=-1;
+function _msnPick(txt){
+  for(const[re,resp]of MSN_KEYWORDS)if(re.test(txt))return resp;
+  let i;do{i=Math.floor(Math.random()*MSN_FALLBACKS.length);}while(i===_msnLastFall&&MSN_FALLBACKS.length>1);
+  _msnLastFall=i;
+  return MSN_FALLBACKS[i];
+}
+// ---- Aviso de mensaje sin leer en la bandeja (muñeco ↔ globo alternando) ----
+let _msnBlinkInt=null,_msnWinId=null,_msnOpenedOnce=false;
+function msnSetUnread(on){
+  const t=document.getElementById('tray-msn');
+  if(!t)return;
+  if(on){
+    if(t.classList.contains('unread'))return;
+    t.classList.add('unread');
+    t.title='MSN Messenger — mensaje sin leer de '+MSN_NICK;
+    _msnBlinkInt=setInterval(()=>t.classList.toggle('alt'),600);
+  }else{
+    t.classList.remove('unread');t.classList.remove('alt');
+    t.title='MSN Messenger — '+MSN_NICK+' en línea';
+    if(_msnBlinkInt){clearInterval(_msnBlinkInt);_msnBlinkInt=null;}
+  }
+}
+// ---- Estados del contacto (rotan solos) y mensajes espontáneos ----
+const MSN_STATES={
+  online:{dot:'#7ebd2f',short:'En línea',text:'En línea · \u{1F3B5} Daddy Yankee - La Gasolina'},
+  away:{dot:'#f0ad00',short:'Ausente',text:'Ausente · salió a correr \u{1F3C3} vuelve en 5 min'},
+  busy:{dot:'#d04030',short:'No disponible',text:'No disponible · partida seria de Buscaminas'}
+};
+let _msnState='online',_msnStateLock=false,_msnAwayAutoSent=false,_msnLiveSay=null;
+const _msnPending=[];
+function msnUserName(){return Store.get('tos-msn-name')||'Tú';}
+function msnSetState(id,lock){
+  if(lock!==undefined)_msnStateLock=lock;
+  const st=MSN_STATES[id];
+  if(!st)return;
+  const prev=_msnState;
+  _msnState=id;_msnAwayAutoSent=false;
+  const dot=document.getElementById('msn-dot');
+  if(dot)dot.style.background=st.dot;
+  const txt=document.getElementById('msn-state-text');
+  if(txt)txt.textContent=st.text;
+  const t=document.getElementById('tray-msn');
+  if(t&&!t.classList.contains('unread'))t.title='MSN Messenger — '+MSN_NICK+' ('+st.short+')';
+  const msgs=document.getElementById('msn-msgs');
+  if(prev!==id&&msgs){msgs.innerHTML+='<div class="msn-sys">'+MSN_NICK+' ahora está '+st.short+'.</div>';msgs.scrollTop=msgs.scrollHeight;}
+}
+setInterval(()=>{ // el contacto vive su vida: a veces cambia de estado
+  if(_msnStateLock||Math.random()>=0.35)return;
+  const others=Object.keys(MSN_STATES).filter(s=>s!==_msnState);
+  msnSetState(others[Math.floor(Math.random()*others.length)]);
+},50000);
+const MSN_SPONTANEOUS=[
+  '¿Sigues ahí? Se te ve minimizado en el Messenger de la vida xD',
+  'He visto "Windows Vista.iso" en la papelera... ¿lo restauro? Es broma, JAMÁS',
+  'Casi bato mi récord del Buscaminas. Casi. He explotado en la segunda casilla :(',
+  'El eMule se me ha vuelto a colgar en el 7%. El Barrio Fino se resiste',
+  'Llevo un rato dándole a F5 en tu perfil y no te conectas. Ah no, que esto no es Fotolog xD',
+  '¿Has probado a escribir "bsod" en el terminal? Yo una vez y aún me tiemblan las manos'
+];
+// Si el chat está abierto lo dice en vivo; si no, queda pendiente y la bandeja parpadea
+function msnSpontaneous(){
+  const txt=MSN_SPONTANEOUS[Math.floor(Math.random()*MSN_SPONTANEOUS.length)];
+  if(_msnLiveSay){_msnLiveSay(txt);return;}
+  if(_msnPending.length<2)_msnPending.push(txt);
+  msnSetUnread(true);
+}
+(function _msnSpontLoop(){
+  setTimeout(()=>{
+    try{
+      const desk=document.getElementById('desktop');
+      if(desk&&desk.style.display==='block'&&!document.hidden)msnSpontaneous();
+    }catch(e){}
+    _msnSpontLoop();
+  },75000+Math.random()*60000);
+})();
+// El icono de la bandeja alterna el chat como un item de la barra de tareas:
+// cerrado→abrir, minimizado→restaurar, activo→minimizar, en segundo plano→traer al frente
+function toggleMSNFromTray(){
+  const root=document.getElementById('msn-chat');
+  if(!root){openMSN();return;}
+  const win=root.closest('.window');
+  if(!win)return;
+  const info=openWindows[win.id];
+  if(info&&info.minimized)restoreWindow(win.id);
+  else if(activeWindowId===win.id)minimizeWindow(win.id);
+  else focusWindow(win.id);
+}
+function openMSN(){
+  closeStartMenu();
+  if(focusExisting('msn-chat'))return;
+  const content=`<div id="msn-chat" style="display:flex;flex-direction:column;height:100%;background:#eaf2fb;font-family:Tahoma,sans-serif">
+    <div class="msn-head">
+      <div class="msn-ava">&#127939;</div>
+      <div style="min-width:0"><b style="font-size:12px">${MSN_NICK}</b>
+      <div class="msn-status"><span id="msn-dot"></span><span id="msn-state-text">En línea · &#127925; Daddy Yankee - La Gasolina</span></div></div>
+    </div>
+    <div id="msn-msgs" aria-live="polite"></div>
+    <div class="msn-inputrow">
+      <input id="msn-input" autocomplete="off" placeholder="Escribe un mensaje..." aria-label="Mensaje">
+      <button id="msn-nudge" class="trash-btn" title="Enviar zumbido" aria-label="Enviar zumbido">&#9889;</button>
+      <button id="msn-send" class="trash-btn">Enviar</button>
+    </div>
+  </div>`;
+  createWindow('MSN Messenger','&#128172;',360,470,content,{session:'msn',statusbar:false,onCreated:(id,win)=>{
+    const msgs=document.getElementById('msn-msgs'),inp=document.getElementById('msn-input');
+    const esc=s=>s.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+    // Emoticonos clásicos del Messenger
+    const emo=s=>s.replace(/:\)/g,'\u{1F642}').replace(/:\(/g,'\u{1F641}').replace(/:P/gi,'\u{1F61B}')
+      .replace(/\bxd\b/gi,'\u{1F606}').replace(/\(H\)/gi,'\u{1F60E}').replace(/\(Y\)/gi,'\u{1F44D}').replace(/>:\(/g,'\u{1F620}');
+    const scroll=()=>{msgs.scrollTop=msgs.scrollHeight;};
+    const add=(who,txt,cls)=>{msgs.innerHTML+=`<div class="msn-line ${cls}"><span class="msn-who">${esc(who)} dice:</span><div class="msn-txt">${emo(esc(txt))}</div></div>`;scroll();};
+    const sys=(txt)=>{msgs.innerHTML+=`<div class="msn-sys">${txt}</div>`;scroll();};
+    const shake=()=>{win.classList.add('msn-shake');setTimeout(()=>win.classList.remove('msn-shake'),550);};
+    const buzz=()=>{playTone(70,0.22,'sawtooth',0.6);setTimeout(()=>playTone(62,0.22,'sawtooth',0.55),110);};
+    let typingEl=null;
+    const dingIn=()=>{playTone(1046.5,0.09,'sine',0.35);setTimeout(()=>playTone(1568,0.13,'sine',0.28),90);}; // el "ding" doble clásico
+    const botSay=(txt,delay)=>{
+      // Ausente tarda mucho en contestar; ocupado, un poco; en línea, lo normal
+      const st=_msnState;
+      const outer=delay!=null?delay:(st==='away'?600:350);
+      const inner=st==='away'?3200+Math.random()*1400:st==='busy'?1800+Math.random()*1200:700+Math.random()*800;
+      setTimeout(()=>{
+        if(!document.getElementById('msn-msgs'))return; // ventana cerrada
+        typingEl=document.createElement('div');
+        typingEl.className='msn-typing';
+        typingEl.textContent=MSN_NICK+' está escribiendo...';
+        msgs.appendChild(typingEl);scroll();
+        setTimeout(()=>{
+          if(!document.getElementById('msn-msgs'))return;
+          if(typingEl&&typingEl.parentNode)typingEl.remove();
+          add(MSN_NICK,txt,'bot');
+          dingIn();
+          // Si el chat no está a la vista, el mensaje queda "sin leer" y la bandeja parpadea
+          const info=openWindows[win.id];
+          if(!info||info.minimized||activeWindowId!==win.id)msnSetUnread(true);
+        },inner);
+      },outer);
+    };
+    const send=()=>{
+      const v=inp.value.trim();
+      if(!v)return;
+      add(msnUserName(),v,'me');
+      inp.value='';
+      // "me llamo X": el bot te recuerda para siempre (clave tos-msn-name)
+      const nm=v.match(/(?:me llamo|mi nombre es)\s+([\wÁÉÍÓÚÜÑáéíóúüñ][\wÁÉÍÓÚÜÑáéíóúüñ\- ]{1,15})/i);
+      if(nm){
+        const name=nm[1].trim().replace(/[.,;:!?]+$/,'').slice(0,16);
+        Store.set('tos-msn-name',name);
+        botSay('¡Encantado, '+name+'! Apuntado en la libreta, al lado de mis otros 47 contactos (Y)');
+        return;
+      }
+      // Ausente: auto-respuesta inmediata la primera vez; la de verdad llega cuando "vuelve"
+      if(_msnState==='away'&&!_msnAwayAutoSent){
+        _msnAwayAutoSent=true;
+        setTimeout(()=>{
+          if(!document.getElementById('msn-msgs'))return;
+          add(MSN_NICK,'Auto-respuesta: he salido a correr \u{1F3C3} deja tu mensaje después del zumbido... ¡ya vuelvo!','bot');
+          dingIn();
+        },350);
+      }
+      botSay(_msnPick(v));
+    };
+    document.getElementById('msn-send').onclick=send;
+    inp.addEventListener('keydown',(e)=>{if(e.key==='Enter'){e.preventDefault();send();}});
+    document.getElementById('msn-nudge').onclick=()=>{
+      sys('Has enviado un zumbido.');
+      shake();buzz();
+      setTimeout(()=>{
+        if(!document.getElementById('msn-msgs'))return;
+        sys(MSN_NICK+' te ha enviado un zumbido.');
+        shake();buzz();
+        botSay('¡¿Zumbidos a mí?! Toma DOS. Así aprenderás >:(',200);
+      },1400);
+    };
+    sys(MSN_NICK+' ha iniciado sesión.');
+    // Sonido de conexión (el tririrín de contacto conectado)
+    playTone(523.25,0.09,'sine',0.3);setTimeout(()=>playTone(659.25,0.09,'sine',0.3),110);setTimeout(()=>playTone(783.99,0.14,'sine',0.3),220);
+    const uname=msnUserName();
+    botSay('¡Hombre'+(uname!=='Tú'?', '+uname:'')+', por fin te conectas! ¿Un duelo al Buscaminas o vienes a ver los Proyectos? :)',500);
+    setTimeout(()=>inp.focus(),80);
+    _msnWinId=id;_msnOpenedOnce=true;
+    msnSetUnread(false);
+    msnSetState(_msnState); // pinta el punto y el texto de estado actuales en la cabecera
+    _msnLiveSay=(txt)=>botSay(txt);
+    // Los mensajes que dejó mientras el chat estaba cerrado se entregan al abrir
+    if(_msnPending.length){
+      const pend=_msnPending.splice(0);
+      setTimeout(()=>{
+        if(!document.getElementById('msn-msgs'))return;
+        sys('Mientras no estabas, te escribió:');
+        pend.forEach((m,i)=>setTimeout(()=>{if(document.getElementById('msn-msgs')){add(MSN_NICK,m,'bot');dingIn();}},i*500+200));
+      },2600);
+    }
+    (win._cleanups=win._cleanups||[]).push(()=>{if(_msnWinId===id)_msnWinId=null;_msnLiveSay=null;});
+  }});
 }
 
 // ========== PROPIEDADES DE PROYECTO (portfolio) ==========
@@ -3223,6 +3512,7 @@ function focusWindow(id){
   document.querySelectorAll('.window').forEach(w=>w.classList.remove('focused'));
   const win=document.getElementById(id);
   if(win){win.classList.add('focused');win.style.zIndex=++windowZIndex;activeWindowId=id;}
+  if(id===_msnWinId)msnSetUnread(false); // ver el chat marca los mensajes como leídos
   updateTaskbar();
 }
 
@@ -3252,6 +3542,7 @@ function toggleMaximize(id){
     win.style.top=info.prevBounds.top;
     win.style.width=info.prevBounds.width;
     win.style.height=info.prevBounds.height;
+    win.classList.remove('maximized');
     info.maximized=false;
   }else{
     info.prevBounds={left:win.style.left,top:win.style.top,width:win.style.width,height:win.style.height};
@@ -3259,6 +3550,7 @@ function toggleMaximize(id){
     win.style.top='0';
     win.style.width='100%';
     win.style.height='calc(100svh - 36px)';
+    win.classList.add('maximized');
     info.maximized=true;
   }
   saveSession();
@@ -3382,9 +3674,11 @@ function applySnap(win,kind){
   const info=openWindows[win.id];
   if(kind==='max'){
     if(info&&!info.maximized){info.prevBounds={left:win.style.left,top:win.style.top,width:win.style.width,height:win.style.height};info.maximized=true;}
+    win.classList.add('maximized');
     win.style.left='0';win.style.top='0';win.style.width='100%';win.style.height='calc(100svh - 36px)';
   }else{
     if(info)info.maximized=false;
+    win.classList.remove('maximized');
     win.style.left=kind==='right'?'50%':'0';win.style.top='0';win.style.width='50%';win.style.height='calc(100svh - 36px)';
   }
 }
@@ -3484,7 +3778,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.8.0</p>
+    <p>Versi&oacute;n 0.10.0</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -4044,7 +4338,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
