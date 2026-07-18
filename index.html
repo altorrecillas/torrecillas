@@ -2992,10 +2992,11 @@ function msnSpontaneous(){
   msnSetUnread(true);
 }
 // ---- Salir de MSN (cierra el programa y quita el icono de la bandeja) ----
-let _msnQuitFlag=false;
+let _msnQuitFlag=false,_msnHistory=''; // el historial sobrevive al cerrar con la X; Salir lo borra
 function msnQuit(){
   const root=document.getElementById('msn-chat');
   if(root){const win=root.closest('.window');if(win)closeWindow(win.id);}
+  _msnHistory='';
   _msnQuitFlag=true;
   msnSetUnread(false);
   _msnPending.length=0;
@@ -3145,11 +3146,17 @@ function openMSN(){
         botSay('¡¿Zumbidos a mí?! Toma DOS. Así aprenderás >:(',200);
       },1400);
     };
-    sys(MSN_NICK+' ha iniciado sesión.');
-    // Sonido de conexión (el tririrín de contacto conectado)
-    playTone(523.25,0.09,'sine',0.3);setTimeout(()=>playTone(659.25,0.09,'sine',0.3),110);setTimeout(()=>playTone(783.99,0.14,'sine',0.3),220);
-    const uname=msnUserName();
-    botSay('¡Hombre'+(uname!=='Tú'?', '+uname:'')+', por fin te conectas! ¿Un duelo al Buscaminas o vienes a ver los Proyectos? :)',500);
+    if(_msnHistory){
+      // Cerrar con la X no borra nada: la conversación sigue donde estaba
+      msgs.innerHTML=_msnHistory;
+      scroll();
+    }else{
+      sys(MSN_NICK+' ha iniciado sesión.');
+      // Sonido de conexión (el tririrín de contacto conectado)
+      playTone(523.25,0.09,'sine',0.3);setTimeout(()=>playTone(659.25,0.09,'sine',0.3),110);setTimeout(()=>playTone(783.99,0.14,'sine',0.3),220);
+      const uname=msnUserName();
+      botSay('¡Hombre'+(uname!=='Tú'?', '+uname:'')+', por fin te conectas! ¿Un duelo al Buscaminas o vienes a ver los Proyectos? :)',500);
+    }
     setTimeout(()=>inp.focus(),80);
     _msnWinId=id;_msnOpenedOnce=true;
     msnSetUnread(false);
@@ -3165,7 +3172,13 @@ function openMSN(){
         pend.forEach((m,i)=>setTimeout(()=>{if(document.getElementById('msn-msgs')){add(MSN_NICK,m,'bot');dingIn();}},i*500+200));
       },2600);
     }
-    (win._cleanups=win._cleanups||[]).push(()=>{if(_msnWinId===id)_msnWinId=null;_msnLiveSay=null;});
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      // Guardar la conversación antes de que la ventana desaparezca (sin el "escribiendo...")
+      const m=document.getElementById('msn-msgs');
+      if(m){m.querySelectorAll('.msn-typing').forEach(x=>x.remove());_msnHistory=m.innerHTML;}
+      if(_msnWinId===id)_msnWinId=null;
+      _msnLiveSay=null;
+    });
   }});
 }
 
@@ -3828,7 +3841,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.10.2</p>
+    <p>Versi&oacute;n 0.10.3</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
