@@ -423,6 +423,49 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
 .pl-item.sel{background:#2440a0;color:#fff}
 .pl-item.active{color:#fff;text-shadow:0 0 4px rgba(255,255,255,.4)}
 
+/* WordArt */
+.wart-style{font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer}
+.wart-style.active{border-color:#0054e3;background:linear-gradient(180deg,#e8f0fd,#cfe0f7);font-weight:bold}
+
+/* Reproductor de vídeo (WMP casero) */
+#wmp-root{display:flex;flex-direction:column;height:100%;background:linear-gradient(180deg,#2c3e6b,#16203d);padding:7px;gap:6px;font-family:Tahoma,sans-serif;color:#cdd6ea}
+.wmp-screen{flex:1;min-height:0;position:relative;background:#000;border:2px solid;border-color:#0a0f1e #4a5a8a #4a5a8a #0a0f1e;display:flex;align-items:center;justify-content:center}
+#wmp-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.wmp-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#5a7ac0;font-size:40px}
+.wmp-ph span{font-size:12px;color:#8fa4d8}
+.wmp-title{font-size:11px;color:#cdd6ea;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.wmp-controls{display:flex;gap:4px;align-items:center}
+.wmp-time{flex:1;text-align:center;font-family:'Consolas',monospace;font-size:11px;color:#9fe08a}
+
+/* Temas completos (afectan al chrome; el fondo se elige aparte) */
+body.theme-classic .window{border-radius:0;border-color:#7b7b7b!important}
+body.theme-classic .window-titlebar{border-radius:0}
+body.theme-classic .window.focused .window-titlebar{background:linear-gradient(90deg,#000080,#1084d0)!important}
+body.theme-classic .window:not(.focused) .window-titlebar{background:linear-gradient(90deg,#808080,#b5b5b5)!important}
+body.theme-classic #taskbar{background:#c0c0c0!important;border-top:1px solid #fff}
+body.theme-classic #start-btn{background:#c0c0c0!important;color:#000;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0}
+body.theme-classic .taskbar-item{background:#c0c0c0!important;color:#000!important;text-shadow:none;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0}
+body.theme-classic .taskbar-item.active{border-color:#404040 #fff #fff #404040}
+body.theme-classic #system-tray{background:#c0c0c0!important;color:#000!important;box-shadow:none;border-left:2px solid #808080}
+body.theme-classic #system-tray #clock{color:#000}
+body.theme-classic #start-menu{border-radius:0;border-color:#808080}
+body.theme-classic .start-header{background:linear-gradient(90deg,#000080,#1084d0)!important}
+body.theme-olive .window{border-color:#6f7d43!important}
+body.theme-olive .window.focused .window-titlebar{background:linear-gradient(180deg,#b6c383,#7a8a4a 40%,#5e6b3c)!important}
+body.theme-olive #taskbar{background:linear-gradient(180deg,#a8b871 0%,#7d8d4c 50%,#5f6e3a 100%)!important}
+body.theme-olive #system-tray{background:linear-gradient(180deg,#8d9d5c,#6c7c42)!important;border-left-color:rgba(0,0,0,.25)}
+body.theme-olive #start-menu{border-color:#5e6b3c}
+body.theme-olive .start-header{background:linear-gradient(180deg,#a8b871,#6f7d43)!important}
+body.theme-silver .window{border-color:#7f7f94!important}
+body.theme-silver .window.focused .window-titlebar{background:linear-gradient(180deg,#f4f4f8,#b9b9c8 45%,#8f8fa4)!important}
+body.theme-silver .window.focused .window-titlebar .window-title{color:#1a1a2a;text-shadow:none}
+body.theme-silver #taskbar{background:linear-gradient(180deg,#dcdce6 0%,#b0b0c0 50%,#8a8a9e 100%)!important}
+body.theme-silver #system-tray{background:linear-gradient(180deg,#c2c2d0,#9898ac)!important;color:#222!important}
+body.theme-silver #system-tray #clock{color:#222}
+body.theme-silver #start-menu{border-color:#8a8a9e}
+body.theme-silver .start-header{background:linear-gradient(180deg,#dcdce6,#9c9cb0)!important}
+body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
+
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:46px;z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
 #welcome-tip::after{content:'';position:absolute;bottom:-9px;left:26px;border:9px solid transparent;border-top-color:#ffffe1;border-bottom:none}
@@ -2037,6 +2080,14 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
             <div class="si-icon">&#9889;</div>
             <div><div class="si-label">Winamp</div></div>
           </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openVideo()">
+            <div class="si-icon">&#127916;</div>
+            <div><div class="si-label">Reproductor de v&iacute;deo</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openWordArt()">
+            <div class="si-icon">&#127344;&#65039;</div>
+            <div><div class="si-label">WordArt</div></div>
+          </div>
           <div class="start-item" role="button" tabindex="0" onclick="openDefrag()">
             <div class="si-icon">&#128189;</div>
             <div><div class="si-label">Desfragmentador</div></div>
@@ -2929,7 +2980,7 @@ const SESSION_OPENERS={
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
-  defrag:()=>openDefrag(),player:()=>openPlayer()
+  defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3726,6 +3777,282 @@ function openPlayer(){
   }});
 }
 
+// ========== CASCADA DEL SOLITARIO (el premio clásico, con estela) ==========
+function solitaireCascade(){
+  if(document.getElementById('cascade'))return;
+  const c=document.createElement('canvas');
+  c.id='cascade';
+  c.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:9750;pointer-events:none';
+  document.body.appendChild(c);
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const ctx=c.getContext&&c.getContext('2d');
+  const SUITS=['♠','♥','♦','♣'];
+  const cards=[];
+  let spawned=0,alive=true;
+  const iv=setInterval(()=>{
+    if(spawned>=52)return;
+    const s=spawned%4;
+    cards.push({x:c.width*0.2+Math.random()*c.width*0.6,y:50+Math.random()*90,vx:(Math.random()*6-3)||2.2,vy:-(2+Math.random()*4),suit:SUITS[s],red:s===1||s===2,done:false});
+    spawned++;
+  },90);
+  const end=()=>{
+    if(!alive)return;
+    alive=false;clearInterval(iv);c.remove();
+    document.removeEventListener('pointerdown',end);
+    document.removeEventListener('keydown',end);
+  };
+  const step=()=>{
+    if(!alive)return;
+    if(ctx){
+      for(const cd of cards){
+        if(cd.done)continue;
+        cd.vy+=0.5;cd.x+=cd.vx;cd.y+=cd.vy;
+        if(cd.y>c.height-96){cd.y=c.height-96;cd.vy*=-0.75;if(Math.abs(cd.vy)<1.5)cd.vy=-(6+Math.random()*6);}
+        if(cd.x<-70||cd.x>c.width+70)cd.done=true;
+        // Se pinta SIN borrar el fotograma anterior: la estela mítica
+        ctx.fillStyle='#fff';ctx.fillRect(cd.x,cd.y,66,90);
+        ctx.strokeStyle='#333';ctx.strokeRect(cd.x+0.5,cd.y+0.5,65,89);
+        ctx.fillStyle=cd.red?'#c22':'#111';
+        ctx.font='bold 30px Georgia,serif';
+        ctx.fillText(cd.suit,cd.x+20,cd.y+58);
+      }
+    }
+    if(spawned>=52&&cards.every(cd=>cd.done)){end();return;}
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+  setTimeout(()=>{
+    document.addEventListener('pointerdown',end,{once:true});
+    document.addEventListener('keydown',end,{once:true});
+  },600);
+  setTimeout(end,30000);
+}
+
+// ========== MI PC (unidades y propiedades del sistema) ==========
+function openMiPC(){
+  closeStartMenu();
+  if(focusExisting('mipc-content'))return;
+  const drives=[
+    {icon:'&#128189;',label:'Disco local (C:)',id:'c'},
+    {icon:'&#128191;',label:'CD-ROM (D:)',id:'d'},
+    {icon:'&#128190;',label:'Disquete 3&frac12; (A:)',id:'a'},
+    {icon:'&#128193;',label:'Proyectos',id:'proyectos'},
+    {icon:'&#128377;',label:'Juegos',id:'juegos'}
+  ];
+  const items=drives.map(d=>`<div class="drive-item" data-drive="${d.id}" role="button" tabindex="0" aria-label="${d.label}"><div class="drive-icon">${d.icon}</div><div class="drive-label">${d.label}</div></div>`).join('');
+  const content=`<div style="display:flex;flex-direction:column;height:100%;background:#fff">
+    <div style="flex-shrink:0;display:flex;gap:6px;padding:6px 8px;border-bottom:1px solid #aca899;background:#ece9d8">
+      <button id="mipc-props" class="trash-btn">&#9881;&#65039; Propiedades del sistema</button>
+    </div>
+    <div class="computer-content" id="mipc-content" style="flex:1;overflow:auto;align-content:flex-start">${items}</div>
+  </div>`;
+  createWindow('Mi PC','&#128421;&#65039;',560,360,content,{session:'mipc',onCreated:(id,win)=>{
+    const abrir={
+      c:()=>xpDialog('Disco local (C:)','<div style="font-size:28px">&#128189;</div><div>Capacidad: 4,3 GB &middot; Libre: 612 MB<div style="margin:6px 0;height:12px;border:1px solid #888;background:#fff"><div style="height:100%;width:86%;background:linear-gradient(180deg,#4a90d8,#1f5fa8)"></div></div><span style="opacity:.7;font-size:11px">El 86% son fotos de 2004 sin ordenar.</span></div>'),
+      d:()=>xpDialog('CD-ROM (D:)','<div style="font-size:28px">&#128191;</div><div>No hay ning&uacute;n disco en la unidad.<br><span style="opacity:.7">(El CD de Encarta 99 se lo qued&oacute; un primo.)</span></div>'),
+      a:()=>xpDialog('Disquete 3&frac12; (A:)','<div style="font-size:28px">&#128190;</div><div><b>A:\\ no est&aacute; accesible.</b><br>El dispositivo no est&aacute; preparado.<br><span style="opacity:.7">Nunca lo estuvo. Nunca lo estar&aacute;.</span></div>'),
+      proyectos:()=>openProyectos(),
+      juegos:()=>openGamesFolder()
+    };
+    win.querySelectorAll('.drive-item[data-drive]').forEach(el=>{
+      el.onclick=()=>{if(abrir[el.dataset.drive])abrir[el.dataset.drive]();};
+    });
+    document.getElementById('mipc-props').onclick=()=>{
+      const up=Math.floor(((typeof performance!=='undefined'&&performance.now)?performance.now():0)/60000);
+      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.15<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
+    };
+  }});
+}
+
+// ========== WORDART (el generador de portadas de trabajos) ==========
+const WORDART_STYLES=[
+  {id:'rainbow',label:'Arco iris'},
+  {id:'gold',label:'Dorado 3D'},
+  {id:'neon',label:'Neón'},
+  {id:'red',label:'Clásico rojo'},
+  {id:'wave',label:'Ola piscina'},
+  {id:'metal',label:'Metal azul'}
+];
+function drawWordArt(canvas,text,style){
+  const ctx=canvas.getContext&&canvas.getContext('2d');
+  if(!ctx)return;
+  const W=760,H=300;
+  canvas.width=W;canvas.height=H;
+  text=(text||'TU TEXTO').slice(0,24);
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  if(style==='neon'){ctx.fillStyle='#0d0d20';}else{ctx.fillStyle='#fff';}
+  ctx.fillRect(0,0,W,H);
+  if(style==='rainbow'){
+    // Texto arqueado con cada letra de un color del arco iris
+    const chars=[...text];
+    const R=340,cx=W/2,cy=H/2+R-70;
+    const span=Math.min(2.2,0.14*chars.length);
+    ctx.font='bold 68px Impact,Haettenschweiler,sans-serif';
+    chars.forEach((ch,i)=>{
+      const a=-span/2+span*(chars.length===1?0.5:i/(chars.length-1));
+      ctx.save();
+      ctx.translate(cx+Math.sin(a)*R,cy-Math.cos(a)*R);
+      ctx.rotate(a);
+      ctx.fillStyle='hsl('+Math.round(i/Math.max(1,chars.length-1)*300)+',90%,48%)';
+      ctx.strokeStyle='#222';ctx.lineWidth=2;
+      ctx.strokeText(ch,0,0);ctx.fillText(ch,0,0);
+      ctx.restore();
+    });
+  }else if(style==='gold'){
+    ctx.font='bold 86px Georgia,serif';
+    for(let d=12;d>0;d--){ctx.fillStyle=d>6?'#5a4208':'#8a6a10';ctx.fillText(text,W/2+d,H/2+d);}
+    const g=ctx.createLinearGradient(0,H/2-50,0,H/2+50);
+    g.addColorStop(0,'#fff3b0');g.addColorStop(0.45,'#f0c420');g.addColorStop(0.55,'#c89000');g.addColorStop(1,'#8a6a00');
+    ctx.fillStyle=g;ctx.fillText(text,W/2,H/2);
+    ctx.strokeStyle='#5a4a00';ctx.lineWidth=1.5;ctx.strokeText(text,W/2,H/2);
+  }else if(style==='neon'){
+    ctx.font='italic bold 76px Arial,sans-serif';
+    ctx.shadowColor='#f0f';ctx.shadowBlur=26;
+    ctx.fillStyle='#f0f';ctx.fillText(text,W/2+4,H/2+4);
+    ctx.shadowColor='#0ff';ctx.shadowBlur=22;
+    ctx.fillStyle='#bffcff';ctx.fillText(text,W/2,H/2);
+    ctx.shadowBlur=0;
+  }else if(style==='red'){
+    ctx.font='bold 88px Impact,Haettenschweiler,sans-serif';
+    ctx.fillStyle='#9a9a9a';ctx.fillText(text,W/2+10,H/2+10);
+    ctx.fillStyle='#d02020';ctx.fillText(text,W/2,H/2);
+    ctx.strokeStyle='#600';ctx.lineWidth=2;ctx.strokeText(text,W/2,H/2);
+  }else if(style==='wave'){
+    const chars=[...text];
+    ctx.font='bold 62px Verdana,sans-serif';
+    const total=chars.length,step=Math.min(58,(W-80)/Math.max(1,total));
+    const x0=W/2-step*(total-1)/2;
+    chars.forEach((ch,i)=>{
+      const y=H/2+Math.sin(i*0.8)*26;
+      ctx.fillStyle=i%2?'#00a8c8':'#0868b8';
+      ctx.strokeStyle='#fff';ctx.lineWidth=5;
+      ctx.strokeText(ch,x0+i*step,y);ctx.fillText(ch,x0+i*step,y);
+    });
+  }else{ // metal
+    ctx.font='bold 84px Arial,sans-serif';
+    const g=ctx.createLinearGradient(0,H/2-46,0,H/2+46);
+    g.addColorStop(0,'#0a3a8a');g.addColorStop(0.49,'#cfe4ff');g.addColorStop(0.5,'#f8fbff');g.addColorStop(0.52,'#8ab0e0');g.addColorStop(1,'#0a2a6a');
+    ctx.fillStyle=g;ctx.fillText(text,W/2,H/2);
+    ctx.strokeStyle='#08204a';ctx.lineWidth=2;ctx.strokeText(text,W/2,H/2);
+  }
+}
+function openWordArt(){
+  closeStartMenu();
+  if(focusExisting('wordart-root'))return;
+  const chips=WORDART_STYLES.map((s,i)=>`<button class="wart-style${i===0?' active':''}" data-s="${s.id}">${s.label}</button>`).join('');
+  const content=`<div id="wordart-root" style="display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;font-size:11px;padding:8px;gap:7px">
+    <div style="display:flex;gap:6px;align-items:center">
+      <input id="wart-text" value="TORRECILLAS" maxlength="24" aria-label="Texto del WordArt" style="flex:1;min-width:0;border:1px solid #7da2ce;border-radius:3px;padding:5px 7px;font-family:inherit;font-size:12px">
+      <button id="wart-dl" class="trash-btn">&#11015;&#65039; Descargar PNG</button>
+    </div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap" id="wart-styles">${chips}</div>
+    <div style="flex:1;min-height:0;background:#fff;border:1px solid #aca899;display:flex;align-items:center;justify-content:center;overflow:hidden">
+      <canvas id="wart-canvas" style="max-width:100%;max-height:100%"></canvas>
+    </div>
+  </div>`;
+  createWindow('WordArt','&#127344;&#65039;',560,380,content,{session:'wordart',statusbar:false,onCreated:(id,win)=>{
+    const canvas=document.getElementById('wart-canvas');
+    const inp=document.getElementById('wart-text');
+    let style=WORDART_STYLES[0].id;
+    const redraw=()=>drawWordArt(canvas,inp.value.trim(),style);
+    inp.addEventListener('input',redraw);
+    win.querySelectorAll('.wart-style').forEach(b=>{
+      b.onclick=()=>{
+        win.querySelectorAll('.wart-style').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        style=b.dataset.s;
+        redraw();
+      };
+    });
+    document.getElementById('wart-dl').onclick=()=>{
+      try{
+        const a=document.createElement('a');
+        a.download='wordart-'+Date.now()+'.png';
+        a.href=canvas.toDataURL('image/png');
+        a.click();
+      }catch(e){}
+    };
+    redraw();
+  }});
+}
+
+// ========== REPRODUCTOR DE VÍDEO (WMP de andar por casa) ==========
+let _videoHook=null;
+function videoAddFiles(list){ if(_videoHook)_videoHook(list); }
+function openVideo(){
+  closeStartMenu();
+  if(focusExisting('wmp-root'))return;
+  const content=`<div id="wmp-root">
+    <div class="wmp-screen">
+      <video id="wmp-video" playsinline></video>
+      <div class="wmp-ph" id="wmp-ph">&#9654;<span>Abre un v&iacute;deo de tu equipo (&#128193;)</span></div>
+    </div>
+    <div class="wmp-title" id="wmp-title">Reproductor de v&iacute;deo</div>
+    <input type="range" class="wa-seek" id="wmp-seek" min="0" max="100" value="0" aria-label="Posici&oacute;n del v&iacute;deo">
+    <div class="wmp-controls">
+      <button class="wa-btn" id="wmp-play" title="Reproducir" aria-label="Reproducir">&#9654;</button>
+      <button class="wa-btn" id="wmp-pause" title="Pausa" aria-label="Pausa">&#10074;&#10074;</button>
+      <button class="wa-btn" id="wmp-stop" title="Detener" aria-label="Detener">&#9632;</button>
+      <span id="wmp-time" class="wmp-time">0:00</span>
+      <button class="wa-btn" id="wmp-full" title="Pantalla completa" aria-label="Pantalla completa">&#9974;</button>
+      <label class="wa-btn" for="wmp-file" role="button" tabindex="0" title="Abrir v&iacute;deo del equipo" aria-label="Abrir archivo de v&iacute;deo">&#128193;</label>
+      <input type="file" id="wmp-file" accept="video/*" style="display:none" aria-label="Abrir archivo de v&iacute;deo">
+    </div>
+  </div>`;
+  createWindow('Reproductor de vídeo','&#127916;',480,420,content,{session:'video',statusbar:false,onCreated:(id,win)=>{
+    const v=document.getElementById('wmp-video');
+    const ph=document.getElementById('wmp-ph');
+    const ttl=document.getElementById('wmp-title');
+    const seek=document.getElementById('wmp-seek');
+    const timeEl=document.getElementById('wmp-time');
+    let curUrl='';
+    const fmt=(s)=>{s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+    const openFiles=(files)=>{
+      const f=files&&files[0];
+      if(!f)return;
+      if(curUrl){try{URL.revokeObjectURL(curUrl);}catch(e){}}
+      try{curUrl=(window.URL&&URL.createObjectURL)?URL.createObjectURL(f):'';}catch(e){curUrl='';}
+      try{v.src=curUrl;v.volume=masterVolume;const pr=v.play();if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}
+      ttl.textContent=f.name||'vídeo';
+      ph.style.display='none';
+    };
+    document.getElementById('wmp-file').addEventListener('change',(e)=>{if(e.target.files&&e.target.files.length)openFiles(e.target.files);e.target.value='';});
+    _videoHook=openFiles;
+    document.getElementById('wmp-play').onclick=()=>{try{v.volume=masterVolume;const pr=v.play();if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}};
+    document.getElementById('wmp-pause').onclick=()=>{try{v.pause();}catch(e){}};
+    document.getElementById('wmp-stop').onclick=()=>{try{v.pause();v.currentTime=0;}catch(e){}};
+    document.getElementById('wmp-full').onclick=()=>{try{if(v.requestFullscreen)v.requestFullscreen();}catch(e){}};
+    seek.oninput=()=>{try{if(isFinite(v.duration)&&v.duration>0)v.currentTime=seek.value/100*v.duration;}catch(e){}};
+    v.addEventListener('timeupdate',()=>{
+      timeEl.textContent=fmt(v.currentTime)+(isFinite(v.duration)?' / '+fmt(v.duration):'');
+      if(document.activeElement!==seek&&isFinite(v.duration)&&v.duration>0)seek.value=Math.round(v.currentTime/v.duration*100);
+    });
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      try{v.pause();}catch(e){}
+      if(curUrl){try{URL.revokeObjectURL(curUrl);}catch(e){}}
+      _videoHook=null;
+    });
+  }});
+}
+
+// ========== TEMAS COMPLETOS DEL SISTEMA ==========
+const OS_THEMES=['luna','olive','silver','classic'];
+function applyTheme(t){
+  if(OS_THEMES.indexOf(t)<0)t='luna';
+  document.body.classList.remove('theme-olive','theme-silver','theme-classic');
+  if(t!=='luna')document.body.classList.add('theme-'+t);
+  Store.set('tos-theme',t);
+  // Un tema completo manda sobre los colores sueltos personalizados
+  if(t!=='luna'){
+    Store.del('tos-taskbar-color');Store.del('tos-window-color');
+    const tb=document.getElementById('taskbar'),sb=document.getElementById('start-btn');
+    if(tb)tb.style.background='';
+    if(sb)sb.style.background='';
+    const ws=document.getElementById('window-color-style');
+    if(ws)ws.remove();
+  }
+}
+
 // ========== NETSCAPE NAVIGATOR (navegador retro, funcional con iframe) ==========
 const NS_ICON='<svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg>';
 const NS_HOME_URL='about:home';
@@ -3936,6 +4263,7 @@ function makeIconDraggable(icon,id){
 
 // Desktop icons
 const desktopApps=[
+  {id:'mipc',label:'Mi PC',icon:'&#128421;&#65039;',action:()=>openMiPC()},
   {id:'proyectos',label:'Proyectos',icon:'&#128193;',action:()=>openProyectos()},
   {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',action:()=>openJuegazos()},
   {id:'juegos',label:'Juegos',icon:'&#128377;',action:()=>openGamesFolder()},
@@ -4536,7 +4864,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.14.0</p>
+    <p>Versi&oacute;n 0.15.0</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -4595,6 +4923,9 @@ function applyWallpaper(wpId){
 function loadSavedAppearance(){
   const savedWP=Store.get('tos-wp');
   if(savedWP)applyWallpaper(savedWP);
+  // El tema completo va primero; los colores sueltos solo aplican con el tema Luna
+  const savedTheme=Store.get('tos-theme');
+  if(savedTheme&&savedTheme!=='luna')applyTheme(savedTheme);
   const savedTC=Store.get('tos-taskbar-color');
   if(savedTC)applyTaskbarColor(savedTC);
   const savedWC=Store.get('tos-window-color');
@@ -4632,6 +4963,16 @@ function openSettings(){
       </div>
     </div>
     <div class="settings-section" id="settings-color">
+      <div class="settings-group">
+        <h3>&#128187; Tema del sistema</h3>
+        <p>El estilo completo de ventanas, barra y men&uacute;</p>
+        <div class="color-presets" id="theme-presets">
+          <div class="color-preset theme-chip" data-t="luna" title="Luna (XP azul)" style="background:linear-gradient(180deg,#3a6fe0,#1941a5)"></div>
+          <div class="color-preset theme-chip" data-t="olive" title="Luna Olive" style="background:linear-gradient(180deg,#a8b871,#5f6e3a)"></div>
+          <div class="color-preset theme-chip" data-t="silver" title="Luna Silver" style="background:linear-gradient(180deg,#e0e0ea,#8a8a9e)"></div>
+          <div class="color-preset theme-chip" data-t="classic" title="Windows Cl&aacute;sico" style="background:linear-gradient(90deg,#000080,#1084d0)"></div>
+        </div>
+      </div>
       <div class="settings-group">
         <h3>&#127912; Color de la barra de tareas</h3>
         <p>Personaliza el color principal de la barra inferior</p>
@@ -4792,6 +5133,11 @@ function openSettings(){
     if(savedWC){wcInput.value=savedWC;applyWindowColor(savedWC);
       document.querySelectorAll('#window-presets .color-preset').forEach(x=>{x.classList.toggle('active',x.dataset.c===savedWC);});
     }
+    // Tema del sistema
+    const themeChips=document.querySelectorAll('#theme-presets .theme-chip');
+    const markTheme=()=>{const cur=Store.get('tos-theme')||'luna';themeChips.forEach(c=>c.classList.toggle('active',c.dataset.t===cur));};
+    themeChips.forEach(c=>{c.onclick=()=>{applyTheme(c.dataset.t);markTheme();};});
+    markTheme();
     // Salvapantallas y campanilla de inicio
     const ssOn=document.getElementById('scrsv-on');
     const ssMin=document.getElementById('scrsv-min');
@@ -4842,6 +5188,7 @@ function resetSettings(){
   Store.del('tos-wp-paint');
   Store.del('tos-desk-deleted');
   Store.del('tos-ui-sounds');
+  Store.del('tos-theme');
   const dbg=document.getElementById('desktop-bg');
   if(dbg){dbg.style.background='';dbg.style.filter='';}
   document.getElementById('desktop').style.background='';
@@ -5121,7 +5468,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -5129,7 +5476,7 @@ function openTerminal(){
         case '':break;
         case 'help':print('Comandos: help, ver, dir, echo <txt>, date, cls, whoami, about, open <app>, juego <nombre>, juegos, proyectos, exit');break;
         case 'ver':print('Torrecillas OS [Versión 1.0]');break;
-        case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records, msn, netscape, player, defrag');break;
+        case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records, msn, netscape, winamp, video, wordart, defrag, mipc');break;
         case 'proyectos':print(proyectosApps.map(p=>p.label+' — '+p.link).join('\n'));break;
         case 'crash':case 'bsod':print('Iniciando volcado de memoria...');setTimeout(showBSOD,900);break;
         case 'echo':print(a);break;
@@ -5255,6 +5602,7 @@ function openPaint(){
           <button class="game-btn" id="paint-clear" style="padding:2px 6px;font-size:10px;margin:0">Limpiar</button>
           <button class="game-btn" id="paint-save" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#40c040,#208020)">Descargar</button>
           <button class="game-btn" id="paint-wallpaper" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#4a90d8,#1f5fa8)" title="Establecer el dibujo como fondo de escritorio">&#128444;&#65039; Fondo</button>
+          <button class="game-btn" id="paint-print" style="padding:2px 6px;font-size:10px;margin:0" title="Imprimir el dibujo">&#128424;&#65039; Imprimir</button>
         </div>
       </div>
     </div>
@@ -5527,6 +5875,16 @@ function openPaint(){
         const sb=document.querySelector('#'+id+' .window-statusbar');
         if(sb)sb.textContent='¡Dibujo establecido como fondo de escritorio! (se cambia desde Ajustes)';
         playTone(523,0.1,'sine',0.4);setTimeout(()=>playTone(784,0.14,'sine',0.4),110);
+      }catch(e){}
+    };
+    // Imprimir de verdad: solo el lienzo, vía iframe oculto
+    document.getElementById('paint-print').onclick=()=>{
+      try{
+        const fr=document.createElement('iframe');
+        fr.style.cssText='position:fixed;width:0;height:0;border:0';
+        fr.srcdoc='<img src="'+canvas.toDataURL('image/png')+'" style="max-width:100%" onload="setTimeout(function(){window.print();},60)">';
+        document.body.appendChild(fr);
+        setTimeout(()=>{try{fr.remove();}catch(e){}},5000);
       }catch(e){}
     };
     
@@ -5869,7 +6227,7 @@ function initSolitaire(){
       const c=g[0];if(c.s!==f||found[f].length+1!==c.r)return false;
       removeMoving();found[f].push(c);return true;
     }
-    function afterMove(){render();if(found.every(p=>p.length===13)){statusEl.textContent='¡Has ganado! 🎉';sfxWin();}}
+    function afterMove(){render();if(found.every(p=>p.length===13)){statusEl.textContent='¡Has ganado! 🎉';sfxWin();solitaireCascade();}}
     function autoFoundation(c,fromType,col,idx){
       if(found[c.s].length+1!==c.r)return;
       if(fromType==='waste'){if(waste[waste.length-1]!==c)return;sel={type:'waste'};}
