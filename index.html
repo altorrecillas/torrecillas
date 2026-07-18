@@ -156,13 +156,13 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 #start-games-toggle.open .si-arrow{transform:rotate(90deg)}
 #start-games-toggle.open{background:#e8f0fc}
 /* Submenú de juegos como flyout lateral (no empuja el menú hacia abajo) */
-#start-games-submenu{display:none}
-#start-games-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
-#start-games-submenu .start-item{padding:6px 10px}
+#start-games-submenu,#start-utils-submenu{display:none}
+#start-games-submenu.show,#start-utils-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
 @keyframes subIn{0%{opacity:0;transform:translateX(14px)}100%{opacity:1;transform:none}}
-#start-games-submenu .start-item{padding:4px 10px 4px 24px}
-#start-games-submenu .si-icon{width:22px;height:22px;font-size:16px}
-#start-games-submenu .si-label{font-weight:normal;font-size:12px}
+#start-games-submenu .start-item,#start-utils-submenu .start-item{padding:4px 10px 4px 24px}
+#start-games-submenu .si-icon,#start-utils-submenu .si-icon{width:22px;height:22px;font-size:16px}
+#start-games-submenu .si-label,#start-utils-submenu .si-label{font-weight:normal;font-size:12px}
+#start-utils-toggle.open .si-arrow{transform:rotate(90deg)}
 .start-footer{background:linear-gradient(180deg,#3c7de0,#2456b8);padding:6px 10px;display:flex;justify-content:flex-end;gap:8px}
 .start-footer-btn{padding:4px 12px;background:linear-gradient(180deg,#d04040,#a02020);color:#fff;border:1px solid #801010;border-radius:3px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px;font-weight:bold}
 .start-footer-btn:hover{background:linear-gradient(180deg,#e05050,#b03030)}
@@ -315,6 +315,7 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 #desktop-icons{position:relative}
 .desktop-icon.dragging{opacity:.75;z-index:60}
 .desktop-icon.drop-target{background:rgba(255,80,60,.35);border:1px dashed #fff;border-radius:4px}
+#marquee{position:absolute;background:rgba(11,97,255,.22);border:1px solid #2a6fd0;z-index:55;pointer-events:none}
 #trash-items .drive-icon img{width:34px;height:34px;border-radius:8px}
 .desktop-icon .icon img{width:38px;height:38px;border-radius:9px;box-shadow:1px 1px 3px rgba(0,0,0,.35)}
 
@@ -386,6 +387,41 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
 .ns-viewport{flex:1;background:#fff;position:relative}
 #ns-iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 .ns-statusbar{display:flex;gap:8px;padding:3px 8px;border-top:1px solid #fff;background:#c0c0c0;font-size:10px;color:#222}
+
+/* Winamp: skin clásico gris metalizado con LED verde */
+#player-root{display:flex;flex-direction:column;height:100%;background:linear-gradient(180deg,#3d3d4f,#2a2a38);padding:6px;gap:5px;font-family:Tahoma,sans-serif;color:#cdd0da;border:2px solid;border-color:#5a5a72 #16161e #16161e #5a5a72}
+.wa-brand{text-align:center;font-size:9px;letter-spacing:5px;font-weight:bold;color:#8f93a8;text-shadow:0 1px 0 #000;background:linear-gradient(180deg,#2c2c3c,#22222e);border:1px solid #16161e;border-radius:2px;padding:1px 0}
+.wa-top{display:flex;gap:6px;align-items:stretch}
+.wa-time{flex-shrink:0;min-width:88px;display:flex;align-items:center;justify-content:center;background:#0a120a;border:2px solid;border-color:#000 #4a4a60 #4a4a60 #000;color:#2eff46;font-family:'Consolas','Courier New',monospace;font-size:26px;font-weight:bold;letter-spacing:2px;text-shadow:0 0 6px rgba(46,255,70,.6);padding:2px 6px}
+#pl-viz{flex:1;min-width:0;height:44px;background:#0a120a;border:2px solid;border-color:#000 #4a4a60 #4a4a60 #000;display:block}
+.wa-lcd{background:#0a120a;border:2px solid;border-color:#000 #4a4a60 #4a4a60 #000;padding:3px 6px;font-family:'Consolas','Courier New',monospace;font-size:11px;color:#2eff46;overflow:hidden}
+.pl-title-wrap{overflow:hidden;white-space:nowrap}
+.pl-title-wrap.scrolling #pl-title{display:inline-block;padding-left:100%;animation:plScroll 10s linear infinite}
+@keyframes plScroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.wa-info{display:flex;align-items:center;gap:4px;font-size:9px;color:#8f93a8}
+.wa-box{background:#0a120a;border:1px solid #000;color:#2eff46;font-family:'Consolas',monospace;font-size:10px;min-width:24px;text-align:center;padding:1px 3px}
+.wa-lbl{margin-right:6px}
+.wa-ind{border:1px solid #16161e;background:#22222e;padding:1px 5px;border-radius:2px;color:#555b70}
+#player-root.playing .wa-ind.lit-when-playing{color:#2eff46;text-shadow:0 0 4px rgba(46,255,70,.5)}
+.wa-seek{width:100%;accent-color:#c8b060;height:14px;margin:0}
+.wa-sliders{display:flex;align-items:center;gap:6px}
+.wa-vol{flex:1;min-width:0;accent-color:#2eff46;height:12px}
+.wa-bal{width:56px;flex-shrink:0;accent-color:#c8b060;height:12px}
+.wa-toggle{flex-shrink:0;font-size:9px;font-weight:bold;padding:2px 6px;border:1px solid;border-color:#5a5a72 #16161e #16161e #5a5a72;background:#2e2e3e;color:#8f93a8;cursor:pointer;user-select:none}
+.wa-toggle.on{color:#2eff46;border-color:#16161e #5a5a72 #5a5a72 #16161e;background:#22222e}
+.wa-controls{display:flex;gap:3px;align-items:center}
+.wa-btn{flex:1;height:26px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#4c4c62,#30303f);border:1px solid;border-color:#6a6a82 #16161e #16161e #6a6a82;border-radius:2px;color:#dfe2ec;font-size:12px;cursor:pointer;user-select:none;padding:0}
+.wa-btn:active{border-color:#16161e #6a6a82 #6a6a82 #16161e;background:#26263e}
+.wa-eject{flex:0 0 30px;margin-left:4px}
+#pl-list{flex:1;min-height:0;overflow:auto;background:#0a0a14;border:2px solid;border-color:#000 #4a4a60 #4a4a60 #000;font-size:11px;font-family:'Consolas','Courier New',monospace}
+#player-root.nolist #pl-list{display:none}
+.pl-item{display:flex;gap:5px;padding:3px 7px;cursor:pointer;color:#2eff46;white-space:nowrap;overflow:hidden}
+.pl-num{flex-shrink:0;opacity:.7}
+.pl-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.pl-len{flex-shrink:0;opacity:.7}
+.pl-item:hover{background:#16163a}
+.pl-item.sel{background:#2440a0;color:#fff}
+.pl-item.active{color:#fff;text-shadow:0 0 4px rgba(255,255,255,.4)}
 
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:46px;z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
@@ -1745,8 +1781,9 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
 
 /* Ajustes responsive para móvil: menús y popups que quepan en pantalla */
 @media (max-width:600px){
-  .start-left{flex:1}
+  .start-left{flex:1;overflow-y:auto}
   .start-right{width:40%}
+  .start-body{max-height:calc(100svh - 130px)}
   #calendar-popup{left:2vw;right:2vw;width:auto;bottom:42px}
   #context-menu{min-width:62vw}
 }
@@ -1978,10 +2015,6 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
           <div class="si-icon">&#128290;</div>
           <div><div class="si-label">Calculadora</div><div class="si-desc">Calculadora de Windows</div></div>
         </div>
-        <div class="start-item" role="button" tabindex="0" onclick="openPaint()">
-          <div class="si-icon">&#127912;</div>
-          <div><div class="si-label">Paint</div><div class="si-desc">Editor de imagenes</div></div>
-        </div>
         <div class="start-item" role="button" tabindex="0" onclick="openNotepad()">
           <div class="si-icon">&#128221;</div>
           <div><div class="si-label">Bloc de notas</div><div class="si-desc">Editor de texto con autoguardado</div></div>
@@ -1990,17 +2023,36 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
           <div class="si-icon">&#128340;</div>
           <div><div class="si-label">Reloj</div><div class="si-desc">Reloj, cron&oacute;metro y temporizador</div></div>
         </div>
-        <div class="start-item" role="button" tabindex="0" onclick="openImageViewer()">
-          <div class="si-icon">&#128444;&#65039;</div>
-          <div><div class="si-label">Visor de im&aacute;genes</div><div class="si-desc">Ver im&aacute;genes con zoom</div></div>
-        </div>
         <div class="start-item" role="button" tabindex="0" onclick="openMSN()">
           <div class="si-icon">&#128172;</div>
           <div><div class="si-label">MSN Messenger</div><div class="si-desc">Un contacto sigue en l&iacute;nea</div></div>
         </div>
-        <div class="start-item" role="button" tabindex="0" onclick="openNetscape()">
-          <div class="si-icon"><svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg></div>
-          <div><div class="si-label">Netscape Navigator</div><div class="si-desc">La web como en 1996</div></div>
+        <div class="start-item" role="button" tabindex="0" id="start-utils-toggle" onclick="toggleStartUtils(event)">
+          <div class="si-icon">&#129520;</div>
+          <div style="flex:1"><div class="si-label">Utilidades</div><div class="si-desc">Winamp, Netscape y m&aacute;s</div></div>
+          <div class="si-arrow">&#9656;</div>
+        </div>
+        <div id="start-utils-submenu">
+          <div class="start-item" role="button" tabindex="0" onclick="openPlayer()">
+            <div class="si-icon">&#9889;</div>
+            <div><div class="si-label">Winamp</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openDefrag()">
+            <div class="si-icon">&#128189;</div>
+            <div><div class="si-label">Desfragmentador</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openNetscape()">
+            <div class="si-icon"><svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg></div>
+            <div><div class="si-label">Netscape Navigator</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openImageViewer()">
+            <div class="si-icon">&#128444;&#65039;</div>
+            <div><div class="si-label">Visor de im&aacute;genes</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openPaint()">
+            <div class="si-icon">&#127912;</div>
+            <div><div class="si-label">Paint</div></div>
+          </div>
         </div>
         <div class="start-item" role="button" tabindex="0" onclick="openTerminal()">
           <div class="si-icon">&#128421;&#65039;</div>
@@ -2093,6 +2145,7 @@ const Store = {
 let _sysErrShown=false;
 function showSystemError(msg){
   if(_sysErrShown)return; _sysErrShown=true;
+  try{uiSfx('error');}catch(e){}
   const ov=document.createElement('div');
   ov.id='sys-error';
   ov.setAttribute('role','alertdialog');
@@ -2680,8 +2733,51 @@ function stopScreensaver(){
   _ssRaf=null;_ssActive=false;_ssLast=Date.now();
 }
 
+// ========== SONIDOS DE INTERFAZ (abrir/cerrar/minimizar/diálogos) ==========
+function uiSfx(kind){
+  if(_restoringSession)return; // reabrir la sesión en bloque no debe sonar a traca
+  if(Store.get('tos-ui-sounds')==='off')return;
+  if(kind==='open'){playTone(660,0.05,'sine',0.18);setTimeout(()=>playTone(880,0.06,'sine',0.15),40);}
+  else if(kind==='close'){playTone(520,0.05,'sine',0.16);setTimeout(()=>playTone(330,0.07,'sine',0.14),45);}
+  else if(kind==='min'){playTone(500,0.04,'sine',0.14);setTimeout(()=>playTone(380,0.05,'sine',0.12),35);}
+  else if(kind==='dialog'){playTone(587,0.12,'sine',0.3);}
+  else if(kind==='error'){playTone(415,0.18,'triangle',0.35);setTimeout(()=>playTone(311,0.22,'triangle',0.3),140);}
+}
+
+// ========== SELECCIÓN CON RECTÁNGULO EN EL ESCRITORIO ==========
+(function(){
+  let box=null,sx=0,sy=0,active=false;
+  const desk=document.getElementById('desktop');
+  if(!desk)return;
+  desk.addEventListener('mousedown',(e)=>{
+    if(e.button!==0)return;
+    const t=e.target;
+    if(!(t.id==='desktop-icons'||t.id==='desktop'||t.id==='desktop-bg'))return;
+    active=true;sx=e.clientX;sy=e.clientY;
+    document.querySelectorAll('.desktop-icon').forEach(i=>i.classList.remove('selected'));
+    box=document.createElement('div');
+    box.id='marquee';
+    box.style.left=sx+'px';box.style.top=sy+'px';
+    desk.appendChild(box);
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove',(e)=>{
+    if(!active||!box)return;
+    const x=Math.min(sx,e.clientX),y=Math.min(sy,e.clientY);
+    const wd=Math.abs(e.clientX-sx),ht=Math.abs(e.clientY-sy);
+    box.style.left=x+'px';box.style.top=y+'px';box.style.width=wd+'px';box.style.height=ht+'px';
+    const r={left:x,top:y,right:x+wd,bottom:y+ht};
+    document.querySelectorAll('.desktop-icon').forEach(ic=>{
+      const b=ic.getBoundingClientRect();
+      ic.classList.toggle('selected',b.left<r.right&&b.right>r.left&&b.top<r.bottom&&b.bottom>r.top);
+    });
+  });
+  document.addEventListener('mouseup',()=>{ if(box)box.remove(); box=null; active=false; });
+})();
+
 // ========== DIÁLOGO GENÉRICO ESTILO XP ==========
 function xpDialog(title,bodyHTML,buttons){
+  uiSfx('dialog');
   const ov=document.createElement('div');
   ov.className='xp-dialog-ov';
   ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
@@ -2832,7 +2928,8 @@ const SESSION_OPENERS={
   proyectos:()=>openProyectos(),juegazos:()=>openJuegazos(),juegos:()=>openGamesFolder(),
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
-  papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape()
+  papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
+  defrag:()=>openDefrag(),player:()=>openPlayer()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3055,11 +3152,27 @@ function msnSpontaneous(){
   msnSetUnread(true);
 }
 // ---- Salir de MSN (cierra el programa y quita el icono de la bandeja) ----
-let _msnQuitFlag=false,_msnHistory=''; // el historial sobrevive al cerrar con la X; Salir lo borra
+let _msnQuitFlag=false;
+// El historial sobrevive al cerrar con la X y ahora también a recargar (localStorage); Salir lo borra
+let _msnHistory=Store.get('tos-msn-history')||'';
+function _msnSaveHistory(){
+  let h=_msnHistory;
+  if(h.length>40000){ // tope de tamaño: recortar por el principio en el borde de un mensaje
+    const cut=h.indexOf('<div',h.length-35000);
+    h=cut>0?h.slice(cut):h.slice(-35000);
+  }
+  Store.set('tos-msn-history',h);
+}
+window.addEventListener('beforeunload',()=>{
+  const m=document.getElementById('msn-msgs');
+  if(m){m.querySelectorAll('.msn-typing').forEach(x=>x.remove());_msnHistory=m.innerHTML;}
+  if(_msnHistory)_msnSaveHistory();
+});
 function msnQuit(){
   const root=document.getElementById('msn-chat');
   if(root){const win=root.closest('.window');if(win)closeWindow(win.id);}
   _msnHistory='';
+  Store.del('tos-msn-history');
   _msnQuitFlag=true;
   msnSetUnread(false);
   _msnPending.length=0;
@@ -3130,6 +3243,7 @@ function openMSN(){
     <div id="msn-msgs" aria-live="polite"></div>
     <div class="msn-inputrow">
       <input id="msn-input" autocomplete="off" placeholder="Escribe un mensaje..." aria-label="Mensaje">
+      <button id="msn-emo" class="trash-btn" title="Emoticonos" aria-label="Insertar emoticono">&#128578;</button>
       <button id="msn-nudge" class="trash-btn" title="Enviar zumbido" aria-label="Enviar zumbido">&#9889;</button>
       <button id="msn-send" class="trash-btn">Enviar</button>
     </div>
@@ -3142,7 +3256,8 @@ function openMSN(){
     const esc=s=>s.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
     // Emoticonos clásicos del Messenger
     const emo=s=>s.replace(/:\)/g,'\u{1F642}').replace(/:\(/g,'\u{1F641}').replace(/:P/gi,'\u{1F61B}')
-      .replace(/\bxd\b/gi,'\u{1F606}').replace(/\(H\)/gi,'\u{1F60E}').replace(/\(Y\)/gi,'\u{1F44D}').replace(/>:\(/g,'\u{1F620}');
+      .replace(/\bxd\b/gi,'\u{1F606}').replace(/\(H\)/gi,'\u{1F60E}').replace(/\(Y\)/gi,'\u{1F44D}').replace(/>:\(/g,'\u{1F620}')
+      .replace(/\(L\)/gi,'\u{2764}\u{FE0F}').replace(/\(F\)/gi,'\u{1F339}');
     const scroll=()=>{msgs.scrollTop=msgs.scrollHeight;};
     const add=(who,txt,cls)=>{msgs.innerHTML+=`<div class="msn-line ${cls}"><span class="msn-who">${esc(who)} dice:</span><div class="msn-txt">${emo(esc(txt))}</div></div>`;scroll();};
     const sys=(txt)=>{msgs.innerHTML+=`<div class="msn-sys">${txt}</div>`;scroll();};
@@ -3199,6 +3314,15 @@ function openMSN(){
     };
     document.getElementById('msn-send').onclick=send;
     inp.addEventListener('keydown',(e)=>{if(e.key==='Enter'){e.preventDefault();send();}});
+    // Paleta de emoticonos clásicos: inserta el CÓDIGO, como mandan los cánones
+    document.getElementById('msn-emo').onclick=(e)=>{
+      e.stopPropagation();
+      const EMOS=[['\u{1F642}',':)'],['\u{1F641}',':('],['\u{1F61B}',':P'],['\u{1F606}','xD'],['\u{1F60E}','(H)'],['\u{1F44D}','(Y)'],['\u{2764}\u{FE0F}','(L)'],['\u{1F339}','(F)'],['\u{1F620}','>:(']];
+      showContextMenu(e.clientX||60,e.clientY||60,EMOS.map(([ic,code])=>({icon:ic,label:code,action:()=>{
+        inp.value=(inp.value+' '+code+' ').replace(/\s+/g,' ').replace(/^\s/,'');
+        try{inp.focus();}catch(err){}
+      }})));
+    };
     document.getElementById('msn-nudge').onclick=()=>{
       sys('Has enviado un zumbido.');
       shake();buzz();
@@ -3238,9 +3362,366 @@ function openMSN(){
     (win._cleanups=win._cleanups||[]).push(()=>{
       // Guardar la conversación antes de que la ventana desaparezca (sin el "escribiendo...")
       const m=document.getElementById('msn-msgs');
-      if(m){m.querySelectorAll('.msn-typing').forEach(x=>x.remove());_msnHistory=m.innerHTML;}
+      if(m){m.querySelectorAll('.msn-typing').forEach(x=>x.remove());_msnHistory=m.innerHTML;_msnSaveHistory();}
       if(_msnWinId===id)_msnWinId=null;
       _msnLiveSay=null;
+    });
+  }});
+}
+
+// ========== DESFRAGMENTADOR DE DISCO (hipnosis noventera) ==========
+function openDefrag(){
+  closeStartMenu();
+  if(focusExisting('defrag-root'))return;
+  const content=`<div id="defrag-root" style="display:flex;flex-direction:column;height:100%;background:#c0c0c0;font-family:Tahoma,sans-serif;font-size:11px;padding:8px;gap:7px;color:#000">
+    <div style="flex:1;min-height:0;background:#000;border:2px solid;border-color:#808080 #fff #fff #808080;padding:3px">
+      <canvas id="defrag-canvas" style="width:100%;height:100%;display:block"></canvas>
+    </div>
+    <div style="display:flex;gap:12px;font-size:10px;align-items:center;flex-wrap:wrap">
+      <span><span style="display:inline-block;width:9px;height:9px;background:#2a5fd0"></span> Datos</span>
+      <span><span style="display:inline-block;width:9px;height:9px;background:#d04030"></span> Fragmentado</span>
+      <span><span style="display:inline-block;width:9px;height:9px;background:#3c9a3c"></span> Sistema</span>
+      <span><span style="display:inline-block;width:9px;height:9px;background:#fff;border:1px solid #999"></span> Libre</span>
+    </div>
+    <div id="defrag-msg">Listo para desfragmentar la unidad C:.</div>
+    <div style="border:2px solid;border-color:#808080 #fff #fff #808080;background:#fff;height:16px"><div id="defrag-bar" style="height:100%;width:0%;background:repeating-linear-gradient(90deg,#2a5fd0 0 8px,#4a80e8 8px 16px)"></div></div>
+    <div style="display:flex;gap:6px">
+      <button id="defrag-start" class="trash-btn">Iniciar</button>
+      <button id="defrag-pause" class="trash-btn" disabled>Pausa</button>
+      <button id="defrag-stop" class="trash-btn" disabled>Detener</button>
+      <span id="defrag-eta" style="margin-left:auto;font-size:10px;color:#333"></span>
+    </div>
+  </div>`;
+  createWindow('Desfragmentador de disco','&#128189;',520,420,content,{session:'defrag',statusbar:false,onCreated:(id,win)=>{
+    const canvas=document.getElementById('defrag-canvas');
+    const ctx=canvas.getContext&&canvas.getContext('2d');
+    const COLORS=['#ffffff','#2a5fd0','#d04030','#3c9a3c']; // libre, datos, fragmentado, sistema
+    const CELL=9;
+    let cols=48,rows=28,cells=[],total=0,compacted=0,timer=null,paused=false,etaMin=0;
+    const fit=()=>{
+      const w=canvas.clientWidth||430,h=canvas.clientHeight||240;
+      canvas.width=w;canvas.height=h;
+      cols=Math.max(20,Math.floor(w/CELL));rows=Math.max(10,Math.floor(h/CELL));
+    };
+    const init=()=>{
+      fit();
+      cells=[];
+      for(let i=0;i<cols*rows;i++){
+        const r=Math.random();
+        cells.push(r<0.5?1:r<0.66?2:r<0.7?3:0); // mezcla desordenada, como debe ser
+      }
+      total=cells.filter(c=>c===1||c===2).length;
+      compacted=0;etaMin=47+Math.floor(Math.random()*180); // estimación absurda inicial
+      draw();
+    };
+    const draw=()=>{
+      if(!ctx)return;
+      ctx.fillStyle='#000';ctx.fillRect(0,0,canvas.width,canvas.height);
+      for(let i=0;i<cells.length;i++){
+        ctx.fillStyle=COLORS[cells[i]];
+        ctx.fillRect((i%cols)*CELL,Math.floor(i/cols)*CELL,CELL-1,CELL-1);
+      }
+    };
+    const msg=document.getElementById('defrag-msg'),bar=document.getElementById('defrag-bar'),eta=document.getElementById('defrag-eta');
+    const bStart=document.getElementById('defrag-start'),bPause=document.getElementById('defrag-pause'),bStop=document.getElementById('defrag-stop');
+    const setBtns=(running)=>{bStart.disabled=running;bPause.disabled=!running;bStop.disabled=!running;};
+    const finish=()=>{
+      clearInterval(timer);timer=null;setBtns(false);bPause.textContent='Pausa';
+      msg.textContent='Desfragmentación completada.';
+      eta.textContent='';
+      playTone(523,0.12,'sine',0.4);setTimeout(()=>playTone(659,0.12,'sine',0.4),130);setTimeout(()=>playTone(784,0.18,'sine',0.4),260);
+      xpDialog('Desfragmentador de disco','<div style="font-size:28px">&#128189;</div><div>La unidad C: ha quedado impecable.<br><span style="opacity:.7">El equipo irá exactamente igual de rápido, pero da gusto mirarlo.</span></div>');
+    };
+    const tick=()=>{
+      if(paused)return;
+      // Mover unos bloques por tic: de una posición aleatoria al frente compactado
+      for(let k=0;k<6&&compacted<total;k++){
+        while(compacted<cells.length&&cells[compacted]===3)compacted++; // el sistema no se toca
+        if(compacted>=cells.length)break;
+        if(cells[compacted]!==1){
+          let j=-1;
+          for(let t=0;t<40;t++){const cand=compacted+1+Math.floor(Math.random()*(cells.length-compacted-1));if(cells[cand]===1||cells[cand]===2){j=cand;break;}}
+          if(j<0){for(let s=cells.length-1;s>compacted;s--){if(cells[s]===1||cells[s]===2){j=s;break;}}}
+          if(j<0){finish();return;}
+          cells[j]=0;
+          cells[compacted]=1;
+        }else{
+          cells[compacted]=1;
+        }
+        compacted++;
+      }
+      const done=cells.slice(0,compacted).filter(c=>c===1).length;
+      const pct=Math.min(100,Math.round(done/Math.max(1,total)*100));
+      const paso=pct<20?'1 de 3: comprobando la unidad C:':pct<85?'2 de 3: desfragmentando archivos':'3 de 3: compactando espacio libre';
+      msg.textContent='Paso '+paso+'... '+pct+'% completado';
+      bar.style.width=pct+'%';
+      if(Math.random()<0.2)etaMin=Math.max(1,etaMin+(Math.random()<0.6?-3:2)); // la ETA sube y baja, fiel a la época
+      eta.textContent='Tiempo restante estimado: '+Math.floor(etaMin/60)+' h '+(etaMin%60)+' min';
+      draw();
+      if(compacted>=total&&pct>=100)finish();
+    };
+    bStart.onclick=()=>{
+      init();paused=false;setBtns(true);
+      msg.textContent='Paso 1 de 3: comprobando la unidad C:...';
+      if(timer)clearInterval(timer);
+      timer=setInterval(tick,60);
+    };
+    bPause.onclick=()=>{paused=!paused;bPause.textContent=paused?'Reanudar':'Pausa';if(msg&&paused)msg.textContent='En pausa. El disco espera pacientemente.';};
+    bStop.onclick=()=>{clearInterval(timer);timer=null;paused=false;bPause.textContent='Pausa';setBtns(false);msg.textContent='Detenido. La unidad C: se queda como estaba, hecha un cuadro.';eta.textContent='';};
+    init();
+    (win._cleanups=win._cleanups||[]).push(()=>{if(timer)clearInterval(timer);});
+  }});
+}
+
+// ========== REPRODUCTOR DE MÚSICA (chiptunes sintetizados + archivos del equipo) ==========
+// Pistas de 32 pasos (semicorcheas) en notas MIDI; se sintetizan al vuelo, sin archivos.
+const CHIP_TRACKS=[
+  {name:'Bliss Dreams',bpm:112,lead:'triangle',bass:'triangle',
+   mel:[76,null,79,null,83,null,79,null,76,null,79,null,84,null,83,null,76,null,79,null,83,null,86,null,84,null,83,null,79,null,76,null],
+   low:[52,null,null,null,47,null,null,null,52,null,null,null,47,null,null,null,52,null,null,null,47,null,null,null,45,null,null,null,47,null,null,null]},
+  {name:'Autopista 2004',bpm:132,lead:'square',bass:'sawtooth',
+   mel:[69,69,null,72,null,74,null,76,null,74,72,null,69,null,null,null,69,69,null,72,null,74,null,77,null,76,74,null,72,null,null,null],
+   low:[45,null,45,null,48,null,48,null,50,null,50,null,52,null,52,null,45,null,45,null,48,null,48,null,50,null,52,null,45,null,null,null]},
+  {name:'Buscaminas Groove',bpm:120,lead:'square',bass:'triangle',
+   mel:[null,74,76,74,null,71,null,69,null,71,74,null,76,null,79,null,null,74,76,74,null,71,null,69,null,67,69,71,69,null,null,null],
+   low:[50,null,null,50,null,null,50,null,43,null,null,43,null,null,45,null,50,null,null,50,null,null,50,null,43,null,45,null,47,null,null,null]}
+];
+let _playerHook=null;
+function playerAddFiles(list){ if(_playerHook)_playerHook(list); }
+function openPlayer(){
+  closeStartMenu();
+  if(focusExisting('player-root'))return;
+  const content=`<div id="player-root">
+    <div class="wa-brand">WINAMP</div>
+    <div class="wa-top">
+      <div class="wa-time" id="pl-time">0:00</div>
+      <canvas id="pl-viz"></canvas>
+    </div>
+    <div class="wa-lcd"><div class="pl-title-wrap"><span id="pl-title">WINAMP 2.95 &middot; doble clic en una pista</span></div></div>
+    <div class="wa-info">
+      <span class="wa-box" id="pl-kbps">--</span><span class="wa-lbl">kbps</span>
+      <span class="wa-box" id="pl-khz">--</span><span class="wa-lbl">kHz</span>
+      <span class="wa-ind" id="pl-mono">mono</span>
+      <span class="wa-ind lit-when-playing" id="pl-stereo">stereo</span>
+    </div>
+    <input type="range" class="wa-seek" id="pl-seek" min="0" max="100" value="0" aria-label="Posici&oacute;n de la pista">
+    <div class="wa-sliders">
+      <input type="range" class="wa-vol" id="pl-vol" min="0" max="100" aria-label="Volumen">
+      <input type="range" class="wa-bal" id="pl-bal" min="-10" max="10" value="0" aria-label="Balance (decorativo)">
+      <span class="wa-toggle" id="pl-eq" role="button" tabindex="0" title="Ecualizador (de adorno, como casi siempre)">EQ</span>
+      <span class="wa-toggle on" id="pl-pltog" role="button" tabindex="0" title="Mostrar/ocultar lista">PL</span>
+    </div>
+    <div class="wa-controls">
+      <button class="wa-btn" id="pl-prev" title="Anterior" aria-label="Anterior">&#9198;</button>
+      <button class="wa-btn" id="pl-play" title="Reproducir" aria-label="Reproducir">&#9654;</button>
+      <button class="wa-btn" id="pl-pause" title="Pausa" aria-label="Pausa">&#10074;&#10074;</button>
+      <button class="wa-btn" id="pl-stop" title="Detener" aria-label="Detener">&#9632;</button>
+      <button class="wa-btn" id="pl-next" title="Siguiente" aria-label="Siguiente">&#9197;</button>
+      <label class="wa-btn wa-eject" for="pl-file" role="button" tabindex="0" title="Abrir archivo: a&ntilde;ade m&uacute;sica de tu equipo" aria-label="Abrir archivos de m&uacute;sica">&#9167;</label>
+      <input type="file" id="pl-file" accept="audio/*" multiple style="display:none" aria-label="A&ntilde;adir archivos de audio">
+    </div>
+    <div id="pl-list" role="listbox" aria-label="Lista de reproducci&oacute;n"></div>
+  </div>`;
+  createWindow('Winamp','&#9889;',300,480,content,{session:'player',statusbar:false,onCreated:(id,win)=>{
+    const listEl=document.getElementById('pl-list');
+    const title=document.getElementById('pl-title');
+    const timeEl=document.getElementById('pl-time');
+    const playBtn=document.getElementById('pl-play');
+    const viz=document.getElementById('pl-viz');
+    const vctx=viz.getContext&&viz.getContext('2d');
+    const au=document.createElement('audio');
+    const playlist=CHIP_TRACKS.map(t=>({type:'chip',name:t.name+' (chiptune)',ref:t}));
+    let cur=-1,playing=false,chipTimer=null,chipStart0=0,chipSteps=0,noiseBuf=null;
+    let analyser=null,mediaSrc=null;
+    const midi=n=>440*Math.pow(2,(n-69)/12);
+    const fitViz=()=>{viz.width=viz.clientWidth||300;viz.height=viz.clientHeight||44;};
+    fitViz();
+    // Analizador para el visualizador (si el entorno lo permite; si no, barras simuladas)
+    const hookAnalyser=()=>{
+      try{
+        const ctx=getAudioCtx();
+        if(!analyser&&ctx.createAnalyser){analyser=ctx.createAnalyser();analyser.fftSize=64;analyser.connect(ctx.destination);}
+        if(analyser&&!mediaSrc&&ctx.createMediaElementSource){mediaSrc=ctx.createMediaElementSource(au);mediaSrc.connect(analyser);}
+      }catch(e){}
+    };
+    const noiseHat=(t,len)=>{
+      try{
+        const ctx=getAudioCtx();
+        if(!ctx.createBuffer||!ctx.createBufferSource)return;
+        if(!noiseBuf){noiseBuf=ctx.createBuffer(1,2048,ctx.sampleRate||44100);const d=noiseBuf.getChannelData(0);for(let i=0;i<2048;i++)d[i]=Math.random()*2-1;}
+        const src=ctx.createBufferSource();src.buffer=noiseBuf;
+        const g=ctx.createGain();
+        g.gain.setValueAtTime(Math.max(0.001,0.05*masterVolume),t);
+        g.gain.exponentialRampToValueAtTime(0.001,t+len);
+        src.connect(g);g.connect(analyser||ctx.destination);
+        src.start(t);src.stop(t+len);
+      }catch(e){}
+    };
+    const scheduleStep=(tr,s,t,dur)=>{
+      try{
+        const ctx=getAudioCtx();
+        const note=(n,type,vol,len)=>{
+          if(n==null)return;
+          const o=ctx.createOscillator(),g=ctx.createGain();
+          o.type=type;o.frequency.value=midi(n);
+          g.gain.setValueAtTime(Math.max(0.001,vol*masterVolume),t);
+          g.gain.exponentialRampToValueAtTime(0.001,t+len);
+          o.connect(g);g.connect(analyser||ctx.destination);
+          o.start(t);o.stop(t+len+0.02);
+        };
+        note(tr.mel[s],tr.lead,0.15,dur*0.95);
+        note(tr.low[s],tr.bass,0.2,dur*1.8);
+        if(s%4===2)noiseHat(t,dur*0.35);
+      }catch(e){}
+    };
+    const chipStop=()=>{if(chipTimer){clearInterval(chipTimer);chipTimer=null;}};
+    const chipPlay=(tr)=>{
+      chipStop();
+      hookAnalyser();
+      const ctx=getAudioCtx();
+      const stepDur=60/tr.bpm/4;
+      let nextT=(ctx.currentTime||0)+0.08,step=0;
+      chipStart0=ctx.currentTime||0;chipSteps=0;
+      chipTimer=setInterval(()=>{
+        const now=ctx.currentTime||0;
+        const horizon=now+0.18;
+        let guard=0;
+        while(nextT<horizon&&guard++<24){
+          scheduleStep(tr,step%32,nextT,stepDur);
+          step++;nextT+=stepDur;
+          if(!(now>0))break; // entorno sin reloj de audio real: no inundar
+        }
+        chipSteps=step;
+      },80);
+    };
+    const fmt=(s)=>{s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+    const root=document.getElementById('player-root');
+    const seek=document.getElementById('pl-seek');
+    const vol=document.getElementById('pl-vol');
+    let pausedFile=false;
+    const render=()=>{
+      listEl.innerHTML=playlist.map((p,i)=>`<div class="pl-item${i===cur?' active':''}" role="option" tabindex="0" data-i="${i}" aria-label="${p.name}">
+        <span class="pl-num">${i+1}.</span><span class="pl-name">${p.name}</span><span class="pl-len">${p.type==='chip'?'0:32':'--:--'}</span></div>`).join('');
+      listEl.querySelectorAll('.pl-item').forEach(el=>{
+        el.onclick=()=>{listEl.querySelectorAll('.pl-item').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');};
+        el.ondblclick=()=>playIdx(+el.dataset.i);
+        el.addEventListener('keydown',(e)=>{if(e.key==='Enter'){e.preventDefault();playIdx(+el.dataset.i);}});
+      });
+    };
+    const stopAll=()=>{
+      chipStop();
+      try{au.pause();}catch(e){}
+      playing=false;pausedFile=false;
+      root.classList.remove('playing');
+      title.parentElement.classList.remove('scrolling');
+      seek.value=0;
+    };
+    const setInfo=(p)=>{
+      document.getElementById('pl-kbps').textContent=p?(p.type==='chip'?'8':'128'):'--';
+      document.getElementById('pl-khz').textContent=p?'44':'--';
+      seek.disabled=!p||p.type==='chip'; // los chiptunes en bucle no se rebobinan
+    };
+    const playIdx=(i)=>{
+      if(i<0||i>=playlist.length)return;
+      stopAll();
+      cur=i;
+      const p=playlist[i];
+      title.textContent=(i+1)+'. '+p.name+' - Winamp *** ';
+      setInfo(p);
+      if(p.type==='chip'){chipPlay(p.ref);}
+      else{
+        hookAnalyser();
+        try{au.src=p.url;au.volume=masterVolume;const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}
+      }
+      playing=true;
+      root.classList.add('playing');
+      title.parentElement.classList.add('scrolling');
+      render();
+    };
+    au.onended=()=>{if(cur<playlist.length-1)playIdx(cur+1);else stopAll();};
+    playBtn.onclick=()=>{
+      // Como el de verdad: play con pausa de archivo la reanuda; si no, (re)arranca la pista
+      if(pausedFile&&playlist[cur]&&playlist[cur].type==='file'){
+        try{au.volume=masterVolume;const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}
+        pausedFile=false;playing=true;root.classList.add('playing');title.parentElement.classList.add('scrolling');
+      }else{
+        playIdx(cur<0?0:cur);
+      }
+    };
+    document.getElementById('pl-pause').onclick=()=>{
+      if(!playing)return;
+      if(playlist[cur]&&playlist[cur].type==='file'){try{au.pause();}catch(e){}pausedFile=true;}
+      else chipStop(); // los chiptunes vuelven a empezar al reanudar, gaje del cartucho
+      playing=false;
+      root.classList.remove('playing');
+      title.parentElement.classList.remove('scrolling');
+    };
+    document.getElementById('pl-stop').onclick=()=>{stopAll();try{au.currentTime=0;}catch(e){}};
+    document.getElementById('pl-next').onclick=()=>playIdx((cur+1+playlist.length)%playlist.length);
+    document.getElementById('pl-prev').onclick=()=>playIdx((cur-1+playlist.length)%playlist.length);
+    // Seek solo para archivos; volumen enlazado con el volumen del sistema (bandeja incluida)
+    seek.oninput=()=>{
+      const p=playlist[cur];
+      if(p&&p.type==='file'&&isFinite(au.duration)&&au.duration>0){try{au.currentTime=seek.value/100*au.duration;}catch(e){}}
+    };
+    vol.value=Math.round(masterVolume*100);
+    vol.oninput=()=>{try{setMasterVolume(+vol.value);}catch(e){}try{au.volume=masterVolume;}catch(e){}};
+    document.getElementById('pl-eq').onclick=(e)=>e.target.classList.toggle('on');
+    document.getElementById('pl-pltog').onclick=(e)=>{e.target.classList.toggle('on');root.classList.toggle('nolist',!e.target.classList.contains('on'));};
+    setInfo(null);
+    const addFiles=(files)=>{
+      [...files].forEach(f=>{
+        let u='';
+        try{u=(window.URL&&URL.createObjectURL)?URL.createObjectURL(f):'';}catch(e){}
+        playlist.push({type:'file',name:f.name||'archivo de audio',url:u});
+      });
+      render();
+    };
+    document.getElementById('pl-file').addEventListener('change',(e)=>{if(e.target.files&&e.target.files.length)addFiles(e.target.files);e.target.value='';});
+    _playerHook=addFiles;
+    // Visualizador: analizador real si existe; si no, barras al ritmo del secuenciador
+    let raf=null;
+    const freq=analyserSize=>new Uint8Array(analyserSize);
+    let fdata=null;
+    const drawViz=()=>{
+      if(vctx){
+        const W=viz.width,H=viz.height,N=16;
+        vctx.fillStyle='#0a1a0a';vctx.fillRect(0,0,W,H);
+        for(let i=0;i<N;i++){
+          let v=0;
+          if(playing){
+            if(analyser&&playlist[cur]&&playlist[cur].type==='file'){
+              try{if(!fdata)fdata=freq(analyser.frequencyBinCount);analyser.getByteFrequencyData(fdata);v=fdata[Math.floor(i*fdata.length/N)]/255;}catch(e){v=0;}
+            }
+            if(!v)v=0.15+0.8*Math.abs(Math.sin((chipSteps||Date.now()/125)*0.7+i*1.3))*Math.random();
+          }
+          const h=Math.max(2,v*(H-4));
+          vctx.fillStyle=v>0.75?'#ff5040':v>0.45?'#ffd54f':'#39ff5a';
+          vctx.fillRect(i*(W/N)+2,H-h-2,(W/N)-4,h);
+        }
+      }
+      // Tiempo transcurrido + volumen en vivo para archivos
+      if(playing&&playlist[cur]){
+        if(playlist[cur].type==='file'){
+          timeEl.textContent=fmt(au.currentTime);
+          try{au.volume=masterVolume;}catch(e){}
+          if(document.activeElement!==seek&&isFinite(au.duration)&&au.duration>0)seek.value=Math.round(au.currentTime/au.duration*100);
+        }else{
+          const ctx=getAudioCtx();
+          timeEl.textContent=fmt((ctx.currentTime||0)-chipStart0);
+        }
+      }
+      // El deslizador de volumen sigue al volumen del sistema (por si lo tocan desde la bandeja)
+      if(document.activeElement!==vol)vol.value=Math.round(masterVolume*100);
+      raf=requestAnimationFrame(drawViz);
+    };
+    raf=requestAnimationFrame(drawViz);
+    render();
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      stopAll();
+      if(raf)cancelAnimationFrame(raf);
+      _playerHook=null;
+      playlist.forEach(p=>{if(p.type==='file'&&p.url){try{URL.revokeObjectURL(p.url);}catch(e){}}});
     });
   }});
 }
@@ -3652,20 +4133,26 @@ function toggleStartMenu(){
 }
 function closeStartMenu(){
   document.getElementById('start-menu').classList.remove('show');
-  // Colapsar la carpeta de juegos para que el menu reabra limpio
-  const sub=document.getElementById('start-games-submenu');
-  const tog=document.getElementById('start-games-toggle');
-  if(sub)sub.classList.remove('show');
-  if(tog)tog.classList.remove('open');
+  // Colapsar las carpetas desplegables para que el menu reabra limpio
+  [['start-games-submenu','start-games-toggle'],['start-utils-submenu','start-utils-toggle']].forEach(([s,t])=>{
+    const sub=document.getElementById(s),tog=document.getElementById(t);
+    if(sub)sub.classList.remove('show');
+    if(tog)tog.classList.remove('open');
+  });
 }
-function toggleStartGames(e){
+function _toggleStartFlyout(e,subId,togId,otherSubId,otherTogId){
   e.stopPropagation();
-  const sub=document.getElementById('start-games-submenu');
-  const tog=document.getElementById('start-games-toggle');
+  const sub=document.getElementById(subId),tog=document.getElementById(togId);
   if(!sub||!tog)return;
+  // Solo un flyout abierto a la vez
+  const oSub=document.getElementById(otherSubId),oTog=document.getElementById(otherTogId);
+  if(oSub)oSub.classList.remove('show');
+  if(oTog)oTog.classList.remove('open');
   sub.classList.toggle('show');
   tog.classList.toggle('open',sub.classList.contains('show'));
 }
+function toggleStartGames(e){_toggleStartFlyout(e,'start-games-submenu','start-games-toggle','start-utils-submenu','start-utils-toggle');}
+function toggleStartUtils(e){_toggleStartFlyout(e,'start-utils-submenu','start-utils-toggle','start-games-submenu','start-games-toggle');}
 
 // ===== Menú contextual del escritorio (clic derecho) =====
 function showContextMenu(x,y,items){
@@ -3772,6 +4259,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   _lastWindowId=id;
   updateTaskbar();
   saveSession();
+  uiSfx('open');
 
   if(opts.onCreated)opts.onCreated(id,win);
   return id;
@@ -3787,7 +4275,7 @@ function focusWindow(id){
 
 function minimizeWindow(id){
   const win=document.getElementById(id);
-  if(win){win.classList.add('minimized');openWindows[id].minimized=true;}
+  if(win){win.classList.add('minimized');openWindows[id].minimized=true;uiSfx('min');}
   if(activeWindowId===id)activeWindowId=null;
   updateTaskbar();
   saveSession();
@@ -3827,7 +4315,7 @@ function toggleMaximize(id){
 
 function closeWindow(id){
   const win=document.getElementById(id);
-  if(win){(win._cleanups||[]).forEach(f=>{try{f();}catch(e){}});win.remove();}
+  if(win){(win._cleanups||[]).forEach(f=>{try{f();}catch(e){}});win.remove();uiSfx('close');}
   if(gameInstances[id]){if(gameInstances[id].destroy)gameInstances[id].destroy();delete gameInstances[id];}
   delete openWindows[id];
   if(activeWindowId===id){
@@ -4048,7 +4536,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.12.0</p>
+    <p>Versi&oacute;n 0.14.0</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -4211,10 +4699,11 @@ function openSettings(){
         </div>
       </div>
       <div class="settings-group">
-        <h3>&#128276; Sonido de inicio</h3>
-        <p>La campanilla al entrar al escritorio</p>
-        <div class="color-row">
-          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="chime-on"> Activada</label>
+        <h3>&#128276; Sonido</h3>
+        <p>Campanilla de inicio y sonidos de ventanas</p>
+        <div class="color-row" style="flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="chime-on"> Campanilla de inicio</label>
+          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="ui-sounds-on"> Sonidos de interfaz</label>
         </div>
       </div>
       <div class="settings-group">
@@ -4312,6 +4801,8 @@ function openSettings(){
     if(ssMin){ssMin.value=String(screensaverMinutes());ssMin.onchange=()=>Store.set('tos-scrsv-min',ssMin.value);}
     if(ssTest)ssTest.onclick=()=>startScreensaver();
     if(chimeOn){chimeOn.checked=Store.get('tos-startup-sound')!=='off';chimeOn.onchange=()=>Store.set('tos-startup-sound',chimeOn.checked?'on':'off');}
+    const uiSnd=document.getElementById('ui-sounds-on');
+    if(uiSnd){uiSnd.checked=Store.get('tos-ui-sounds')!=='off';uiSnd.onchange=()=>Store.set('tos-ui-sounds',uiSnd.checked?'on':'off');}
   }});
 }
 
@@ -4350,6 +4841,7 @@ function resetSettings(){
   Store.del('tos-icon-pos');
   Store.del('tos-wp-paint');
   Store.del('tos-desk-deleted');
+  Store.del('tos-ui-sounds');
   const dbg=document.getElementById('desktop-bg');
   if(dbg){dbg.style.background='';dbg.style.filter='';}
   document.getElementById('desktop').style.background='';
@@ -4629,7 +5121,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -4637,7 +5129,7 @@ function openTerminal(){
         case '':break;
         case 'help':print('Comandos: help, ver, dir, echo <txt>, date, cls, whoami, about, open <app>, juego <nombre>, juegos, proyectos, exit');break;
         case 'ver':print('Torrecillas OS [Versión 1.0]');break;
-        case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records, msn, netscape');break;
+        case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records, msn, netscape, player, defrag');break;
         case 'proyectos':print(proyectosApps.map(p=>p.label+' — '+p.link).join('\n'));break;
         case 'crash':case 'bsod':print('Iniciando volcado de memoria...');setTimeout(showBSOD,900);break;
         case 'echo':print(a);break;
