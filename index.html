@@ -159,15 +159,15 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 #start-search-row{padding:5px 8px 7px;border-bottom:1px solid #e4e0d0}
 #start-search{width:100%;border:1px solid #7da2ce;border-radius:3px;padding:5px 8px;font-family:Tahoma,sans-serif;font-size:12px;outline:none}
 #start-search:focus{border-color:#0054e3;box-shadow:0 0 3px rgba(0,84,227,.4)}
-.start-left.searching>.start-item,.start-left.searching>.start-separator,.start-left.searching>#start-games-submenu,.start-left.searching>#start-utils-submenu{display:none}
+.start-left.searching>.start-item,.start-left.searching>.start-separator,.start-left.searching>#start-games-submenu,.start-left.searching>#start-utils-submenu,.start-left.searching>#start-nostalgia-submenu{display:none}
 #start-search-results .start-item{padding:6px 10px}
-#start-games-submenu,#start-utils-submenu{display:none}
-#start-games-submenu.show,#start-utils-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
+#start-games-submenu,#start-utils-submenu,#start-nostalgia-submenu{display:none}
+#start-games-submenu.show,#start-utils-submenu.show,#start-nostalgia-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
 @keyframes subIn{0%{opacity:0;transform:translateX(14px)}100%{opacity:1;transform:none}}
-#start-games-submenu .start-item,#start-utils-submenu .start-item{padding:4px 10px 4px 24px}
-#start-games-submenu .si-icon,#start-utils-submenu .si-icon{width:22px;height:22px;font-size:16px}
-#start-games-submenu .si-label,#start-utils-submenu .si-label{font-weight:normal;font-size:12px}
-#start-utils-toggle.open .si-arrow{transform:rotate(90deg)}
+#start-games-submenu .start-item,#start-utils-submenu .start-item,#start-nostalgia-submenu .start-item{padding:4px 10px 4px 24px}
+#start-games-submenu .si-icon,#start-utils-submenu .si-icon,#start-nostalgia-submenu .si-icon{width:22px;height:22px;font-size:16px}
+#start-games-submenu .si-label,#start-utils-submenu .si-label,#start-nostalgia-submenu .si-label{font-weight:normal;font-size:12px}
+#start-utils-toggle.open .si-arrow,#start-nostalgia-toggle.open .si-arrow{transform:rotate(90deg)}
 .start-footer{background:linear-gradient(180deg,#3c7de0,#2456b8);padding:6px 10px;display:flex;justify-content:flex-end;gap:8px}
 .start-footer-btn{padding:4px 12px;background:linear-gradient(180deg,#d04040,#a02020);color:#fff;border:1px solid #801010;border-radius:3px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px;font-weight:bold}
 .start-footer-btn:hover{background:linear-gradient(180deg,#e05050,#b03030)}
@@ -392,6 +392,23 @@ svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
 .ns-viewport{flex:1;background:#fff;position:relative}
 #ns-iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 .ns-statusbar{display:flex;gap:8px;padding:3px 8px;border-top:1px solid #fff;background:#c0c0c0;font-size:10px;color:#222}
+#ns-dial{position:absolute;inset:0;z-index:5;background:rgba(192,192,192,.92);display:flex;align-items:center;justify-content:center}
+.ns-dial-box{width:min(300px,90%);background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;padding:12px;text-align:center;font-size:11px;display:flex;flex-direction:column;gap:9px;align-items:center}
+.ns-dial-title{font-weight:bold;font-size:12px}
+.ns-dial-anim{font-size:24px;display:flex;gap:10px;align-items:center}
+.ns-dial-dots{animation:nsDots 1s steps(3) infinite;letter-spacing:2px;font-weight:bold;color:#000080}
+@keyframes nsDots{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+/* Regedit */
+.reg-node{margin-left:12px}
+.reg-key{padding:2px 4px;cursor:pointer;white-space:nowrap;border-radius:2px}
+.reg-key:hover{background:#e8f0fd}
+.reg-key.sel{background:#2b71b9;color:#fff}
+.reg-tog{display:inline-block;width:12px;color:#666}
+.reg-key.sel .reg-tog{color:#fff}
+.reg-val{display:flex;gap:10px;padding:3px 4px;border-bottom:1px solid #f0ede0}
+.reg-vn{flex-shrink:0;width:110px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reg-vt{flex-shrink:0;color:#888;font-size:10px}
+.reg-vd{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* Winamp: skin clásico gris metalizado con LED verde */
 #player-root{display:flex;flex-direction:column;height:100%;background:linear-gradient(180deg,#3d3d4f,#2a2a38);padding:6px;gap:5px;font-family:Tahoma,sans-serif;color:#cdd0da;border:2px solid;border-color:#5a5a72 #16161e #16161e #5a5a72}
@@ -497,6 +514,25 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
 .oe-subj{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .oe-date{flex-shrink:0;color:#888;font-size:10px}
 .oe-mail.sel .oe-date{color:#dde}
+
+/* Encarta 99 */
+#enc-root{display:flex;height:100%;background:#fff;font-family:Georgia,'Times New Roman',serif}
+.enc-side{flex-shrink:0;width:190px;display:flex;flex-direction:column;background:linear-gradient(180deg,#2a1a5e,#141033);padding:10px 8px;gap:8px}
+.enc-brand{color:#f0c420;font-family:Tahoma,sans-serif;font-weight:bold;font-size:17px;letter-spacing:2px;text-align:center}
+.enc-brand span{color:#fff;font-size:11px;vertical-align:super;margin-left:3px}
+#enc-search{border:1px solid #6a5aae;border-radius:3px;background:#f4f2ff;padding:4px 7px;font-family:Tahoma,sans-serif;font-size:11px;outline:none}
+#enc-list{flex:1;min-height:0;overflow:auto}
+.enc-item{padding:5px 7px;color:#dcd6f7;font-family:Tahoma,sans-serif;font-size:11px;cursor:pointer;border-radius:3px}
+.enc-item:hover{background:#3d2a80}
+.enc-item.sel{background:#f0c420;color:#241a4e;font-weight:bold}
+.enc-item-cat{display:block;font-size:9px;opacity:.65}
+.enc-body{flex:1;min-width:0;overflow:auto;padding:16px 20px;font-size:13px;line-height:1.65;color:#222}
+.enc-body h2{font-size:21px;color:#2a1a5e;border-bottom:3px solid #f0c420;padding-bottom:4px;margin:2px 0 10px}
+.enc-cat{font-family:Tahoma,sans-serif;font-size:10px;color:#8a7ec4;text-transform:uppercase;letter-spacing:1px}
+.enc-body a{color:#2a5fd0}
+.enc-seealso{margin-top:14px;padding-top:8px;border-top:1px solid #ddd;font-family:Tahoma,sans-serif;font-size:11px}
+.enc-see{color:#2a5fd0;text-decoration:underline;cursor:pointer;margin-right:6px}
+@media (max-width:600px){.enc-side{width:130px}}
 
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:46px;z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
@@ -2106,7 +2142,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
         </div>
         <div class="start-item" role="button" tabindex="0" id="start-utils-toggle" onclick="toggleStartUtils(event)">
           <div class="si-icon">&#129520;</div>
-          <div style="flex:1"><div class="si-label">Utilidades</div><div class="si-desc">Winamp, Netscape y m&aacute;s</div></div>
+          <div style="flex:1"><div class="si-label">Utilidades</div><div class="si-desc">Winamp, WordArt y m&aacute;s</div></div>
           <div class="si-arrow">&#9656;</div>
         </div>
         <div id="start-utils-submenu">
@@ -2121,6 +2157,25 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
           <div class="start-item" role="button" tabindex="0" onclick="openWordArt()">
             <div class="si-icon">&#127344;&#65039;</div>
             <div><div class="si-label">WordArt</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openImageViewer()">
+            <div class="si-icon">&#128444;&#65039;</div>
+            <div><div class="si-label">Visor de im&aacute;genes</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openPaint()">
+            <div class="si-icon">&#127912;</div>
+            <div><div class="si-label">Paint</div></div>
+          </div>
+        </div>
+        <div class="start-item" role="button" tabindex="0" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
+          <div class="si-icon">&#128252;</div>
+          <div style="flex:1"><div class="si-label">Nostalgia</div><div class="si-desc">In&uacute;tiles pero entra&ntilde;ables</div></div>
+          <div class="si-arrow">&#9656;</div>
+        </div>
+        <div id="start-nostalgia-submenu">
+          <div class="start-item" role="button" tabindex="0" onclick="openEncarta()">
+            <div class="si-icon">&#127757;</div>
+            <div><div class="si-label">Encarta 99</div></div>
           </div>
           <div class="start-item" role="button" tabindex="0" onclick="openEmule()">
             <div class="si-icon">&#128052;</div>
@@ -2137,14 +2192,6 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
           <div class="start-item" role="button" tabindex="0" onclick="openNetscape()">
             <div class="si-icon"><svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg></div>
             <div><div class="si-label">Netscape Navigator</div></div>
-          </div>
-          <div class="start-item" role="button" tabindex="0" onclick="openImageViewer()">
-            <div class="si-icon">&#128444;&#65039;</div>
-            <div><div class="si-label">Visor de im&aacute;genes</div></div>
-          </div>
-          <div class="start-item" role="button" tabindex="0" onclick="openPaint()">
-            <div class="si-icon">&#127912;</div>
-            <div><div class="si-label">Paint</div></div>
           </div>
         </div>
         <div class="start-item" role="button" tabindex="0" onclick="openTerminal()">
@@ -3023,7 +3070,7 @@ const SESSION_OPENERS={
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
   defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo(),
-  emule:()=>openEmule(),outlook:()=>openOutlook()
+  emule:()=>openEmule(),outlook:()=>openOutlook(),regedit:()=>openRegedit(),encarta:()=>openEncarta()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3895,7 +3942,10 @@ function openMiPC(){
   createWindow('Mi PC','&#128421;&#65039;',560,360,content,{session:'mipc',onCreated:(id,win)=>{
     const abrir={
       c:()=>xpDialog('Disco local (C:)','<div style="font-size:28px">&#128189;</div><div>Capacidad: 4,3 GB &middot; Libre: 612 MB<div style="margin:6px 0;height:12px;border:1px solid #888;background:#fff"><div style="height:100%;width:86%;background:linear-gradient(180deg,#4a90d8,#1f5fa8)"></div></div><span style="opacity:.7;font-size:11px">El 86% son fotos de 2004 sin ordenar.</span></div>'),
-      d:()=>xpDialog('CD-ROM (D:)','<div style="font-size:28px">&#128191;</div><div>No hay ning&uacute;n disco en la unidad.<br><span style="opacity:.7">(El CD de Encarta 99 se lo qued&oacute; un primo.)</span></div>'),
+      d:()=>xpDialog('CD-ROM (D:)','<div style="font-size:28px">&#128191;</div><div>No hay ning&uacute;n disco en la unidad.<br><span style="opacity:.7">El CD de Encarta 99 se lo qued&oacute; un primo... pero apareci&oacute; una copia instalada.</span></div>',[
+        {label:'Abrir Encarta 99',primary:true,action:()=>openEncarta()},
+        {label:'Cerrar'}
+      ]),
       a:()=>xpDialog('Disquete 3&frac12; (A:)','<div style="font-size:28px">&#128190;</div><div><b>A:\\ no est&aacute; accesible.</b><br>El dispositivo no est&aacute; preparado.<br><span style="opacity:.7">Nunca lo estuvo. Nunca lo estar&aacute;.</span></div>'),
       proyectos:()=>openProyectos(),
       juegos:()=>openGamesFolder()
@@ -3905,7 +3955,7 @@ function openMiPC(){
     });
     document.getElementById('mipc-props').onclick=()=>{
       const up=Math.floor(((typeof performance!=='undefined'&&performance.now)?performance.now():0)/60000);
-      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.16<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
+      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.18<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
     };
   }});
 }
@@ -4257,6 +4307,72 @@ function openOutlook(){
   }});
 }
 
+// ========== ENCARTA 99 (la enciclopedia del primo) ==========
+const ENCARTA_ARTS=[
+  {id:'bliss',t:'Bliss (colina)',cat:'Geografía',see:['xp'],
+   b:'<p>Fotografía de una colina verde en Sonoma (California) que se convirtió en <b>la imagen más vista de la historia</b> al ser fondo de escritorio de Windows XP.</p><p>Estudios de la época estiman que más humanos han contemplado esta colina que cualquier paisaje real. La colina, hoy, tiene viñedos y ya no se parece en nada. Este sistema operativo la mantiene viva.</p>'},
+  {id:'xp',t:'Windows XP',cat:'Informática',see:['bliss','msn'],
+   b:'<p>Sistema operativo lanzado en 2001, célebre por su botón verde de Inicio, su sonido de arranque y su estabilidad <i>relativa</i>.</p><p>Torrecillas OS, donde usted se encuentra ahora mismo, es un homenaje en un solo archivo HTML. Sin virus, sin service packs y sin llamar al primo informático.</p>'},
+  {id:'emule',t:'eMule',cat:'Fauna digital',see:['modem','reggaeton'],
+   b:'<p>Programa de intercambio de archivos (2002) representado por una mula. Velocidad media de descarga: <b>12 KB/s con viento a favor</b>.</p><p>Su hábitat natural: ordenadores encendidos toda la noche "porque me queda un 2%". Estado de conservación: extinto en la práctica, eterno en la memoria. Véase la reserva natural en la carpeta Nostalgia.</p>'},
+  {id:'msn',t:'MSN Messenger',cat:'Comunicación',see:['xp','modem'],
+   b:'<p>Mensajería instantánea (1999-2013) con la que una generación aprendió a escribir rápido y a sufrir por un "Ausente".</p><p>Innovaciones clave: el zumbido, los emoticonos que parpadeaban y poner canciones tristes en el nick. Un ejemplar vivo, <b>Alejandro_Virtual</b>, sigue en línea en la bandeja del sistema de este equipo.</p>'},
+  {id:'modem',t:'Módem de 56k',cat:'Música experimental',see:['emule'],
+   b:'<p>Dispositivo de conexión a Internet e instrumento de música concreta. Su obra más conocida, <i>pshhh-kzzzz (1997)</i>, se interpretaba cada vez que alguien quería entrar en Internet y se interrumpía cuando mamá cogía el teléfono.</p><p>Puede escucharse una reconstrucción fiel abriendo Netscape Navigator en este equipo.</p>'},
+  {id:'gava',t:'Gavà',cat:'Geografía',see:['torrecillas'],
+   b:'<p>Ciudad del Baix Llobregat (Barcelona) con playa, espárragos con denominación de origen y una escena gastronómica sorprendente:</p><p>&#127828; <a href="https://woodpeckers.es" target="_blank" rel="noopener noreferrer">Woodpecker\'s</a> — posiblemente las mejores hamburguesas del mundo.<br>&#127843; <a href="https://tottorigava.es" target="_blank" rel="noopener noreferrer">Tottori</a> — cocina japonesa de verdad.</p>'},
+  {id:'torrecillas',t:'Torrecillas, Alejandro',cat:'Biografías',see:['gava','xp'],
+   b:'<p>Desarrollador español (Gavà). Autor de este sistema operativo y de un peque&ntilde;o imperio de webs: restaurantes, ocio en la Costa Dorada y una aplicación de gestión de vehículos.</p><p>Obras completas en la carpeta <b>Proyectos</b> del escritorio.</p>'},
+  {id:'reggaeton',t:'Reggaetón (2004)',cat:'Música',see:['emule'],
+   b:'<p>Género musical que en 2004 alcanzó masa crítica con <i>La Gasolina</i> de Daddy Yankee, del álbum <i>Barrio Fino</i>.</p><p>Según fuentes cercanas a este sistema, Alejandro_Virtual lleva escuchándola en bucle desde el martes. El álbum completo sigue bajando en el eMule (7%).</p>'},
+  {id:'disquete',t:'Disquete de 3½',cat:'Almacenamiento',see:['y2k'],
+   b:'<p>Soporte de almacenamiento de <b>1,44 MB de esperanza</b>. Ritual de uso: guardar el trabajo, sacar el disquete, llegar a clase, descubrir que "el archivo está dañado".</p><p>Sobrevive como icono de "Guardar" en programas que ya no saben lo que es. La unidad A: de este equipo, fiel a la historia, no está preparada.</p>'},
+  {id:'y2k',t:'Efecto 2000 (Y2K)',cat:'Historia',see:['disquete'],
+   b:'<p>Catástrofe informática mundial programada para la medianoche del 31 de diciembre de 1999, con aviones cayendo y neveras rebelándose.</p><p>Resultado final: no pasó absolutamente nada, salvo la mayor facturación en consultoría informática del siglo XX. Este artículo se actualizó por última vez en 1999, por si acaso.</p>'}
+];
+function openEncarta(){
+  closeStartMenu();
+  if(focusExisting('enc-root'))return;
+  const content=`<div id="enc-root">
+    <div class="enc-side">
+      <div class="enc-brand">ENCARTA<span>99</span></div>
+      <input id="enc-search" placeholder="Buscar art&iacute;culo..." autocomplete="off" aria-label="Buscar art&iacute;culo">
+      <div id="enc-list" role="listbox" aria-label="Art&iacute;culos"></div>
+    </div>
+    <div id="enc-body" class="enc-body"></div>
+  </div>`;
+  createWindow('Encarta 99','&#127757;',620,440,content,{session:'encarta',onCreated:(id,win)=>{
+    const list=document.getElementById('enc-list');
+    const body=document.getElementById('enc-body');
+    const search=document.getElementById('enc-search');
+    const show=(aid)=>{
+      const a=ENCARTA_ARTS.find(x=>x.id===aid);
+      if(!a)return;
+      const see=(a.see||[]).map(sid=>{
+        const s=ENCARTA_ARTS.find(x=>x.id===sid);
+        return s?`<span class="enc-see" role="button" tabindex="0" data-a="${sid}">${s.t}</span>`:'';
+      }).join(' ');
+      body.innerHTML=`<div class="enc-cat">${a.cat}</div><h2>${a.t}</h2>${a.b}${see?'<div class="enc-seealso"><b>Véase también:</b> '+see+'</div>':''}`;
+      body.querySelectorAll('.enc-see').forEach(el=>{el.onclick=()=>show(el.dataset.a);});
+      body.scrollTop=0;
+      list.querySelectorAll('.enc-item').forEach(x=>x.classList.toggle('sel',x.dataset.a===aid));
+    };
+    const render=(q)=>{
+      q=(q||'').toLowerCase();
+      const arts=ENCARTA_ARTS.filter(a=>!q||a.t.toLowerCase().includes(q)||a.cat.toLowerCase().includes(q));
+      list.innerHTML=arts.map(a=>`<div class="enc-item" role="option" tabindex="0" data-a="${a.id}">${a.t}<span class="enc-item-cat">${a.cat}</span></div>`).join('')||'<div style="padding:10px;font-size:11px;color:#ccd">Sin resultados. Prueba "Bliss".</div>';
+      list.querySelectorAll('.enc-item').forEach(el=>{
+        el.onclick=()=>show(el.dataset.a);
+        el.addEventListener('keydown',(e)=>{if(e.key==='Enter'){e.preventDefault();show(el.dataset.a);}});
+      });
+    };
+    search.addEventListener('input',()=>render(search.value));
+    render('');
+    // Artículo del día: uno al azar, como mandaba la portada del CD
+    show(ENCARTA_ARTS[Math.floor(Math.random()*ENCARTA_ARTS.length)].id);
+  }});
+}
+
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
 const OS_THEMES=['luna','olive','silver','classic'];
 function applyTheme(t){
@@ -4274,6 +4390,193 @@ function applyTheme(t){
     if(ws)ws.remove();
   }
 }
+
+// ========== MÓDEM DE 56K (la banda sonora del trauma) ==========
+// Sintetiza la conexión: DTMF al marcar, tono de portadora, negociación y el pshhh final.
+function playModemSound(){
+  try{
+    const ctx=getAudioCtx();
+    const master=ctx.createGain();
+    master.gain.value=Math.max(0.001,masterVolume*0.7);
+    master.connect(ctx.destination);
+    const t0=ctx.currentTime+0.05;
+    const tone=(f,at,dur,vol,type)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=type||'sine';o.frequency.value=f;
+      g.gain.setValueAtTime(Math.max(0.001,vol),t0+at);
+      g.gain.exponentialRampToValueAtTime(0.001,t0+at+dur);
+      o.connect(g);g.connect(master);
+      o.start(t0+at);o.stop(t0+at+dur+0.02);
+    };
+    // Marcación DTMF (pares de frecuencias reales)
+    const DTMF=[[941,1336],[697,1477],[770,1209],[852,1336],[697,1336],[941,1209]];
+    DTMF.forEach((p,i)=>{tone(p[0],i*0.14,0.1,0.1);tone(p[1],i*0.14,0.1,0.1);});
+    // Portadora de respuesta + negociación (el uiii-uoooo)
+    tone(2100,1.1,0.5,0.09);
+    for(let i=0;i<10;i++)tone(i%2?1180:980,1.7+i*0.07,0.06,0.11,'square');
+    // El pshhhhh (ruido blanco en dos ráfagas)
+    if(ctx.createBuffer&&ctx.createBufferSource){
+      const nb=ctx.createBuffer(1,8192,ctx.sampleRate||44100);
+      const d=nb.getChannelData(0);
+      for(let i=0;i<8192;i++)d[i]=Math.random()*2-1;
+      const burst=(at,dur,vol)=>{
+        const src=ctx.createBufferSource();src.buffer=nb;src.loop=true;
+        const g=ctx.createGain();
+        g.gain.setValueAtTime(Math.max(0.001,vol),t0+at);
+        g.gain.exponentialRampToValueAtTime(0.001,t0+at+dur);
+        src.connect(g);g.connect(master);
+        src.start(t0+at);src.stop(t0+at+dur);
+      };
+      burst(2.45,1.3,0.12);
+      burst(3.8,0.7,0.06);
+      tone(1000,3.8,0.6,0.04);
+    }
+    return ()=>{try{master.disconnect();}catch(e){}};
+  }catch(e){return ()=>{};}
+}
+let _nsDialed=false; // una conexión por sesión, como cuando ocupabas el teléfono
+function _nsShowDial(win){
+  const vp=win.querySelector('.ns-viewport');
+  if(!vp)return;
+  const ov=document.createElement('div');
+  ov.id='ns-dial';
+  ov.innerHTML=`<div class="ns-dial-box">
+    <div class="ns-dial-title">Conexi&oacute;n telef&oacute;nica a redes</div>
+    <div class="ns-dial-anim"><span>&#128187;</span><span class="ns-dial-dots">&middot;&middot;&middot;</span><span>&#128222;</span></div>
+    <div id="ns-dial-status">Marcando 908 200 200...</div>
+    <button id="ns-dial-cancel" class="trash-btn">Cancelar</button>
+  </div>`;
+  vp.appendChild(ov);
+  const stopSound=playModemSound();
+  const status=(t)=>{const s=document.getElementById('ns-dial-status');if(s)s.textContent=t;};
+  const timers=[
+    setTimeout(()=>status('Negociando con el módem... (no cojas el teléfono)'),1300),
+    setTimeout(()=>status('Comprobando nombre de usuario y contraseña...'),2600),
+    setTimeout(()=>status('Registrando el equipo en la red...'),3600),
+    setTimeout(()=>done(true),4400)
+  ];
+  const done=(ok)=>{
+    timers.forEach(clearTimeout);
+    stopSound();
+    if(ov.parentNode)ov.remove();
+    const st=document.getElementById('ns-status');
+    if(st&&ok)st.textContent='Conectado a 56.000 bps · Documento: listo';
+    if(ok)playTone(880,0.08,'sine',0.3);
+  };
+  ov.querySelector('#ns-dial-cancel').onclick=()=>done(false);
+  (win._cleanups=win._cleanups||[]).push(()=>done(false));
+}
+
+// ========== REGEDIT (toca el registro bajo tu responsabilidad) ==========
+const REG_TREE={
+  'HKEY_LOCAL_MACHINE':{
+    'SOFTWARE':{
+      'Torrecillas OS':{__v:{'Version':'0.18.0','Bliss':'activado','NostalgiaLevel':'0xFFFF'}},
+      'Messenger':{__v:{'Nick':'Alejandro_Virtual','Zumbidos':'ilimitados','Estado':'En línea'}},
+      'eMule':{__v:{'VelocidadMaxima':'12 KB/s (no tocar)','ColaDeEspera':'4.312 usuarios'}}
+    },
+    'SYSTEM':{
+      'CurrentControlSet':{__v:{'CriticalStuff':'NO BORRAR','BSOD_Trigger':'armado','Estabilidad':'sorprendente'}}
+    },
+    'HARDWARE':{__v:{'CPU':'Pentium III 733 MHz','RAM':'256 MB SDRAM','GPU':'Voodoo3 2000'}}
+  },
+  'HKEY_CURRENT_USER':{
+    'Escritorio':{__v:{'Wallpaper':'bliss','IconosArrastrables':'sí'}},
+    'Secretos':{__v:{'ComandoProhibido':'format c:','CascadaSolitario':'52 cartas'}}
+  }
+};
+function openRegedit(){
+  closeStartMenu();
+  if(focusExisting('reg-root'))return;
+  let selPath=null;
+  const nodeHTML=(obj,path)=>Object.keys(obj).filter(k=>k!=='__v').map(k=>{
+    const p=path?path+'\\'+k:k;
+    const kids=Object.keys(obj[k]).filter(x=>x!=='__v').length>0;
+    return `<div class="reg-node"><div class="reg-key" data-p="${p}" role="button" tabindex="0"><span class="reg-tog">${kids?'&#9656;':'&nbsp;'}</span>&#128193; ${k}</div><div class="reg-kids" style="display:none">${nodeHTML(obj[k],p)}</div></div>`;
+  }).join('');
+  const content=`<div id="reg-root" style="display:flex;flex-direction:column;height:100%;background:#fff;font-family:Tahoma,sans-serif;font-size:11px;color:#222">
+    <div style="flex-shrink:0;display:flex;gap:6px;padding:5px 8px;border-bottom:1px solid #aca899;background:#ece9d8">
+      <button id="reg-del" class="trash-btn" disabled>&#10060; Eliminar clave</button>
+      <span id="reg-path" style="margin-left:auto;font-size:10px;color:#555;align-self:center">Mi PC</span>
+    </div>
+    <div style="flex:1;display:flex;min-height:0">
+      <div id="reg-tree" style="flex-shrink:0;width:55%;border-right:1px solid #aca899;overflow:auto;padding:6px">${nodeHTML(REG_TREE,'')}</div>
+      <div id="reg-vals" style="flex:1;overflow:auto;padding:6px"><i style="color:#888">Selecciona una clave.</i></div>
+    </div>
+  </div>`;
+  createWindow('Editor del Registro','&#128295;',560,400,content,{session:'regedit',onCreated:(id,win)=>{
+    const findNode=(p)=>{let cur=REG_TREE;for(const part of p.split('\\')){cur=cur[part];if(!cur)return null;}return cur;};
+    const delBtn=document.getElementById('reg-del');
+    win.querySelectorAll('.reg-key').forEach(el=>{
+      el.onclick=()=>{
+        const kids=el.nextElementSibling;
+        if(kids&&kids.innerHTML.trim()){
+          const open=kids.style.display!=='none';
+          kids.style.display=open?'none':'block';
+          el.querySelector('.reg-tog').innerHTML=open?'&#9656;':'&#9662;';
+        }
+        win.querySelectorAll('.reg-key').forEach(x=>x.classList.remove('sel'));
+        el.classList.add('sel');
+        selPath=el.dataset.p;
+        delBtn.disabled=false;
+        document.getElementById('reg-path').textContent='Mi PC\\'+selPath;
+        const node=findNode(selPath);
+        const vals=(node&&node.__v)||{};
+        const rows=Object.keys(vals).map(k=>`<div class="reg-val"><span class="reg-vn">${k}</span><span class="reg-vt">REG_SZ</span><span class="reg-vd">${vals[k]}</span></div>`).join('');
+        document.getElementById('reg-vals').innerHTML=rows||'<i style="color:#888">(sin valores)</i>';
+      };
+    });
+    delBtn.onclick=()=>{
+      if(!selPath)return;
+      if(selPath.indexOf('SYSTEM')>=0){
+        xpDialog('Editor del Registro','<div style="font-size:28px">&#9888;&#65039;</div><div>Est&aacute;s a punto de eliminar <b>'+selPath+'</b>.<br>Esta clave pone literalmente "NO BORRAR".<br><span style="opacity:.7">&iquest;Seguro que quieres hacerlo?</span></div>',[
+          {label:'Sí, soy valiente',primary:true,action:()=>{
+            xpDialog('Editor del Registro','<div style="font-size:28px">&#128561;</div><div>&iquest;SEGURO seguro? No hay copia de seguridad del registro.<br><span style="opacity:.7">(Bueno, s&iacute; la hay, en Ajustes. Pero del registro de mentira no.)</span></div>',[
+              {label:'BÓRRALA',primary:true,action:()=>setTimeout(showBSOD,600)},
+              {label:'Mejor no'}
+            ]);
+          }},
+          {label:'Cancelar'}
+        ]);
+      }else{
+        xpDialog('Editor del Registro','<div style="font-size:28px">&#128683;</div><div>Acceso denegado al eliminar <b>'+selPath+'</b>.<br><span style="opacity:.7">Este registro se protege solo. Prueba con algo de SYSTEM si te atreves.</span></div>');
+      }
+    };
+  }});
+}
+
+// ========== SOPORTE DE MANDO (Gamepad → teclado en los juegos) ==========
+// Traduce cruceta/stick/botones a los mismos eventos de teclado que ya escuchan
+// los juegos, y solo cuando la ventana activa ES un juego (nada de escribir espacios en el MSN).
+(function(){
+  if(typeof navigator==='undefined'||typeof navigator.getGamepads!=='function')return;
+  const state={};
+  const BTN_MAP=[[14,'ArrowLeft'],[15,'ArrowRight'],[12,'ArrowUp'],[13,'ArrowDown'],[4,'ArrowLeft'],[5,'ArrowRight'],[0,' '],[1,'Enter'],[9,'r']];
+  const KEYS=['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' ','Enter','r'];
+  const send=(key,down)=>{document.dispatchEvent(new KeyboardEvent(down?'keydown':'keyup',{key,bubbles:true,cancelable:true}));};
+  setInterval(()=>{
+    const info=openWindows[activeWindowId];
+    if(!info||!info.session||info.session.indexOf('game:')!==0)return;
+    let gp=null;
+    try{
+      const gps=navigator.getGamepads()||[];
+      for(const g of gps){if(g&&g.connected){gp=g;break;}}
+    }catch(e){}
+    if(!gp)return;
+    const want={};
+    BTN_MAP.forEach(([b,k])=>{if(gp.buttons&&gp.buttons[b]&&gp.buttons[b].pressed)want[k]=true;});
+    if(gp.axes){
+      if(gp.axes[0]<-0.5)want.ArrowLeft=true;
+      if(gp.axes[0]>0.5)want.ArrowRight=true;
+      if(gp.axes[1]<-0.5)want.ArrowUp=true;
+      if(gp.axes[1]>0.5)want.ArrowDown=true;
+    }
+    KEYS.forEach(k=>{
+      if(want[k]&&!state[k]){state[k]=true;send(k,true);}
+      else if(!want[k]&&state[k]){state[k]=false;send(k,false);}
+    });
+  },50);
+})();
 
 // ========== NETSCAPE NAVIGATOR (navegador retro, funcional con iframe) ==========
 const NS_ICON='<svg class="ns-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#00174d"/><circle cx="6" cy="6" r="1" fill="#fff"/><circle cx="26" cy="5" r="0.8" fill="#fff"/><circle cx="22" cy="10" r="0.6" fill="#9cf"/><circle cx="9" cy="12" r="0.7" fill="#9cf"/><circle cx="27" cy="17" r="0.7" fill="#fff"/><path d="M7 25V7h4.2l9.6 12.2V7H25v18h-4.2L11.2 12.8V25z" fill="#fff"/></svg>';
@@ -4399,6 +4702,8 @@ function openNetscape(){
     _nsGoHook=(u)=>{go(u);focusWindow(id);};
     (win._cleanups=win._cleanups||[]).push(()=>{_nsGoHook=null;});
     go(NS_HOME_URL);
+    // Primera conexión de la sesión: hay que pasar por el módem, como Dios manda
+    if(!_nsDialed){_nsDialed=true;_nsShowDial(win);}
   }});
 }
 
@@ -4453,7 +4758,7 @@ function _searchIndex(){
    ['Netscape Navigator','&#127760;',openNetscape],['Símbolo del sistema','&#128421;&#65039;',openTerminal],
    ['Nota adhesiva','&#128221;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
-   ['Instalar app','&#128190;',openInstallApp]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -4778,29 +5083,38 @@ function toggleStartMenu(){
     setTimeout(()=>{const i=document.getElementById('start-search');if(i)try{i.focus();}catch(e){}},60);
   }
 }
+const START_FLYOUTS=[
+  ['start-games-submenu','start-games-toggle'],
+  ['start-utils-submenu','start-utils-toggle'],
+  ['start-nostalgia-submenu','start-nostalgia-toggle']
+];
 function closeStartMenu(){
   document.getElementById('start-menu').classList.remove('show');
   try{clearStartSearch();}catch(e){}
   // Colapsar las carpetas desplegables para que el menu reabra limpio
-  [['start-games-submenu','start-games-toggle'],['start-utils-submenu','start-utils-toggle']].forEach(([s,t])=>{
+  START_FLYOUTS.forEach(([s,t])=>{
     const sub=document.getElementById(s),tog=document.getElementById(t);
     if(sub)sub.classList.remove('show');
     if(tog)tog.classList.remove('open');
   });
 }
-function _toggleStartFlyout(e,subId,togId,otherSubId,otherTogId){
+function _toggleStartFlyout(e,subId,togId){
   e.stopPropagation();
   const sub=document.getElementById(subId),tog=document.getElementById(togId);
   if(!sub||!tog)return;
   // Solo un flyout abierto a la vez
-  const oSub=document.getElementById(otherSubId),oTog=document.getElementById(otherTogId);
-  if(oSub)oSub.classList.remove('show');
-  if(oTog)oTog.classList.remove('open');
+  START_FLYOUTS.forEach(([s,t])=>{
+    if(s===subId)return;
+    const os=document.getElementById(s),ot=document.getElementById(t);
+    if(os)os.classList.remove('show');
+    if(ot)ot.classList.remove('open');
+  });
   sub.classList.toggle('show');
   tog.classList.toggle('open',sub.classList.contains('show'));
 }
-function toggleStartGames(e){_toggleStartFlyout(e,'start-games-submenu','start-games-toggle','start-utils-submenu','start-utils-toggle');}
-function toggleStartUtils(e){_toggleStartFlyout(e,'start-utils-submenu','start-utils-toggle','start-games-submenu','start-games-toggle');}
+function toggleStartGames(e){_toggleStartFlyout(e,'start-games-submenu','start-games-toggle');}
+function toggleStartUtils(e){_toggleStartFlyout(e,'start-utils-submenu','start-utils-toggle');}
+function toggleStartNostalgia(e){_toggleStartFlyout(e,'start-nostalgia-submenu','start-nostalgia-toggle');}
 
 // ===== Menú contextual del escritorio (clic derecho) =====
 function showContextMenu(x,y,items){
@@ -5184,8 +5498,8 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.17.0</p>
-    <p style="margin-top:10px;font-size:11px;opacity:.8">Atajos: Alt+Tab cambia de ventana &middot; Ctrl+Esc abre Inicio<br>R reinicia los juegos &middot; arrastra iconos (a la papelera tambi&eacute;n)</p>
+    <p>Versi&oacute;n 0.19.0</p>
+    <p style="margin-top:10px;font-size:11px;opacity:.8">Atajos: Alt+Tab cambia de ventana &middot; Ctrl+Esc abre Inicio<br>R reinicia los juegos &middot; arrastra iconos (a la papelera tambi&eacute;n)<br>&#127918; Mando: cruceta/stick + A funciona en los juegos</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -5807,7 +6121,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,encarta:openEncarta};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -5818,6 +6132,7 @@ function openTerminal(){
         case 'dir':print('Carpetas: Proyectos, Juegos AAA, Juegos, Papelera\nApps: calc, paint, notas, ajustes, reloj, visor, papelera, instalar, records, msn, netscape, winamp, video, wordart, defrag, mipc');break;
         case 'proyectos':print(proyectosApps.map(p=>p.label+' — '+p.link).join('\n'));break;
         case 'crash':case 'bsod':print('Iniciando volcado de memoria...');setTimeout(showBSOD,900);break;
+        case 'regedit':openRegedit();print('Abriendo el Editor del Registro. Cuidado ahí dentro.');break;
         case 'echo':print(a);break;
         case 'date':print(_fullDate(new Date()));break;
         case 'whoami':print('torrecillas\\usuario');break;
