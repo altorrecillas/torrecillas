@@ -156,6 +156,11 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 #start-games-toggle.open .si-arrow{transform:rotate(90deg)}
 #start-games-toggle.open{background:#e8f0fc}
 /* Submenú de juegos como flyout lateral (no empuja el menú hacia abajo) */
+#start-search-row{padding:5px 8px 7px;border-bottom:1px solid #e4e0d0}
+#start-search{width:100%;border:1px solid #7da2ce;border-radius:3px;padding:5px 8px;font-family:Tahoma,sans-serif;font-size:12px;outline:none}
+#start-search:focus{border-color:#0054e3;box-shadow:0 0 3px rgba(0,84,227,.4)}
+.start-left.searching>.start-item,.start-left.searching>.start-separator,.start-left.searching>#start-games-submenu,.start-left.searching>#start-utils-submenu{display:none}
+#start-search-results .start-item{padding:6px 10px}
 #start-games-submenu,#start-utils-submenu{display:none}
 #start-games-submenu.show,#start-utils-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
 @keyframes subIn{0%{opacity:0;transform:translateX(14px)}100%{opacity:1;transform:none}}
@@ -2070,6 +2075,8 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
     </div>
     <div class="start-body">
       <div class="start-left">
+        <div id="start-search-row"><input id="start-search" placeholder="Buscar..." autocomplete="off" spellcheck="false" aria-label="Buscar aplicaciones, juegos y proyectos"></div>
+        <div id="start-search-results"></div>
         <div class="start-item" role="button" tabindex="0" id="start-games-toggle" onclick="toggleStartGames(event)">
           <div class="si-icon">&#128377;</div>
           <div style="flex:1"><div class="si-label">Juegos</div><div class="si-desc">13 juegos cl&aacute;sicos</div></div>
@@ -3672,7 +3679,8 @@ function openPlayer(){
       chipStart0=ctx.currentTime||0;chipSteps=0;
       chipTimer=setInterval(()=>{
         const now=ctx.currentTime||0;
-        const horizon=now+0.18;
+        // Con la pestaña oculta los timers van a 1Hz: programar mucho más por delante
+        const horizon=now+(document.hidden?1.6:0.2);
         let guard=0;
         while(nextT<horizon&&guard++<24){
           scheduleStep(tr,step%32,nextT,stepDur);
@@ -3817,6 +3825,7 @@ function openPlayer(){
 // ========== CASCADA DEL SOLITARIO (el premio clásico, con estela) ==========
 function solitaireCascade(){
   if(document.getElementById('cascade'))return;
+  try{if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;}catch(e){}
   const c=document.createElement('canvas');
   c.id='cascade';
   c.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:9750;pointer-events:none';
@@ -4393,6 +4402,97 @@ function openNetscape(){
   }});
 }
 
+// ========== COPIA DE SEGURIDAD (todo el estado tos-* a un archivo) ==========
+function osExportBackup(){
+  const data={};
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&k.indexOf('tos-')===0)data[k]=localStorage.getItem(k);
+    }
+  }catch(e){}
+  const json=JSON.stringify({app:'torrecillas-os',version:1,fecha:new Date().toISOString(),data});
+  try{
+    const a=document.createElement('a');
+    a.download='torrecillas-os-copia-'+new Date().toISOString().slice(0,10)+'.json';
+    a.href='data:application/json;charset=utf-8,'+encodeURIComponent(json);
+    a.click();
+  }catch(e){}
+  return json;
+}
+function osImportBackup(json,sinConfirmar){
+  let obj=null;
+  try{obj=JSON.parse(json);}catch(e){}
+  if(!obj||obj.app!=='torrecillas-os'||!obj.data){
+    xpDialog('Importar copia','<div style="font-size:28px">&#10060;</div><div>Ese archivo no parece una copia de Torrecillas OS.</div>');
+    return false;
+  }
+  const aplicar=()=>{
+    Object.keys(obj.data).forEach(k=>{if(k.indexOf('tos-')===0)Store.set(k,obj.data[k]);});
+    try{location.reload();}catch(e){}
+  };
+  if(sinConfirmar){aplicar();return true;}
+  const n=Object.keys(obj.data).length;
+  xpDialog('Importar copia','<div style="font-size:28px">&#128190;</div><div>Copia del '+(obj.fecha||'').slice(0,10)+' con '+n+' ajustes (r&eacute;cords, fondos, notas...).<br>&iquest;Restaurarla? Sobrescribe lo actual y reinicia el equipo.</div>',[
+    {label:'Sí, restaurar',primary:true,action:aplicar},
+    {label:'Cancelar'}
+  ]);
+  return true;
+}
+
+// ========== BÚSQUEDA DEL MENÚ INICIO ==========
+function _searchNorm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+function _searchIndex(){
+  const ix=[];
+  gamesApps.forEach(g=>ix.push({label:g.label,icon:g.icon,hint:'Juego',run:()=>openGame(g.key)}));
+  proyectosApps.forEach(p=>ix.push({label:p.label,icon:p.icon,hint:'Proyecto',run:()=>window.open(p.link,'_blank','noopener,noreferrer')}));
+  [['Calculadora','&#128290;',openCalculator],['Paint','&#127912;',openPaint],['Bloc de notas','&#128221;',openNotepad],
+   ['Reloj','&#128340;',openClock],['Visor de imágenes','&#128444;&#65039;',openImageViewer],['MSN Messenger','&#128172;',openMSN],
+   ['Winamp','&#9889;',openPlayer],['Reproductor de vídeo','&#127916;',openVideo],['WordArt','&#127344;&#65039;',openWordArt],
+   ['eMule','&#128052;',openEmule],['Outlook Express','&#128231;',openOutlook],['Desfragmentador','&#128189;',openDefrag],
+   ['Netscape Navigator','&#127760;',openNetscape],['Símbolo del sistema','&#128421;&#65039;',openTerminal],
+   ['Nota adhesiva','&#128221;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
+   ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
+   ['Instalar app','&#128190;',openInstallApp]
+  ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
+  return ix;
+}
+function startSearch(q){
+  const res=document.getElementById('start-search-results');
+  const left=document.querySelector('.start-left');
+  if(!res||!left)return;
+  q=_searchNorm((q||'').trim());
+  if(!q){left.classList.remove('searching');res.innerHTML='';res._matches=null;return;}
+  left.classList.add('searching');
+  const matches=_searchIndex().filter(it=>_searchNorm(it.label).includes(q)).slice(0,9);
+  res._matches=matches;
+  res.innerHTML=matches.length
+    ?matches.map((m,i)=>`<div class="start-item search-hit" role="button" tabindex="0" data-i="${i}"><div class="si-icon">${m.icon}</div><div><div class="si-label">${m.label}</div><div class="si-desc">${m.hint}</div></div></div>`).join('')
+    :'<div style="padding:10px 14px;font-size:12px;color:#888">Sin resultados. Prueba "juegos", "winamp" o "proyectos".</div>';
+  res.querySelectorAll('.search-hit').forEach(el=>{
+    el.onclick=()=>{const m=matches[+el.dataset.i];clearStartSearch();closeStartMenu();m.run();};
+  });
+}
+function clearStartSearch(){
+  const i=document.getElementById('start-search');
+  if(i)i.value='';
+  startSearch('');
+}
+(function(){
+  const inp=document.getElementById('start-search');
+  if(!inp)return;
+  inp.addEventListener('input',()=>startSearch(inp.value));
+  inp.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'){
+      const res=document.getElementById('start-search-results');
+      const m=res&&res._matches&&res._matches[0];
+      if(m){e.preventDefault();clearStartSearch();closeStartMenu();m.run();}
+    }else if(e.key==='Escape'){
+      clearStartSearch();
+    }
+  });
+})();
+
 // ========== PROPIEDADES DE PROYECTO (portfolio) ==========
 function openProjectProps(pid){
   const app=proyectosApps.find(p=>p.id===pid);
@@ -4671,10 +4771,16 @@ function initDesktop(){
 }
 
 function toggleStartMenu(){
-  document.getElementById('start-menu').classList.toggle('show');
+  const sm=document.getElementById('start-menu');
+  sm.classList.toggle('show');
+  // En escritorio, el foco directo al buscador; en móvil no (saltaría el teclado)
+  if(sm.classList.contains('show')&&window.innerWidth>600){
+    setTimeout(()=>{const i=document.getElementById('start-search');if(i)try{i.focus();}catch(e){}},60);
+  }
 }
 function closeStartMenu(){
   document.getElementById('start-menu').classList.remove('show');
+  try{clearStartSearch();}catch(e){}
   // Colapsar las carpetas desplegables para que el menu reabra limpio
   [['start-games-submenu','start-games-toggle'],['start-utils-submenu','start-utils-toggle']].forEach(([s,t])=>{
     const sub=document.getElementById(s),tog=document.getElementById(t);
@@ -5078,7 +5184,8 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.16.1</p>
+    <p>Versi&oacute;n 0.17.0</p>
+    <p style="margin-top:10px;font-size:11px;opacity:.8">Atajos: Alt+Tab cambia de ventana &middot; Ctrl+Esc abre Inicio<br>R reinicia los juegos &middot; arrastra iconos (a la papelera tambi&eacute;n)</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -5262,6 +5369,15 @@ function openSettings(){
         </div>
       </div>
       <div class="settings-group">
+        <h3>&#128190; Copia de seguridad</h3>
+        <p>R&eacute;cords, notas, fondos y ajustes, a un archivo</p>
+        <div class="color-row" style="flex-wrap:wrap">
+          <button class="settings-btn" onclick="osExportBackup()">&#11015;&#65039; Exportar copia</button>
+          <label class="settings-btn" for="backup-file" style="cursor:pointer">&#11014;&#65039; Importar copia</label>
+          <input type="file" id="backup-file" accept=".json,application/json" style="display:none" aria-label="Importar copia de seguridad">
+        </div>
+      </div>
+      <div class="settings-group">
         <h3>&#128260; Restaurar valores</h3>
         <p>Vuelve a la configuracion por defecto</p>
         <button class="settings-btn danger" onclick="resetSettings()">&#8634; Restaurar todo</button>
@@ -5363,6 +5479,15 @@ function openSettings(){
     if(chimeOn){chimeOn.checked=Store.get('tos-startup-sound')!=='off';chimeOn.onchange=()=>Store.set('tos-startup-sound',chimeOn.checked?'on':'off');}
     const uiSnd=document.getElementById('ui-sounds-on');
     if(uiSnd){uiSnd.checked=Store.get('tos-ui-sounds')!=='off';uiSnd.onchange=()=>Store.set('tos-ui-sounds',uiSnd.checked?'on':'off');}
+    const bkFile=document.getElementById('backup-file');
+    if(bkFile)bkFile.addEventListener('change',(e)=>{
+      const f=e.target.files&&e.target.files[0];
+      if(!f)return;
+      const rd=new FileReader();
+      rd.onload=()=>osImportBackup(rd.result,false);
+      rd.readAsText(f);
+      e.target.value='';
+    });
   }});
 }
 

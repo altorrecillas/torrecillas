@@ -1,7 +1,7 @@
 // Service worker de Torrecillas OS: deja el escritorio disponible sin conexión.
 // Estrategia: red primero para el documento (así llegan las actualizaciones),
 // caché como respaldo; el resto de GET se sirve de caché y se rellena al vuelo.
-const CACHE = 'tos-v1';
+const CACHE = 'tos-v2';
 const ASSETS = ['./', './index.html', './og.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
