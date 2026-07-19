@@ -348,7 +348,13 @@ body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif
 .msn-ava{width:38px;height:38px;flex-shrink:0;border-radius:6px;background:linear-gradient(180deg,#bfe6ff,#7fb8e8);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid #7a9cc0}
 .msn-status{font-size:10px;color:#567;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #msn-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#7ebd2f;margin-right:3px}
-.msn-quit{margin-left:auto;flex-shrink:0;align-self:flex-start;font-size:10px;color:#16569e;text-decoration:underline;cursor:pointer;padding:2px 4px}
+.msn-quit{flex-shrink:0;align-self:flex-start;font-size:10px;color:#16569e;text-decoration:underline;cursor:pointer;padding:2px 4px}
+.msn-tts{margin-left:auto;flex-shrink:0;align-self:flex-start;font-size:12px;cursor:pointer;padding:1px 4px;border-radius:3px;opacity:.45}
+.msn-tts.on{opacity:1;background:#d8e6f8}
+#drop-hint{position:fixed;inset:10px;z-index:99995;border:4px dashed #4a90d8;border-radius:14px;background:rgba(10,30,80,.55);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-family:Tahoma,sans-serif;font-size:17px;line-height:1.7;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.wa-eqpanel{display:flex;gap:6px;justify-content:space-between;background:#22222e;border:1px solid #16161e;border-radius:2px;padding:6px 8px 3px}
+.wa-eqband{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:8px;color:#8f93a8}
+.wa-eqs{writing-mode:vertical-lr;direction:rtl;height:52px;width:14px;accent-color:#2eff46}
 #msn-msgs{flex:1;overflow:auto;padding:10px;background:#fff;font-size:12px}
 .msn-line{margin-bottom:8px}
 .msn-who{color:#16569e;font-weight:bold;font-size:11px;display:block}
@@ -2166,6 +2172,14 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
             <div class="si-icon">&#127912;</div>
             <div><div class="si-label">Paint</div></div>
           </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openLoquendo()">
+            <div class="si-icon">&#128483;&#65039;</div>
+            <div><div class="si-label">Loquendo</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openRecorder()">
+            <div class="si-icon">&#127908;</div>
+            <div><div class="si-label">Grabadora de sonidos</div></div>
+          </div>
         </div>
         <div class="start-item" role="button" tabindex="0" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
           <div class="si-icon">&#128252;</div>
@@ -3070,7 +3084,8 @@ const SESSION_OPENERS={
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
   defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo(),
-  emule:()=>openEmule(),outlook:()=>openOutlook(),regedit:()=>openRegedit(),encarta:()=>openEncarta()
+  emule:()=>openEmule(),outlook:()=>openOutlook(),regedit:()=>openRegedit(),encarta:()=>openEncarta(),
+  loquendo:()=>openLoquendo(),recorder:()=>openRecorder()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3357,6 +3372,15 @@ function msnQuitConfirm(){
     _msnSpontLoop();
   },75000+Math.random()*60000);
 })();
+// Notificación nativa cuando el bot escribe con la pestaña en segundo plano
+function msnNotify(txt){
+  try{
+    if(typeof Notification==='undefined'||Notification.permission!=='granted')return;
+    if(!document.hidden)return;
+    const n=new Notification(MSN_NICK+' dice:',{body:String(txt).slice(0,120),tag:'tos-msn',icon:TOS_ICON_192});
+    n.onclick=()=>{try{window.focus();}catch(e){}try{toggleMSNFromTray();}catch(e){}};
+  }catch(e){}
+}
 // El icono de la bandeja alterna el chat como un item de la barra de tareas:
 // cerrado→abrir, minimizado→restaurar, activo→minimizar, en segundo plano→traer al frente
 function toggleMSNFromTray(){
@@ -3380,6 +3404,7 @@ function openMSN(){
       <div class="msn-ava">&#127939;</div>
       <div style="min-width:0"><b style="font-size:12px">${MSN_NICK}</b>
       <div class="msn-status"><span id="msn-dot"></span><span id="msn-state-text">En línea · &#127925; Daddy Yankee - La Gasolina</span></div></div>
+      <span class="msn-tts" id="msn-tts" role="button" tabindex="0" title="Leer sus mensajes en voz alta (cortesía de Loquendo)" aria-label="Leer mensajes en voz alta">&#128266;</span>
       <span class="msn-quit" role="button" tabindex="0" title="Cerrar el programa y quitar el icono de la bandeja" aria-label="Salir de MSN Messenger" onclick="msnQuitConfirm()">Salir</span>
     </div>
     <div id="msn-msgs" aria-live="polite"></div>
@@ -3404,7 +3429,10 @@ function openMSN(){
     const add=(who,txt,cls)=>{msgs.innerHTML+=`<div class="msn-line ${cls}"><span class="msn-who">${esc(who)} dice:</span><div class="msn-txt">${emo(esc(txt))}</div></div>`;scroll();};
     const sys=(txt)=>{msgs.innerHTML+=`<div class="msn-sys">${txt}</div>`;scroll();};
     const shake=()=>{win.classList.add('msn-shake');setTimeout(()=>win.classList.remove('msn-shake'),550);};
-    const buzz=()=>{playTone(70,0.22,'sawtooth',0.6);setTimeout(()=>playTone(62,0.22,'sawtooth',0.55),110);};
+    const buzz=()=>{
+      playTone(70,0.22,'sawtooth',0.6);setTimeout(()=>playTone(62,0.22,'sawtooth',0.55),110);
+      try{if(navigator.vibrate)navigator.vibrate([180,80,180]);}catch(e){} // el zumbido vibra DE VERDAD en el móvil
+    };
     let typingEl=null;
     const dingIn=()=>{playTone(1046.5,0.09,'sine',0.35);setTimeout(()=>playTone(1568,0.13,'sine',0.28),90);}; // el "ding" doble clásico
     const botSay=(txt,delay)=>{
@@ -3424,6 +3452,8 @@ function openMSN(){
           if(_msnState!=='online')msnSetState('online'); // si escribe es que ha vuelto: primero el aviso de estado, luego su mensaje
           add(MSN_NICK,txt,'bot');
           dingIn();
+          msnNotify(txt);
+          if(Store.get('tos-msn-tts')==='on')loquendoSpeak(txt.replace(/\((H|Y|L|F)\)/gi,'').replace(/>:\(|:\)|:\(|:P|\bxd\b/gi,''));
           // Si el chat no está a la vista, el mensaje queda "sin leer" y la bandeja parpadea
           const info=openWindows[win.id];
           if(!info||info.minimized||activeWindowId!==win.id)msnSetUnread(true);
@@ -3435,6 +3465,8 @@ function openMSN(){
       if(!v)return;
       add(msnUserName(),v,'me');
       inp.value='';
+      // Primer mensaje: pedir permiso de notificaciones (gesto del usuario mediante)
+      try{if(typeof Notification!=='undefined'&&Notification.permission==='default')Notification.requestPermission();}catch(e){}
       // "me llamo X": el bot te recuerda para siempre (clave tos-msn-name)
       const nm=v.match(/(?:me llamo|mi nombre es)\s+([\wÁÉÍÓÚÜÑáéíóúüñ][\wÁÉÍÓÚÜÑáéíóúüñ\- ]{1,15})/i);
       if(nm){
@@ -3485,6 +3517,17 @@ function openMSN(){
       playTone(523.25,0.09,'sine',0.3);setTimeout(()=>playTone(659.25,0.09,'sine',0.3),110);setTimeout(()=>playTone(783.99,0.14,'sine',0.3),220);
       const uname=msnUserName();
       botSay('¡Hombre'+(uname!=='Tú'?', '+uname:'')+', por fin te conectas! ¿Un duelo al Buscaminas o vienes a ver los Proyectos? :)',500);
+    }
+    // Botón de lectura en voz alta (cortesía de Loquendo)
+    const tts=document.getElementById('msn-tts');
+    if(tts){
+      tts.classList.toggle('on',Store.get('tos-msn-tts')==='on');
+      tts.onclick=()=>{
+        const on=Store.get('tos-msn-tts')!=='on';
+        Store.set('tos-msn-tts',on?'on':'off');
+        tts.classList.toggle('on',on);
+        if(!on){try{if(typeof speechSynthesis!=='undefined')speechSynthesis.cancel();}catch(e){}}
+      };
     }
     setTimeout(()=>inp.focus(),80);
     _msnWinId=id;_msnOpenedOnce=true;
@@ -3629,7 +3672,7 @@ const CHIP_TRACKS=[
    low:[50,null,null,50,null,null,50,null,43,null,null,43,null,null,45,null,50,null,null,50,null,null,50,null,43,null,45,null,47,null,null,null]}
 ];
 let _playerHook=null;
-function playerAddFiles(list){ if(_playerHook)_playerHook(list); }
+function playerAddFiles(list,autoplay){ if(_playerHook)_playerHook(list,autoplay); }
 function openPlayer(){
   closeStartMenu();
   if(focusExisting('player-root'))return;
@@ -3650,8 +3693,11 @@ function openPlayer(){
     <div class="wa-sliders">
       <input type="range" class="wa-vol" id="pl-vol" min="0" max="100" aria-label="Volumen">
       <input type="range" class="wa-bal" id="pl-bal" min="-10" max="10" value="0" aria-label="Balance (decorativo)">
-      <span class="wa-toggle" id="pl-eq" role="button" tabindex="0" title="Ecualizador (de adorno, como casi siempre)">EQ</span>
+      <span class="wa-toggle" id="pl-eq" role="button" tabindex="0" title="Ecualizador (de verdad)">EQ</span>
       <span class="wa-toggle on" id="pl-pltog" role="button" tabindex="0" title="Mostrar/ocultar lista">PL</span>
+    </div>
+    <div class="wa-eqpanel" id="pl-eqpanel" style="display:none">
+      ${[60,170,600,1000,3000,12000].map((f,i)=>`<label class="wa-eqband"><input type="range" class="wa-eqs" data-b="${i}" min="-12" max="12" value="0" aria-label="Banda de ${f>=1000?(f/1000)+'K':f} Hz"><span>${f>=1000?(f/1000)+'K':f}</span></label>`).join('')}
     </div>
     <div class="wa-controls">
       <button class="wa-btn" id="pl-prev" title="Anterior" aria-label="Anterior">&#9198;</button>
@@ -3674,18 +3720,35 @@ function openPlayer(){
     const au=document.createElement('audio');
     const playlist=CHIP_TRACKS.map(t=>({type:'chip',name:t.name+' (chiptune)',ref:t}));
     let cur=-1,playing=false,chipTimer=null,chipStart0=0,chipSteps=0,noiseBuf=null;
-    let analyser=null,mediaSrc=null;
+    let analyser=null,mediaSrc=null,eqFilters=null,audioIn=null;
     const midi=n=>440*Math.pow(2,(n-69)/12);
     const fitViz=()=>{viz.width=viz.clientWidth||300;viz.height=viz.clientHeight||44;};
     fitViz();
-    // Analizador para el visualizador (si el entorno lo permite; si no, barras simuladas)
+    const EQ_FREQS=[60,170,600,1000,3000,12000];
+    const eqGains=()=>{try{const g=JSON.parse(Store.get('tos-eq')||'[]');return EQ_FREQS.map((_,i)=>Number(g[i])||0);}catch(e){return EQ_FREQS.map(()=>0);}};
+    // Analizador + cadena de EQ real (si el entorno lo permite; si no, barras simuladas)
     const hookAnalyser=()=>{
       try{
         const ctx=getAudioCtx();
         if(!analyser&&ctx.createAnalyser){analyser=ctx.createAnalyser();analyser.fftSize=64;analyser.connect(ctx.destination);}
-        if(analyser&&!mediaSrc&&ctx.createMediaElementSource){mediaSrc=ctx.createMediaElementSource(au);mediaSrc.connect(analyser);}
+        if(!eqFilters&&ctx.createBiquadFilter){
+          const gains=eqGains();
+          eqFilters=EQ_FREQS.map((f,i)=>{
+            const bf=ctx.createBiquadFilter();
+            bf.type=i===0?'lowshelf':i===EQ_FREQS.length-1?'highshelf':'peaking';
+            bf.frequency.value=f;
+            if(bf.Q)bf.Q.value=1;
+            bf.gain.value=gains[i];
+            return bf;
+          });
+          for(let i=0;i<eqFilters.length-1;i++)eqFilters[i].connect(eqFilters[i+1]);
+          eqFilters[eqFilters.length-1].connect(analyser||ctx.destination);
+          audioIn=eqFilters[0];
+        }
+        if(!mediaSrc&&ctx.createMediaElementSource){mediaSrc=ctx.createMediaElementSource(au);mediaSrc.connect(audioIn||analyser||ctx.destination);}
       }catch(e){}
     };
+    const sink=()=>audioIn||analyser||getAudioCtx().destination;
     const noiseHat=(t,len)=>{
       try{
         const ctx=getAudioCtx();
@@ -3695,7 +3758,7 @@ function openPlayer(){
         const g=ctx.createGain();
         g.gain.setValueAtTime(Math.max(0.001,0.05*masterVolume),t);
         g.gain.exponentialRampToValueAtTime(0.001,t+len);
-        src.connect(g);g.connect(analyser||ctx.destination);
+        src.connect(g);g.connect(sink());
         src.start(t);src.stop(t+len);
       }catch(e){}
     };
@@ -3708,7 +3771,7 @@ function openPlayer(){
           o.type=type;o.frequency.value=midi(n);
           g.gain.setValueAtTime(Math.max(0.001,vol*masterVolume),t);
           g.gain.exponentialRampToValueAtTime(0.001,t+len);
-          o.connect(g);g.connect(analyser||ctx.destination);
+          o.connect(g);g.connect(sink());
           o.start(t);o.stop(t+len+0.02);
         };
         note(tr.mel[s],tr.lead,0.15,dur*0.95);
@@ -3809,7 +3872,23 @@ function openPlayer(){
     };
     vol.value=Math.round(masterVolume*100);
     vol.oninput=()=>{try{setMasterVolume(+vol.value);}catch(e){}try{au.volume=masterVolume;}catch(e){}};
-    document.getElementById('pl-eq').onclick=(e)=>e.target.classList.toggle('on');
+    // EQ de verdad: el panel filtra el audio con BiquadFilters y se recuerda
+    const eqPanel=document.getElementById('pl-eqpanel');
+    const eqInit=eqGains();
+    win.querySelectorAll('.wa-eqs').forEach((s,i)=>{
+      s.value=eqInit[i];
+      s.oninput=()=>{
+        const vals=[...win.querySelectorAll('.wa-eqs')].map(x=>+x.value);
+        Store.set('tos-eq',JSON.stringify(vals));
+        if(eqFilters)eqFilters.forEach((bf,j)=>{try{bf.gain.value=vals[j];}catch(e){}});
+      };
+    });
+    document.getElementById('pl-eq').onclick=(e)=>{
+      const on=eqPanel.style.display==='none';
+      eqPanel.style.display=on?'flex':'none';
+      e.target.classList.toggle('on',on);
+      if(on)hookAnalyser(); // levantar la cadena de filtros al abrirlo
+    };
     document.getElementById('pl-pltog').onclick=(e)=>{e.target.classList.toggle('on');root.classList.toggle('nolist',!e.target.classList.contains('on'));};
     setInfo(null);
     const addFiles=(files)=>{
@@ -3821,7 +3900,7 @@ function openPlayer(){
       render();
     };
     document.getElementById('pl-file').addEventListener('change',(e)=>{if(e.target.files&&e.target.files.length)addFiles(e.target.files);e.target.value='';});
-    _playerHook=addFiles;
+    _playerHook=(list,autoplay)=>{addFiles(list);if(autoplay&&playlist.length)playIdx(playlist.length-1);};
     // Visualizador: analizador real si existe; si no, barras al ritmo del secuenciador
     let raf=null;
     const freq=analyserSize=>new Uint8Array(analyserSize);
@@ -3955,7 +4034,7 @@ function openMiPC(){
     });
     document.getElementById('mipc-props').onclick=()=>{
       const up=Math.floor(((typeof performance!=='undefined'&&performance.now)?performance.now():0)/60000);
-      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.18<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
+      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.20<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
     };
   }});
 }
@@ -4373,6 +4452,246 @@ function openEncarta(){
   }});
 }
 
+// ========== ARCHIVOS DEL EQUIPO: SOLTAR SOBRE EL ESCRITORIO Y CTRL+V ==========
+let _viewerLoadFile=null,_paintLoadImage=null;
+function osOpenDroppedFile(f){
+  if(!f)return;
+  const type=f.type||'';
+  const name=(f.name||'').toLowerCase();
+  if(type.indexOf('image/')===0){
+    openImageViewer();
+    if(_viewerLoadFile)_viewerLoadFile(f);
+  }else if(type.indexOf('audio/')===0){
+    openPlayer();
+    playerAddFiles([f],true);
+  }else if(type.indexOf('video/')===0){
+    openVideo();
+    videoAddFiles([f]);
+  }else if(name.slice(-5)==='.json'||type==='application/json'){
+    try{
+      const rd=new FileReader();
+      rd.onload=()=>{osImportBackup(rd.result,false);};
+      rd.readAsText(f);
+    }catch(e){}
+  }else{
+    xpDialog('Abrir archivo','<div style="font-size:28px">&#128196;</div><div>No sé abrir <b>'+(f.name||'eso')+'</b>.<br><span style="opacity:.7">En 2004 esto se resolvía con doble clic y una oración.</span><br>Acepto imágenes, audio, vídeo y copias de seguridad.</div>');
+  }
+}
+(function(){
+  let hint=null,depth=0;
+  const showHint=()=>{
+    if(hint)return;
+    hint=document.createElement('div');
+    hint.id='drop-hint';
+    hint.innerHTML='<div>&#128229;<br>Suelta el archivo: yo me encargo<br><span style="font-size:11px;opacity:.8">imagen &rarr; Visor &middot; m&uacute;sica &rarr; Winamp &middot; v&iacute;deo &rarr; Reproductor &middot; copia .json &rarr; restaurar</span></div>';
+    document.body.appendChild(hint);
+  };
+  const hideHint=()=>{depth=0;if(hint){hint.remove();hint=null;}};
+  document.addEventListener('dragenter',(e)=>{
+    if(e.dataTransfer&&[...(e.dataTransfer.types||[])].indexOf('Files')>=0){depth++;showHint();}
+  });
+  document.addEventListener('dragleave',()=>{depth--;if(depth<=0)hideHint();});
+  document.addEventListener('dragover',(e)=>{e.preventDefault();});
+  document.addEventListener('drop',(e)=>{
+    e.preventDefault();
+    hideHint();
+    const fs=e.dataTransfer&&e.dataTransfer.files;
+    if(!fs||!fs.length)return;
+    const files=[...fs];
+    const audios=files.filter(x=>(x.type||'').indexOf('audio/')===0);
+    if(audios.length>1){openPlayer();playerAddFiles(audios,true);}
+    files.filter(x=>audios.length<=1||((x.type||'').indexOf('audio/')!==0)).forEach(osOpenDroppedFile);
+  });
+  // Ctrl+V con una imagen en el portapapeles: directa a Paint para pintarrajearla
+  document.addEventListener('paste',(e)=>{
+    const items=(e.clipboardData&&e.clipboardData.items)||[];
+    for(const it of items){
+      if(it.type&&it.type.indexOf('image/')===0&&it.getAsFile){
+        const f=it.getAsFile();
+        if(f){
+          openPaint();
+          if(_paintLoadImage)_paintLoadImage(f);
+          e.preventDefault();
+        }
+        return;
+      }
+    }
+  });
+})();
+
+// ========== BATERÍA REAL EN LA BANDEJA ==========
+(function(){
+  if(!navigator.getBattery)return;
+  navigator.getBattery().then((b)=>{
+    const tray=document.getElementById('tray-icons');
+    if(!tray)return;
+    const span=document.createElement('span');
+    span.id='tray-batt';
+    tray.appendChild(span);
+    const render=()=>{
+      const p=Math.round(b.level*100);
+      const col=b.charging?'#7ebd2f':p<15?'#d04030':p<40?'#f0ad00':'#7ebd2f';
+      span.title='Batería: '+p+'%'+(b.charging?' (cargando)':'');
+      span.innerHTML='<svg width="21" height="11" viewBox="0 0 21 11" aria-hidden="true"><rect x="0.5" y="0.5" width="17" height="10" rx="2" fill="none" stroke="#fff" stroke-opacity=".85"/><rect x="18.5" y="3" width="2" height="5" rx="1" fill="#fff" fill-opacity=".85"/><rect x="2" y="2" width="'+Math.max(1,14*b.level)+'" height="7" rx="1" fill="'+col+'"/>'+(b.charging?'<text x="6" y="9" font-size="9" fill="#fff">&#9889;</text>':'')+'</svg>';
+    };
+    ['levelchange','chargingchange'].forEach(ev=>{try{b.addEventListener(ev,render);}catch(e){}});
+    render();
+  }).catch(()=>{});
+})();
+
+// ========== LOQUENDO (texto a voz con solera) ==========
+function loquendoSpeak(text,voiceName,rate,pitch){
+  try{
+    if(typeof speechSynthesis==='undefined'||typeof SpeechSynthesisUtterance==='undefined')return false;
+    const u=new SpeechSynthesisUtterance(String(text||'').slice(0,500));
+    const voices=speechSynthesis.getVoices()||[];
+    let v=voiceName?voices.find(x=>x.name===voiceName):null;
+    if(!v)v=voices.find(x=>(x.lang||'').indexOf('es')===0)||voices[0];
+    if(v)u.voice=v;
+    u.rate=rate||1;u.pitch=pitch||1;
+    u.volume=Math.max(0,Math.min(1,masterVolume*1.4));
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+    return true;
+  }catch(e){return false;}
+}
+function openLoquendo(){
+  closeStartMenu();
+  if(focusExisting('loq-root'))return;
+  const content=`<div id="loq-root" style="display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;font-size:11px;padding:9px;gap:8px">
+    <textarea id="loq-text" aria-label="Texto a leer" style="flex:1;min-height:0;border:1px solid #7da2ce;border-radius:3px;padding:7px;font-family:inherit;font-size:13px;resize:none;outline:none">hola soy loquendo y voy a narrar tu partida del buscaminas</textarea>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <select id="loq-voice" aria-label="Voz" style="font-family:Tahoma;font-size:11px;padding:3px;max-width:150px"></select>
+      <label style="display:flex;align-items:center;gap:4px">Velocidad <input type="range" id="loq-rate" min="50" max="200" value="100" style="width:70px"></label>
+      <label style="display:flex;align-items:center;gap:4px">Tono <input type="range" id="loq-pitch" min="50" max="200" value="100" style="width:70px"></label>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button id="loq-play" class="settings-btn" style="flex:1;font-weight:bold">&#128266; LEER</button>
+      <button id="loq-stop" class="trash-btn">Parar</button>
+    </div>
+    <div style="font-size:10px;color:#666">Con la voz adecuada, cualquier texto se convierte en un v&iacute;deo de 2007.</div>
+  </div>`;
+  createWindow('Loquendo','&#128483;&#65039;',380,320,content,{session:'loquendo',statusbar:false,onCreated:(id,win)=>{
+    const sel=document.getElementById('loq-voice');
+    const fill=()=>{
+      try{
+        const vs=(typeof speechSynthesis!=='undefined'&&speechSynthesis.getVoices())||[];
+        const es=vs.filter(v=>(v.lang||'').indexOf('es')===0);
+        const list=(es.length?es:vs).slice(0,25);
+        sel.innerHTML=list.length?list.map(v=>`<option value="${v.name}">${v.name}</option>`).join(''):'<option value="">(sin voces en este navegador)</option>';
+      }catch(e){sel.innerHTML='<option value="">(sin voces)</option>';}
+    };
+    fill();
+    try{if(typeof speechSynthesis!=='undefined')speechSynthesis.onvoiceschanged=fill;}catch(e){}
+    document.getElementById('loq-play').onclick=()=>{
+      const ok=loquendoSpeak(document.getElementById('loq-text').value,sel.value,document.getElementById('loq-rate').value/100,document.getElementById('loq-pitch').value/100);
+      if(!ok)xpDialog('Loquendo','<div style="font-size:28px">&#128483;&#65039;</div><div>Este navegador no tiene s&iacute;ntesis de voz.<br><span style="opacity:.7">Ni Loquendo pudo con esto.</span></div>');
+    };
+    document.getElementById('loq-stop').onclick=()=>{try{if(typeof speechSynthesis!=='undefined')speechSynthesis.cancel();}catch(e){}};
+  }});
+}
+
+// ========== GRABADORA DE SONIDOS (la de la ondita verde) ==========
+function openRecorder(){
+  closeStartMenu();
+  if(focusExisting('rec-root'))return;
+  const content=`<div id="rec-root" style="display:flex;flex-direction:column;height:100%;background:#c0c0c0;font-family:Tahoma,sans-serif;font-size:11px;padding:9px;gap:8px;border:2px solid;border-color:#fff #404040 #404040 #fff">
+    <div style="background:#0a120a;border:2px solid;border-color:#404040 #fff #fff #404040;height:64px;position:relative">
+      <canvas id="rec-wave" style="width:100%;height:100%;display:block"></canvas>
+    </div>
+    <div id="rec-status" style="text-align:center;color:#333">Listo para grabar.</div>
+    <div style="display:flex;gap:5px;justify-content:center">
+      <button id="rec-rec" class="trash-btn" style="color:#a00;font-weight:bold">&#9210; Grabar</button>
+      <button id="rec-stop" class="trash-btn" disabled>&#9632; Parar</button>
+      <button id="rec-play" class="trash-btn" disabled>&#9654; Reproducir</button>
+      <a id="rec-dl" class="trash-btn" style="display:none;text-decoration:none" download="grabacion-torrecillas.webm">&#11015;&#65039; Guardar</a>
+    </div>
+  </div>`;
+  createWindow('Grabadora de sonidos','&#127908;',360,240,content,{session:'recorder',statusbar:false,onCreated:(id,win)=>{
+    const wave=document.getElementById('rec-wave');
+    const wctx=wave.getContext&&wave.getContext('2d');
+    const st=document.getElementById('rec-status');
+    const bRec=document.getElementById('rec-rec'),bStop=document.getElementById('rec-stop'),bPlay=document.getElementById('rec-play'),bDl=document.getElementById('rec-dl');
+    let rec=null,chunks=[],stream=null,raf=null,anal=null,blobUrl='',au=null,t0=0;
+    const drawWave=()=>{
+      if(wctx){
+        const W=wave.width=wave.clientWidth||300,H=wave.height=wave.clientHeight||58;
+        wctx.fillStyle='#0a120a';wctx.fillRect(0,0,W,H);
+        wctx.strokeStyle='#2eff46';wctx.lineWidth=2;wctx.beginPath();
+        if(anal){
+          try{
+            const data=new Uint8Array(anal.fftSize);
+            anal.getByteTimeDomainData(data);
+            for(let i=0;i<W;i++){
+              const v=data[Math.floor(i*data.length/W)]/128-1;
+              const y=H/2+v*H*0.45;
+              i?wctx.lineTo(i,y):wctx.moveTo(i,y);
+            }
+          }catch(e){wctx.moveTo(0,H/2);wctx.lineTo(W,H/2);}
+        }else{
+          for(let i=0;i<W;i++){
+            const y=H/2+Math.sin(i*0.15+Date.now()/90)*H*0.3*Math.random();
+            i?wctx.lineTo(i,y):wctx.moveTo(i,y);
+          }
+        }
+        wctx.stroke();
+      }
+      raf=requestAnimationFrame(drawWave);
+    };
+    const stopAllRec=()=>{
+      if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){}}
+      if(stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){}stream=null;}
+      if(raf){cancelAnimationFrame(raf);raf=null;}
+      anal=null;
+    };
+    bRec.onclick=async()=>{
+      if(typeof MediaRecorder==='undefined'||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+        xpDialog('Grabadora','<div style="font-size:28px">&#127908;</div><div>No hay micr&oacute;fono disponible (o el navegador no deja).<br><span style="opacity:.7">En 2004 tampoco ten&iacute;amos, as&iacute; que empate.</span></div>');
+        return;
+      }
+      try{
+        stream=await navigator.mediaDevices.getUserMedia({audio:true});
+        chunks=[];
+        rec=new MediaRecorder(stream);
+        rec.ondataavailable=(e)=>{if(e.data&&e.data.size)chunks.push(e.data);};
+        rec.onstop=()=>{
+          const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});
+          if(blobUrl){try{URL.revokeObjectURL(blobUrl);}catch(e){}}
+          try{blobUrl=URL.createObjectURL(blob);}catch(e){blobUrl='';}
+          bDl.href=blobUrl;bDl.style.display='';
+          bPlay.disabled=false;
+          st.textContent='Grabado ('+Math.round((Date.now()-t0)/1000)+'s). Dale al play o guárdalo.';
+        };
+        try{
+          const ctx=getAudioCtx();
+          if(ctx.createMediaStreamSource&&ctx.createAnalyser){
+            anal=ctx.createAnalyser();anal.fftSize=512;
+            ctx.createMediaStreamSource(stream).connect(anal);
+          }
+        }catch(e){}
+        rec.start();
+        t0=Date.now();
+        st.textContent='&#128308; Grabando... di algo bonito.';st.innerHTML=st.textContent;
+        bRec.disabled=true;bStop.disabled=false;bPlay.disabled=true;
+        drawWave();
+      }catch(e){
+        xpDialog('Grabadora','<div style="font-size:28px">&#128683;</div><div>Sin permiso para el micr&oacute;fono.<br><span style="opacity:.7">Respetable. Aqu&iacute; nadie graba a nadie.</span></div>');
+      }
+    };
+    bStop.onclick=()=>{stopAllRec();bRec.disabled=false;bStop.disabled=true;};
+    bPlay.onclick=()=>{
+      if(!blobUrl)return;
+      if(!au)au=document.createElement('audio');
+      try{au.src=blobUrl;au.volume=masterVolume;const p=au.play();if(p&&p.catch)p.catch(()=>{});}catch(e){}
+    };
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      stopAllRec();
+      if(au){try{au.pause();}catch(e){}}
+      if(blobUrl){try{URL.revokeObjectURL(blobUrl);}catch(e){}}
+    });
+  }});
+}
+
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
 const OS_THEMES=['luna','olive','silver','classic'];
 function applyTheme(t){
@@ -4471,7 +4790,7 @@ function _nsShowDial(win){
 const REG_TREE={
   'HKEY_LOCAL_MACHINE':{
     'SOFTWARE':{
-      'Torrecillas OS':{__v:{'Version':'0.18.0','Bliss':'activado','NostalgiaLevel':'0xFFFF'}},
+      'Torrecillas OS':{__v:{'Version':'0.20.0','Bliss':'activado','NostalgiaLevel':'0xFFFF'}},
       'Messenger':{__v:{'Nick':'Alejandro_Virtual','Zumbidos':'ilimitados','Estado':'En línea'}},
       'eMule':{__v:{'VelocidadMaxima':'12 KB/s (no tocar)','ColaDeEspera':'4.312 usuarios'}}
     },
@@ -4758,7 +5077,7 @@ function _searchIndex(){
    ['Netscape Navigator','&#127760;',openNetscape],['Símbolo del sistema','&#128421;&#65039;',openTerminal],
    ['Nota adhesiva','&#128221;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -5498,7 +5817,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.19.0</p>
+    <p>Versi&oacute;n 0.20.0</p>
     <p style="margin-top:10px;font-size:11px;opacity:.8">Atajos: Alt+Tab cambia de ventana &middot; Ctrl+Esc abre Inicio<br>R reinicia los juegos &middot; arrastra iconos (a la papelera tambi&eacute;n)<br>&#127918; Mando: cruceta/stick + A funciona en los juegos</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
@@ -6086,12 +6405,16 @@ function openImageViewer(){
     let zoom=1,url=null;
     const apply=()=>{img.style.transform='scale('+zoom+')';zEl.textContent=Math.round(zoom*100)+'%';};
     document.getElementById('iv-open').onclick=()=>file.click();
-    file.onchange=()=>{
-      const f=file.files[0];if(!f)return;
+    const loadImageFile=(f)=>{
+      if(!f)return;
       if(url)URL.revokeObjectURL(url);
-      url=URL.createObjectURL(f);img.src=url;img.style.display='';empty.style.display='none';
+      try{url=(window.URL&&URL.createObjectURL)?URL.createObjectURL(f):'';}catch(e){url='';}
+      img.src=url;img.style.display='';empty.style.display='none';
       img.onload=()=>{zoom=1;apply();};
     };
+    file.onchange=()=>loadImageFile(file.files[0]);
+    _viewerLoadFile=loadImageFile; // gancho para soltar archivos sobre el escritorio
+    (win._cleanups=win._cleanups||[]).push(()=>{if(_viewerLoadFile===loadImageFile)_viewerLoadFile=null;});
     document.getElementById('iv-zin').onclick=()=>{zoom=Math.min(8,zoom*1.25);apply();};
     document.getElementById('iv-zout').onclick=()=>{zoom=Math.max(0.1,zoom/1.25);apply();};
     document.getElementById('iv-fit').onclick=()=>{
@@ -6121,7 +6444,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,encarta:openEncarta};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -6252,6 +6575,8 @@ function openPaint(){
           </select>
         </div>
         <div style="margin-left:auto;display:flex;gap:3px">
+          <button class="game-btn" id="paint-open" style="padding:2px 6px;font-size:10px;margin:0" title="Abrir una imagen del equipo">&#128193; Abrir</button>
+          <input type="file" id="paint-file" accept="image/*" style="display:none" aria-label="Abrir imagen en Paint">
           <button class="game-btn" id="paint-undo" style="padding:2px 6px;font-size:10px;margin:0" title="Deshacer">&#8617;</button>
           <button class="game-btn" id="paint-clear" style="padding:2px 6px;font-size:10px;margin:0">Limpiar</button>
           <button class="game-btn" id="paint-save" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#40c040,#208020)">Descargar</button>
@@ -6531,6 +6856,28 @@ function openPaint(){
         playTone(523,0.1,'sine',0.4);setTimeout(()=>playTone(784,0.14,'sine',0.4),110);
       }catch(e){}
     };
+    // Abrir imagen del equipo (también la usa Ctrl+V y el arrastre al escritorio)
+    const loadImageIntoPaint=(f)=>{
+      if(!f)return;
+      try{
+        const im=new Image();
+        im.onload=()=>{
+          const c2=canvas.getContext('2d');
+          if(!c2)return;
+          c2.fillStyle='#fff';c2.fillRect(0,0,canvas.width,canvas.height);
+          const sc=Math.min(canvas.width/im.width,canvas.height/im.height,1);
+          const w2=im.width*sc,h2=im.height*sc;
+          c2.drawImage(im,(canvas.width-w2)/2,(canvas.height-h2)/2,w2,h2);
+          saveState();
+          try{URL.revokeObjectURL(im.src);}catch(e){}
+        };
+        im.src=(window.URL&&URL.createObjectURL)?URL.createObjectURL(f):'';
+      }catch(e){}
+    };
+    document.getElementById('paint-open').onclick=()=>document.getElementById('paint-file').click();
+    document.getElementById('paint-file').addEventListener('change',(e)=>{if(e.target.files&&e.target.files.length)loadImageIntoPaint(e.target.files[0]);e.target.value='';});
+    _paintLoadImage=loadImageIntoPaint;
+    (document.getElementById(id)._cleanups=document.getElementById(id)._cleanups||[]).push(()=>{if(_paintLoadImage===loadImageIntoPaint)_paintLoadImage=null;});
     // Imprimir de verdad: solo el lienzo, vía iframe oculto
     document.getElementById('paint-print').onclick=()=>{
       try{
