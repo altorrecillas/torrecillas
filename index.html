@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Torrecillas OS">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta property="og:description" content="12 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
+<meta property="og:description" content="13 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
 <meta property="og:url" content="https://torrecillas.cat/">
 <meta property="og:image" content="https://torrecillas.cat/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,12 +22,12 @@
 <meta property="og:image:alt" content="Logo de Torrecillas OS sobre una colina estilo Bliss con el texto: un escritorio XP en tu navegador">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta name="twitter:description" content="12 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
+<meta name="twitter:description" content="13 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
 <meta name="twitter:image" content="https://torrecillas.cat/og.png">
 <!-- Datos estructurados para buscadores (schema.org) -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
-  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 12 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
+  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 13 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
   {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/"},
   {"@type":"ItemList","@id":"https://torrecillas.cat/#proyectos","name":"Proyectos","itemListElement":[
     {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Woodpecker's","url":"https://woodpeckers.es","description":"Web oficial de la hamburguesería Woodpecker's de Gavà"}},
@@ -465,6 +465,33 @@ body.theme-silver #system-tray #clock{color:#222}
 body.theme-silver #start-menu{border-color:#8a8a9e}
 body.theme-silver .start-header{background:linear-gradient(180deg,#dcdce6,#9c9cb0)!important}
 body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
+
+/* eMule */
+.em-tab{padding:3px 10px;border:1px solid #9ab09a;border-bottom:none;border-radius:4px 4px 0 0;background:#d0dcd0;cursor:default;color:#555}
+.em-tab.active{background:#eef3ee;font-weight:bold;color:#222}
+.em-row{padding:5px 7px;border-bottom:1px solid #d8e0d8;cursor:pointer}
+.em-row:hover{background:#e2ecE2}
+.em-row.done .em-name{color:#1a7a1a;font-weight:bold}
+.em-name{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.em-cols{display:flex;gap:12px;font-size:9px;color:#555;margin:2px 0}
+.em-bar{position:relative;height:11px;background:#c8d4e4;border:1px solid #8898b0;overflow:hidden}
+.em-frag{position:absolute;inset:0;display:flex;opacity:.55}
+.em-fill{position:absolute;top:0;left:0;bottom:0;background:linear-gradient(180deg,#3a68c8,#1a3a88);opacity:.85}
+.em-pct{position:absolute;inset:0;text-align:center;font-size:9px;color:#fff;text-shadow:0 0 2px #000;line-height:11px}
+
+/* Outlook Express */
+.oe-folder{padding:5px 10px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oe-folder:hover{background:#e8e2cc}
+.oe-folder.active{background:#d8e4f4;font-weight:bold}
+.oe-mail{display:flex;gap:8px;padding:4px 8px;border-bottom:1px solid #eee;cursor:pointer;font-size:11px}
+.oe-mail:hover{background:#f0f4fa}
+.oe-mail.sel{background:#2b71b9;color:#fff}
+.oe-mail.unread{font-weight:bold}
+.oe-mail.unread::before{content:'\2709\FE0F';margin-right:2px}
+.oe-from{flex-shrink:0;width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oe-subj{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oe-date{flex-shrink:0;color:#888;font-size:10px}
+.oe-mail.sel .oe-date{color:#dde}
 
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:46px;z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
@@ -2045,7 +2072,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
       <div class="start-left">
         <div class="start-item" role="button" tabindex="0" id="start-games-toggle" onclick="toggleStartGames(event)">
           <div class="si-icon">&#128377;</div>
-          <div style="flex:1"><div class="si-label">Juegos</div><div class="si-desc">12 juegos cl&aacute;sicos</div></div>
+          <div style="flex:1"><div class="si-label">Juegos</div><div class="si-desc">13 juegos cl&aacute;sicos</div></div>
           <div class="si-arrow">&#9656;</div>
         </div>
         <div id="start-games-submenu"></div>
@@ -2087,6 +2114,14 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
           <div class="start-item" role="button" tabindex="0" onclick="openWordArt()">
             <div class="si-icon">&#127344;&#65039;</div>
             <div><div class="si-label">WordArt</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openEmule()">
+            <div class="si-icon">&#128052;</div>
+            <div><div class="si-label">eMule</div></div>
+          </div>
+          <div class="start-item" role="button" tabindex="0" onclick="openOutlook()">
+            <div class="si-icon">&#128231;</div>
+            <div><div class="si-label">Outlook Express</div></div>
           </div>
           <div class="start-item" role="button" tabindex="0" onclick="openDefrag()">
             <div class="si-icon">&#128189;</div>
@@ -2598,7 +2633,7 @@ function isStandalone(){
     if(location.protocol!=='https:'&&location.protocol!=='http:')return;
     const m={
       name:'Torrecillas OS',short_name:'Torrecillas OS',lang:'es',
-      description:'Un escritorio estilo Windows XP en tu navegador: 12 juegos clasicos, Paint, terminal y portfolio.',
+      description:'Un escritorio estilo Windows XP en tu navegador: 13 juegos clasicos, Paint, terminal y portfolio.',
       start_url:location.origin+location.pathname,
       scope:location.origin+location.pathname.replace(/[^/]*$/,''),
       display:'standalone',background_color:'#08286c',theme_color:'#1941a5',
@@ -2980,7 +3015,8 @@ const SESSION_OPENERS={
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
-  defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo()
+  defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo(),
+  emule:()=>openEmule(),outlook:()=>openOutlook()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3032,6 +3068,7 @@ const RECORD_DEFS=[
   {icon:'&#129521;',label:'Arkanoid',key:'tos-arkanoid-best',unit:'puntos'},
   {icon:'&#128126;',label:'Invaders',key:'tos-invaders-best',unit:'puntos'},
   {icon:'&#129513;',label:'2048',key:'tos-2048-best',unit:'puntos'},
+  {icon:'&#128640;',label:'Pinball',key:'tos-pinball-best',unit:'puntos'},
   {icon:'&#128163;',label:'Buscaminas · fácil',key:'tos-ms-best-easy',unit:'s'},
   {icon:'&#128163;',label:'Buscaminas · medio',key:'tos-ms-best-medium',unit:'s'},
   {icon:'&#128163;',label:'Buscaminas · difícil',key:'tos-ms-best-hard',unit:'s'}
@@ -3102,7 +3139,7 @@ function maybeShowWelcomeTip(){
   tip.id='welcome-tip';tip.setAttribute('role','status');
   tip.innerHTML=`<span class="tip-close" role="button" tabindex="0" aria-label="Cerrar aviso">×</span>
     <b>&#128075; ¡Bienvenido a Torrecillas OS!</b>
-    Esto es un escritorio de verdad: pulsa <b>Inicio</b> para descubrir 12 juegos, Paint, el terminal y mis proyectos. Los iconos se pueden arrastrar.`;
+    Esto es un escritorio de verdad: pulsa <b>Inicio</b> para descubrir 13 juegos, Paint, el terminal y mis proyectos. Los iconos se pueden arrastrar.`;
   document.body.appendChild(tip);
   const done=()=>{Store.set('tos-tour','done');if(tip.parentNode)tip.remove();};
   tip.querySelector('.tip-close').onclick=done;
@@ -3859,7 +3896,7 @@ function openMiPC(){
     });
     document.getElementById('mipc-props').onclick=()=>{
       const up=Math.floor(((typeof performance!=='undefined'&&performance.now)?performance.now():0)/60000);
-      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.15<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
+      xpDialog('Propiedades del sistema','<div style="font-size:28px">&#128421;&#65039;</div><div><b>Torrecillas OS XP</b> versi&oacute;n 0.16<br>Procesador: Pentium III a 733 MHz<br>Memoria: 256 MB de RAM (SDRAM)<br>Gr&aacute;fica: Voodoo3 2000 &middot; DirectX 8.1<br>Encendido desde hace '+up+' min<br><span style="opacity:.7">Rendimiento: sorprendente para ser un solo archivo.</span></div>');
     };
   }});
 }
@@ -4031,6 +4068,182 @@ function openVideo(){
       try{v.pause();}catch(e){}
       if(curUrl){try{URL.revokeObjectURL(curUrl);}catch(e){}}
       _videoHook=null;
+    });
+  }});
+}
+
+// ========== EMULE (las descargas eternas de 2004) ==========
+const EMULE_DL=[
+  {id:'cancion',name:'cancion_exito_2004(2).mp3',size:'3,8 MB',rate:0.06,start:4},
+  {id:'pelicula',name:'pelicula_estreno_DVDRip_ESPANOL_(1_link).avi',size:'693 MB',rate:0.002,start:1.2},
+  {id:'barrio',name:'Barrio Fino (album completo) [eMule paradise].zip',size:'54 MB',rate:0.008,start:7},
+  {id:'juego',name:'juego_completo_full_no_virus.iso',size:'2,1 GB',rate:0.001,start:0.3},
+  {id:'pps',name:'fotos_graciosas_2004.pps',size:'1,2 MB',rate:0.18,start:62},
+  {id:'driver',name:'driver_impresora_hp_deskjet.exe',size:'812 KB',rate:0.4,start:38}
+];
+const EMULE_DONE_MSG={
+  cancion:'<div style="font-size:28px">&#127925;</div><div><b>cancion_exito_2004(2).mp3</b> completada... y resulta ser un chiptune de 8 bits.<br><span style="opacity:.7">Cl&aacute;sico del eMule. Al menos suena bien: te la pongo en el Winamp.</span></div>',
+  pps:'<div style="font-size:28px">&#128444;&#65039;</div><div><b>fotos_graciosas_2004.pps</b> completado.<br><span style="opacity:.7">47 diapositivas con WordArt y un gato que dice cosas. Patrimonio cultural.</span></div>',
+  driver:'<div style="font-size:28px">&#128424;&#65039;</div><div><b>driver_impresora_hp_deskjet.exe</b> completado.<br>Era una barra de herramientas para Internet Explorer.<br><span style="opacity:.7">(Instalada tres veces, como manda la tradici&oacute;n.)</span></div>'
+};
+function _emuleState(){try{return JSON.parse(Store.get('tos-emule')||'{}');}catch(e){return{};}}
+function openEmule(){
+  closeStartMenu();
+  if(focusExisting('emule-root'))return;
+  const st=_emuleState();
+  EMULE_DL.forEach(d=>{if(typeof st[d.id]!=='number')st[d.id]=d.start;});
+  const rows=EMULE_DL.map(d=>`<div class="em-row" data-id="${d.id}" role="button" tabindex="0" aria-label="${d.name}">
+    <div class="em-name">${d.name}</div>
+    <div class="em-cols"><span class="em-size">${d.size}</span><span class="em-speed" id="em-speed-${d.id}">0,0 KB/s</span><span class="em-src" id="em-src-${d.id}"></span><span class="em-eta" id="em-eta-${d.id}"></span></div>
+    <div class="em-bar"><div class="em-frag" id="em-frag-${d.id}"></div><div class="em-fill" id="em-fill-${d.id}"></div><span class="em-pct" id="em-pct-${d.id}"></span></div>
+  </div>`).join('');
+  const content=`<div id="emule-root" style="display:flex;flex-direction:column;height:100%;background:#eef3ee;font-family:Tahoma,sans-serif;font-size:11px;color:#222">
+    <div style="flex-shrink:0;display:flex;gap:4px;padding:5px 8px;background:linear-gradient(180deg,#f4f8f4,#d8e4d8);border-bottom:1px solid #9ab09a">
+      <span class="em-tab">Servidores</span><span class="em-tab active">Transferencias</span><span class="em-tab">Buscar</span><span class="em-tab">Compartidos</span>
+    </div>
+    <div style="flex:1;overflow:auto;padding:6px">${rows}</div>
+    <div id="emule-status" style="flex-shrink:0;padding:4px 8px;border-top:1px solid #9ab09a;background:#e0eae0;font-size:10px;color:#333"></div>
+  </div>`;
+  createWindow('eMule v0.44b','&#128052;',600,420,content,{session:'emule',onCreated:(id,win)=>{
+    // Patrón de fragmentos fijo por descarga (la barra azul/roja mítica)
+    EMULE_DL.forEach((d,di)=>{
+      const frag=document.getElementById('em-frag-'+d.id);
+      if(!frag)return;
+      let html='';
+      for(let i=0;i<24;i++){
+        const has=((di*7+i*13)%10)>2; // pseudoaleatorio estable
+        html+=`<span style="flex:1;background:${has?'#9ab8e0':'#d04030'}"></span>`;
+      }
+      frag.innerHTML=html;
+    });
+    const tick=()=>{
+      let totDown=0;
+      EMULE_DL.forEach(d=>{
+        const done=st[d.id]>=100;
+        const speed=done?0:(Math.random()<0.4?0:Math.random()*12);
+        totDown+=speed;
+        if(!done){
+          st[d.id]=Math.min(100,st[d.id]+d.rate*(speed/6));
+        }
+        const pct=st[d.id];
+        const sp=document.getElementById('em-speed-'+d.id);
+        if(!sp)return;
+        sp.textContent=done?'—':speed.toFixed(1).replace('.',',')+' KB/s';
+        document.getElementById('em-src-'+d.id).textContent=done?'Completado':'Fuentes: '+(2+Math.floor(Math.random()*4))+' (0 completas)';
+        const days=Math.ceil((100-pct)/(d.rate*300));
+        document.getElementById('em-eta-'+d.id).textContent=done?'':(speed===0?'&infin;'.replace('&infin;','∞'):'≈ '+days+' d'+(days===1?'ía':'ías'));
+        document.getElementById('em-fill-'+d.id).style.width=pct+'%';
+        document.getElementById('em-pct-'+d.id).textContent=pct.toFixed(1).replace('.',',')+'%';
+        const row=win.querySelector('.em-row[data-id="'+d.id+'"]');
+        if(row)row.classList.toggle('done',done);
+      });
+      Store.set('tos-emule',JSON.stringify(st));
+      const stt=document.getElementById('emule-status');
+      if(stt)stt.textContent='eMule v0.44b · Conectado (ID alta) · Usuarios: '+(3412093+Math.floor(Math.random()*900)).toLocaleString('es-ES')+' · Archivos: 580M · ⬇ '+totDown.toFixed(1).replace('.',',')+' KB/s ⬆ 1,0 KB/s';
+    };
+    tick();
+    const iv=setInterval(tick,900);
+    win.querySelectorAll('.em-row').forEach(row=>{
+      row.ondblclick=()=>{
+        const d=EMULE_DL.find(x=>x.id===row.dataset.id);
+        if(st[d.id]>=100){
+          xpDialog('Descarga completada',EMULE_DONE_MSG[d.id]||'<div style="font-size:28px">&#128230;</div><div><b>'+d.name+'</b> completado. No preguntes qué hay dentro.</div>');
+          if(d.id==='cancion')openPlayer();
+        }else{
+          xpDialog('eMule','<div style="font-size:28px">&#128052;</div><div><b>'+d.name+'</b><br>Fuentes: 2 (0 completas). En cola: 4.312 usuarios por delante.<br><span style="opacity:.7">Paciencia. El eMule no se apura; se respeta.</span></div>');
+        }
+      };
+    });
+    (win._cleanups=win._cleanups||[]).push(()=>clearInterval(iv));
+  }});
+}
+
+// ========== OUTLOOK EXPRESS (el buzón de 2004) ==========
+const MAIL_MSGS=[
+  {id:'m1',from:'PROMOCIONES-MOVILES',subj:'GANA UN MOVIL CON CAMARA!!!',date:'12/07/2004',
+   body:'<div style="font-family:\'Comic Sans MS\',cursive;text-align:center"><span style="color:#f00;font-size:22px;font-weight:bold">&iexcl;&iexcl;ENHORABUENA!!</span><br><span style="color:#00c">Eres el visitante <b>1.000.000</b></span><br><span style="font-size:16px;color:#080">Has ganado un <b>m&oacute;vil CON C&Aacute;MARA</b> &#128241;&#128247;</span><br><br><span style="background:#ff0;padding:2px 8px">Solo tienes que reenviar este correo a 20 contactos</span><br><br><small style="color:#999">y darnos tu direcci&oacute;n, tu DNI y el PIN de tu tarjeta</small></div>'},
+  {id:'m2',from:'tu_prima_leti_87',subj:'RV: RV: RV: RV: REENVIA O 7 AÑOS DE MALA SUERTE',date:'11/07/2004',
+   body:'<div style="font-family:\'Comic Sans MS\',cursive;color:#808;text-align:center">Esta cadena la empez&oacute; un monje en 1802.<br>Un chico la borr&oacute; y suspendi&oacute; todas.<br>Una chica la reenvi&oacute; y le toc&oacute; la primitiva.<br><b>T&Uacute; DECIDES.</b><br><br>&#11015;&#65039; reenv&iacute;a antes de 4 minutos &#11015;&#65039;</div>'},
+  {id:'m3',from:'jorge_de_clase',subj:'fotos_graciosas.pps (2,4 MB)',date:'10/07/2004',
+   body:'<div>jajajaja mira el powerpoint q me han pasado esta wapisimo<br><br><span style="border:1px solid #999;padding:3px 8px;background:#eee">&#128206; fotos_graciosas.pps</span><br><br><small>(no lo abras en el trabajo jajaja)</small></div>'},
+  {id:'m4',from:'Alejandro Torrecillas',subj:'Mis proyectos web (esto sí es de verdad)',date:'hoy',
+   body:'<div>Hola: entre tanto spam de 2004, un correo real. Estas son mis webs:<br><br>&#128663; <a href="https://solutioncar.torrecillas.cat" target="_blank" rel="noopener noreferrer">SolutionCar</a> — gesti&oacute;n de veh&iacute;culos<br>&#127828; <a href="https://woodpeckers.es" target="_blank" rel="noopener noreferrer">Woodpecker\'s</a> — hamburguesas en Gav&agrave;<br>&#127843; <a href="https://tottorigava.es" target="_blank" rel="noopener noreferrer">Tottori</a> — japon&eacute;s en Gav&agrave;<br>&#127865; <a href="https://miamilounge.es" target="_blank" rel="noopener noreferrer">Miami Lounge</a> — Costa Dorada<br><br>Un saludo,<br>Alejandro</div>'},
+  {id:'m5',from:'Servicio_MSN_Oficial',subj:'Tu cuenta sera ELIMINADA (reenvia este correo)',date:'09/07/2004',
+   body:'<div style="color:#00c">Estimado usuario:<br>Hotmail esta lleno. Si no reenvias este correo a TODOS tus contactos, tu cuenta sera eliminada el viernes.<br><br>Atentamente,<br><b>Bill Gates en persona</b><br><small style="color:#999">(este correo es 100% oficial, f&iacute;jate que lo pone aqu&iacute;)</small></div>'},
+  {id:'m6',from:'Hotmail Staff',subj:'Confirmacion: has sido uno de los elegidos',date:'08/07/2004',
+   body:'<div>Microsoft repartir&aacute; su fortuna entre quienes reenv&iacute;en este correo.<br>Contador verificado por AOL y por un primo inform&aacute;tico.<br><br><b>No es broma.</b> (Era broma.)</div>'}
+];
+function _mailRead(){try{return JSON.parse(Store.get('tos-mail-read')||'[]');}catch(e){return [];}}
+function openOutlook(){
+  closeStartMenu();
+  if(focusExisting('oe-root'))return;
+  const content=`<div id="oe-root" style="display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;font-size:11px;color:#222">
+    <div style="flex-shrink:0;display:flex;gap:6px;padding:5px 8px;border-bottom:1px solid #aca899;background:#ece9d8">
+      <button class="trash-btn" id="oe-new">&#9993;&#65039; Nuevo</button>
+      <button class="trash-btn" id="oe-reply">&#8617;&#65039; Responder</button>
+      <button class="trash-btn" id="oe-sync">&#128260; Enviar y recibir</button>
+      <span id="oe-status" style="margin-left:auto;font-size:10px;color:#555;align-self:center"></span>
+    </div>
+    <div style="flex:1;display:flex;min-height:0">
+      <div id="oe-folders" style="flex-shrink:0;width:140px;border-right:1px solid #aca899;background:#f6f4ea;padding:6px 0;overflow:auto">
+        <div class="oe-folder active" data-f="inbox">&#128229; Bandeja de entrada <b id="oe-count"></b></div>
+        <div class="oe-folder" data-f="sent">&#128228; Enviados</div>
+        <div class="oe-folder" data-f="spam">&#128293; No deseado</div>
+        <div class="oe-folder" data-f="trash">&#128465;&#65039; Eliminados</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+        <div id="oe-list" style="flex-shrink:0;height:45%;overflow:auto;border-bottom:2px solid #aca899;background:#fff"></div>
+        <div id="oe-preview" style="flex:1;overflow:auto;background:#fff;padding:12px;font-size:12px;line-height:1.5"><i style="color:#888">Selecciona un mensaje para leerlo.</i></div>
+      </div>
+    </div>
+  </div>`;
+  createWindow('Outlook Express','&#128231;',640,440,content,{session:'outlook',onCreated:(id,win)=>{
+    const list=document.getElementById('oe-list');
+    const prev=document.getElementById('oe-preview');
+    const counter=document.getElementById('oe-count');
+    const FOLDER_EMPTY={
+      sent:'Enviados: 1 borrador de 2004 que nunca mandaste. Mejor as&iacute;.',
+      spam:'Vac&iacute;o. Sinceramente, casi todo lo de la bandeja deber&iacute;a estar aqu&iacute;.',
+      trash:'Nada. Los correos de 2004 son historia viva: no se borran.'
+    };
+    const render=()=>{
+      const read=_mailRead();
+      const unread=MAIL_MSGS.filter(m=>read.indexOf(m.id)<0).length;
+      counter.textContent=unread?('('+unread+')'):'';
+      list.innerHTML=MAIL_MSGS.map(m=>{
+        const is=read.indexOf(m.id)<0;
+        return `<div class="oe-mail${is?' unread':''}" data-m="${m.id}" role="button" tabindex="0" aria-label="${m.subj}">
+          <span class="oe-from">${m.from}</span><span class="oe-subj">${m.subj}</span><span class="oe-date">${m.date}</span>
+        </div>`;
+      }).join('');
+      list.querySelectorAll('.oe-mail').forEach(el=>{
+        el.onclick=()=>{
+          const m=MAIL_MSGS.find(x=>x.id===el.dataset.m);
+          const read2=_mailRead();
+          if(read2.indexOf(m.id)<0){read2.push(m.id);Store.set('tos-mail-read',JSON.stringify(read2));}
+          prev.innerHTML='<div style="border-bottom:1px solid #ddd;padding-bottom:6px;margin-bottom:8px"><b>De:</b> '+m.from+'<br><b>Asunto:</b> '+m.subj+'</div>'+m.body;
+          list.querySelectorAll('.oe-mail').forEach(x=>x.classList.remove('sel'));
+          el.classList.add('sel');el.classList.remove('unread');
+          const unread2=MAIL_MSGS.filter(x=>_mailRead().indexOf(x.id)<0).length;
+          counter.textContent=unread2?('('+unread2+')'):'';
+        };
+      });
+    };
+    render();
+    document.getElementById('oe-new').onclick=()=>xpDialog('Nuevo mensaje','<div style="font-size:28px">&#9993;&#65039;</div><div>Redacta tranquilo... pero este Outlook no env&iacute;a nada desde 2006.<br><span style="opacity:.7">Para hablar con alguien de verdad, el MSN.</span></div>');
+    document.getElementById('oe-reply').onclick=()=>xpDialog('Responder','<div style="font-size:28px">&#8617;&#65039;</div><div>Respuesta enviada a... ninguna parte.<br><span style="opacity:.7">Las cadenas de 2004 por fin se cortan aqu&iacute;.</span></div>');
+    document.getElementById('oe-sync').onclick=()=>{
+      const stt=document.getElementById('oe-status');
+      stt.textContent='Comprobando correo nuevo...';
+      setTimeout(()=>{const s=document.getElementById('oe-status');if(s)s.textContent='No hay mensajes nuevos. Qué alivio.';},1400);
+    };
+    win.querySelectorAll('.oe-folder').forEach(f=>{
+      f.onclick=()=>{
+        win.querySelectorAll('.oe-folder').forEach(x=>x.classList.remove('active'));
+        f.classList.add('active');
+        if(f.dataset.f==='inbox'){render();prev.innerHTML='<i style="color:#888">Selecciona un mensaje para leerlo.</i>';}
+        else{list.innerHTML='';prev.innerHTML='<i style="color:#888">'+FOLDER_EMPTY[f.dataset.f]+'</i>';}
+      };
     });
   }});
 }
@@ -4302,7 +4515,8 @@ const gamesApps=[
   {key:'ttt',label:'Tres en raya',icon:'&#11093;'},
   {key:'connect4',label:'Conecta 4',icon:'&#128313;'},
   {key:'memory',label:'Memoria',icon:'&#127183;'},
-  {key:'solitaire',label:'Solitario',icon:'&#127183;'}
+  {key:'solitaire',label:'Solitario',icon:'&#127183;'},
+  {key:'pinball',label:'Pinball',icon:'&#128640;'}
 ];
 // Poblar la carpeta desplegable del menu inicio desde la misma lista de juegos
 function buildStartGamesSubmenu(){
@@ -4864,7 +5078,7 @@ function openAbout(){
   const content=`<div class="about-content">
     <div class="about-logo">&#128187;</div>
     <h2>Torrecillas OS XP</h2>
-    <p>Versi&oacute;n 0.15.0</p>
+    <p>Versi&oacute;n 0.16.1</p>
     <p>Sistema operativo en tu navegador</p>
     <p style="margin-top:15px">Juegos incluidos:</p>
     <p>&#127807; Snake | &#127922; Tetris | &#128038; Flappy Bird | &#129521; Arkanoid</p>
@@ -5468,7 +5682,7 @@ function openTerminal(){
     const print=(t='')=>{out.innerHTML+=esc(t)+'\n';out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión 1.0]');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -5908,7 +6122,219 @@ function focusExisting(elId){
   return false;
 }
 
-const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game'};
+// ========== PINBALL (Space Cadet de bolsillo) ==========
+function initPinball(){
+  const content=`<div id="new-pinball-game" style="display:flex;flex-direction:column;height:100%;background:#060a18;color:#fff;font-family:Rajdhani,sans-serif">
+    <div style="flex-shrink:0;display:flex;gap:16px;justify-content:center;padding:6px;font-size:15px;font-weight:600">
+      <span>PUNTOS <span id="pin-score" style="color:#ffd54f">0</span></span>
+      <span>BOLAS <span id="pin-balls" style="color:#6ec4f0">3</span></span>
+      <span>R&Eacute;CORD <span id="pin-best" style="color:#44ff88">0</span></span>
+    </div>
+    <div id="pin-wrap" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative">
+      <canvas id="pin-canvas"></canvas>
+      <div id="pin-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(4,8,24,.85);text-align:center">
+        <div id="pin-title" style="font-size:26px;font-weight:700;letter-spacing:2px;color:#6ec4f0">&#128640; PINBALL</div>
+        <div id="pin-msg" style="font-size:13px;opacity:.85;line-height:1.5;padding:0 14px">Espacio: lanzar (mant&eacute;n para m&aacute;s fuerza)<br>&#8592;/&#8594; o toca cada mitad: flippers &middot; R: reiniciar</div>
+        <button id="pin-start" style="${GBTN}">Jugar</button>
+      </div>
+    </div>
+  </div>`;
+  createWindow('Pinball','&#128640;',380,640,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
+    const canvas=document.getElementById('pin-canvas');
+    const ctx=canvas.getContext&&canvas.getContext('2d');
+    const LW=360,LH=600;
+    const fit=()=>fitCanvasToWrap(canvas,'pin-wrap',LW,LH);
+    fit();
+    const scoreEl=document.getElementById('pin-score');
+    const ballsEl=document.getElementById('pin-balls');
+    const bestEl=document.getElementById('pin-best');
+    const overlay=document.getElementById('pin-overlay');
+    let best=Store.getInt('tos-pinball-best',0);
+    bestEl.textContent=best;
+    // Mesa: segmentos [x1,y1,x2,y2]. Carril de lanzamiento a la derecha.
+    const WALLS=[
+      [8,8,352,8],[8,8,8,430],[352,8,352,592],
+      [352,56,304,8],           // deflector: la bola entra a la mesa por arriba
+      [326,110,326,560],        // pared interior del carril
+      [8,430,105,530],[326,430,255,530] // guías hacia los flippers
+    ];
+    const BUMPERS=[
+      {x:110,y:150,r:17,pts:100},{x:250,y:150,r:17,pts:100},{x:180,y:230,r:17,pts:100},
+      {x:60,y:330,r:10,pts:25},{x:300,y:330,r:10,pts:25}
+    ];
+    const FLIP_LEN=58,REST=0.5,UP=-0.55;
+    const flippers=[
+      {px:105,py:530,dir:1,a:REST,target:REST,vel:0},
+      {px:255,py:530,dir:-1,a:REST,target:REST,vel:0}
+    ];
+    const STARS=[];for(let i=0;i<40;i++)STARS.push([12+Math.random()*310,12+Math.random()*380,Math.random()*1.4+0.4]);
+    let ball,score,balls,running=false,launched=false,charging=false,power=0,flash={},acc=0,over=false;
+    const newBall=()=>{ball={x:339,y:545,vx:0,vy:0,r:8};launched=false;charging=false;power=0;};
+    const reset=()=>{score=0;balls=3;over=false;scoreEl.textContent='0';ballsEl.textContent='3';newBall();};
+    const addScore=(n)=>{score+=n;scoreEl.textContent=score;};
+    const tipOf=(f)=>({x:f.px+Math.cos(f.a)*FLIP_LEN*f.dir,y:f.py+Math.sin(f.a)*FLIP_LEN});
+    // Colisión bola-segmento con reflexión
+    const hitSeg=(x1,y1,x2,y2,rest,boost)=>{
+      const dx=x2-x1,dy=y2-y1;
+      const len2=dx*dx+dy*dy||1;
+      let t=((ball.x-x1)*dx+(ball.y-y1)*dy)/len2;
+      t=Math.max(0,Math.min(1,t));
+      const cx=x1+dx*t,cy=y1+dy*t;
+      let nx=ball.x-cx,ny=ball.y-cy;
+      const d=Math.hypot(nx,ny);
+      if(d>=ball.r||d===0)return false;
+      nx/=d;ny/=d;
+      ball.x=cx+nx*ball.r;ball.y=cy+ny*ball.r;
+      const dot=ball.vx*nx+ball.vy*ny;
+      if(dot<0){
+        ball.vx-=(1+rest)*dot*nx;
+        ball.vy-=(1+rest)*dot*ny;
+      }
+      if(boost){ball.vx+=nx*boost;ball.vy+=ny*boost;}
+      return true;
+    };
+    const tick=()=>{
+      // Flippers hacia su ángulo objetivo (la velocidad da el impulso)
+      for(const f of flippers){
+        const prev=f.a;
+        if(f.a<f.target)f.a=Math.min(f.target,f.a+0.38);
+        else if(f.a>f.target)f.a=Math.max(f.target,f.a-0.38);
+        f.vel=f.a-prev;
+      }
+      if(!launched){
+        if(charging)power=Math.min(4.5,power+0.22);
+        return;
+      }
+      // Substeps para que la bola no atraviese nada
+      for(let s=0;s<3;s++){
+        ball.vy+=0.32/3;
+        ball.x+=ball.vx/3;ball.y+=ball.vy/3;
+        for(const wl of WALLS)hitSeg(wl[0],wl[1],wl[2],wl[3],0.5);
+        for(const b of BUMPERS){
+          let nx=ball.x-b.x,ny=ball.y-b.y;
+          const d=Math.hypot(nx,ny);
+          if(d<ball.r+b.r&&d>0){
+            nx/=d;ny/=d;
+            ball.x=b.x+nx*(ball.r+b.r);ball.y=b.y+ny*(ball.r+b.r);
+            const sp=Math.max(4.5,Math.hypot(ball.vx,ball.vy)*0.8);
+            ball.vx=nx*sp;ball.vy=ny*sp;
+            addScore(b.pts);
+            flash[b.x+'-'+b.y]=8;
+            playTone(b.pts>50?740:520,0.05,'square',0.3);
+          }
+        }
+        for(const f of flippers){
+          const tp=tipOf(f);
+          if(hitSeg(f.px,f.py,tp.x,tp.y,0.35)){
+            if(f.vel<-0.05){ // flipper subiendo: impulso
+              ball.vy-=5.5;
+              ball.vx+=f.dir*2.2;
+              playTone(300,0.04,'square',0.25);
+            }
+          }
+        }
+      }
+      const sp=Math.hypot(ball.vx,ball.vy);
+      if(sp>24){ball.vx*=24/sp;ball.vy*=24/sp;}
+      if(ball.y>LH+30){
+        balls--;ballsEl.textContent=balls;
+        playTone(160,0.25,'sawtooth',0.4);
+        if(balls>0)newBall();
+        else{
+          over=true;running=false;
+          if(score>best){best=score;Store.set('tos-pinball-best',best);bestEl.textContent=best;}
+          document.getElementById('pin-title').textContent='GAME OVER';
+          document.getElementById('pin-msg').innerHTML='Puntuaci&oacute;n: <b style="color:#ffd54f">'+score+'</b> &middot; R&eacute;cord: '+best+'<br>R o el bot&oacute;n para otra partida';
+          document.getElementById('pin-start').textContent='Otra vez';
+          overlay.style.display='flex';
+        }
+      }
+    };
+    const draw=()=>{
+      if(!ctx)return;
+      const dpr=Math.min(2,window.devicePixelRatio||1);
+      if(ctx.setTransform)ctx.setTransform(canvas.width/LW,0,0,canvas.height/LH,0,0);
+      const g=ctx.createLinearGradient(0,0,0,LH);
+      g.addColorStop(0,'#0a1030');g.addColorStop(1,'#04060f');
+      ctx.fillStyle=g;ctx.fillRect(0,0,LW,LH);
+      ctx.fillStyle='rgba(255,255,255,.7)';
+      for(const st of STARS){ctx.beginPath();ctx.arc(st[0],st[1],st[2],0,Math.PI*2);ctx.fill();}
+      ctx.strokeStyle='#4a90d8';ctx.lineWidth=3;ctx.lineCap='round';
+      for(const wl of WALLS){ctx.beginPath();ctx.moveTo(wl[0],wl[1]);ctx.lineTo(wl[2],wl[3]);ctx.stroke();}
+      for(const b of BUMPERS){
+        const k=flash[b.x+'-'+b.y]||0;
+        if(k>0)flash[b.x+'-'+b.y]=k-1;
+        ctx.fillStyle=k>0?'#ffd54f':(b.pts>50?'#d04070':'#5a48c0');
+        ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+      }
+      ctx.strokeStyle='#ffd54f';ctx.lineWidth=9;
+      for(const f of flippers){
+        const tp=tipOf(f);
+        ctx.beginPath();ctx.moveTo(f.px,f.py);ctx.lineTo(tp.x,tp.y);ctx.stroke();
+      }
+      if(!launched&&running){ // muelle
+        ctx.fillStyle='#d04030';
+        ctx.fillRect(331,560-power*10,16,8+power*10);
+      }
+      if(ball){
+        const bg2=ctx.createRadialGradient(ball.x-3,ball.y-3,1,ball.x,ball.y,ball.r);
+        bg2.addColorStop(0,'#fff');bg2.addColorStop(1,'#8a9ab8');
+        ctx.fillStyle=bg2;
+        ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fill();
+      }
+    };
+    const launch=()=>{
+      if(launched||!running)return;
+      // Base suficiente para salir SIEMPRE del carril (necesita v≈18 para 490px de subida);
+      // la carga añade hasta +4,5 de entrada más enérgica a la mesa
+      ball.vy=-(18.5+power);
+      launched=true;charging=false;power=0;
+      playTone(440,0.08,'square',0.35);
+    };
+    reset();
+    mountGame(id,{
+      rootId:'new-pinball-game',
+      observeId:'pin-wrap',
+      onResize:fit,
+      onFrame:(dt)=>{
+        acc+=dt;
+        let guard=0;
+        while(acc>=16.67&&guard++<8){if(running)tick();acc-=16.67;}
+        draw();
+      },
+      keydown:(e)=>{
+        if(e.key==='ArrowLeft'){e.preventDefault();flippers[0].target=UP;}
+        else if(e.key==='ArrowRight'){e.preventDefault();flippers[1].target=UP;}
+        else if(e.key===' '){e.preventDefault();if(running&&!launched)charging=true;}
+        else if(e.key==='r'||e.key==='R'){reset();overlay.style.display='none';running=true;}
+      },
+      keyup:(e)=>{
+        if(e.key==='ArrowLeft')flippers[0].target=REST;
+        else if(e.key==='ArrowRight')flippers[1].target=REST;
+        else if(e.key===' ')launch();
+      },
+      restart:()=>{reset();overlay.style.display='none';running=true;}
+    });
+    document.getElementById('pin-start').onclick=()=>{reset();overlay.style.display='none';running=true;};
+    // Táctil: mitad izquierda/derecha = flippers; sin lanzar, tocar carga y soltar lanza
+    canvas.addEventListener('touchstart',(e)=>{
+      e.preventDefault();
+      if(running&&!launched){charging=true;return;}
+      for(const t of e.touches){
+        const r=canvas.getBoundingClientRect();
+        if(t.clientX-r.left<r.width/2)flippers[0].target=UP;else flippers[1].target=UP;
+      }
+    },{passive:false});
+    canvas.addEventListener('touchend',(e)=>{
+      e.preventDefault();
+      if(charging){launch();return;}
+      flippers[0].target=REST;flippers[1].target=REST;
+    },{passive:false});
+  }});
+}
+
+const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game'};
 
 // ========== MOTOR DE JUEGO COMÚN ==========
 // Centraliza el ciclo de vida que antes cada juego duplicaba: bucle rAF con
@@ -5976,6 +6402,7 @@ function openGame(game){
     case 'connect4':initConnect4();break;
     case 'memory':initMemoryGame();break;
     case 'solitaire':initSolitaire();break;
+    case 'pinball':initPinball();break;
   }
   _pendingGameSession=null;
 }
