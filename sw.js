@@ -1,20 +1,25 @@
 // Service worker de Torrecillas OS: deja el escritorio disponible sin conexión.
-// Estrategia: red primero para el documento (así llegan las actualizaciones),
-// caché como respaldo; el resto de GET se sirve de caché y se revalida en segundo
-// plano (stale-while-revalidate), así og.png o los iconos se actualizan solos
-// sin tener que acordarse de subir la versión de CACHE en cada despliegue.
-const CACHE = 'tos-v3';
+//
+// ACTUALIZACIONES: sube APP_VERSION en cada despliegue. Al cambiar estos bytes el
+// navegador instala el nuevo worker, que se queda EN ESPERA; la página lo detecta y
+// ofrece "Actualizar". No se activa solo (nada de skipWaiting automático) para no
+// mezclar el JS viejo de una ventana abierta con los assets nuevos.
+//
+// Estrategia de red: red primero para el documento (index.html siempre fresco si hay
+// conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
+// solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
+const APP_VERSION = '0.25.0';
+const CACHE = 'tos-' + APP_VERSION;
 const ASSETS = [
   './', './index.html', './og.png', './apple-touch-icon.png',
   './manifest.webmanifest', './icon-192.png', './icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {
+  // Precachear lo que exista. NO se llama a skipWaiting: el nuevo worker espera a
+  // que la página confirme la actualización (mensaje SKIP_WAITING).
   e.waitUntil(
-    caches.open(CACHE)
-      // og/apple/iconos pueden faltar en despliegues parciales: se cachean los que existan
-      .then((c) => Promise.allSettled(ASSETS.map((a) => c.add(a))))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE).then((c) => Promise.allSettled(ASSETS.map((a) => c.add(a))))
   );
 });
 
@@ -24,6 +29,11 @@ self.addEventListener('activate', (e) => {
       .then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
+});
+
+// La página pide activar el worker en espera cuando el usuario pulsa "Actualizar".
+self.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('fetch', (e) => {
