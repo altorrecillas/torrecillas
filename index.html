@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Torrecillas OS">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta property="og:description" content="16 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
+<meta property="og:description" content="15 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
 <meta property="og:url" content="https://torrecillas.cat/">
 <meta property="og:image" content="https://torrecillas.cat/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,12 +22,12 @@
 <meta property="og:image:alt" content="Logo de Torrecillas OS sobre una colina estilo Bliss con el texto: un escritorio XP en tu navegador">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta name="twitter:description" content="16 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
+<meta name="twitter:description" content="15 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
 <meta name="twitter:image" content="https://torrecillas.cat/og.png">
 <!-- Datos estructurados para buscadores (schema.org) -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
-  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 16 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
+  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 15 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
   {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/"},
   {"@type":"ItemList","@id":"https://torrecillas.cat/#proyectos","name":"Proyectos","itemListElement":[
     {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Woodpecker's","url":"https://woodpeckers.es","description":"Web oficial de la hamburguesería Woodpecker's de Gavà"}},
@@ -58,7 +58,6 @@
     § ADMIN. DE TAREAS
     § CALCULADORA
     § LOGROS
-    § JUEGO: AHORCADO
     § JUEGO: SIMON
     § JUEGO: SUDOKU
     § MENU INICIO
@@ -254,6 +253,14 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .ach-t-l{font-size:13px;font-weight:bold;color:#3d3000}
 @keyframes achIn{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:none}}
 @media(max-width:600px){#ach-toast{right:8px;left:8px;bottom:42px}}
+/* Progreso del Coleccionista dentro del panel de Logros */
+.ach-collector{margin:0 10px 6px;padding:8px 10px;background:linear-gradient(180deg,#fffef5,#f3eeda);border:1px solid #d8cfa8;border-radius:5px;flex-shrink:0}
+.ach-col-head{font-size:11px;font-weight:bold;color:#8a6d1a;margin-bottom:6px}
+.ach-col-grid{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
+.ach-col-chip{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:15px;border-radius:5px;background:#e6e0cc;filter:grayscale(1) opacity(.4);cursor:default}
+.ach-col-chip.done{filter:none;background:#dff0d8}
+.ach-col-hint{font-size:10px;color:#777;line-height:1.35}
+.ach-col-hint.done{color:#2d7d2d;font-weight:bold}
 /* ═══════════════════  § AYUDA  ═══════════════════ */
 .help-panel{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif}
 .help-head{padding:10px 12px 6px;font-size:13px;font-weight:bold;color:#1a4fa0;flex-shrink:0}
@@ -288,25 +295,6 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 #update-bar #update-now:hover{background:linear-gradient(180deg,#4c9cf0,#3080e8)}
 #update-bar #update-later{background:none;border:0;color:#7a6320;font-size:14px;padding:2px 4px;line-height:1}
 @keyframes updIn{0%{opacity:0;transform:translate(-50%,-14px)}100%{opacity:1;transform:translate(-50%,0)}}
-/* ═══════════════════  § JUEGO: AHORCADO  ═══════════════════ */
-.hang-root{display:flex;flex-direction:column;align-items:center;height:100%;background:#0d1326;color:#fff;padding:10px;gap:8px;font-family:Rajdhani,sans-serif}
-.hang-top{display:flex;gap:10px;align-items:center;width:100%;justify-content:center}
-#hang-canvas{background:#0d1326;border:1px solid #2a3a6a;border-radius:6px;max-width:55%}
-.hang-side{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.hang-clue{font-size:12px;color:#9fb6e8;line-height:1.35}
-.hang-lives{font-size:12px;color:#ffd54f}
-.hang-score{font-size:11px;color:#7f93bd}
-.hang-word{font-family:'Courier New',monospace;font-size:24px;letter-spacing:3px;font-weight:700;color:#7dffa0;text-align:center;word-break:break-all}
-.hang-keys{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;width:100%}
-.hang-key{padding:6px 0;font-size:13px;font-weight:700;background:#16213e;border:1px solid #2a3a6a;border-radius:4px;color:#dce7ff}
-.hang-key:hover:not(:disabled){background:#22325c}
-.hang-key.ok{background:#1d5c33;color:#8dffb0;border-color:#2a8a4c}
-.hang-key.ko{background:#5c1d29;color:#ff9aa8;border-color:#8a2a3c}
-.hang-key:disabled{opacity:.65;cursor:default}
-.hang-actions{display:flex;align-items:center;gap:10px;width:100%}
-.hang-msg{flex:1;font-size:12px;color:#9fb6e8;min-height:16px}
-.hang-msg.win{color:#7dffa0;font-weight:700}
-.hang-msg.lose{color:#ff8b84;font-weight:700}
 /* ═══════════════════  § JUEGO: SIMON  ═══════════════════ */
 .simon-root{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0d1326;color:#fff;padding:12px;gap:12px;font-family:Rajdhani,sans-serif}
 .simon-hud{display:flex;gap:22px;font-size:14px;color:#9fb6e8}
@@ -342,8 +330,6 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .sud-msg{flex:1;font-size:12px;color:#9fb6e8;min-height:16px}
 .sud-msg.win{color:#7dffa0;font-weight:700}
 @media(max-width:600px){
-  .hang-keys{grid-template-columns:repeat(7,1fr)}
-  .hang-word{font-size:19px;letter-spacing:2px}
   .sud-cell{font-size:13px}
 }
 /* Inicio rápido: minimiza todo de golpe y lo devuelve (clásico de la barra XP) */
@@ -574,6 +560,11 @@ body.theme-classic #show-desktop{color:#000;background:#c0c0c0;border-color:#fff
 @keyframes msnShake{0%,100%{margin-left:0;margin-top:0}20%{margin-left:-6px;margin-top:3px}40%{margin-left:5px;margin-top:-4px}60%{margin-left:-4px;margin-top:-3px}80%{margin-left:4px;margin-top:3px}}
 .window.msn-shake{animation:msnShake .5s linear}
 /* Icono de bandeja: muñeco clásico por defecto; con mensaje sin leer alterna muñeco ↔ globo */
+#tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
+#tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
+#tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
+.ctx-item .lang-flag{display:inline-flex}
+.ctx-item .lang-flag svg{width:20px;height:14px;display:block;border:1px solid rgba(0,0,0,.3);border-radius:2px}
 #tray-msn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px}
 #tray-msn svg{display:block}
 #tray-msn .tm-balloon{display:none}
@@ -2286,12 +2277,12 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
   <div id="taskbar">
     <button id="start-btn" onclick="toggleStartMenu()">
       <div class="win-icon"><div></div><div></div><div></div><div></div></div>
-      Inicio
+      <span data-i18n="start">Inicio</span>
     </button>
     <button id="show-desktop" onclick="toggleShowDesktop()" title="Mostrar escritorio" aria-label="Mostrar escritorio"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.4" y="3" width="13.2" height="10" rx="1.1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.15" y="10.4" width="11.7" height="2.2" rx="0.4" fill="currentColor"/></svg></button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> &#128246; &#128737;</div>
+      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
       <div id="clock" style="cursor:pointer" onclick="toggleCalendar()" role="button" tabindex="0" aria-label="Fecha y hora"></div>
     </div>
     <div id="volume-popup" style="display:none;position:fixed;bottom:40px;right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
@@ -2309,38 +2300,38 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
     </div>
     <div class="start-body">
       <div class="start-left">
-        <div id="start-search-row"><input id="start-search" placeholder="Buscar..." autocomplete="off" spellcheck="false" aria-label="Buscar aplicaciones, juegos y proyectos"></div>
+        <div id="start-search-row"><input id="start-search" placeholder="Buscar..." data-i18n-ph="search.placeholder" autocomplete="off" spellcheck="false" aria-label="Buscar aplicaciones, juegos y proyectos"></div>
         <div id="start-search-results"></div>
         <button type="button" class="start-item" id="start-games-toggle" onclick="toggleStartGames(event)">
           <div class="si-icon">&#128377;</div>
-          <div style="flex:1"><div class="si-label">Juegos</div><div class="si-desc" id="start-games-desc">juegos cl&aacute;sicos</div></div>
+          <div style="flex:1"><div class="si-label" data-i18n="menu.games">Juegos</div><div class="si-desc" id="start-games-desc">juegos cl&aacute;sicos</div></div>
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-games-submenu"></div>
         <button type="button" class="start-item" onclick="openRecords()">
           <div class="si-icon">&#127942;</div>
-          <div><div class="si-label">R&eacute;cords</div><div class="si-desc">Sal&oacute;n de la fama</div></div>
+          <div><div class="si-label" data-i18n="app.records">R&eacute;cords</div><div class="si-desc" data-i18n="app.records.desc">Sal&oacute;n de la fama</div></div>
         </button>
         <button type="button" class="start-item" onclick="openAchievements()">
           <div class="si-icon">&#127941;</div>
-          <div><div class="si-label">Logros</div><div class="si-desc">Lo que llevas conseguido</div></div>
+          <div><div class="si-label" data-i18n="app.achievements">Logros</div><div class="si-desc" data-i18n="app.achievements.desc">Lo que llevas conseguido</div></div>
         </button>
         <button type="button" class="start-item" onclick="openHelp()">
           <div class="si-icon">&#10067;</div>
-          <div><div class="si-label">Ayuda</div><div class="si-desc">Atajos y trucos (F1)</div></div>
+          <div><div class="si-label" data-i18n="app.help">Ayuda</div><div class="si-desc" data-i18n="app.help.desc">Atajos y trucos (F1)</div></div>
         </button>
         <div class="start-separator"></div>
         <button type="button" class="start-item" onclick="openCalculator()">
           <div class="si-icon">&#128290;</div>
-          <div><div class="si-label">Calculadora</div><div class="si-desc">Calculadora de Windows</div></div>
+          <div><div class="si-label" data-i18n="app.calc">Calculadora</div><div class="si-desc" data-i18n="app.calc.desc">Calculadora de Windows</div></div>
         </button>
         <button type="button" class="start-item" onclick="openNotepad()">
           <div class="si-icon">&#128221;</div>
-          <div><div class="si-label">Bloc de notas</div><div class="si-desc">Editor de texto con autoguardado</div></div>
+          <div><div class="si-label" data-i18n="app.notepad">Bloc de notas</div><div class="si-desc" data-i18n="app.notepad.desc">Editor de texto con autoguardado</div></div>
         </button>
         <button type="button" class="start-item" onclick="openMyDocuments()">
           <div class="si-icon">&#128450;&#65039;</div>
-          <div><div class="si-label">Mis documentos</div><div class="si-desc">Tus notas y dibujos guardados</div></div>
+          <div><div class="si-label" data-i18n="app.docs">Mis documentos</div><div class="si-desc" data-i18n="app.docs.desc">Tus notas y dibujos guardados</div></div>
         </button>
         <button type="button" class="start-item" onclick="openClock()">
           <div class="si-icon">&#128340;</div>
@@ -2352,13 +2343,13 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
         </button>
         <button type="button" class="start-item" id="start-utils-toggle" onclick="toggleStartUtils(event)">
           <div class="si-icon">&#129520;</div>
-          <div style="flex:1"><div class="si-label">Utilidades</div><div class="si-desc">Winamp, WordArt y m&aacute;s</div></div>
+          <div style="flex:1"><div class="si-label" data-i18n="menu.utils">Utilidades</div><div class="si-desc">Winamp, WordArt y m&aacute;s</div></div>
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-utils-submenu">
           <button type="button" class="start-item" onclick="openTaskManager()">
             <div class="si-icon">&#128200;</div>
-            <div><div class="si-label">Administrador de tareas</div><div class="si-desc">Ctrl+Alt+Supr</div></div>
+            <div><div class="si-label" data-i18n="app.taskmgr">Administrador de tareas</div><div class="si-desc">Ctrl+Alt+Supr</div></div>
           </button>
           <button type="button" class="start-item" onclick="openPlayer()">
             <div class="si-icon">&#9889;</div>
@@ -2391,7 +2382,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
         </div>
         <button type="button" class="start-item" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
           <div class="si-icon">&#128252;</div>
-          <div style="flex:1"><div class="si-label">Nostalgia</div><div class="si-desc">In&uacute;tiles pero entra&ntilde;ables</div></div>
+          <div style="flex:1"><div class="si-label" data-i18n="menu.nostalgia">Nostalgia</div><div class="si-desc">In&uacute;tiles pero entra&ntilde;ables</div></div>
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-nostalgia-submenu">
@@ -2464,7 +2455,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
       </div>
     </div>
     <div class="start-footer">
-      <button class="start-footer-btn" onclick="shutDown()"><canvas id="shutdown-icon" aria-hidden="true" width="16" height="16"></canvas> Apagar</button>
+      <button class="start-footer-btn" onclick="shutDown()"><canvas id="shutdown-icon" aria-hidden="true" width="16" height="16"></canvas> <span data-i18n="app.shutdown">Apagar</span></button>
     </div>
   </div>
 </div>
@@ -2474,7 +2465,215 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.25.0';
+const APP_VERSION = '0.26.0';
+
+// ========== IDIOMAS (i18n) ==========
+// Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
+// contenido de sabor —MSN, Encarta, Outlook 2004, terminal— se queda en español
+// a propósito: ahí está el chiste. Idiomas: es (defecto), en, ca, ru.
+const I18N_LANGS=[['es','Español'],['en','English'],['ca','Català'],['ru','Русский']];
+const I18N={
+  'start':            {es:'Inicio', en:'Start', ca:'Inici', ru:'Пуск'},
+  'menu.games':       {es:'Juegos', en:'Games', ca:'Jocs', ru:'Игры'},
+  'menu.games.desc':  {es:'{n} juegos clásicos', en:'{n} classic games', ca:'{n} jocs clàssics', ru:'{n} классических игр'},
+  'menu.utils':       {es:'Utilidades', en:'Utilities', ca:'Utilitats', ru:'Утилиты'},
+  'menu.nostalgia':   {es:'Nostalgia', en:'Nostalgia', ca:'Nostàlgia', ru:'Ностальгия'},
+  'app.records':      {es:'Récords', en:'High scores', ca:'Rècords', ru:'Рекорды'},
+  'app.records.desc': {es:'Salón de la fama', en:'Hall of fame', ca:'Saló de la fama', ru:'Зал славы'},
+  'app.achievements': {es:'Logros', en:'Achievements', ca:'Assoliments', ru:'Достижения'},
+  'app.achievements.desc':{es:'Lo que llevas conseguido', en:'What you have unlocked', ca:'El que has aconseguit', ru:'Что вы открыли'},
+  'app.help':         {es:'Ayuda', en:'Help', ca:'Ajuda', ru:'Справка'},
+  'app.help.desc':    {es:'Atajos y trucos (F1)', en:'Shortcuts and tips (F1)', ca:'Dreceres i trucs (F1)', ru:'Горячие клавиши (F1)'},
+  'app.docs':         {es:'Mis documentos', en:'My documents', ca:'Els meus documents', ru:'Мои документы'},
+  'app.docs.desc':    {es:'Tus notas y dibujos guardados', en:'Your saved notes and drawings', ca:'Les teves notes i dibuixos', ru:'Заметки и рисунки'},
+  'app.calc':         {es:'Calculadora', en:'Calculator', ca:'Calculadora', ru:'Калькулятор'},
+  'app.calc.desc':    {es:'Calculadora de Windows', en:'Windows calculator', ca:'Calculadora de Windows', ru:'Калькулятор Windows'},
+  'app.paint':        {es:'Paint', en:'Paint', ca:'Paint', ru:'Paint'},
+  'app.paint.desc':   {es:'Dibuja como en 2001', en:'Draw like it is 2001', ca:'Dibuixa com el 2001', ru:'Рисуй как в 2001'},
+  'app.notepad':      {es:'Bloc de notas', en:'Notepad', ca:'Bloc de notes', ru:'Блокнот'},
+  'app.notepad.desc': {es:'Editor de texto con autoguardado', en:'Text editor with autosave', ca:'Editor de text amb desat automàtic', ru:'Текстовый редактор с автосохранением'},
+  'app.sticky':       {es:'Nota adhesiva', en:'Sticky note', ca:'Nota adhesiva', ru:'Стикер'},
+  'app.sticky.desc':  {es:'Pega una nota en el escritorio', en:'Stick a note on the desktop', ca:'Enganxa una nota a l’escriptori', ru:'Заметка на рабочий стол'},
+  'app.clock':        {es:'Reloj', en:'Clock', ca:'Rellotge', ru:'Часы'},
+  'app.clock.desc':   {es:'Cronómetro y temporizador', en:'Stopwatch and timer', ca:'Cronòmetre i temporitzador', ru:'Секундомер и таймер'},
+  'app.taskmgr':      {es:'Administrador de tareas', en:'Task manager', ca:'Gestor de tasques', ru:'Диспетчер задач'},
+  'app.settings':     {es:'Ajustes', en:'Settings', ca:'Configuració', ru:'Настройки'},
+  'app.settings.desc':{es:'Personaliza el escritorio', en:'Customize the desktop', ca:'Personalitza l’escriptori', ru:'Настройка рабочего стола'},
+  'app.about':        {es:'Acerca de', en:'About', ca:'Quant a', ru:'О системе'},
+  'app.about.desc':   {es:'Información del sistema', en:'System information', ca:'Informació del sistema', ru:'О системе'},
+  'app.install':      {es:'Instalar app', en:'Install app', ca:'Instal·la l’app', ru:'Установить'},
+  'app.shutdown':     {es:'Apagar', en:'Shut down', ca:'Apaga', ru:'Выключить'},
+  'desk.mipc':        {es:'Mi PC', en:'My Computer', ca:'El meu PC', ru:'Мой компьютер'},
+  'desk.projects':    {es:'Proyectos', en:'Projects', ca:'Projectes', ru:'Проекты'},
+  'desk.trash':       {es:'Papelera de reciclaje', en:'Recycle Bin', ca:'Paperera de reciclatge', ru:'Корзина'},
+  'win.min':          {es:'Minimizar', en:'Minimize', ca:'Minimitza', ru:'Свернуть'},
+  'win.max':          {es:'Maximizar', en:'Maximize', ca:'Maximitza', ru:'Развернуть'},
+  'win.close':        {es:'Cerrar', en:'Close', ca:'Tanca', ru:'Закрыть'},
+  'win.restart':      {es:'Reiniciar', en:'Restart', ca:'Reinicia', ru:'Перезапуск'},
+  'set.language':     {es:'Idioma', en:'Language', ca:'Idioma', ru:'Язык'},
+  'set.language.hint':{es:'La interfaz cambia al instante; el contenido retro se queda en español.', en:'The interface changes instantly; the retro content stays in Spanish.', ca:'La interfície canvia a l’instant; el contingut retro es queda en castellà.', ru:'Интерфейс меняется сразу; ретро-контент остаётся на испанском.'},
+  'search.placeholder':{es:'Buscar programas y juegos...', en:'Search programs and games...', ca:'Cerca programes i jocs...', ru:'Поиск программ и игр...'},
+  // Botones y acciones comunes
+  'btn.ok':{es:'Aceptar', en:'OK', ca:'D’acord', ru:'ОК'},
+  'btn.cancel':{es:'Cancelar', en:'Cancel', ca:'Cancel·la', ru:'Отмена'},
+  'btn.yes':{es:'Sí', en:'Yes', ca:'Sí', ru:'Да'},
+  'btn.no':{es:'No', en:'No', ca:'No', ru:'Нет'},
+  'btn.save':{es:'Guardar', en:'Save', ca:'Desa', ru:'Сохранить'},
+  'btn.download':{es:'Descargar', en:'Download', ca:'Baixa', ru:'Скачать'},
+  'btn.open':{es:'Abrir', en:'Open', ca:'Obre', ru:'Открыть'},
+  'btn.rename':{es:'Renombrar', en:'Rename', ca:'Reanomena', ru:'Переименовать'},
+  'btn.delete':{es:'Eliminar', en:'Delete', ca:'Elimina', ru:'Удалить'},
+  'btn.new':{es:'Nuevo', en:'New', ca:'Nou', ru:'Создать'},
+  'btn.clear':{es:'Limpiar', en:'Clear', ca:'Neteja', ru:'Очистить'},
+  'btn.undo':{es:'Deshacer', en:'Undo', ca:'Desfés', ru:'Отменить'},
+  'btn.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
+  'btn.print':{es:'Imprimir', en:'Print', ca:'Imprimeix', ru:'Печать'},
+  'btn.restart':{es:'Reiniciar', en:'Restart', ca:'Reinicia', ru:'Заново'},
+  'btn.newgame':{es:'Nueva partida', en:'New game', ca:'Nova partida', ru:'Новая игра'},
+  'btn.play':{es:'Jugar', en:'Play', ca:'Juga', ru:'Играть'},
+  'btn.again':{es:'Otra vez', en:'Play again', ca:'Un altre cop', ru:'Ещё раз'},
+  'btn.retry':{es:'Reintentar', en:'Retry', ca:'Torna-ho a provar', ru:'Повторить'},
+  'btn.savefs':{es:'Guardar', en:'Save', ca:'Desa', ru:'Сохранить'},
+  'btn.tofiles':{es:'A Mis documentos', en:'To My documents', ca:'Als meus documents', ru:'В Мои документы'},
+  // Palabras de juego (overlays comunes)
+  'game.over':{es:'GAME OVER', en:'GAME OVER', ca:'GAME OVER', ru:'ИГРА ОКОНЧЕНА'},
+  'game.score':{es:'Puntuación', en:'Score', ca:'Puntuació', ru:'Очки'},
+  'game.record':{es:'Récord', en:'Best', ca:'Rècord', ru:'Рекорд'},
+  'game.win':{es:'¡Has ganado!', en:'You win!', ca:'Has guanyat!', ru:'Победа!'},
+  'game.paused':{es:'Pausa', en:'Paused', ca:'Pausa', ru:'Пауза'},
+  // Menús contextuales del escritorio
+  'ctx.refresh':{es:'Actualizar', en:'Refresh', ca:'Actualitza', ru:'Обновить'},
+  'ctx.arrange':{es:'Organizar iconos', en:'Arrange icons', ca:'Organitza les icones', ru:'Упорядочить значки'},
+  'ctx.update':{es:'Actualizar', en:'Update', ca:'Actualitza', ru:'Обновить'},
+  'ctx.later':{es:'Ahora no', en:'Not now', ca:'Ara no', ru:'Не сейчас'},
+  'update.available':{es:'Hay una nueva versión de Torrecillas OS.', en:'A new version of Torrecillas OS is available.', ca:'Hi ha una nova versió de Torrecillas OS.', ru:'Доступна новая версия Torrecillas OS.'},
+  'update.now':{es:'Actualizar', en:'Update', ca:'Actualitza', ru:'Обновить'},
+  'update.updating':{es:'Actualizando…', en:'Updating…', ca:'Actualitzant…', ru:'Обновление…'},
+  // Mis documentos
+  'docs.empty':{es:'Aún no hay documentos.', en:'No documents yet.', ca:'Encara no hi ha documents.', ru:'Пока нет документов.'},
+  'docs.empty2':{es:'Guarda algo desde el Bloc de notas o Paint.', en:'Save something from Notepad or Paint.', ca:'Desa alguna cosa des del Bloc de notes o Paint.', ru:'Сохраните что-нибудь из Блокнота или Paint.'},
+  'docs.count':{es:'{n} documento(s) · doble clic para abrir', en:'{n} document(s) · double-click to open', ca:'{n} document(s) · doble clic per obrir', ru:'{n} документ(ов) · двойной клик, чтобы открыть'},
+  'docs.saveas':{es:'Nombre del archivo:', en:'File name:', ca:'Nom del fitxer:', ru:'Имя файла:'},
+  'docs.savetitle':{es:'Guardar en Mis documentos', en:'Save to My documents', ca:'Desa als meus documents', ru:'Сохранить в Мои документы'},
+  'docs.saved':{es:'Guardado en Mis documentos: {n}', en:'Saved to My documents: {n}', ca:'Desat als meus documents: {n}', ru:'Сохранено в Мои документы: {n}'},
+  'docs.full':{es:'No se pudo guardar: el almacenamiento del navegador está lleno.', en:'Could not save: browser storage is full.', ca:'No s’ha pogut desar: l’emmagatzematge del navegador és ple.', ru:'Не удалось сохранить: хранилище браузера заполнено.'},
+  'docs.deltitle':{es:'Eliminar documento', en:'Delete document', ca:'Elimina el document', ru:'Удалить документ'},
+  'docs.delq':{es:'¿Eliminar «{n}»?', en:'Delete “{n}”?', ca:'Vols eliminar «{n}»?', ru:'Удалить «{n}»?'},
+  'docs.undone':{es:'No se puede deshacer.', en:'This cannot be undone.', ca:'No es pot desfer.', ru:'Это нельзя отменить.'},
+  'docs.renametitle':{es:'Renombrar', en:'Rename', ca:'Reanomena', ru:'Переименовать'},
+  'docs.renameq':{es:'Nuevo nombre para «{n}»:', en:'New name for “{n}”:', ca:'Nou nom per a «{n}»:', ru:'Новое имя для «{n}»:'},
+  // Bloc de notas
+  'np.wrap':{es:'Ajuste de línea', en:'Word wrap', ca:'Ajust de línia', ru:'Перенос строк'},
+  'np.saved':{es:'Guardado', en:'Saved', ca:'Desat', ru:'Сохранено'},
+  'np.editing':{es:'Editando…', en:'Editing…', ca:'Editant…', ru:'Изменение…'},
+  'np.unsaved':{es:'Sin guardar en Mis documentos', en:'Not saved to My documents', ca:'Sense desar als meus documents', ru:'Не сохранено в Мои документы'},
+  'np.savedfs':{es:'Guardado en Mis documentos', en:'Saved to My documents', ca:'Desat als meus documents', ru:'Сохранено в Мои документы'},
+  'np.placeholder':{es:'Escribe aquí... (se guarda solo)', en:'Type here... (autosaves)', ca:'Escriu aquí... (es desa sol)', ru:'Пишите здесь... (автосохранение)'},
+  'np.chars':{es:'{n} caracteres', en:'{n} characters', ca:'{n} caràcters', ru:'{n} символов'},
+  'np.char1':{es:'1 carácter', en:'1 character', ca:'1 caràcter', ru:'1 символ'},
+  'np.lines':{es:'{n} líneas', en:'{n} lines', ca:'{n} línies', ru:'{n} строк'},
+  'np.line1':{es:'1 línea', en:'1 line', ca:'1 línia', ru:'1 строка'},
+  'np.clearq':{es:'¿Vaciar el documento? Se perderá el contenido actual.', en:'Clear the document? Current content will be lost.', ca:'Vols buidar el document? Es perdrà el contingut actual.', ru:'Очистить документ? Текущее содержимое будет потеряно.'},
+  'np.dltxt':{es:'Descargar .txt', en:'Download .txt', ca:'Baixa .txt', ru:'Скачать .txt'},
+  // Paint
+  'paint.wallpaper':{es:'Fondo', en:'Wallpaper', ca:'Fons', ru:'Обои'},
+  'paint.wallset':{es:'¡Dibujo establecido como fondo de escritorio! (se cambia desde Ajustes)', en:'Drawing set as desktop wallpaper! (change it in Settings)', ca:'Dibuix establert com a fons d’escriptori! (es canvia des de Configuració)', ru:'Рисунок установлен как обои! (меняется в Настройках)'},
+  // Récords
+  'rec.hall':{es:'Salón de la fama', en:'Hall of fame', ca:'Saló de la fama', ru:'Зал славы'},
+  'rec.clear':{es:'Borrar récords', en:'Clear scores', ca:'Esborra els rècords', ru:'Сбросить рекорды'},
+  'rec.saved':{es:'Los récords se guardan en este navegador.', en:'Scores are saved in this browser.', ca:'Els rècords es desen en aquest navegador.', ru:'Рекорды хранятся в этом браузере.'},
+  'rec.none':{es:'Aún no hay récords... ¡a jugar!', en:'No scores yet... go play!', ca:'Encara no hi ha rècords... a jugar!', ru:'Рекордов пока нет... играйте!'},
+  'rec.clearq':{es:'¿Seguro que quieres borrar todos los récords?', en:'Delete all high scores?', ca:'Segur que vols esborrar tots els rècords?', ru:'Удалить все рекорды?'},
+  'rec.legends':{es:'Las leyendas no se borran.', en:'Legends never fade.', ca:'Les llegendes no s’esborren.', ru:'Легенды не стираются.'},
+  'rec.clearyes':{es:'Sí, borrar', en:'Yes, clear', ca:'Sí, esborra', ru:'Да, сбросить'},
+  // Logros
+  'ach.reset':{es:'Reiniciar logros', en:'Reset achievements', ca:'Reinicia els assoliments', ru:'Сбросить достижения'},
+  'ach.saved':{es:'Se guardan en este navegador.', en:'Saved in this browser.', ca:'Es desen en aquest navegador.', ru:'Хранятся в этом браузере.'},
+  'ach.all':{es:'¡Todos conseguidos! Eres de los nuestros.', en:'All unlocked! You are one of us.', ca:'Tots aconseguits! Ets dels nostres.', ru:'Все открыты! Ты один из нас.'},
+  'ach.collector':{es:'Coleccionista — {a} / {b} juegos probados', en:'Collector — {a} / {b} games tried', ca:'Col·leccionista — {a} / {b} jocs provats', ru:'Коллекционер — {a} / {b} игр опробовано'},
+  'ach.missing':{es:'Te faltan: {n}', en:'Missing: {n}', ca:'Et falten: {n}', ru:'Осталось: {n}'},
+  'ach.alltried':{es:'¡Los has probado todos!', en:'You have tried them all!', ca:'Els has provat tots!', ru:'Вы попробовали все!'},
+  'ach.resetq':{es:'¿Empezar los logros de cero?', en:'Reset achievements to zero?', ca:'Vols començar els assoliments de zero?', ru:'Начать достижения заново?'},
+  'ach.recordskept':{es:'Los récords no se tocan.', en:'Your scores stay intact.', ca:'Els rècords no es toquen.', ru:'Рекорды не затрагиваются.'},
+  'ach.resetyes':{es:'Sí, reiniciar', en:'Yes, reset', ca:'Sí, reinicia', ru:'Да, сбросить'},
+  // Ajustes
+  'set.tab.wp':{es:'Fondo', en:'Wallpaper', ca:'Fons', ru:'Обои'},
+  'set.tab.color':{es:'Colores', en:'Colors', ca:'Colors', ru:'Цвета'},
+  'set.tab.display':{es:'Pantalla', en:'Display', ca:'Pantalla', ru:'Экран'},
+  'set.reset':{es:'Restaurar todo', en:'Reset all', ca:'Restaura-ho tot', ru:'Сбросить всё'},
+  // Admin. de tareas
+  'tm.apps':{es:'Aplicaciones', en:'Applications', ca:'Aplicacions', ru:'Приложения'},
+  'tm.perf':{es:'Rendimiento', en:'Performance', ca:'Rendiment', ru:'Быстродействие'},
+  'tm.task':{es:'Tarea', en:'Task', ca:'Tasca', ru:'Задача'},
+  'tm.status':{es:'Estado', en:'Status', ca:'Estat', ru:'Состояние'},
+  'tm.mem':{es:'Memoria', en:'Memory', ca:'Memòria', ru:'Память'},
+  'tm.end':{es:'Finalizar tarea', en:'End task', ca:'Finalitza la tasca', ru:'Снять задачу'},
+  'tm.switch':{es:'Cambiar a', en:'Switch to', ca:'Canvia a', ru:'Переключиться'},
+  'tm.empty':{es:'No hay tareas en ejecución.', en:'No running tasks.', ca:'No hi ha tasques en execució.', ru:'Нет запущенных задач.'},
+  'tm.st.min':{es:'Minimizado', en:'Minimized', ca:'Minimitzat', ru:'Свёрнуто'},
+  'tm.st.fg':{es:'En primer plano', en:'Foreground', ca:'En primer pla', ru:'На переднем плане'},
+  'tm.st.run':{es:'En ejecución', en:'Running', ca:'En execució', ru:'Выполняется'},
+  'tm.cpu':{es:'Uso de CPU', en:'CPU usage', ca:'Ús de CPU', ru:'Загрузка ЦП'},
+  'tm.memg':{es:'Memoria', en:'Memory', ca:'Memòria', ru:'Память'},
+  'tm.procs':{es:'Procesos', en:'Processes', ca:'Processos', ru:'Процессы'},
+  'tm.threads':{es:'Subprocesos', en:'Threads', ca:'Subprocessos', ru:'Потоки'},
+  'tm.uptime':{es:'Tiempo activo', en:'Up time', ca:'Temps actiu', ru:'Время работы'},
+  'tm.endwarn':{es:'Si finaliza <b>{n}</b> perderá los datos sin guardar.', en:'If you end <b>{n}</b> you will lose unsaved data.', ca:'Si finalitzes <b>{n}</b> perdràs les dades sense desar.', ru:'Если снять <b>{n}</b>, несохранённые данные будут потеряны.'},
+  'tm.endnow':{es:'Finalizar ahora', en:'End now', ca:'Finalitza ara', ru:'Снять сейчас'},
+  // Instalar
+  'inst.title':{es:'Instalar en el equipo', en:'Install on your device', ca:'Instal·la al dispositiu', ru:'Установить на устройство'},
+  'inst.now':{es:'Instalar ahora', en:'Install now', ca:'Instal·la ara', ru:'Установить сейчас'},
+};
+function currentLang(){ const l=Store.get('tos-lang'); return I18N_LANGS.some(x=>x[0]===l)?l:'es'; }
+function t(key,vars){
+  const e=I18N[key];
+  let str=e?(e[currentLang()]||e.es):key;
+  if(vars)for(const k in vars)str=str.replace('{'+k+'}',vars[k]);
+  return str;
+}
+// Aplica las traducciones a los nodos marcados con data-i18n / data-i18n-attr
+function applyI18n(root){
+  (root||document).querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    const vars=el.getAttribute('data-i18n-n')?{n:el.getAttribute('data-i18n-n')}:null;
+    el.textContent=t(key,vars);
+  });
+  (root||document).querySelectorAll('[data-i18n-title]').forEach(el=>el.title=t(el.getAttribute('data-i18n-title')));
+  (root||document).querySelectorAll('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',t(el.getAttribute('data-i18n-aria'))));
+  (root||document).querySelectorAll('[data-i18n-ph]').forEach(el=>el.setAttribute('placeholder',t(el.getAttribute('data-i18n-ph'))));
+  try{document.documentElement.lang=currentLang();}catch(e){}
+}
+function setLang(l){ Store.set('tos-lang',l); try{location.reload();}catch(e){} }
+// Banderas en SVG (fiables en cualquier sistema, como el resto de iconos del tray)
+const LANG_FLAGS={
+  es:'<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#c60b1e"/><rect y="3" width="18" height="6" fill="#ffc400"/></svg>',
+  en:'<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#012169"/><path d="M0,0 L18,12 M18,0 L0,12" stroke="#fff" stroke-width="2.4"/><path d="M0,0 L18,12 M18,0 L0,12" stroke="#c8102e" stroke-width="1"/><rect x="7" width="4" height="12" fill="#fff"/><rect y="4" width="18" height="4" fill="#fff"/><rect x="7.6" width="2.8" height="12" fill="#c8102e"/><rect y="4.6" width="18" height="2.8" fill="#c8102e"/></svg>',
+  ca:'<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#fcdd09"/><g fill="#da121a"><rect y="1.333" width="18" height="1.333"/><rect y="4" width="18" height="1.333"/><rect y="6.667" width="18" height="1.333"/><rect y="9.333" width="18" height="1.333"/></g></svg>',
+  ru:'<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#fff"/><rect y="4" width="18" height="4" fill="#0039a6"/><rect y="8" width="18" height="4" fill="#d52b1e"/></svg>'
+};
+function langName(code){ const e=I18N_LANGS.find(x=>x[0]===code); return e?e[1]:code; }
+// Pinta la bandera del idioma actual en la bandeja del sistema
+function updateTrayLang(){
+  const el=document.getElementById('tray-lang');
+  if(!el)return;
+  const l=currentLang();
+  el.innerHTML=LANG_FLAGS[l]||LANG_FLAGS.es;
+  el.title=t('set.language')+': '+langName(l);
+  el.setAttribute('aria-label',t('set.language')+': '+langName(l));
+}
+// Menú para elegir idioma desde la bandeja
+function toggleLangMenu(ev){
+  if(ev){ev.preventDefault();ev.stopPropagation();}
+  const el=document.getElementById('tray-lang');
+  const r=el?el.getBoundingClientRect():{left:window.innerWidth-80,top:window.innerHeight-60};
+  const items=I18N_LANGS.map(([code,name])=>({
+    icon:'<span class="lang-flag">'+LANG_FLAGS[code]+'</span>',
+    label:name+(code===currentLang()?' ✓':''),
+    action:()=>{ if(code!==currentLang())setLang(code); }
+  }));
+  showContextMenu(r.left,r.top-8-items.length*26,items);
+}
+const i18t=t; // alias por si una variable local se llama 't' (overlays de juego)
 let windowZIndex = 100;
 let activeWindowId = null;
 let windowIdCounter = 0;
@@ -2550,6 +2749,20 @@ function fsSave({id,name,type,data}){
   return {ok:true,id:nid};
 }
 function fsRemove(id){ const arr=fsList().filter(f=>f.id!==id); _fsWrite(arr); }
+// Saca un archivo del FS virtual al equipo real (descarga del navegador)
+function fsDownload(id){
+  const f=fsGet(id); if(!f)return;
+  const m=FS_META[f.type]||FS_META.txt;
+  const a=document.createElement('a');
+  a.download=f.name.replace(/[\\/:*?"<>|]/g,'_')+m.ext;
+  try{
+    if(f.type==='txt'){
+      a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(f.data);
+    }else{ a.href=f.data; } // png/audio ya son dataURL
+    a.click();
+    announce('Descargando '+f.name+m.ext);
+  }catch(e){}
+}
 function fsRename(id,name){ const arr=fsList(); const f=arr.find(x=>x.id===id); if(f){f.name=name;_fsWrite(arr);} }
 // Nombre único: si "Nota" existe, propone "Nota (2)"
 function fsUniqueName(base,type){
@@ -2560,30 +2773,32 @@ function fsUniqueName(base,type){
 }
 const FS_META={
   txt:{icon:'&#128196;',label:'Texto',ext:'.txt'},
-  png:{icon:'&#128444;&#65039;',label:'Imagen',ext:'.png'}
+  png:{icon:'&#128444;&#65039;',label:'Imagen',ext:'.png'},
+  audio:{icon:'&#127925;',label:'Audio',ext:'.webm'}
 };
 // Abre un archivo del FS en la app que le corresponde
 function fsOpen(id){
   const f=fsGet(id); if(!f)return;
   if(f.type==='txt'){ openNotepad({fileId:f.id,name:f.name,text:f.data}); }
   else if(f.type==='png'){ openImageViewer(); if(_viewerLoadDataURL)_viewerLoadDataURL(f.data,f.name); }
+  else if(f.type==='audio'){ openPlayer(); if(_playerAddDataURL)_playerAddDataURL(f.data,f.name+FS_META.audio.ext,true); }
 }
 function openMyDocuments(){
   closeStartMenu();
   if(focusExisting('docs-panel'))return;
   const content=`<div id="docs-panel" class="docs-panel">
-    <div class="docs-head">&#128193; Mis documentos <span id="docs-count"></span></div>
+    <div class="docs-head">&#128193; <span data-i18n="app.docs">Mis documentos</span> <span id="docs-count"></span></div>
     <div class="docs-grid" id="docs-grid" role="listbox" aria-label="Mis documentos"></div>
     <div class="docs-foot"><span id="docs-foot-txt"></span></div>
   </div>`;
-  createWindow('Mis documentos','&#128193;',460,400,content,{session:'docs',statusbar:false,onCreated:(id)=>{
+  createWindow(t('app.docs'),'&#128193;',460,400,content,{session:'docs',statusbar:false,onCreated:(id)=>{
     let sel=null;
     const render=()=>{
       const grid=document.getElementById('docs-grid');
       if(!grid)return;
       const arr=fsList().sort((a,b)=>b.date-a.date);
       if(!arr.length){
-        grid.innerHTML='<div class="docs-empty">Aún no hay documentos.<br><span>Guarda algo desde el Bloc de notas o Paint.</span></div>';
+        grid.innerHTML='<div class="docs-empty">'+t('docs.empty')+'<br><span>'+t('docs.empty2')+'</span></div>';
       }else{
         grid.innerHTML=arr.map(f=>{
           const m=FS_META[f.type]||FS_META.txt;
@@ -2600,7 +2815,7 @@ function openMyDocuments(){
         });
       }
       const foot=document.getElementById('docs-foot-txt');
-      if(foot)foot.textContent=arr.length?(arr.length+' documento'+(arr.length===1?'':'s')+' · doble clic para abrir'):'';
+      if(foot)foot.textContent=arr.length?t('docs.count',{n:arr.length}):'';
     };
     // Toolbar contextual sencilla: renombrar / eliminar mediante teclado o botones flotantes
     const grid=document.getElementById('docs-grid');
@@ -2609,17 +2824,19 @@ function openMyDocuments(){
       if(e.key==='Enter'){e.preventDefault();fsOpen(sel);}
       else if(e.key==='Delete'){e.preventDefault();borrar(sel);}
       else if(e.key==='F2'){e.preventDefault();renombrar(sel);}
+      else if((e.ctrlKey||e.metaKey)&&(e.key==='s'||e.key==='S')){e.preventDefault();fsDownload(sel);}
     });
     const renombrar=(fid)=>{
       const f=fsGet(fid); if(!f)return;
-      const nombre=prompt('Nuevo nombre para "'+f.name+'":',f.name);
-      if(nombre&&nombre.trim()){ fsRename(fid,nombre.trim()); render(); }
+      xpPrompt(t('docs.renametitle'),t('docs.renameq',{n:f.name}),f.name,(nombre)=>{
+        if(nombre){ fsRename(fid,nombre); render(); }
+      });
     };
     const borrar=(fid)=>{
       const f=fsGet(fid); if(!f)return;
-      xpDialog('Eliminar documento','<div class="dlg-icon">&#128465;&#65039;</div><div>¿Eliminar <b>'+escHtml(f.name)+'</b>?<br><span class="dlg-sub">No se puede deshacer.</span></div>',[
-        {label:'Eliminar',primary:true,action:()=>{fsRemove(fid);if(sel===fid)sel=null;render();announce('Documento eliminado');}},
-        {label:'Cancelar'}
+      xpDialog(t('docs.deltitle'),'<div class="dlg-icon">&#128465;&#65039;</div><div>'+t('docs.delq',{n:escHtml(f.name)})+'<br><span class="dlg-sub">'+t('docs.undone')+'</span></div>',[
+        {label:t('btn.delete'),primary:true,action:()=>{fsRemove(fid);if(sel===fid)sel=null;render();announce('Documento eliminado');}},
+        {label:t('btn.cancel')}
       ]);
     };
     // clic derecho sobre un archivo: menú renombrar/eliminar
@@ -2627,9 +2844,10 @@ function openMyDocuments(){
       const b=e.target.closest('.docs-file'); if(!b)return;
       e.preventDefault(); sel=b.dataset.id; render();
       showContextMenu(e.clientX,e.clientY,[
-        {label:'Abrir',action:()=>fsOpen(sel)},
-        {label:'Renombrar',action:()=>renombrar(sel)},
-        {label:'Eliminar',action:()=>borrar(sel)}
+        {label:t('btn.open'),action:()=>fsOpen(sel)},
+        {label:t('btn.download'),action:()=>fsDownload(sel)},
+        {label:t('btn.rename'),action:()=>renombrar(sel)},
+        {label:t('btn.delete'),action:()=>borrar(sel)}
       ]);
     });
     _docsRender=render; // para refrescar desde fuera cuando se guarda algo
@@ -2639,19 +2857,20 @@ function openMyDocuments(){
 }
 let _docsRender=null;
 function _docsRefresh(){ if(_docsRender)_docsRender(); }
-// Guarda pidiendo nombre; reutiliza si ya existe ese id. Devuelve el id o null.
-function fsSaveDialog(type,defaultName,data,existingId){
-  const base=(prompt('Guardar como (en Mis documentos):',defaultName)||'').trim();
-  if(!base)return null;
-  const name=existingId?base:fsUniqueName(base,type);
-  const r=fsSave({id:existingId||null,name,type,data});
-  if(!r.ok){
-    xpDialog('Mis documentos','<div class="dlg-icon">&#128190;</div><div>No se pudo guardar: el almacenamiento del navegador está lleno.</div>');
-    return null;
-  }
-  _docsRefresh();
-  announce('Guardado en Mis documentos: '+name);
-  return r.id;
+// Guarda pidiendo nombre (diálogo XP). Llama a onSaved(id,name) si se guardó.
+function fsSaveDialog(type,defaultName,data,existingId,onSaved){
+  xpPrompt(t('docs.savetitle'),t('docs.saveas'),defaultName,(base)=>{
+    if(!base)return;
+    const name=existingId?base:fsUniqueName(base,type);
+    const r=fsSave({id:existingId||null,name,type,data});
+    if(!r.ok){
+      xpDialog(t('app.docs'),'<div class="dlg-icon">&#128190;</div><div>'+t('docs.full')+'</div>');
+      return;
+    }
+    _docsRefresh();
+    announce(t('docs.saved',{n:name}));
+    if(onSaved)onSaved(r.id,name);
+  });
 }
 
 // Migra una sola vez los récords antiguos (sin prefijo) al nuevo esquema "tos-*"
@@ -2936,6 +3155,8 @@ if(savedVol!==null){masterVolume=savedVol/100;}
 // ── Boot sequence: arranque → bienvenida → escritorio (sin pantalla de login) ──
 function enterDesktop(){
   document.getElementById('desktop').style.display='block';
+  applyI18n(); // traduce el chrome (menú, botones) al idioma guardado
+  updateTrayLang(); // bandera del idioma en la bandeja
   initDesktop();
   loadSavedAppearance();
   drawStartMenuIcons();
@@ -3099,7 +3320,7 @@ function isStandalone(){
   function injectFallback(){
     const m={
       name:'Torrecillas OS',short_name:'Torrecillas OS',lang:'es',
-      description:'Un escritorio estilo Windows XP en tu navegador: 16 juegos clasicos, Paint, terminal y portfolio.',
+      description:'Un escritorio estilo Windows XP en tu navegador: 15 juegos clasicos, Paint, terminal y portfolio.',
       start_url:location.origin+location.pathname,
       scope:location.origin+location.pathname.replace(/[^/]*$/,''),
       display:'standalone',background_color:'#08286c',theme_color:'#1941a5',
@@ -3117,6 +3338,7 @@ function isStandalone(){
 // Service worker: escritorio offline + ACTUALIZACIONES controladas. Si sw.js no se
 // despliega, los catch lo ignoran y la app sigue funcionando desde la red.
 let _swReloading=false; // evita bucles de recarga
+let _swUpdateRequested=false; // solo recargamos si TÚ pediste actualizar (no en la 1ª toma de control)
 function _swShowUpdate(worker){
   if(!worker)return;
   // Aviso no intrusivo: banner con "Actualizar" que activa el worker en espera.
@@ -3125,22 +3347,25 @@ function _swShowUpdate(worker){
   bar=document.createElement('div');
   bar.id='update-bar';
   bar.setAttribute('role','status');
-  bar.innerHTML='<span>&#128260; Hay una nueva versión de Torrecillas OS.</span>'+
-    '<button type="button" id="update-now">Actualizar</button>'+
-    '<button type="button" id="update-later" aria-label="Ahora no">&#10005;</button>';
+  bar.innerHTML='<span>&#128260; '+t('update.available')+'</span>'+
+    '<button type="button" id="update-now">'+t('update.now')+'</button>'+
+    '<button type="button" id="update-later" aria-label="'+t('ctx.later')+'">&#10005;</button>';
   document.body.appendChild(bar);
   announce('Hay una nueva versión disponible. Pulsa Actualizar para instalarla.');
   document.getElementById('update-now').onclick=()=>{
-    document.getElementById('update-now').textContent='Actualizando…';
-    // Al activarse, controllerchange dispara la recarga (una sola vez)
+    document.getElementById('update-now').textContent=t('update.updating');
+    _swUpdateRequested=true; // desde aquí sí queremos recargar cuando el worker tome el control
     worker.postMessage({type:'SKIP_WAITING'});
   };
   document.getElementById('update-later').onclick=()=>bar.remove();
 }
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){
-  // Cuando el nuevo worker toma el control, recargar una vez para estrenar la versión
+  // Recargar SOLO tras una actualización que tú confirmaste. En la primera visita el
+  // worker hace clients.claim() y también dispara controllerchange, pero ahí NO se
+  // recarga (la página ya tiene el contenido fresco de la red); si no, se vería un
+  // "auto-refresh" fantasma nada más entrar.
   navigator.serviceWorker.addEventListener('controllerchange',()=>{
-    if(_swReloading)return; _swReloading=true;
+    if(!_swUpdateRequested||_swReloading)return; _swReloading=true;
     try{location.reload();}catch(e){}
   });
   window.addEventListener('load',async ()=>{
@@ -3190,7 +3415,7 @@ function openInstallApp(){
       <li>Confirma con <b>Añadir</b>: aparecerá el icono del OS.</li>
     </ol>`;
   }else{
-    action=`<button id="install-now-btn" class="install-btn" ${installPromptEvent?'':'disabled'}>&#128190; Instalar ahora</button>
+    action=`<button id="install-now-btn" class="install-btn" ${installPromptEvent?'':'disabled'}>&#128190; ${t('inst.now')}</button>
       <div id="install-status" class="install-hint">${installPromptEvent?'':'Si el botón está apagado, usa el menú del navegador (&#8942;) &rarr; «Instalar aplicación» o «Añadir a pantalla de inicio».'}</div>`;
   }
   const content=`<div id="install-panel" style="padding:14px 16px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;background:#ece9d8;height:100%;overflow:auto">
@@ -3207,7 +3432,7 @@ function openInstallApp(){
     <div class="install-action">${action}</div>
     <p class="install-hint" style="margin-top:12px">También puedes seguir usándolo en el navegador: nada cambia.</p>
   </div>`;
-  createWindow('Instalar en el equipo','&#128190;',420,400,content,{statusbar:false,onCreated:()=>{
+  createWindow(t('inst.title'),'&#128190;',420,400,content,{statusbar:false,onCreated:()=>{
     const b=document.getElementById('install-now-btn');
     if(b)b.onclick=async()=>{
       if(!installPromptEvent)return;
@@ -3385,7 +3610,7 @@ function xpDialog(title,bodyHTML,buttons){
     <div class="xp-dialog-btns" style="padding:0 16px 12px;display:flex;gap:8px;justify-content:flex-end"></div>
   </div>`;
   const btns=ov.querySelector('.xp-dialog-btns');
-  (buttons&&buttons.length?buttons:[{label:'Aceptar',primary:true}]).forEach(b=>{
+  (buttons&&buttons.length?buttons:[{label:t('btn.ok'),primary:true}]).forEach(b=>{
     const el=document.createElement('button');
     el.textContent=b.label;
     el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(b.primary?'#0054e3':'#aca899')+';border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer';
@@ -3396,6 +3621,47 @@ function xpDialog(title,bodyHTML,buttons){
   const first=btns.querySelector('button');
   if(first)try{first.focus();}catch(e){}
   return ov;
+}
+
+// Diálogo con campo de texto, estética XP (sustituye a prompt() del navegador,
+// que en una PWA instalada se ve como un intruso). onOk recibe el valor.
+function xpPrompt(title,label,defaultValue,onOk){
+  uiSfx('dialog');
+  const ov=document.createElement('div');
+  ov.className='xp-dialog-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(title)}" style="width:min(380px,92vw);background:#ece9d8;border:2px solid #0054e3;border-radius:8px 8px 4px 4px;box-shadow:0 10px 40px rgba(0,0,0,.5);overflow:hidden">
+    <div style="background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">${escHtml(title)}</div>
+    <div style="padding:14px 16px 6px;font-size:12px;color:#222;line-height:1.5">
+      <label for="xp-prompt-input" style="display:block;margin-bottom:6px">${escHtml(label)}</label>
+      <input id="xp-prompt-input" type="text" style="width:100%;font-family:Tahoma;font-size:13px;padding:5px 7px;border:1px solid #7f9db9;border-radius:2px;box-sizing:border-box">
+    </div>
+    <div class="xp-dialog-btns" style="padding:0 16px 12px;display:flex;gap:8px;justify-content:flex-end"></div>
+  </div>`;
+  const inp=ov.querySelector('#xp-prompt-input');
+  inp.value=defaultValue||'';
+  const btns=ov.querySelector('.xp-dialog-btns');
+  const mk=(label,primary,fn)=>{
+    const el=document.createElement('button');
+    el.textContent=label;
+    el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer';
+    el.onclick=fn; btns.appendChild(el); return el;
+  };
+  const aceptar=()=>{ const v=inp.value.trim(); ov.remove(); if(onOk)onOk(v); };
+  mk(t('btn.ok'),true,aceptar);
+  mk(t('btn.cancel'),false,()=>ov.remove());
+  inp.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){e.preventDefault();aceptar();} else if(e.key==='Escape'){e.preventDefault();ov.remove();} });
+  document.body.appendChild(ov);
+  setTimeout(()=>{try{inp.focus();inp.select();}catch(e){}},30);
+  return ov;
+}
+
+// Confirmación estética XP (sustituye a confirm()). onYes se llama al aceptar.
+function xpConfirm(title,message,onYes,okLabel){
+  xpDialog(title,'<div class="dlg-icon">&#10067;</div><div>'+message+'</div>',[
+    {label:okLabel||t('btn.yes'),primary:true,action:onYes},
+    {label:t('btn.cancel')}
+  ]);
 }
 
 // ========== PAPELERA DE RECICLAJE ==========
@@ -3587,7 +3853,6 @@ const RECORD_DEFS=[
   {icon:'&#128163;',label:'Buscaminas · fácil',key:'tos-ms-best-easy',unit:'s'},
   {icon:'&#128163;',label:'Buscaminas · medio',key:'tos-ms-best-medium',unit:'s'},
   {icon:'&#128163;',label:'Buscaminas · difícil',key:'tos-ms-best-hard',unit:'s'},
-  {icon:'&#128128;',label:'Ahorcado · racha',key:'tos-hangman-best',unit:'seguidas'},
   {icon:'&#128191;',label:'Simon',key:'tos-simon-best',unit:'rondas'},
   {icon:'&#57;&#65039;&#8419;',label:'Sudoku · fácil',key:'tos-sudoku-best-facil',unit:'s'},
   {icon:'&#57;&#65039;&#8419;',label:'Sudoku · medio',key:'tos-sudoku-best-medio',unit:'s'},
@@ -3645,7 +3910,6 @@ const ACHIEVEMENTS=[
   {id:'pong-victoria',icon:'&#127955;',label:'Rey del Pong',desc:'Ganar a la CPU al Pong'},
   {id:'memoria-aguda',icon:'&#129504;',label:'Memoria de elefante',desc:'Completar Memoria en 14 movimientos o menos'},
   {id:'solitario-completo',icon:'&#127183;',label:'Paciencia infinita',desc:'Completar el Solitario'},
-  {id:'ahorcado-racha',icon:'&#128128;',label:'Verdugo experto',desc:'5 palabras seguidas en el Ahorcado'},
   {id:'sudoku-resuelto',icon:'&#57;&#65039;&#8419;',label:'Cuadrícula perfecta',desc:'Resolver un Sudoku'},
   {id:'simon-ronda8',icon:'&#128191;',label:'Buena oreja',desc:'Llegar a la ronda 8 en Simon'}
 ];
@@ -3697,11 +3961,12 @@ function openAchievements(){
   closeStartMenu();
   if(focusExisting('ach-panel'))return;
   const content=`<div id="ach-panel" class="ach-panel">
-    <div class="ach-head">&#127941; Logros <span id="ach-count"></span></div>
+    <div class="ach-head">&#127941; ${t('app.achievements')} <span id="ach-count"></span></div>
+    <div class="ach-collector" id="ach-collector"></div>
     <div class="ach-list" id="ach-list"></div>
-    <div class="ach-foot"><span id="ach-foot-txt"></span><button type="button" class="trash-btn" id="ach-clear">Reiniciar logros</button></div>
+    <div class="ach-foot"><span id="ach-foot-txt"></span><button type="button" class="trash-btn" id="ach-clear">${t('ach.reset')}</button></div>
   </div>`;
-  createWindow('Logros','&#127941;',390,430,content,{session:'logros',statusbar:false,onCreated:()=>{
+  createWindow(t('app.achievements'),'&#127941;',390,430,content,{session:'logros',statusbar:false,onCreated:()=>{
     const render=()=>{
       const st=_achState();
       const list=document.getElementById('ach-list');
@@ -3715,19 +3980,31 @@ function openAchievements(){
           <div class="ach-date">${fecha}</div>
         </div>`;
       }).join('');
+      // Progreso del Coleccionista: qué juegos has probado y cuáles te faltan
+      const played=_playedState();
+      const col=document.getElementById('ach-collector');
+      if(col){
+        const jugados=gamesApps.filter(g=>played[g.key]).length;
+        const faltan=gamesApps.filter(g=>!played[g.key]);
+        col.innerHTML='<div class="ach-col-head">&#127942; '+t('ach.collector',{a:jugados,b:gamesApps.length})+'</div>'+
+          '<div class="ach-col-grid">'+gamesApps.map(g=>
+            '<span class="ach-col-chip'+(played[g.key]?' done':'')+'" title="'+g.label+(played[g.key]?' (probado)':' (por probar)')+'">'+g.icon+'</span>'
+          ).join('')+'</div>'+
+          (faltan.length?'<div class="ach-col-hint">'+t('ach.missing',{n:faltan.map(g=>g.label).join(', ')})+'</div>':'<div class="ach-col-hint done">'+t('ach.alltried')+'</div>');
+      }
       const n=ACHIEVEMENTS.filter(a=>st[a.id]).length;
       const c=document.getElementById('ach-count');
       if(c)c.textContent=n+' / '+ACHIEVEMENTS.length;
       const f=document.getElementById('ach-foot-txt');
-      if(f)f.textContent=n===ACHIEVEMENTS.length?'¡Todos conseguidos! Eres de los nuestros.':'Se guardan en este navegador.';
+      if(f)f.textContent=n===ACHIEVEMENTS.length?t('ach.all'):t('ach.saved');
       const b=document.getElementById('ach-clear');
       if(b)b.disabled=!n;
     };
     render();
     document.getElementById('ach-clear').onclick=()=>{
-      xpDialog('Reiniciar logros','<div class="dlg-icon">&#127941;</div><div>¿Empezar los logros de cero?<br><span class="dlg-sub">Los récords no se tocan.</span></div>',[
-        {label:'Sí, reiniciar',primary:true,action:()=>{Store.del('tos-achievements');Store.del('tos-played');render();}},
-        {label:'Cancelar'}
+      xpDialog(t('ach.reset'),'<div class="dlg-icon">&#127941;</div><div>'+t('ach.resetq')+'<br><span class="dlg-sub">'+t('ach.recordskept')+'</span></div>',[
+        {label:t('ach.resetyes'),primary:true,action:()=>{Store.del('tos-achievements');Store.del('tos-played');render();}},
+        {label:t('btn.cancel')}
       ]);
     };
   }});
@@ -3737,17 +4014,17 @@ function openRecords(){
   closeStartMenu();
   if(focusExisting('records-panel'))return;
   const content=`<div id="records-panel" style="display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif">
-    <div style="padding:10px 12px 6px;font-size:13px;font-weight:bold;color:#1a4fa0">&#127942; Salón de la fama</div>
+    <div style="padding:10px 12px 6px;font-size:13px;font-weight:bold;color:#1a4fa0">&#127942; ${t('rec.hall')}</div>
     <div style="flex:1;overflow:auto;background:#fff;margin:0 10px;border:1px solid #aca899;border-radius:3px">
       <table class="records-table"><tbody id="records-body"></tbody></table>
     </div>
     <div style="display:flex;align-items:center;gap:8px;padding:8px 10px">
       <span id="records-foot" style="flex:1;font-size:10px;color:#555"></span>
-      <button id="records-share" class="trash-btn">&#128228; Compartir</button>
-      <button id="records-clear" class="trash-btn">Borrar récords</button>
+      <button id="records-share" class="trash-btn">&#128228; ${t('btn.share')}</button>
+      <button id="records-clear" class="trash-btn">${t('rec.clear')}</button>
     </div>
   </div>`;
-  createWindow('Récords','&#127942;',380,430,content,{session:'records',statusbar:false,onCreated:()=>{
+  createWindow(t('app.records'),'&#127942;',380,430,content,{session:'records',statusbar:false,onCreated:()=>{
     const render=()=>{
       const body=document.getElementById('records-body');
       if(!body)return;
@@ -3758,7 +4035,7 @@ function openRecords(){
         return `<tr><td class="rec-ic">${r.icon}</td><td>${r.label}</td><td class="rec-val${v===null?' empty':''}">${v===null?'—':v+' '+r.unit}</td></tr>`;
       }).join('');
       const foot=document.getElementById('records-foot');
-      if(foot)foot.textContent=any?'Los récords se guardan en este navegador.':'Aún no hay récords... ¡a jugar!';
+      if(foot)foot.textContent=any?t('rec.saved'):t('rec.none');
       const btn=document.getElementById('records-clear');
       if(btn)btn.disabled=!any;
       const sh=document.getElementById('records-share');
@@ -3767,9 +4044,9 @@ function openRecords(){
     render();
     document.getElementById('records-share').onclick=shareRecords;
     document.getElementById('records-clear').onclick=()=>{
-      xpDialog('Borrar récords','<div class="dlg-icon">&#127942;</div><div>¿Seguro que quieres borrar todos los récords?<br><span class="dlg-sub">Las leyendas no se borran... pero los récords sí.</span></div>',[
-        {label:'Sí, borrar',primary:true,action:()=>{RECORD_DEFS.forEach(r=>Store.del(r.key));render();}},
-        {label:'Cancelar'}
+      xpDialog(t('rec.clear'),'<div class="dlg-icon">&#127942;</div><div>'+t('rec.clearq')+'<br><span class="dlg-sub">'+t('rec.legends')+'... pero los récords sí.</span></div>',[
+        {label:t('rec.clearyes'),primary:true,action:()=>{RECORD_DEFS.forEach(r=>Store.del(r.key));render();}},
+        {label:t('btn.cancel')}
       ]);
     };
   }});
@@ -4268,7 +4545,7 @@ const CHIP_TRACKS=[
    mel:[null,74,76,74,null,71,null,69,null,71,74,null,76,null,79,null,null,74,76,74,null,71,null,69,null,67,69,71,69,null,null,null],
    low:[50,null,null,50,null,null,50,null,43,null,null,43,null,null,45,null,50,null,null,50,null,null,50,null,43,null,45,null,47,null,null,null]}
 ];
-let _playerHook=null;
+let _playerHook=null,_playerAddDataURL=null;
 function playerAddFiles(list,autoplay){ if(_playerHook)_playerHook(list,autoplay); }
 function openPlayer(){
   closeStartMenu();
@@ -4498,6 +4775,7 @@ function openPlayer(){
     };
     document.getElementById('pl-file').addEventListener('change',(e)=>{if(e.target.files&&e.target.files.length)addFiles(e.target.files);e.target.value='';});
     _playerHook=(list,autoplay)=>{addFiles(list);if(autoplay&&playlist.length)playIdx(playlist.length-1);};
+    _playerAddDataURL=(dataurl,name,autoplay)=>{ playlist.push({type:'file',name:name||'audio',url:dataurl}); render(); if(autoplay)playIdx(playlist.length-1); };
     // Visualizador: analizador real si existe; si no, barras al ritmo del secuenciador
     let raf=null;
     const freq=analyserSize=>new Uint8Array(analyserSize);
@@ -4539,7 +4817,7 @@ function openPlayer(){
     (win._cleanups=win._cleanups||[]).push(()=>{
       stopAll();
       if(raf)cancelAnimationFrame(raf);
-      _playerHook=null;
+      _playerHook=null;_playerAddDataURL=null;
       playlist.forEach(p=>{if(p.type==='file'&&p.url){try{URL.revokeObjectURL(p.url);}catch(e){}}});
     });
   }});
@@ -4716,6 +4994,7 @@ function openWordArt(){
     <div style="display:flex;gap:6px;align-items:center">
       <input id="wart-text" value="TORRECILLAS" maxlength="24" aria-label="Texto del WordArt" style="flex:1;min-width:0;border:1px solid #7da2ce;border-radius:3px;padding:5px 7px;font-family:inherit;font-size:12px">
       <button id="wart-dl" class="trash-btn">&#11015;&#65039; Descargar PNG</button>
+      <button id="wart-savefs" class="trash-btn">&#128190; A Mis documentos</button>
     </div>
     <div style="display:flex;gap:4px;flex-wrap:wrap" id="wart-styles">${chips}</div>
     <div style="flex:1;min-height:0;background:#fff;border:1px solid #aca899;display:flex;align-items:center;justify-content:center;overflow:hidden">
@@ -4743,6 +5022,10 @@ function openWordArt(){
         a.href=canvas.toDataURL('image/png');
         a.click();
       }catch(e){}
+    };
+    document.getElementById('wart-savefs').onclick=()=>{
+      let data; try{data=canvas.toDataURL('image/png');}catch(e){return;}
+      fsSaveDialog('png',(inp.value.trim()||'WordArt').slice(0,24),data,null);
     };
     redraw();
   }});
@@ -5202,6 +5485,7 @@ function openRecorder(){
       <button id="rec-stop" class="trash-btn" disabled>&#9632; Parar</button>
       <button id="rec-play" class="trash-btn" disabled>&#9654; Reproducir</button>
       <a id="rec-dl" class="trash-btn" style="display:none;text-decoration:none" download="grabacion-torrecillas.webm">&#11015;&#65039; Guardar</a>
+      <button id="rec-savefs" class="trash-btn" style="display:none">&#128190; A Mis documentos</button>
     </div>
   </div>`;
   createWindow('Grabadora de sonidos','&#127908;',360,240,content,{session:'recorder',statusbar:false,onCreated:(id,win)=>{
@@ -5255,7 +5539,9 @@ function openRecorder(){
           const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});
           if(blobUrl){try{URL.revokeObjectURL(blobUrl);}catch(e){}}
           try{blobUrl=URL.createObjectURL(blob);}catch(e){blobUrl='';}
+          lastBlob=blob;
           bDl.href=blobUrl;bDl.style.display='';
+          const bFs=document.getElementById('rec-savefs');if(bFs)bFs.style.display='';
           bPlay.disabled=false;
           st.textContent='Grabado ('+Math.round((Date.now()-t0)/1000)+'s). Dale al play o guárdalo.';
         };
@@ -5274,6 +5560,14 @@ function openRecorder(){
       }catch(e){
         xpDialog('Grabadora','<div class="dlg-icon">&#128683;</div><div>Sin permiso para el micr&oacute;fono.<br><span class="dlg-sub">Respetable. Aqu&iacute; nadie graba a nadie.</span></div>');
       }
+    };
+    let lastBlob=null;
+    const bFs=document.getElementById('rec-savefs');
+    if(bFs)bFs.onclick=()=>{
+      if(!lastBlob)return;
+      const fr=new FileReader();
+      fr.onload=()=>fsSaveDialog('audio','Grabación',fr.result,null);
+      fr.readAsDataURL(lastBlob);
     };
     bStop.onclick=()=>{stopAllRec();bRec.disabled=false;bStop.disabled=true;};
     bPlay.onclick=()=>{
@@ -5409,7 +5703,7 @@ function tmProcesses(){
   return Object.keys(openWindows).map(id=>{
     const w=openWindows[id];
     return {id,title:w.title,icon:w.icon,minimized:!!w.minimized,
-            estado:w.minimized?'Minimizado':(activeWindowId===id?'En primer plano':'En ejecución'),
+            estado:w.minimized?t('tm.st.min'):(activeWindowId===id?t('tm.st.fg'):t('tm.st.run')),
             juego:!!gameInstances[id]};
   });
 }
@@ -5420,27 +5714,27 @@ function openTaskManager(){
   if(focusExisting('tm-root'))return;
   const content=`<div id="tm-root" class="tm-root">
     <div class="tm-tabs" role="tablist">
-      <button type="button" class="tm-tab active" data-t="apps" role="tab">Aplicaciones</button>
-      <button type="button" class="tm-tab" data-t="rend" role="tab">Rendimiento</button>
+      <button type="button" class="tm-tab active" data-t="apps" role="tab">${t('tm.apps')}</button>
+      <button type="button" class="tm-tab" data-t="rend" role="tab">${t('tm.perf')}</button>
     </div>
     <div class="tm-pane" id="tm-apps">
-      <div class="tm-head"><span>Tarea</span><span>Estado</span><span>Memoria</span></div>
+      <div class="tm-head"><span>${t('tm.task')}</span><span>${t('tm.status')}</span><span>${t('tm.mem')}</span></div>
       <div id="tm-list" class="tm-list" role="listbox" aria-label="Tareas en ejecución"></div>
       <div class="tm-actions">
-        <button type="button" class="game-btn" id="tm-end" disabled>Finalizar tarea</button>
-        <button type="button" class="game-btn" id="tm-switch" disabled>Cambiar a</button>
+        <button type="button" class="game-btn" id="tm-end" disabled>${t('tm.end')}</button>
+        <button type="button" class="game-btn" id="tm-switch" disabled>${t('tm.switch')}</button>
       </div>
     </div>
     <div class="tm-pane" id="tm-rend" hidden>
       <div class="tm-graphs">
-        <div><div class="tm-glabel">Uso de CPU</div><canvas id="tm-cpu" width="150" height="90" role="img" aria-label="Gráfica de uso de CPU"></canvas></div>
-        <div><div class="tm-glabel">Memoria</div><canvas id="tm-mem" width="150" height="90" role="img" aria-label="Gráfica de uso de memoria"></canvas></div>
+        <div><div class="tm-glabel">${t('tm.cpu')}</div><canvas id="tm-cpu" width="150" height="90" role="img" aria-label="Gráfica de uso de CPU"></canvas></div>
+        <div><div class="tm-glabel">${t('tm.memg')}</div><canvas id="tm-mem" width="150" height="90" role="img" aria-label="Gráfica de uso de memoria"></canvas></div>
       </div>
       <div class="tm-stats" id="tm-stats"></div>
     </div>
     <div class="tm-status" id="tm-status">Procesos: 0</div>
   </div>`;
-  createWindow('Administrador de tareas de Windows','&#128200;',420,340,content,{session:'taskmgr',statusbar:false,onCreated:(id,win)=>{
+  createWindow(t('app.taskmgr'),'&#128200;',420,340,content,{session:'taskmgr',statusbar:false,onCreated:(id,win)=>{
     let sel=null;
     const list=document.getElementById('tm-list');
     const endBtn=document.getElementById('tm-end');
@@ -5455,27 +5749,27 @@ function openTaskManager(){
            <span class="tm-state">${p.estado}</span>
            <span class="tm-mem">${_tmMem(p,i)} MB</span>
          </div>`).join('')
-        : '<div class="tm-empty">No hay tareas en ejecución.</div>';
+        : '<div class="tm-empty">'+t('tm.empty')+'</div>';
       list.querySelectorAll('.tm-row').forEach(r=>{
         r.onclick=()=>{sel=r.dataset.id;render();};
         r.ondblclick=()=>{restoreWindow(r.dataset.id);};
       });
       endBtn.disabled=!sel;swBtn.disabled=!sel;
       const st=document.getElementById('tm-status');
-      if(st)st.textContent='Procesos: '+pr.length+'  ·  Uso de CPU: '+(12+pr.length*7)+'%';
+      if(st)st.textContent=t('tm.procs')+': '+pr.length+'  ·  '+t('tm.cpu')+': '+(12+pr.length*7)+'%';
       const stats=document.getElementById('tm-stats');
       if(stats)stats.innerHTML=
-        '<div><b>Procesos</b><span>'+pr.length+'</span></div>'+
-        '<div><b>Subprocesos</b><span>'+(pr.length*3+17)+'</span></div>'+
-        '<div><b>Tiempo activo</b><span>'+_tmUptime()+'</span></div>'+
-        '<div><b>Memoria</b><span>'+pr.reduce((a,p,i)=>a+_tmMem(p,i),0)+' MB / 512 MB</span></div>';
+        '<div><b>'+t('tm.procs')+'</b><span>'+pr.length+'</span></div>'+
+        '<div><b>'+t('tm.threads')+'</b><span>'+(pr.length*3+17)+'</span></div>'+
+        '<div><b>'+t('tm.uptime')+'</b><span>'+_tmUptime()+'</span></div>'+
+        '<div><b>'+t('tm.memg')+'</b><span>'+pr.reduce((a,p,i)=>a+_tmMem(p,i),0)+' MB / 512 MB</span></div>';
     };
     endBtn.onclick=()=>{
       if(!sel)return;
       const p=tmProcesses().find(x=>x.id===sel);
-      xpDialog('Advertencia del Administrador de tareas',
-        '<div class="dlg-icon">&#9888;&#65039;</div><div>Si finaliza <b>'+escHtml(p?p.title:'')+'</b> perder&aacute; los datos sin guardar.<br><span class="dlg-sub">(aqu&iacute; no hay gran cosa que perder, todo sea dicho)</span></div>',
-        [{label:'Finalizar ahora',primary:true,action:()=>{closeWindow(sel);sel=null;render();announce('Tarea finalizada');}},{label:'Cancelar'}]);
+      xpDialog(t('app.taskmgr'),
+        '<div class="dlg-icon">&#9888;&#65039;</div><div>'+t('tm.endwarn',{n:escHtml(p?p.title:'')})+'</div>',
+        [{label:t('tm.endnow'),primary:true,action:()=>{closeWindow(sel);sel=null;render();announce('Tarea finalizada');}},{label:'Cancelar'}]);
     };
     swBtn.onclick=()=>{ if(sel)restoreWindow(sel); };
     win.querySelectorAll('.tm-tab').forEach(t=>{
@@ -5932,12 +6226,12 @@ function makeIconDraggable(icon,id){
 
 // Desktop icons
 const desktopApps=[
-  {id:'mipc',label:'Mi PC',icon:'&#128421;&#65039;',action:()=>openMiPC()},
-  {id:'docs',label:'Mis documentos',icon:'&#128450;&#65039;',action:()=>openMyDocuments()},
-  {id:'proyectos',label:'Proyectos',icon:'&#128193;',action:()=>openProyectos()},
+  {id:'mipc',label:'Mi PC',i18n:'desk.mipc',icon:'&#128421;&#65039;',action:()=>openMiPC()},
+  {id:'docs',label:'Mis documentos',i18n:'app.docs',icon:'&#128450;&#65039;',action:()=>openMyDocuments()},
+  {id:'proyectos',label:'Proyectos',i18n:'desk.projects',icon:'&#128193;',action:()=>openProyectos()},
   {id:'netscape',label:'Netscape Navigator',icon:NS_ICON,action:()=>openNetscape()},
-  {id:'papelera',label:'Papelera de reciclaje',icon:'&#128465;&#65039;',action:()=>openPapelera()},
-  {id:'instalar',label:'Instalar app',icon:`<img src="${TOS_ICON_192}" alt="" draggable="false">`,action:()=>openInstallApp()}
+  {id:'papelera',label:'Papelera de reciclaje',i18n:'desk.trash',icon:'&#128465;&#65039;',action:()=>openPapelera()},
+  {id:'instalar',label:'Instalar app',i18n:'app.install',icon:`<img src="${TOS_ICON_192}" alt="" draggable="false">`,action:()=>openInstallApp()}
 ];
 
 // Tamano de ventana de carpeta adaptado al dispositivo:
@@ -5972,7 +6266,6 @@ const gamesApps=[
   {key:'memory',label:'Memoria',icon:'&#129504;'},
   {key:'solitaire',label:'Solitario',icon:'&#127183;'},
   {key:'pinball',label:'Pinball',icon:'&#128640;'},
-  {key:'hangman',label:'Ahorcado',icon:'&#128128;'},
   {key:'sudoku',label:'Sudoku',icon:'&#57;&#65039;&#8419;'},
   {key:'simon',label:'Simon',icon:'&#128191;'}
 ];
@@ -6053,7 +6346,7 @@ function openJuegazos(){
 
 // Subcarpetas dentro de Proyectos (antes eran iconos sueltos del escritorio)
 const PROY_SUBFOLDERS=[
-  {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 16 juegos clásicos del sistema'},
+  {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 15 juegos clásicos del sistema'},
   {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',open:()=>openJuegazos(),desc:'Mis juegos web publicados'}
 ];
 function openProyectos(){
@@ -6124,7 +6417,7 @@ function initDesktop(){
     iconDiv.className='icon';
     iconDiv.innerHTML=app.icon;
     const label=document.createElement('div');
-    label.className='label';label.textContent=app.label;
+    label.className='label';label.textContent=app.i18n?t(app.i18n):app.label;
     icon.appendChild(iconDiv);
     icon.appendChild(label);
     // En tactil no hay doble clic fiable (suele disparar el zoom de doble toque):
@@ -6267,8 +6560,8 @@ document.addEventListener('contextmenu',(e)=>{
   if((e.target.closest&&(e.target.closest('.window')||e.target.closest('#taskbar')))||document.getElementById('desktop').style.display==='none')return;
   e.preventDefault();
   showContextMenu(e.clientX,e.clientY,[
-    {icon:'&#128260;',label:'Actualizar',action:()=>initDesktop()},
-    {icon:'&#128203;',label:'Organizar iconos',action:()=>{Store.del('tos-icon-pos');initDesktop();}},
+    {icon:'&#128260;',label:t('ctx.refresh'),action:()=>initDesktop()},
+    {icon:'&#128203;',label:t('ctx.arrange'),action:()=>{Store.del('tos-icon-pos');initDesktop();}},
     {sep:true},
     {icon:'&#127912;',label:'Cambiar fondo',action:()=>openSettings()},
     {icon:'&#9432;',label:'Propiedades',action:()=>openAbout()}
@@ -6316,10 +6609,10 @@ function createWindow(title,icon,width,height,content,opts={}){
     <div class="window-titlebar">
       <div class="window-title"><span class="wt-icon">${icon}</span>${title}</div>
       <div class="window-controls">
-        ${isGame?'<button class="btn-restart" onclick="restartGameWindow(\''+id+'\')" title="Reiniciar" aria-label="Reiniciar">&#8635;</button>':''}
-        <button class="btn-minimize" onclick="minimizeWindow('${id}')" title="Minimizar" aria-label="Minimizar">_</button>
-        <button class="btn-maximize" onclick="toggleMaximize('${id}')" title="Maximizar" aria-label="Maximizar">&#9723;</button>
-        <button class="btn-close" onclick="closeWindow('${id}')" title="Cerrar" aria-label="Cerrar">X</button>
+        ${isGame?'<button class="btn-restart" onclick="restartGameWindow(\''+id+'\')" title="'+t('win.restart')+'" aria-label="'+t('win.restart')+'">&#8635;</button>':''}
+        <button class="btn-minimize" onclick="minimizeWindow('${id}')" title="${t('win.min')}" aria-label="${t('win.min')}">_</button>
+        <button class="btn-maximize" onclick="toggleMaximize('${id}')" title="${t('win.max')}" aria-label="${t('win.max')}">&#9723;</button>
+        <button class="btn-close" onclick="closeWindow('${id}')" title="${t('win.close')}" aria-label="${t('win.close')}">X</button>
       </div>
     </div>
     <div class="window-body">${content}</div>
@@ -6330,6 +6623,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   win.setAttribute('aria-label',title);
   win.tabIndex=-1;
   document.getElementById('desktop').appendChild(win);
+  try{applyI18n(win);}catch(e){} // traduce cualquier data-i18n del contenido dinámico
 
   // Drag
   const _titlebar=win.querySelector('.window-titlebar');
@@ -6644,49 +6938,49 @@ function _aboutGameLines(perLine=4){
 // ═══════════════════  § AYUDA (F1)  ═══════════════════
 // Centro de ayuda con todos los atajos reales del sistema, generado desde una
 // tabla para que no se quede desfasado como el parrafo del "Acerca de".
-const HELP_SHORTCUTS=[
-  ['Ventanas',[
-    ['Alt + Tab','Cambiar entre ventanas abiertas (Mayús invierte)'],
-    ['Ctrl + Esc  ·  ⊞ Win','Abrir el menú Inicio'],
-    ['Ctrl + W','Cerrar la ventana activa'],
-    ['Ctrl + Alt + Supr','Administrador de tareas'],
-    ['Doble clic en la barra','Maximizar / restaurar la ventana'],
-    ['Arrastrar a un borde','Encajar la ventana (arriba = maximizar)'],
-  ]],
-  ['Escritorio',[
-    ['Flechas','Moverte entre los iconos del escritorio'],
-    ['Inicio / Fin','Primer / último icono'],
-    ['Enter','Abrir el icono seleccionado'],
-    ['Arrastrar a la papelera','Eliminar un icono del escritorio'],
-    ['Ctrl + V (imagen)','Pegar una imagen del portapapeles en Paint'],
-    ['Soltar un archivo','Abrirlo en la app que le toque'],
-  ]],
-  ['Juegos',[
-    ['Flechas / Espacio','Controles habituales de cada juego'],
-    ['R','Reiniciar la partida'],
-    ['Mando 🎮','Cruceta / stick + A también funcionan'],
-  ]],
-  ['Trucos',[
-    ['Escribe "crash"','…en el Símbolo del sistema. Tú confía'],
-    ['3 minutos quieto','Aparece el salvapantallas de estrellas'],
-    ['Papelera','Guarda alguna sorpresa dentro'],
-  ]],
-];
+const HELP_I18N={
+ es:[
+  ['Ventanas',[['Alt + Tab','Cambiar entre ventanas abiertas (Mayús invierte)'],['Ctrl + Esc · ⊞ Win','Abrir el menú Inicio'],['Ctrl + W','Cerrar la ventana activa'],['Ctrl + Alt + Supr','Administrador de tareas'],['Doble clic en la barra','Maximizar / restaurar la ventana'],['Arrastrar a un borde','Encajar la ventana (arriba = maximizar)']]],
+  ['Escritorio',[['Flechas','Moverte entre los iconos del escritorio'],['Inicio / Fin','Primer / último icono'],['Enter','Abrir el icono seleccionado'],['Arrastrar a la papelera','Eliminar un icono del escritorio'],['Ctrl + V (imagen)','Pegar una imagen del portapapeles en Paint'],['Soltar un archivo','Abrirlo en la app que le toque']]],
+  ['Juegos',[['Flechas / Espacio','Controles habituales de cada juego'],['R','Reiniciar la partida'],['Mando 🎮','Cruceta / stick + A también funcionan']]],
+  ['Trucos',[['Escribe "crash"','…en el Símbolo del sistema. Tú confía'],['3 minutos quieto','Aparece el salvapantallas de estrellas'],['Papelera','Guarda alguna sorpresa dentro']]]
+ ],
+ en:[
+  ['Windows',[['Alt + Tab','Switch between open windows (Shift reverses)'],['Ctrl + Esc · ⊞ Win','Open the Start menu'],['Ctrl + W','Close the active window'],['Ctrl + Alt + Del','Task manager'],['Double-click title bar','Maximize / restore the window'],['Drag to an edge','Snap the window (top = maximize)']]],
+  ['Desktop',[['Arrow keys','Move between desktop icons'],['Home / End','First / last icon'],['Enter','Open the selected icon'],['Drag to the bin','Remove a desktop icon'],['Ctrl + V (image)','Paste a clipboard image into Paint'],['Drop a file','Opens in the matching app']]],
+  ['Games',[['Arrows / Space','Usual controls of each game'],['R','Restart the game'],['Gamepad 🎮','D-pad / stick + A work too']]],
+  ['Secrets',[['Type "crash"','…in the Command Prompt. Trust me'],['3 minutes idle','The starfield screensaver appears'],['Recycle Bin','Keeps a surprise inside']]]
+ ],
+ ca:[
+  ['Finestres',[['Alt + Tab','Canviar entre finestres obertes (Maj inverteix)'],['Ctrl + Esc · ⊞ Win','Obrir el menú Inici'],['Ctrl + W','Tancar la finestra activa'],['Ctrl + Alt + Supr','Gestor de tasques'],['Doble clic a la barra','Maximitzar / restaurar la finestra'],['Arrossegar a una vora','Encaixar la finestra (a dalt = maximitzar)']]],
+  ['Escriptori',[['Fletxes','Moure’t entre les icones'],['Inici / Fi','Primera / última icona'],['Enter','Obrir la icona seleccionada'],['Arrossegar a la paperera','Eliminar una icona'],['Ctrl + V (imatge)','Enganxar una imatge al Paint'],['Deixar anar un fitxer','S’obre a l’app que toqui']]],
+  ['Jocs',[['Fletxes / Espai','Controls habituals de cada joc'],['R','Reiniciar la partida'],['Comandament 🎮','Creueta / stick + A també van']]],
+  ['Trucs',[['Escriu "crash"','…al Símbol del sistema. Confia-hi'],['3 minuts quiet','Apareix el salvapantalles d’estrelles'],['Paperera','Guarda alguna sorpresa a dins']]]
+ ],
+ ru:[
+  ['Окна',[['Alt + Tab','Переключение между окнами (Shift — назад)'],['Ctrl + Esc · ⊞ Win','Открыть меню «Пуск»'],['Ctrl + W','Закрыть активное окно'],['Ctrl + Alt + Del','Диспетчер задач'],['Двойной клик по заголовку','Развернуть / восстановить окно'],['Перетащить к краю','Прикрепить окно (вверх = развернуть)']]],
+  ['Рабочий стол',[['Стрелки','Перемещение по значкам'],['Home / End','Первый / последний значок'],['Enter','Открыть выбранный значок'],['Перетащить в корзину','Удалить значок'],['Ctrl + V (картинка)','Вставить картинку в Paint'],['Бросить файл','Откроется в нужном приложении']]],
+  ['Игры',[['Стрелки / Пробел','Обычное управление в играх'],['R','Начать заново'],['Геймпад 🎮','Крестовина / стик + A тоже работают']]],
+  ['Секреты',[['Введите "crash"','…в командной строке. Доверься'],['3 минуты покоя','Появится звёздная заставка'],['Корзина','Хранит сюрприз внутри']]]
+ ]
+};
 function openHelp(){
   closeStartMenu();
   if(focusExisting('help-panel'))return;
-  const grupos=HELP_SHORTCUTS.map(([titulo,filas])=>
+  const grupos=(HELP_I18N[currentLang()]||HELP_I18N.es).map(([titulo,filas])=>
     '<div class="help-group"><h3>'+titulo+'</h3><table>'+
     filas.map(([k,d])=>'<tr><td class="help-key">'+k+'</td><td>'+d+'</td></tr>').join('')+
     '</table></div>').join('');
+  const foot={es:'Torrecillas OS es un escritorio de mentira en una sola página web. Pulsa <b>F1</b> para volver aquí.',
+    en:'Torrecillas OS is a fake desktop in a single web page. Press <b>F1</b> to come back here.',
+    ca:'Torrecillas OS és un escriptori de mentida en una sola pàgina web. Prem <b>F1</b> per tornar aquí.',
+    ru:'Torrecillas OS — фальшивый рабочий стол на одной веб-странице. Нажмите <b>F1</b>, чтобы вернуться сюда.'}[currentLang()];
   const content='<div id="help-panel" class="help-panel">'+
-    '<div class="help-head">❓ Ayuda de Torrecillas OS</div>'+
+    '<div class="help-head">❓ '+t('app.help')+' · Torrecillas OS</div>'+
     '<div class="help-body">'+grupos+
-      '<p class="help-foot">Torrecillas OS es un escritorio de mentira hecho en una sola página web. '+
-      'Todo lo que ves —juegos, apps, papelera— vive en tu navegador. '+
-      'Pulsa <b>F1</b> en cualquier momento para volver aquí.</p>'+
+      '<p class="help-foot">'+foot+'</p>'+
     '</div></div>';
-  createWindow('Ayuda','&#10067;',420,460,content,{session:'ayuda'});
+  createWindow(t('app.help'),'&#10067;',420,460,content,{session:'ayuda'});
 }
 
 function openAbout(){
@@ -6781,9 +7075,9 @@ function openSettings(){
   if(paintWP)wpHTML+=`<div class="wallpaper-option" data-wp="paint" style="background-image:url('${paintWP}');background-size:cover;background-position:center" title="Mi dibujo de Paint"></div>`;
   const content=`<div class="settings-panel">
     <div class="settings-tabs">
-      <div class="settings-tab active" data-tab="wp">&#127748; Fondo</div>
-      <div class="settings-tab" data-tab="color">&#127912; Colores</div>
-      <div class="settings-tab" data-tab="display">&#128187; Pantalla</div>
+      <div class="settings-tab active" data-tab="wp">&#127748; ${t('set.tab.wp')}</div>
+      <div class="settings-tab" data-tab="color">&#127912; ${t('set.tab.color')}</div>
+      <div class="settings-tab" data-tab="display">&#128187; ${t('set.tab.display')}</div>
     </div>
     <div class="settings-section active" id="settings-wp">
       <div class="settings-group">
@@ -6840,6 +7134,13 @@ function openSettings(){
     </div>
     <div class="settings-section" id="settings-display">
       <div class="settings-group">
+        <h3>&#127760; <span data-i18n="set.language">Idioma</span></h3>
+        <p data-i18n="set.language.hint">La interfaz cambia al instante; el contenido retro se queda en español.</p>
+        <div class="color-row">
+          <select id="lang-select" style="font-family:Tahoma;font-size:12px;padding:4px 8px;border:1px solid #7f9db9;border-radius:3px">${I18N_LANGS.map(l=>'<option value="'+l[0]+'"'+(currentLang()===l[0]?' selected':'')+'>'+l[1]+'</option>').join('')}</select>
+        </div>
+      </div>
+      <div class="settings-group">
         <h3>&#128269; Brillo del escritorio</h3>
         <p>Ajusta la luminosidad del fondo</p>
         <div class="color-row">
@@ -6889,11 +7190,13 @@ function openSettings(){
       <div class="settings-group">
         <h3>&#128260; Restaurar valores</h3>
         <p>Vuelve a la configuracion por defecto</p>
-        <button class="settings-btn danger" onclick="resetSettings()">&#8634; Restaurar todo</button>
+        <button class="settings-btn danger" onclick="resetSettings()">&#8634; ${t('set.reset')}</button>
       </div>
     </div>
   </div>`;
-  const winId=createWindow('Ajustes','&#9881;',420,400,content,{session:'ajustes',onCreated:(id)=>{
+  const winId=createWindow(t('app.settings'),'&#9881;',420,400,content,{session:'ajustes',onCreated:(id)=>{
+    const langSel=document.getElementById('lang-select');
+    if(langSel)langSel.onchange=()=>{ if(langSel.value!==currentLang())setLang(langSel.value); }; // recarga con el idioma nuevo
     // Tab switching
     document.querySelectorAll('.settings-tab').forEach(tab=>{
       tab.onclick=()=>{
@@ -7209,18 +7512,18 @@ function openNotepad(opts){
   const btn='font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer';
   const content=`<div style="display:flex;flex-direction:column;height:100%;background:#ece9d8">
     <div style="flex-shrink:0;display:flex;gap:5px;align-items:center;padding:4px 6px;border-bottom:1px solid #aca899;flex-wrap:wrap">
-      <button id="np-new" style="${btn}" title="Vaciar el documento">&#128196; Nuevo</button>
-      <button id="np-savefs" style="${btn}" title="Guardar en Mis documentos">&#128190; Guardar</button>
-      <button id="np-save" style="${btn}" title="Descargar como .txt">&#11015;&#65039; Descargar .txt</button>
-      <label style="font-size:11px;color:#444;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="np-wrap" checked> Ajuste de l&iacute;nea</label>
-      <span id="np-saved" style="margin-left:auto;font-size:10px;color:#2d7d2d">Guardado</span>
+      <button id="np-new" style="${btn}" title="Vaciar el documento">&#128196; ${t('btn.new')}</button>
+      <button id="np-savefs" style="${btn}" title="${t('docs.savetitle')}">&#128190; ${t('btn.save')}</button>
+      <button id="np-save" style="${btn}" title="${t('np.dltxt')}">&#11015;&#65039; ${t('np.dltxt')}</button>
+      <label style="font-size:11px;color:#444;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="np-wrap" checked> ${t('np.wrap')}</label>
+      <span id="np-saved" style="margin-left:auto;font-size:10px;color:#2d7d2d">${t('np.saved')}</span>
     </div>
-    <textarea id="notepad-area" spellcheck="false" aria-label="Documento del bloc de notas" placeholder="Escribe aqu&iacute;... (se guarda solo)" style="flex:1;border:none;outline:none;resize:none;padding:9px;font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.45;background:#fff;color:#111;width:100%"></textarea>
+    <textarea id="notepad-area" spellcheck="false" aria-label="Documento del bloc de notas" placeholder="${escHtml(t('np.placeholder'))}" style="flex:1;border:none;outline:none;resize:none;padding:9px;font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.45;background:#fff;color:#111;width:100%"></textarea>
     <div style="flex-shrink:0;border-top:1px solid #aca899;padding:3px 9px;font-size:10px;color:#555;display:flex;gap:16px;background:#ece9d8">
       <span id="np-docname" style="color:#1a4fa0;font-weight:bold"></span><span id="np-stats">0 caracteres</span><span id="np-lines">1 l&iacute;nea</span>
     </div>
   </div>`;
-  createWindow('Bloc de notas','&#128221;',480,420,content,{session:'notas',statusbar:false,onCreated:(id,win)=>{
+  createWindow(t('app.notepad'),'&#128221;',480,420,content,{session:'notas',statusbar:false,onCreated:(id,win)=>{
     const ta=document.getElementById('notepad-area');
     const stats=document.getElementById('np-stats'),linesEl=document.getElementById('np-lines'),savedEl=document.getElementById('np-saved');
     const nameEl=document.getElementById('np-docname');
@@ -7242,30 +7545,29 @@ function openNotepad(opts){
     let saveTmr=null;
     function updateStats(){
       const v=ta.value,n=v.length;
-      stats.textContent=n+(n===1?' carácter':' caracteres');
+      stats.textContent=n===1?t('np.char1'):t('np.chars',{n:n});
       const ln=n?v.split('\n').length:1;
-      linesEl.textContent=ln+(ln===1?' línea':' líneas');
+      linesEl.textContent=ln===1?t('np.line1'):t('np.lines',{n:ln});
     }
     function scheduleSave(){
-      savedEl.textContent='Editando…';savedEl.style.color='#999';
+      savedEl.textContent=t('np.editing');savedEl.style.color='#999';
       clearTimeout(saveTmr);
-      saveTmr=setTimeout(()=>{ if(!curFile)Store.set('tos-notepad',ta.value); savedEl.textContent=curFile?'Sin guardar en Mis documentos':'Guardado';savedEl.style.color=curFile?'#b06000':'#2d7d2d';},400);
+      saveTmr=setTimeout(()=>{ if(!curFile)Store.set('tos-notepad',ta.value); savedEl.textContent=curFile?t('np.unsaved'):t('np.saved');savedEl.style.color=curFile?'#b06000':'#2d7d2d';},400);
     }
     ta.addEventListener('input',()=>{updateStats();scheduleSave();});
     cargar(opts);
+    const vaciar=()=>{ curFile=null;setDocName();ta.value='';updateStats();Store.set('tos-notepad','');ta.focus(); };
     document.getElementById('np-new').onclick=()=>{
-      if(ta.value&&!confirm('¿Vaciar el documento? Se perderá el contenido actual.'))return;
-      curFile=null;setDocName();ta.value='';updateStats();Store.set('tos-notepad','');ta.focus();
+      if(ta.value)xpConfirm(t('app.notepad'),t('np.clearq'),vaciar,t('btn.clear'));
+      else vaciar();
     };
     // Guardar en Mis documentos: crea un .txt con nombre o reescribe el archivo abierto
     document.getElementById('np-savefs').onclick=()=>{
-      const nid=fsSaveDialog('txt',curFile?curFile.name:'Nota',ta.value,curFile?curFile.id:null);
-      if(nid){
-        const f=fsGet(nid);
-        curFile={id:nid,name:f?f.name:'Nota'};
+      fsSaveDialog('txt',curFile?curFile.name:'Nota',ta.value,curFile?curFile.id:null,(nid,name)=>{
+        curFile={id:nid,name:name};
         setDocName();
-        savedEl.textContent='Guardado en Mis documentos';savedEl.style.color='#2d7d2d';
-      }
+        savedEl.textContent=t('np.savedfs');savedEl.style.color='#2d7d2d';
+      });
     };
     document.getElementById('np-save').onclick=()=>{
       const blob=new Blob([ta.value],{type:'text/plain;charset=utf-8'});
@@ -7568,14 +7870,14 @@ function openPaint(){
           </select>
         </div>
         <div style="margin-left:auto;display:flex;gap:3px">
-          <button class="game-btn game-btn-sm" id="paint-open" title="Abrir una imagen del equipo">&#128193; Abrir</button>
+          <button class="game-btn game-btn-sm" id="paint-open" title="Abrir una imagen del equipo">&#128193; ${t('btn.open')}</button>
           <input type="file" id="paint-file" accept="image/*" style="display:none" aria-label="Abrir imagen en Paint">
-          <button class="game-btn game-btn-sm" id="paint-undo" title="Deshacer">&#8617;</button>
-          <button class="game-btn game-btn-sm" id="paint-clear">Limpiar</button>
-          <button class="game-btn" id="paint-savefs" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#f0c040,#c89010)" title="Guardar en Mis documentos">&#128190; Guardar</button>
-          <button class="game-btn" id="paint-save" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#40c040,#208020)">Descargar</button>
-          <button class="game-btn" id="paint-wallpaper" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#4a90d8,#1f5fa8)" title="Establecer el dibujo como fondo de escritorio">&#128444;&#65039; Fondo</button>
-          <button class="game-btn game-btn-sm" id="paint-print" title="Imprimir el dibujo">&#128424;&#65039; Imprimir</button>
+          <button class="game-btn game-btn-sm" id="paint-undo" title="${t('btn.undo')}">&#8617;</button>
+          <button class="game-btn game-btn-sm" id="paint-clear">${t('btn.clear')}</button>
+          <button class="game-btn" id="paint-savefs" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#f0c040,#c89010)" title="${t('docs.savetitle')}">&#128190; ${t('btn.save')}</button>
+          <button class="game-btn" id="paint-save" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#40c040,#208020)">${t('btn.download')}</button>
+          <button class="game-btn" id="paint-wallpaper" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#4a90d8,#1f5fa8)" title="Establecer el dibujo como fondo de escritorio">&#128444;&#65039; ${t('paint.wallpaper')}</button>
+          <button class="game-btn game-btn-sm" id="paint-print" title="${t('btn.print')}">&#128424;&#65039; ${t('btn.print')}</button>
         </div>
       </div>
     </div>
@@ -7877,7 +8179,7 @@ function openPaint(){
         Store.set('tos-wp','paint');
         unlock('artista');
         applyWallpaper('paint');
-        if(sb)sb.textContent='¡Dibujo establecido como fondo de escritorio! (se cambia desde Ajustes)';
+        if(sb)sb.textContent=t('paint.wallset');
         playTone(523,0.1,'sine',0.4);setTimeout(()=>playTone(784,0.14,'sine',0.4),110);
       }catch(e){}
     };
@@ -7949,7 +8251,7 @@ function initPinball(){
       <div id="pin-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(4,8,24,.85);text-align:center">
         <div id="pin-title" style="font-size:26px;font-weight:700;letter-spacing:2px;color:#6ec4f0">&#128640; PINBALL</div>
         <div id="pin-msg" style="font-size:13px;opacity:.85;line-height:1.5;padding:0 14px">Espacio: lanzar (mant&eacute;n para m&aacute;s fuerza)<br>&#8592;/&#8594; o toca cada mitad: flippers &middot; R: reiniciar</div>
-        <button id="pin-start" class="g-btn">Jugar</button>
+        <button id="pin-start" class="g-btn">${t('btn.play')}</button>
       </div>
     </div>
   </div>`;
@@ -8060,9 +8362,9 @@ function initPinball(){
           if(rec.submit(score)){best=rec.value;bestEl.textContent=best;}
           announce('Pinball, fin de la partida. Puntuaci\u00f3n '+score+'. R\u00e9cord '+best+'.');
           checkScoreAchievements();
-          document.getElementById('pin-title').textContent='GAME OVER';
+          document.getElementById('pin-title').textContent=i18t('game.over');
           document.getElementById('pin-msg').innerHTML='Puntuaci&oacute;n: <b style="color:#ffd54f">'+score+'</b> &middot; R&eacute;cord: '+best+'<br>R o el bot&oacute;n para otra partida';
-          document.getElementById('pin-start').textContent='Otra vez';
+          document.getElementById('pin-start').textContent=t('btn.again');
           overlay.style.display='flex';
         }
       }
@@ -8162,7 +8464,7 @@ function initPinball(){
   }});
 }
 
-const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game',hangman:'hang-game',sudoku:'sudoku-game',simon:'simon-game'};
+const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game',sudoku:'sudoku-game',simon:'simon-game'};
 
 // ========== MOTOR DE JUEGO COMÚN ==========
 // Centraliza el ciclo de vida que antes cada juego duplicaba: bucle rAF con
@@ -8232,7 +8534,6 @@ function openGame(game){
     case 'memory':initMemoryGame();break;
     case 'solitaire':initSolitaire();break;
     case 'pinball':initPinball();break;
-    case 'hangman':initHangman();break;
     case 'sudoku':initSudoku();break;
     case 'simon':initSimon();break;
   }
@@ -8240,140 +8541,6 @@ function openGame(game){
 }
 
 // (el estilo común de estos botones vive ahora en la clase .g-btn del CSS)
-
-// ========== AHORCADO ==========
-const HANG_WORDS=[
-  ['DISQUETE','Guardaba 1,44 MB y sonaba a molinillo'],
-  ['MODEM','Chirriaba antes de dejarte entrar a internet'],
-  ['SALVAPANTALLAS','Tuberías, estrellas o un logo rebotando'],
-  ['MESSENGER','Zumbidos, nicks raros y "escribiendo..."'],
-  ['CARRETE','Treinta y seis fotos y a rezar'],
-  ['ESCRITORIO','Donde vive el fondo de la colina verde'],
-  ['PORTAPAPELES','Donde acaba lo que copias'],
-  ['NAVEGADOR','Netscape fue el rey antes que nadie'],
-  ['PAPELERA','Nada se borra del todo hasta vaciarla'],
-  ['TECLADO','Ciento y pico teclas y siempre falta una'],
-  ['VENTANA','La unidad básica de este sistema'],
-  ['BUSCAMINAS','Banderitas y mucha suerte'],
-  ['CHIPTUNE','Música hecha con cuatro canales'],
-  ['GRABADORA','Para dejar recados que nadie escucha'],
-  ['ENCICLOPEDIA','Venía en CD y pesaba lo suyo']
-];
-const HANG_LETTERS='ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
-function initHangman(){
-  const content=`<div id="hang-game" class="hang-root">
-    <div class="hang-top">
-      <canvas id="hang-canvas" width="200" height="180" role="img" aria-label="Dibujo del ahorcado"></canvas>
-      <div class="hang-side">
-        <div class="hang-clue" id="hang-clue"></div>
-        <div class="hang-lives" id="hang-lives"></div>
-        <div class="hang-score" id="hang-score"></div>
-      </div>
-    </div>
-    <div class="hang-word" id="hang-word" role="status" aria-live="polite"></div>
-    <div class="hang-keys" id="hang-keys"></div>
-    <div class="hang-actions">
-      <span id="hang-msg" class="hang-msg"></span>
-      <button type="button" class="g-btn" id="hang-reset">Otra palabra</button>
-    </div>
-  </div>`;
-  createWindow('Ahorcado','&#128128;',380,470,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
-    const canvas=document.getElementById('hang-canvas');
-    const ctx=canvas.getContext&&canvas.getContext('2d');
-    const wordEl=document.getElementById('hang-word'),clueEl=document.getElementById('hang-clue');
-    const livesEl=document.getElementById('hang-lives'),keysEl=document.getElementById('hang-keys');
-    const msgEl=document.getElementById('hang-msg'),scoreEl=document.getElementById('hang-score');
-    const MAX=6;
-    let word='',clue='',found=new Set(),fails=0,over=false,racha=0;
-    const rec=useRecord('tos-hangman-best');
-    const oculta=()=>word.split('').map(c=>found.has(c)?c:'_').join(' ');
-    function draw(){
-      if(!ctx)return;
-      const W=canvas.width,H=canvas.height;
-      ctx.fillStyle='#0d1326';ctx.fillRect(0,0,W,H);
-      ctx.strokeStyle='#8fa6d8';ctx.lineWidth=4;ctx.lineCap='round';
-      // horca
-      ctx.beginPath();ctx.moveTo(20,H-14);ctx.lineTo(120,H-14);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(50,H-14);ctx.lineTo(50,18);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(50,18);ctx.lineTo(125,18);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(125,18);ctx.lineTo(125,38);ctx.stroke();
-      ctx.strokeStyle=over&&fails>=MAX?'#ff5577':'#ffd54f';
-      const partes=[
-        ()=>{ctx.beginPath();ctx.arc(125,52,14,0,Math.PI*2);ctx.stroke();},           // cabeza
-        ()=>{ctx.beginPath();ctx.moveTo(125,66);ctx.lineTo(125,110);ctx.stroke();},   // tronco
-        ()=>{ctx.beginPath();ctx.moveTo(125,76);ctx.lineTo(104,96);ctx.stroke();},    // brazo izq
-        ()=>{ctx.beginPath();ctx.moveTo(125,76);ctx.lineTo(146,96);ctx.stroke();},    // brazo der
-        ()=>{ctx.beginPath();ctx.moveTo(125,110);ctx.lineTo(106,140);ctx.stroke();},  // pierna izq
-        ()=>{ctx.beginPath();ctx.moveTo(125,110);ctx.lineTo(144,140);ctx.stroke();}   // pierna der
-      ];
-      for(let i=0;i<fails&&i<partes.length;i++)partes[i]();
-    }
-    function pintarTeclas(){
-      keysEl.innerHTML=HANG_LETTERS.map(l=>{
-        const usada=found.has(l)||(fallosSet.has(l));
-        const buena=found.has(l);
-        return `<button type="button" class="hang-key${usada?(buena?' ok':' ko'):''}" data-l="${l}" ${usada||over?'disabled':''} aria-label="Letra ${l}">${l}</button>`;
-      }).join('');
-      keysEl.querySelectorAll('.hang-key').forEach(b=>{ b.onclick=()=>probar(b.dataset.l); });
-    }
-    let fallosSet=new Set();
-    function pintar(){
-      wordEl.textContent=oculta();
-      wordEl.setAttribute('aria-label','Palabra: '+word.split('').map(c=>found.has(c)?c:'espacio en blanco').join(', '));
-      clueEl.textContent=clue;
-      livesEl.innerHTML='Fallos: '+fails+' / '+MAX+' &nbsp;'+'❤️'.repeat(Math.max(0,MAX-fails));
-      scoreEl.textContent='Racha: '+racha+'  ·  Mejor: '+rec.value;
-      pintarTeclas();draw();
-    }
-    function probar(l){
-      if(over||found.has(l)||fallosSet.has(l))return;
-      if(word.includes(l)){
-        found.add(l);
-        try{playTone(660,0.06,'sine',0.25);}catch(e){}
-        if(word.split('').every(c=>found.has(c)))ganar();
-      }else{
-        fallosSet.add(l);fails++;
-        try{playTone(200,0.12,'sawtooth',0.3);}catch(e){}
-        if(fails>=MAX)perder();
-      }
-      pintar();
-    }
-    function ganar(){
-      over=true;racha++;
-      msgEl.textContent='¡Acertada! ('+racha+' seguidas)';
-      msgEl.className='hang-msg win';
-      if(rec.submit(racha))announce('Nuevo récord de racha en el Ahorcado: '+racha);
-      if(racha>=5)unlock('ahorcado-racha');
-      else announce('Palabra acertada: '+word);
-      checkScoreAchievements();
-      try{playTone(523,0.1,'sine',0.4);setTimeout(()=>playTone(784,0.16,'sine',0.35),110);}catch(e){}
-    }
-    function perder(){
-      over=true;
-      msgEl.textContent='Era "'+word+'". Racha perdida.';
-      msgEl.className='hang-msg lose';
-      announce('Ahorcado, has perdido. La palabra era '+word);
-      racha=0;
-    }
-    function reset(){
-      const p=HANG_WORDS[Math.floor(Math.random()*HANG_WORDS.length)];
-      word=p[0];clue=p[1];found=new Set();fallosSet=new Set();fails=0;over=false;
-      msgEl.textContent='';msgEl.className='hang-msg';
-      pintar();
-    }
-    document.getElementById('hang-reset').onclick=reset;
-    mountGame(id,{
-      rootId:'hang-game',
-      restart:reset,
-      keydown:(e)=>{
-        const k=(e.key||'').toUpperCase();
-        if(k==='R'&&over){reset();return;}
-        if(HANG_LETTERS.includes(k)){e.preventDefault();probar(k);}
-      }
-    });
-    reset();
-  }});
-}
 
 // ========== SIMON ==========
 const SIMON_PADS=[
@@ -8440,7 +8607,7 @@ function initSimon(){
         msgEl.textContent='Fallaste en la ronda '+seq.length+'. Mejor: '+rec.value;
         announce('Simon, fin de la partida en la ronda '+seq.length);
         try{playTone(120,0.4,'sawtooth',0.4);}catch(e){}
-        document.getElementById('simon-start').textContent='Otra vez';
+        document.getElementById('simon-start').textContent=t('btn.again');
       }
     }
     pads.forEach((p,i)=>{ p.onclick=()=>pulsar(i); });
@@ -8610,7 +8777,7 @@ function initTicTacToe(){
     <div id="ttt-board" style="display:grid;grid-template-columns:repeat(3,80px);grid-template-rows:repeat(3,80px);gap:6px"></div>
     <div style="display:flex;gap:14px;align-items:center">
       <label style="font-size:13px;display:flex;align-items:center;gap:5px;cursor:pointer"><input type="checkbox" id="ttt-cpu" checked> vs CPU</label>
-      <button id="ttt-reset" class="g-btn">Nueva partida</button>
+      <button id="ttt-reset" class="g-btn">${t('btn.newgame')}</button>
     </div>
   </div>`;
   createWindow('Tres en raya','&#11093;',320,400,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
@@ -8676,7 +8843,7 @@ function initConnect4(){
   const content=`<div id="c4-game" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0d1326;color:#fff;padding:12px;gap:10px;font-family:Rajdhani,sans-serif">
     <div id="c4-status" style="font-size:18px;font-weight:700;min-height:22px">Tu turno (rojo)</div>
     <div id="c4-board" style="display:grid;grid-template-columns:repeat(7,38px);gap:4px;background:#1b3a8a;padding:8px;border-radius:10px"></div>
-    <button id="c4-reset" class="g-btn">Nueva partida</button>
+    <button id="c4-reset" class="g-btn">${t('btn.newgame')}</button>
   </div>`;
   createWindow('Conecta 4','&#128313;',360,430,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const boardEl=document.getElementById('c4-board'),statusEl=document.getElementById('c4-status');
@@ -8742,7 +8909,7 @@ function initMemoryGame(){
     <div style="display:flex;gap:18px;font-size:14px;font-weight:600"><span id="mem-moves">Movimientos: 0</span><span id="mem-pairs">Parejas: 0/8</span></div>
     <div id="mem-status" style="min-height:20px;font-size:16px;font-weight:700;color:#ffd24a"></div>
     <div id="mem-board" style="display:grid;grid-template-columns:repeat(4,64px);grid-template-rows:repeat(4,64px);gap:6px"></div>
-    <button id="mem-reset" class="g-btn">Nueva partida</button>
+    <button id="mem-reset" class="g-btn">${t('btn.newgame')}</button>
   </div>`;
   createWindow('Memoria','&#129504;',330,440,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const boardEl=document.getElementById('mem-board'),movesEl=document.getElementById('mem-moves'),pairsEl=document.getElementById('mem-pairs'),statusEl=document.getElementById('mem-status');
@@ -8807,7 +8974,7 @@ function initSolitaire(){
       <div style="display:flex;gap:6px" id="sol-foundations"></div>
     </div>
     <div id="sol-tableau" style="display:flex;gap:6px;align-items:flex-start"></div>
-    <div style="margin-top:10px;text-align:center"><button id="sol-reset" class="g-btn">Nueva partida</button></div>
+    <div style="margin-top:10px;text-align:center"><button id="sol-reset" class="g-btn">${t('btn.newgame')}</button></div>
   </div>`;
   createWindow('Solitario','&#127183;',660,540,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const tl=document.getElementById('sol-top-left'),fo=document.getElementById('sol-foundations'),tabEl=document.getElementById('sol-tableau'),statusEl=document.getElementById('sol-status'),gameEl=document.getElementById('sol-game');
@@ -8946,7 +9113,7 @@ function initSnakeGame(){
             <button class="diff-btn" data-speed="65">Difícil</button>
             <button class="diff-btn" data-speed="45">Extremo</button>
           </div>
-          <button class="btn btn-primary" id="startBtn">Jugar</button>
+          <button class="btn btn-primary" id="startBtn">${t('btn.play')}</button>
           <div id="keyHints">&#9650;&#9660;&#9664;&#9654; &nbsp;/&nbsp; W A S D &nbsp;&mdash;&nbsp; Espacio: pausa &nbsp;&mdash;&nbsp; &#8635;: men&uacute;</div>
         </div>
       </div>
@@ -9404,7 +9571,7 @@ function initSnakeGame(){
         highEl.style.display = 'block';
         highEl.textContent = `Récord: ${highScore}`;
         diffSel.style.display = 'none';
-        startBtn.textContent = 'Reintentar';
+        startBtn.textContent = i18t('btn.retry');
       } else if (type === 'paused') {
         title.textContent = '⏸ PAUSA';
         subtitle.textContent = 'Presiona Espacio para continuar';
@@ -9535,7 +9702,7 @@ function initTetrisGame(){
             <div class="tetris-overlay-title">&#127922; TETRIS</div>
             <div class="tetris-overlay-subtitle">El cl&aacute;sico de bloques</div>
             <div class="tetris-overlay-score" id="tetris-overlay-score" style="display:none;"></div>
-            <button class="tetris-btn tetris-btn-primary" id="tetris-start-btn">Jugar</button>
+            <button class="tetris-btn tetris-btn-primary" id="tetris-start-btn">${t('btn.play')}</button>
             <div id="tetris-key-hints">&#8592; &#8594; Mover &nbsp;&#124;&nbsp; &#8593; Rotar &nbsp;&#124;&nbsp; &#8595; Bajar &nbsp;&#124;&nbsp; Espacio: Ca&iacute;da instant&aacute;nea</div>
           </div>
         </div>
@@ -9790,10 +9957,10 @@ function initTetrisGame(){
           const s=ov.querySelector('.tetris-overlay-subtitle');
           const sc=document.getElementById('tetris-overlay-score');
           const btn=document.getElementById('tetris-start-btn');
-          setOvTitle(t,'#ff4466,#ff8844','GAME OVER');
+          setOvTitle(t,'#ff4466,#ff8844',i18t('game.over'));
           if(s)s.textContent='Sigue intent\u00e1ndolo';
           if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+' \u2014 L\u00edneas: '+lines+' \u2014 R\u00e9cord: '+highScore;}
-          if(btn)btn.textContent='Reintentar';
+          if(btn)btn.textContent=i18t('btn.retry');
           ov.classList.remove('hidden');
         }
       }
@@ -9947,7 +10114,7 @@ function initFlappyGame(){
           <div class="flappy-overlay-title">&#128038; FLAPPY</div>
           <div class="flappy-overlay-subtitle">Vuela entre las tuber&iacute;as</div>
           <div class="flappy-overlay-score" id="flappy-overlay-score"></div>
-          <button class="flappy-btn flappy-btn-primary" id="flappy-start-btn">Jugar</button>
+          <button class="flappy-btn flappy-btn-primary" id="flappy-start-btn">${t('btn.play')}</button>
           <div id="flappy-key-hints">Espacio &nbsp;/&nbsp; Click &nbsp;/&nbsp; Toca para volar &nbsp;&mdash;&nbsp; R: reiniciar</div>
         </div>
       </div>
@@ -10087,10 +10254,10 @@ function initFlappyGame(){
           const s=ov.querySelector('.flappy-overlay-subtitle');
           const sc=document.getElementById('flappy-overlay-score');
           const btn=document.getElementById('flappy-start-btn');
-          setOvTitle(t,'#ff4466,#ff8844','GAME OVER');
+          setOvTitle(t,'#ff4466,#ff8844',i18t('game.over'));
           if(s)s.textContent='Sigue intent\u00e1ndolo';
           if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+(newRecord?' \u2014 \u00a1Nuevo r\u00e9cord!':' \u2014 R\u00e9cord: '+highScore);}
-          if(btn)btn.textContent='Reintentar';
+          if(btn)btn.textContent=i18t('btn.retry');
           ov.classList.remove('hidden');
         }
       }
@@ -10187,7 +10354,7 @@ function initArkanoidGame(){
           <div class="arkanoid-overlay-title">&#129521; ARKANOID</div>
           <div class="arkanoid-overlay-subtitle">Rompe todos los ladrillos</div>
           <div class="arkanoid-overlay-score" id="arkanoid-overlay-score"></div>
-          <button class="arkanoid-btn arkanoid-btn-primary" id="arkanoid-start-btn">Jugar</button>
+          <button class="arkanoid-btn arkanoid-btn-primary" id="arkanoid-start-btn">${t('btn.play')}</button>
           <div id="arkanoid-key-hints">&#8592; &#8594; / Rat&oacute;n para mover &nbsp;&#124;&nbsp; Espacio / Click: Lanzar &nbsp;&#124;&nbsp; R: reiniciar</div>
         </div>
       </div>
@@ -10382,11 +10549,11 @@ function initArkanoidGame(){
             setOvTitle(t,'#44ff88,#00ffcc','\u00a1GANASTE!');
             if(s)s.textContent='\u00a1Todos los ladrillos rotos!';
           } else {
-            setOvTitle(t,'#ff4466,#ff8844','GAME OVER');
+            setOvTitle(t,'#ff4466,#ff8844',i18t('game.over'));
             if(s)s.textContent='Sigue intent\u00e1ndolo';
           }
           if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+' — Nivel '+level+' — Récord: '+highScore;}
-          if(btn)btn.textContent='Reintentar';
+          if(btn)btn.textContent=i18t('btn.retry');
           ov.classList.remove('hidden');
         }
       }
@@ -10536,7 +10703,7 @@ function initSpaceInvadersGame(){
           <div class="invaders-overlay-title">&#128126; INVADERS</div>
           <div class="invaders-overlay-subtitle">Defiende la Tierra</div>
           <div class="invaders-overlay-score" id="invaders-overlay-score"></div>
-          <button class="invaders-btn invaders-btn-primary" id="invaders-start-btn">Jugar</button>
+          <button class="invaders-btn invaders-btn-primary" id="invaders-start-btn">${t('btn.play')}</button>
           <div id="invaders-key-hints">&#8592; &#8594; / A D Mover &nbsp;&#124;&nbsp; Espacio Disparar &nbsp;&#124;&nbsp; R: reiniciar</div>
         </div>
       </div>
@@ -10871,7 +11038,7 @@ function initSpaceInvadersGame(){
         setOvTitle(t,'#44ff88,#00ffcc','\u00a1VICTORIA!');
         if(s)s.textContent='\u00a1Tierra salvada!';
       }else{
-        setOvTitle(t,'#ff4466,#ff8844','GAME OVER');
+        setOvTitle(t,'#ff4466,#ff8844',i18t('game.over'));
         if(s)s.textContent='La Tierra ha ca\u00eddo...';
       }
       const isNew=rec.submit(score);
@@ -10879,7 +11046,7 @@ function initSpaceInvadersGame(){
       announce('Space Invaders, fin de la partida. Puntuaci\u00f3n '+score+', oleada '+wave+'.'+(isNew?' \u00a1Nuevo r\u00e9cord!':''));
       checkScoreAchievements();
       if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+' \u2014 Oleada '+wave+(isNew?' \u2014 \u00a1Nuevo r\u00e9cord!':' \u2014 R\u00e9cord: '+highScore);}
-      if(btn)btn.textContent='Reintentar';
+      if(btn)btn.textContent=i18t('btn.retry');
       ov.classList.remove('hidden');
     }
 
@@ -10999,7 +11166,7 @@ function initMinesweeperGame(){
           <div class="ms-ov-title">&#128163; BUSCAMINAS</div>
           <div class="ms-ov-sub">Encuentra las minas</div>
           <div class="ms-ov-score" id="ms-ov-score"></div>
-          <button class="ms-ov-btn" id="ms-ov-start">Jugar</button>
+          <button class="ms-ov-btn" id="ms-ov-start">${t('btn.play')}</button>
           <div class="ms-key-hint">Clic=Revelar &nbsp;&#124;&nbsp; Clic&#160;der.=Bandera &nbsp;&#124;&nbsp; R:reiniciar</div>
         </div>
       </div>
@@ -11137,7 +11304,7 @@ function initMinesweeperGame(){
       if(scEl){scEl.style.display='block';scEl.textContent='Tiempo: '+timer+'s \u2014 '+DIFFS[diff].label+extra;}
       announce(win?('Buscaminas resuelto en '+timer+' segundos, nivel '+DIFFS[diff].label+'.'):'Buscaminas, has pisado una mina.');
       checkScoreAchievements();
-      if(btn)btn.textContent='Reintentar';
+      if(btn)btn.textContent=i18t('btn.retry');
       ov.classList.remove('hidden');
     }
     function hideOv(){
@@ -11278,7 +11445,7 @@ function initPongGame(){
           <div class="pong-ov-title">&#127955; PONG</div>
           <div class="pong-ov-sub">Primero a 7 puntos</div>
           <div class="pong-ov-score" id="pong-ov-score"></div>
-          <button class="pong-btn" id="pong-start-btn">Jugar</button>
+          <button class="pong-btn" id="pong-start-btn">${t('btn.play')}</button>
           <div id="pong-key-hints">&#8593;&#8595; / W S / Rat&oacute;n para mover &nbsp;&#124;&nbsp; R: reiniciar</div>
         </div>
       </div>
@@ -11414,12 +11581,12 @@ function initPongGame(){
         announce('Pong: has ganado a la CPU'+(nuevo?', nuevo récord de racha':''));
       }else{
         racha=0;
-        setOvTitle(t,'#ff4466,#ff8844','GAME OVER');
+        setOvTitle(t,'#ff4466,#ff8844',i18t('game.over'));
         if(s)s.textContent='La CPU gana esta vez';
         announce('Pong: gana la CPU');
       }
       if(sc){sc.style.display='block';sc.textContent='Tú '+pScore+' — CPU '+cScore;}
-      if(btn)btn.textContent='Reintentar';
+      if(btn)btn.textContent=i18t('btn.retry');
       ov.classList.remove('hidden');
     }
     function startPong(){
@@ -11510,7 +11677,7 @@ function init2048Game(){
           <div class="g2048-ov-title">&#129513; 2048</div>
           <div class="g2048-ov-sub">Une los n&uacute;meros hasta 2048</div>
           <div class="g2048-ov-score" id="g2048-ov-score"></div>
-          <button class="g2048-btn" id="g2048-start-btn">Jugar</button>
+          <button class="g2048-btn" id="g2048-start-btn">${t('btn.play')}</button>
           <div id="g2048-key-hints">Flechas / WASD / Desliza el dedo &nbsp;&#124;&nbsp; R: reiniciar</div>
         </div>
       </div>
@@ -11663,9 +11830,9 @@ function init2048Game(){
         if(s)s.textContent='¡Lo conseguiste!';
         if(btn)btn.textContent='Seguir jugando';
       }else{
-        setOvTitle(t,'#ff4466,#ff8844','GAME OVER');
+        setOvTitle(t,'#ff4466,#ff8844',i18t('game.over'));
         if(s)s.textContent='Sin movimientos posibles';
-        if(btn)btn.textContent='Reintentar';
+        if(btn)btn.textContent=i18t('btn.retry');
       }
       if(sc){sc.style.display='block';sc.textContent='Puntos: '+score+' — Mejor: '+best;}
       announce(type==='win'?('2048 conseguido. Puntuaci\u00f3n '+score+'.'):('2048, fin de la partida. Puntuaci\u00f3n '+score+'. R\u00e9cord '+best+'.'));
