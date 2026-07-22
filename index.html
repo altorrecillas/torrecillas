@@ -228,10 +228,12 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .calc-mode.active{background:#fff;font-weight:bold;color:#0054e3}
 #calc-display{background:#fff;border:2px inset #aaa;padding:8px;text-align:right;font-size:28px;font-family:'Segoe UI',Tahoma,sans-serif;min-height:50px;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
 .calc-memind{flex-shrink:0;height:12px;font-size:10px;font-weight:bold;color:#0054e3;padding-left:2px}
-.calc-scipad{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;flex-shrink:0}
+.calc-scipad{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;flex-shrink:0;padding-bottom:4px;border-bottom:1px solid #cbc3b0;margin-bottom:1px}
+.calc-scipad[hidden]{display:none}
 .calc-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;flex:1}
 /* Doble clase: .calc-btn se declara más abajo y si no le ganaría el fondo */
-.calc-btn.calc-sci{font-size:11px;background:linear-gradient(180deg,#f4f0e6,#ddd5c4)}
+.calc-btn.calc-sci{font-size:12px;font-weight:600;padding:8px 2px;background:linear-gradient(180deg,#eef1f6,#d3d8e2);color:#233}
+.calc-btn.calc-sci:active{background:linear-gradient(180deg,#b8bcca,#a2a6b6)}
 /* ═══════════════════  § LOGROS  ═══════════════════ */
 .ach-panel{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif}
 .ach-head{padding:10px 12px 6px;font-size:13px;font-weight:bold;color:#1a4fa0;display:flex;justify-content:space-between;align-items:baseline}
@@ -295,6 +297,80 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 #update-bar #update-now:hover{background:linear-gradient(180deg,#4c9cf0,#3080e8)}
 #update-bar #update-later{background:none;border:0;color:#7a6320;font-size:14px;padding:2px 4px;line-height:1}
 @keyframes updIn{0%{opacity:0;transform:translate(-50%,-14px)}100%{opacity:1;transform:translate(-50%,0)}}
+/* ═══════════════════  § PHOTO BOOTH  ═══════════════════ */
+.booth-root{display:flex;flex-direction:column;height:100%;background:#1a1a22;padding:8px;gap:8px;font-family:Tahoma,sans-serif}
+.booth-stage{position:relative;flex:1;background:#000;border:2px inset #555;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:0}
+#booth-canvas{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+.booth-count{position:absolute;font-family:Orbitron,sans-serif;font-size:90px;font-weight:900;color:#fff;text-shadow:0 0 24px rgba(0,0,0,.9);opacity:0;transition:opacity .1s}
+.booth-count.show{opacity:1;animation:boothPop .9s ease-out}
+@keyframes boothPop{0%{transform:scale(1.6);opacity:0}30%{opacity:1}100%{transform:scale(1);opacity:.85}}
+.booth-msg{position:absolute;padding:0 16px;color:#cfcfe0;font-size:12px;text-align:center;line-height:1.5}
+.booth-fxrow{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;flex-shrink:0}
+.booth-fx{font-family:Tahoma;font-size:10px;padding:3px 8px;border:1px solid #4a4a5a;border-radius:12px;background:#2a2a36;color:#c9c9dc;cursor:pointer}
+.booth-fx:hover{background:#34344a}
+.booth-fx.active{background:#3c8cf0;border-color:#2070d8;color:#fff;font-weight:bold}
+.booth-actions{display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;flex-shrink:0}
+/* ═══════════════════  § OLE (arrastrar contenido entre apps)  ═══════════════════ */
+.os-drag-chip{cursor:grab;user-select:none}
+.os-drag-chip:active{cursor:grabbing}
+.os-draggable[draggable="true"]{cursor:grab}
+.os-drop-hi{outline:3px dashed #3c8cf0!important;outline-offset:-3px;background:rgba(60,140,240,.08)}
+.msn-img{max-width:180px;max-height:150px;border:1px solid #7f9db9;border-radius:4px;display:block;margin-top:2px}
+/* ═══════════════════  § MÁQUINA DEL TIEMPO  ═══════════════════ */
+.tm2-root{display:flex;flex-direction:column;height:100%;background:linear-gradient(180deg,#12121e,#20203a);padding:16px;gap:14px;font-family:Rajdhani,Tahoma,sans-serif;color:#dfe6ff}
+.tm2-screen{flex:1;border-radius:10px;padding:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:2px solid rgba(255,255,255,.15);transition:background .4s,box-shadow .4s}
+.tm2-screen[data-era="95"]{background:linear-gradient(135deg,#008080,#0a5a5a);box-shadow:inset 0 0 40px rgba(0,0,0,.4)}
+.tm2-screen[data-era="xp"]{background:linear-gradient(135deg,#1e5cc8,#3a86e0 55%,#5fa838);box-shadow:inset 0 0 40px rgba(0,0,0,.3)}
+.tm2-screen[data-era="vista"]{background:linear-gradient(135deg,#0a1a3a,#123a6e 55%,#2a6ab0);box-shadow:inset 0 0 50px rgba(80,160,255,.35),0 0 20px rgba(80,160,255,.3)}
+.tm2-year{font-family:Orbitron,sans-serif;font-size:44px;font-weight:900;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.tm2-name{font-size:20px;font-weight:700;margin-top:4px}
+.tm2-desc{font-size:12px;opacity:.9;margin-top:8px;line-height:1.4;max-width:260px}
+#tm2-slider{width:100%;accent-color:#3c8cf0;cursor:pointer}
+.tm2-ticks{display:flex;justify-content:space-between;font-size:11px;opacity:.7;font-variant-numeric:tabular-nums}
+.tm2-hint{font-size:11px;opacity:.6;text-align:center}
+/* Ventana mejorada: mini-maqueta del escritorio por era */
+.tm2-screen{gap:12px}
+.tm2-mock{width:120px;height:82px;border-radius:6px;position:relative;overflow:hidden;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.25);background:#3a86e0}
+.tm2-screen[data-era="95"] .tm2-mock{background:#008080}
+.tm2-screen[data-era="xp"] .tm2-mock{background:linear-gradient(180deg,#3a86e0 60%,#5fa838 60%)}
+.tm2-screen[data-era="vista"] .tm2-mock{background:linear-gradient(135deg,#0a1a3a,#2a6ab0)}
+.tm2-mini-taskbar{position:absolute;left:0;right:0;bottom:0;height:16px;display:flex;align-items:center;padding:0 3px;background:#c0c0c0}
+.tm2-screen[data-era="xp"] .tm2-mini-taskbar{background:linear-gradient(180deg,#3168d5,#1941a5)}
+.tm2-screen[data-era="vista"] .tm2-mini-taskbar{background:rgba(12,26,60,.9);backdrop-filter:blur(2px)}
+.tm2-mini-start{font-size:7px;font-weight:bold;color:#000;background:#dcdcdc;border:1px solid #888;padding:0 3px;border-radius:1px}
+.tm2-screen[data-era="xp"] .tm2-mini-start{color:#fff;background:linear-gradient(180deg,#5ace5a,#2a8f2a);border-color:#1a6b1a;border-radius:3px 8px 8px 3px}
+.tm2-screen[data-era="vista"] .tm2-mini-start{color:transparent;width:14px;height:11px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#7dff9a,#2ea44f);border:1px solid rgba(255,255,255,.6);box-shadow:0 0 5px rgba(80,255,140,.6)}
+.tm2-mini-win{position:absolute;left:12px;top:12px;width:66px;height:44px;background:#ece9d8;border:1px solid #888;box-shadow:1px 1px 4px rgba(0,0,0,.4)}
+.tm2-screen[data-era="95"] .tm2-mini-win{border-radius:0}
+.tm2-screen[data-era="xp"] .tm2-mini-win{border-radius:4px 4px 0 0}
+.tm2-screen[data-era="vista"] .tm2-mini-win{border-radius:5px;border-color:rgba(180,210,255,.6);background:rgba(235,244,255,.9)}
+.tm2-mini-title{height:11px;font-size:6px;color:#fff;display:flex;align-items:center;padding:0 3px;background:linear-gradient(90deg,#000080,#1084d0)}
+.tm2-screen[data-era="xp"] .tm2-mini-title{background:linear-gradient(90deg,#0054e3,#2e8bff);border-radius:4px 4px 0 0}
+.tm2-screen[data-era="vista"] .tm2-mini-title{background:linear-gradient(180deg,rgba(60,110,190,.95),rgba(20,50,110,.95))}
+.tm2-info{flex:1;min-width:0}
+.tm2-year{text-align:left}
+.tm2-name{text-align:left}
+.tm2-desc{text-align:left;margin-top:6px}
+
+/* ═══════════════════  § TIPOGRAFÍA POR ERA  ═══════════════════ */
+body.era-95{font-family:'MS Sans Serif','Tahoma',Geneva,sans-serif}
+body.era-95 .window-title,body.era-95 #start-btn,body.era-95 .taskbar-item{font-weight:bold}
+body.era-vista{font-family:'Segoe UI','Segoe','Rajdhani','Trebuchet MS',sans-serif}
+
+/* ═══════════════════  § VIAJE EN EL TIEMPO (transición)  ═══════════════════ */
+#time-warp{position:fixed;inset:0;z-index:99998;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#0a1030 0%,#000 80%);opacity:0;transition:opacity .35s ease;pointer-events:auto;overflow:hidden}
+#time-warp.go{opacity:1}
+#time-warp.out{opacity:0;transition:opacity .45s ease}
+.tw-vortex{position:absolute;width:200vmax;height:200vmax;border-radius:50%;background:conic-gradient(from 0deg,#0a1030,#1e5cc8,#0a1030,#2a6ab0,#0a1030,#5fa838,#0a1030);opacity:.5;filter:blur(2px);animation:twSpin 1.1s linear infinite}
+#time-warp.go .tw-vortex{animation:twSpin 1.1s linear infinite,twZoom 1s ease-out}
+.tw-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 2px,transparent 4px);mix-blend-mode:overlay;animation:twScan 1s linear}
+.tw-year{position:relative;font-family:Orbitron,sans-serif;font-size:15vmin;font-weight:900;color:#fff;text-shadow:0 0 30px rgba(120,180,255,.9),0 0 8px #fff;transform:scale(.3);opacity:0;letter-spacing:4px}
+#time-warp.go .tw-year{animation:twYear 1s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes twSpin{to{transform:rotate(360deg)}}
+@keyframes twZoom{0%{transform:scale(.2)}100%{transform:scale(1.4)}}
+@keyframes twScan{0%{background-position-y:0}100%{background-position-y:40px}}
+@keyframes twYear{0%{transform:scale(.3) rotate(-8deg);opacity:0}35%{opacity:1}70%{transform:scale(1.05) rotate(0);opacity:1}100%{transform:scale(1.15);opacity:.85}}
+@media (prefers-reduced-motion: reduce){.tw-vortex,#time-warp.go .tw-vortex,.tw-scan,#time-warp.go .tw-year{animation:none}.tw-year{opacity:1;transform:none}}
 /* ═══════════════════  § JUEGO: SIMON  ═══════════════════ */
 .simon-root{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0d1326;color:#fff;padding:12px;gap:12px;font-family:Rajdhani,sans-serif}
 .simon-hud{display:flex;gap:22px;font-size:14px;color:#9fb6e8}
@@ -348,6 +424,20 @@ body.theme-classic #show-desktop{color:#000;background:#c0c0c0;border-color:#fff
 .start-body{display:flex;min-height:350px;position:relative}
 .start-left{flex:1;background:#fff;padding:6px 0;border-right:1px solid #d0d0d0}
 .start-right{width:180px;background:#d3e5fa;padding:6px 0}
+/* ═══════════════════  § MENÚ INICIO POR ERA  ═══════════════════ */
+.start-95-banner{display:none}
+/* --- Windows 95: una sola columna, sin buscador, con el banner vertical clásico --- */
+body.era-95 #start-search-row{display:none}
+body.era-95 .start-right{display:none}
+body.era-95 .start-menu,body.era-95 #start-menu{border-radius:0}
+body.era-95 .start-95-banner{display:flex;align-items:flex-end;justify-content:center;width:32px;flex-shrink:0;writing-mode:vertical-rl;transform:rotate(180deg);background:linear-gradient(180deg,#000080,#1084d0);color:#c0c0c0;font-family:'Tahoma','MS Sans Serif',sans-serif;font-size:17px;font-weight:bold;letter-spacing:1px;padding:10px 0}
+body.era-95 .start-95-banner b{color:#fff;font-size:22px}
+body.era-95 .start-header{background:#000080!important;border-radius:0}
+body.era-95 .start-item:hover{background:#000080;color:#fff}
+/* --- Vista: buscador prominente con brillo (la gran novedad de Vista) --- */
+body.era-vista #start-search-row{background:linear-gradient(180deg,#eaf3ff,#d8e8fc);padding:8px}
+body.era-vista #start-search{border:1px solid #6aa5e0;box-shadow:0 0 0 2px rgba(120,180,255,.25),inset 0 1px 3px rgba(0,0,0,.1);border-radius:14px;padding-left:26px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='7' cy='7' r='4.5' fill='none' stroke='%232a6ad4' stroke-width='1.6'/%3E%3Cline x1='10.5' y1='10.5' x2='14' y2='14' stroke='%232a6ad4' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat 7px center}
+body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 0 10px rgba(100,160,255,.5)}
 .start-item{padding:6px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#000}
 .start-item:hover{background:#2b71b9;color:#fff}
 .start-item .si-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:22px}
@@ -467,7 +557,7 @@ body.theme-classic #show-desktop{color:#000;background:#c0c0c0;border-color:#fff
 .calc-op{background:linear-gradient(180deg,#e8d8c0,#d0c0a0)}
 .calc-fn{background:linear-gradient(180deg,#d8d8e8,#c0c0d0)}
 .calc-eq{background:linear-gradient(180deg,#4090e0,#2070c0);color:#fff}
-.calc-zero{grid-column:span 2}
+/* el '0' ocupa una sola columna: la fila estándar ya tiene 4 botones */
 .drive-item{width:120px;text-align:center;padding:14px 8px;cursor:pointer;border-radius:3px}
 .drive-item:hover{background:#e0e8f0;border:1px solid #a0b0c8}
 .drive-item .drive-icon{font-size:48px;margin-bottom:8px}
@@ -560,6 +650,68 @@ body.theme-classic #show-desktop{color:#000;background:#c0c0c0;border-color:#fff
 @keyframes msnShake{0%,100%{margin-left:0;margin-top:0}20%{margin-left:-6px;margin-top:3px}40%{margin-left:5px;margin-top:-4px}60%{margin-left:-4px;margin-top:-3px}80%{margin-left:4px;margin-top:3px}}
 .window.msn-shake{animation:msnShake .5s linear}
 /* Icono de bandeja: muñeco clásico por defecto; con mensaje sin leer alterna muñeco ↔ globo */
+#tray-bell{cursor:pointer;position:relative;display:inline-flex;align-items:center;font-size:13px;filter:grayscale(.3)}
+#tray-bell.has-unread{filter:none;animation:bellRing 1.2s ease}
+#tray-bell.has-unread::after{content:'';position:absolute;top:-1px;right:-2px;width:7px;height:7px;border-radius:50%;background:#e04040;border:1px solid #fff}
+@keyframes bellRing{0%,100%{transform:rotate(0)}15%{transform:rotate(14deg)}30%{transform:rotate(-12deg)}45%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}}
+/* Globos apilables */
+#notif-stack{position:fixed;right:12px;bottom:44px;z-index:9400;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none;max-width:calc(100vw - 24px)}
+.notif-balloon{pointer-events:auto;display:flex;align-items:flex-start;gap:9px;width:280px;max-width:calc(100vw - 24px);padding:9px 10px;background:linear-gradient(180deg,#fffef4,#f2ecd6);border:1px solid #b8a860;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.32);font-family:Tahoma,sans-serif;cursor:pointer;animation:notifIn .3s ease-out}
+.notif-balloon.out{animation:notifOut .26s ease-in forwards}
+.notif-ic{font-size:22px;line-height:1;flex-shrink:0}
+.notif-txt{flex:1;min-width:0}
+.notif-h{font-size:12px;font-weight:bold;color:#5a4a10}
+.notif-b{font-size:11px;color:#444;line-height:1.35;margin-top:1px}
+.notif-x{background:none;border:0;color:#8a7a3a;font-size:12px;cursor:pointer;padding:0 2px;flex-shrink:0;line-height:1}
+@keyframes notifIn{0%{opacity:0;transform:translateX(20px)}100%{opacity:1;transform:none}}
+@keyframes notifOut{0%{opacity:1}100%{opacity:0;transform:translateX(20px)}}
+/* Panel/historial */
+#notif-center{position:fixed;z-index:9401;width:290px;max-width:calc(100vw - 16px);max-height:60vh;background:#ece9d8;border:1px solid #0054e3;border-radius:8px 8px 4px 4px;box-shadow:0 10px 40px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;font-family:Tahoma,sans-serif;animation:notifIn .2s ease-out}
+.nc-head{background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-size:12px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.nc-clear{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:10px;border-radius:3px;padding:1px 7px;cursor:pointer}
+.nc-list{flex:1;overflow:auto;background:#fff}
+.nc-item{display:flex;gap:8px;padding:8px 10px;border-bottom:1px solid #f0f0f0}
+.nc-ic{font-size:18px;flex-shrink:0}
+.nc-h{font-size:11px;font-weight:bold;color:#222}
+.nc-b{font-size:10px;color:#555;line-height:1.35}
+.nc-time{font-size:9px;color:#999;margin-top:1px}
+.nc-empty{padding:24px 10px;text-align:center;color:#999;font-size:12px}
+/* ═══════════════════  § LECTOR DE EBOOKS  ═══════════════════ */
+.reader-root{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;position:relative}
+.reader-toolbar{flex-shrink:0;display:flex;gap:4px;align-items:center;padding:5px 7px;background:linear-gradient(180deg,#f4f2ec,#e2ded2);border-bottom:1px solid #aca899;flex-wrap:wrap}
+.reader-btn{font-family:Tahoma;font-size:11px;padding:3px 8px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer;color:#222}
+.reader-btn:hover:not(:disabled){background:#fff}
+.reader-btn:disabled{opacity:.45;cursor:default}
+.reader-aa small{font-size:8px;vertical-align:sub}
+.reader-pos{font-size:11px;color:#555;min-width:52px;text-align:center}
+.reader-stage{flex:1;min-height:0;position:relative;background:#ffffff;overflow:hidden}
+.reader-frame{width:100%;height:100%;border:0;display:block;background:#fff}
+.reader-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#999;font-size:34px;text-align:center}
+.reader-empty b{font-size:15px;color:#555}
+.reader-empty span{font-size:12px;color:#999}
+.reader-pdf{position:absolute;inset:0;display:flex;flex-direction:column}
+.reader-pdf-frame{flex:1;border:0;width:100%}
+.reader-pdf-note{flex-shrink:0;padding:4px 8px;font-size:10px;color:#666;background:#f4f2ec;border-top:1px solid #ccc}
+.reader-titlebar{flex-shrink:0;padding:3px 8px;font-size:10px;color:#555;background:#ece9d8;border-top:1px solid #aca899;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Paneles flotantes (índice / tipografía) */
+.reader-panel{position:absolute;top:38px;right:8px;width:230px;max-height:calc(100% - 60px);z-index:10;background:#fbfaf6;border:1px solid #8a8a8a;border-radius:6px;box-shadow:0 6px 22px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden;animation:notifIn .18s ease}
+.reader-panel-h{background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;font-size:11px;font-weight:bold;padding:5px 9px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center}
+.rd-panel-x{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:10px;line-height:1;border-radius:3px;padding:1px 5px;cursor:pointer}
+.reader-toc-list{overflow:auto;padding:3px}
+.rd-toc-item{display:block;width:100%;text-align:left;background:none;border:0;padding:6px 8px;font-size:11px;color:#222;cursor:pointer;border-radius:3px;line-height:1.3}
+.rd-toc-item:hover{background:#dceaff}
+.reader-type{padding:8px 10px;gap:9px}
+.rd-row{display:flex;align-items:center;gap:8px;font-size:11px;color:#333;margin-bottom:8px}
+.rd-row>span:first-child{width:74px;flex-shrink:0;color:#555}
+.rd-step{font-family:Georgia,serif;padding:2px 8px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer}
+.rd-val{min-width:38px;text-align:center;font-size:11px}
+.rd-row select,.rd-row input[type=range]{flex:1;min-width:0}
+.rd-themes{display:flex;gap:5px}
+.rd-theme{width:26px;height:22px;border:1px solid #aca899;border-radius:3px;cursor:pointer;font-weight:bold;font-size:11px}
+.rd-theme.active{outline:2px solid #0054e3;outline-offset:1px}
+.rd-col{display:inline-flex;align-items:center;gap:3px}
+.rd-col input[type=color]{width:26px;height:20px;padding:0;border:1px solid #aca899;cursor:pointer}
+.rd-check{display:flex;align-items:center;gap:5px;cursor:pointer}
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
@@ -691,6 +843,56 @@ body.theme-silver #system-tray #clock{color:#222}
 body.theme-silver #start-menu{border-color:#8a8a9e}
 body.theme-silver .start-header{background:linear-gradient(180deg,#dcdce6,#9c9cb0)!important}
 body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
+/* Tema AERO (Windows Vista) — cristal, brillo y bordes redondeados */
+body.theme-aero .window{border-radius:8px 8px 4px 4px;border:1px solid rgba(180,210,255,.5)!important;box-shadow:0 8px 34px rgba(0,20,60,.55),0 0 0 1px rgba(255,255,255,.15) inset}
+body.theme-aero .window-titlebar{background:linear-gradient(180deg,rgba(60,110,190,.92),rgba(20,50,110,.92))!important;border-bottom:1px solid rgba(160,200,255,.4);box-shadow:0 1px 0 rgba(255,255,255,.25) inset;backdrop-filter:blur(6px)}
+body.theme-aero .window:not(.focused) .window-titlebar{background:linear-gradient(180deg,rgba(90,110,140,.8),rgba(60,75,100,.8))!important}
+body.theme-aero .window-title{color:#eaf3ff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+body.theme-aero .window-controls button{border-radius:4px;border:1px solid rgba(255,255,255,.35);background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.06))}
+body.theme-aero #taskbar{background:linear-gradient(180deg,rgba(24,44,84,.92),rgba(10,22,52,.94))!important;border-top:1px solid rgba(140,180,255,.5);backdrop-filter:blur(8px)}
+body.theme-aero #system-tray{background:linear-gradient(180deg,rgba(40,70,130,.6),rgba(20,40,90,.6))!important;border-left:1px solid rgba(150,190,255,.35)}
+body.theme-aero #start-btn{background:radial-gradient(circle at 50% 38%,#7dff9a,#2ea44f 60%,#0c6b2a)!important;color:transparent;border:2px solid rgba(255,255,255,.5);border-radius:50%;width:46px;height:30px;box-shadow:0 0 12px rgba(80,255,140,.5),0 2px 6px rgba(0,0,0,.5)}
+body.theme-aero #start-btn .win-icon{filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+body.theme-aero .taskbar-item{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.04))!important;color:#eaf3ff!important;border:1px solid rgba(160,200,255,.35);border-radius:4px;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+body.theme-aero .taskbar-item.active{background:linear-gradient(180deg,rgba(140,200,255,.4),rgba(90,150,240,.3))!important}
+body.theme-aero #start-menu{border:1px solid rgba(160,200,255,.5);border-radius:8px;background:rgba(235,244,255,.97);box-shadow:0 12px 40px rgba(0,20,60,.5)}
+body.theme-aero .start-header{background:linear-gradient(180deg,rgba(50,100,180,.95),rgba(20,50,110,.95))!important}
+body.theme-aero #clock{color:#eaf3ff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,255,255,.2) inset}
+/* Respaldo del cristal Aero: donde el navegador NO soporta backdrop-filter (el
+   desenfoque), se sustituye por una textura de cristal helado hecha con gradientes
+   (retícula fina + reflejo diagonal) y superficies más opacas para que se lea bien. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  body.theme-aero .window-titlebar{
+    background:
+      linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 42%),
+      repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px),
+      repeating-linear-gradient(-45deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px),
+      linear-gradient(180deg,rgba(74,124,202,.98),rgba(26,58,118,.99))!important;
+  }
+  body.theme-aero .window:not(.focused) .window-titlebar{
+    background:
+      repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px),
+      linear-gradient(180deg,rgba(96,116,146,.97),rgba(64,80,106,.98))!important;
+  }
+  body.theme-aero #taskbar{
+    background:
+      linear-gradient(115deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,0) 30%),
+      repeating-linear-gradient(45deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px),
+      repeating-linear-gradient(-45deg,rgba(0,0,0,.05) 0 1px,transparent 1px 3px),
+      linear-gradient(180deg,rgba(28,50,96,.99),rgba(12,26,58,.995))!important;
+  }
+  body.theme-aero #system-tray{
+    background:
+      repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px),
+      linear-gradient(180deg,rgba(44,74,134,.85),rgba(22,42,92,.9))!important;
+  }
+  .tm2-screen[data-era="vista"] .tm2-mini-taskbar{
+    background:
+      repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 1px,transparent 1px 2px),
+      rgba(12,26,60,.98)!important;
+  }
+}
 
 /* eMule */
 .em-tab{padding:3px 10px;border:1px solid #9ab09a;border-bottom:none;border-radius:4px 4px 0 0;background:#d0dcd0;cursor:default;color:#555}
@@ -2282,7 +2484,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
     <button id="show-desktop" onclick="toggleShowDesktop()" title="Mostrar escritorio" aria-label="Mostrar escritorio"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.4" y="3" width="13.2" height="10" rx="1.1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.15" y="10.4" width="11.7" height="2.2" rx="0.4" fill="currentColor"/></svg></button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
+      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
       <div id="clock" style="cursor:pointer" onclick="toggleCalendar()" role="button" tabindex="0" aria-label="Fecha y hora"></div>
     </div>
     <div id="volume-popup" style="display:none;position:fixed;bottom:40px;right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
@@ -2299,6 +2501,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
       <div class="start-username">Usuario</div>
     </div>
     <div class="start-body">
+      <div class="start-95-banner" aria-hidden="true">Torrecillas<b>95</b></div>
       <div class="start-left">
         <div id="start-search-row"><input id="start-search" placeholder="Buscar..." data-i18n-ph="search.placeholder" autocomplete="off" spellcheck="false" aria-label="Buscar aplicaciones, juegos y proyectos"></div>
         <div id="start-search-results"></div>
@@ -2379,6 +2582,14 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
             <div class="si-icon">&#127908;</div>
             <div><div class="si-label">Grabadora de sonidos</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openPhotoBooth()">
+            <div class="si-icon">&#128247;</div>
+            <div><div class="si-label">Photo Booth</div><div class="si-desc">Webcam con filtros de 2004</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openEbookReader()">
+            <div class="si-icon">&#128214;</div>
+            <div><div class="si-label" data-i18n="reader.title">Lector</div><div class="si-desc">EPUB y PDF</div></div>
+          </button>
         </div>
         <button type="button" class="start-item" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
           <div class="si-icon">&#128252;</div>
@@ -2386,6 +2597,10 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-nostalgia-submenu">
+          <button type="button" class="start-item" onclick="openTimeMachine()">
+            <div class="si-icon">&#9203;</div>
+            <div><div class="si-label">Máquina del tiempo</div><div class="si-desc">95 · XP · Vista</div></div>
+          </button>
           <button type="button" class="start-item" onclick="openEncarta()">
             <div class="si-icon">&#127757;</div>
             <div><div class="si-label">Encarta 99</div></div>
@@ -2465,7 +2680,7 @@ body.theme-silver .start-header .start-username{color:#1a1a2a;text-shadow:none}
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.26.0';
+const APP_VERSION = '0.27.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -2623,6 +2838,20 @@ const I18N={
   // Instalar
   'inst.title':{es:'Instalar en el equipo', en:'Install on your device', ca:'Instal·la al dispositiu', ru:'Установить на устройство'},
   'inst.now':{es:'Instalar ahora', en:'Install now', ca:'Instal·la ara', ru:'Установить сейчас'},
+  // Lector de ebooks
+  'reader.title':{es:'Lector', en:'Reader', ca:'Lector', ru:'Читалка'},
+  'reader.empty':{es:'Abre un EPUB o PDF de tu equipo.', en:'Open an EPUB or PDF from your device.', ca:'Obre un EPUB o PDF del teu equip.', ru:'Откройте EPUB или PDF со своего устройства.'},
+  'reader.fail':{es:'No se pudo abrir el libro.', en:'Could not open the book.', ca:'No s’ha pogut obrir el llibre.', ru:'Не удалось открыть книгу.'},
+  'reader.toc':{es:'Índice', en:'Contents', ca:'Índex', ru:'Оглавление'},
+  'reader.type':{es:'Tipografía', en:'Typography', ca:'Tipografia', ru:'Шрифт'},
+  'reader.size':{es:'Tamaño', en:'Size', ca:'Mida', ru:'Размер'},
+  'reader.font':{es:'Fuente', en:'Font', ca:'Lletra', ru:'Шрифт'},
+  'reader.lh':{es:'Interlineado', en:'Line height', ca:'Interlineat', ru:'Межстрочный'},
+  'reader.width':{es:'Ancho', en:'Width', ca:'Amplada', ru:'Ширина'},
+  'reader.theme':{es:'Tema', en:'Theme', ca:'Tema', ru:'Тема'},
+  'reader.custom':{es:'Colores', en:'Colors', ca:'Colors', ru:'Цвета'},
+  'reader.justify':{es:'Justificar texto', en:'Justify text', ca:'Justifica el text', ru:'Выравнивание по ширине'},
+  'reader.pdfnote':{es:'PDF con el visor del navegador (zoom y búsqueda). El control de letra y color es solo para EPUB.', en:'PDF via the browser viewer (zoom & search). Font/color control is EPUB-only.', ca:'PDF amb el visor del navegador (zoom i cerca). El control de lletra i color és només per a EPUB.', ru:'PDF через встроенный просмотрщик (зум и поиск). Настройка шрифта/цвета — только для EPUB.'},
 };
 function currentLang(){ const l=Store.get('tos-lang'); return I18N_LANGS.some(x=>x[0]===l)?l:'es'; }
 function t(key,vars){
@@ -2726,6 +2955,134 @@ function announce(msg){
   el.textContent='';
   clearTimeout(_announceTmr);
   _announceTmr=setTimeout(()=>{ el.textContent=String(msg); },50);
+}
+
+
+// ========== OLE: ARRASTRAR CONTENIDO ENTRE APPS ==========
+// Un "portapapeles de arrastre" global: las fuentes ponen un payload
+// {kind:'image'|'text', data, name} al empezar a arrastrar, y los destinos lo
+// reciben. El transporte fiable es la variable _osDrag (dataTransfer entre
+// elementos internos es inconsistente); los eventos nativos solo activan/pintan.
+let _osDrag=null;
+function osMakeDragSource(el,provide){
+  if(!el)return;
+  el.setAttribute('draggable','true');
+  el.classList.add('os-draggable');
+  el.addEventListener('dragstart',(e)=>{
+    let p=null; try{p=provide();}catch(err){p=null;}
+    if(!p||!p.data){ if(e.preventDefault)e.preventDefault(); return; }
+    _osDrag=p;
+    try{ e.dataTransfer.setData('text/plain',p.name||'contenido'); e.dataTransfer.effectAllowed='copy'; }catch(err){}
+    document.body.classList.add('os-dragging');
+  });
+  el.addEventListener('dragend',()=>{ _osDrag=null; document.body.classList.remove('os-dragging'); });
+}
+function osMakeDropTarget(el,accept,onDrop){
+  if(!el)return;
+  el.addEventListener('dragover',(e)=>{
+    if(_osDrag&&(accept==='any'||_osDrag.kind===accept)){ if(e.preventDefault)e.preventDefault(); el.classList.add('os-drop-hi'); }
+  });
+  el.addEventListener('dragleave',()=>el.classList.remove('os-drop-hi'));
+  el.addEventListener('drop',(e)=>{
+    el.classList.remove('os-drop-hi');
+    if(_osDrag&&(accept==='any'||_osDrag.kind===accept)){
+      if(e.preventDefault)e.preventDefault();
+      const p=_osDrag; _osDrag=null; document.body.classList.remove('os-dragging');
+      try{onDrop(p);}catch(err){}
+    }
+  });
+}
+// Inserta una imagen (dataURL) como mensaje en el chat del MSN si está abierto
+function msnInjectImage(dataURL){
+  const msgs=document.getElementById('msn-msgs');
+  if(!msgs)return false;
+  const who=(typeof msnUserName==='function'?msnUserName():'Tú');
+  msgs.insertAdjacentHTML('beforeend','<div class="msn-line me"><span class="msn-who">'+escHtml(who)+' dice:</span><div class="msn-txt"><img src="'+dataURL+'" alt="imagen" class="msn-img"></div></div>');
+  msgs.scrollTop=msgs.scrollHeight;
+  try{ if(typeof _msnSaveHistory==='function'){_msnHistory=msgs.innerHTML;_msnSaveHistory();} }catch(e){}
+  announce('Imagen enviada al MSN');
+  return true;
+}
+
+
+// ========== CENTRO DE NOTIFICACIONES ==========
+// Globos estilo XP apilables (abajo a la derecha) + historial en la campana de la
+// bandeja. notify() es el punto único para cualquier aviso del sistema.
+let _notifLog=[];      // {icon,title,body,time} — historial (tope 30)
+let _notifUnread=0;
+function notify(opts){
+  opts=opts||{};
+  const icon=opts.icon||'&#128276;', title=opts.title||'', body=opts.body||'';
+  // 1) registro en el historial
+  _notifLog.unshift({icon,title,body,time:Date.now()});
+  if(_notifLog.length>30)_notifLog.length=30;
+  _notifUnread++;
+  _notifBellUpdate();
+  if(_notifPanelRender)_notifPanelRender();
+  announce((title?title+'. ':'')+body);
+  // 2) globo emergente (si no está silenciado por sesión de restauración)
+  if(!opts.silent&&!(typeof _restoringSession!=='undefined'&&_restoringSession)){
+    let stack=document.getElementById('notif-stack');
+    if(!stack){ stack=document.createElement('div'); stack.id='notif-stack'; document.body.appendChild(stack); }
+    const b=document.createElement('div');
+    b.className='notif-balloon';
+    b.setAttribute('role','status');
+    b.innerHTML='<div class="notif-ic">'+icon+'</div><div class="notif-txt"><div class="notif-h">'+escHtml(title)+'</div>'+(body?'<div class="notif-b">'+escHtml(body)+'</div>':'')+'</div><button type="button" class="notif-x" aria-label="Cerrar">&#10005;</button>';
+    stack.appendChild(b);
+    const close=()=>{ b.classList.add('out'); setTimeout(()=>{ if(b.parentNode)b.remove(); if(stack&&!stack.children.length)stack.remove(); },260); };
+    b.querySelector('.notif-x').onclick=(e)=>{ e.stopPropagation(); close(); };
+    b.onclick=()=>{ if(opts.action)opts.action(); close(); };
+    if(opts.sound!==false){ try{playTone(660,0.05,'sine',0.25);setTimeout(()=>playTone(880,0.07,'sine',0.2),55);}catch(e){} }
+    setTimeout(close, opts.timeout||4500);
+  }
+  return true;
+}
+function _notifBellUpdate(){
+  const bell=document.getElementById('tray-bell');
+  if(!bell)return;
+  bell.classList.toggle('has-unread',_notifUnread>0);
+  bell.setAttribute('aria-label','Notificaciones'+(_notifUnread>0?' ('+_notifUnread+' sin leer)':''));
+  bell.title=_notifUnread>0?_notifUnread+' notificación(es) sin leer':'Notificaciones';
+}
+let _notifPanelRender=null;
+function toggleNotifCenter(ev){
+  if(ev){ev.preventDefault();ev.stopPropagation();}
+  const existing=document.getElementById('notif-center');
+  if(existing){ existing.remove(); _notifPanelRender=null; return; }
+  _notifUnread=0; _notifBellUpdate();
+  const panel=document.createElement('div');
+  panel.id='notif-center';
+  panel.setAttribute('role','dialog');
+  panel.setAttribute('aria-label','Centro de notificaciones');
+  const render=()=>{
+    panel.innerHTML='<div class="nc-head">&#128276; Notificaciones'+
+      (_notifLog.length?'<button type="button" id="nc-clear" class="nc-clear">Vaciar</button>':'')+'</div>'+
+      '<div class="nc-list">'+(_notifLog.length?_notifLog.map(n=>
+        '<div class="nc-item"><div class="nc-ic">'+n.icon+'</div><div class="nc-txt"><div class="nc-h">'+escHtml(n.title)+'</div>'+(n.body?'<div class="nc-b">'+escHtml(n.body)+'</div>':'')+'<div class="nc-time">'+_notifAgo(n.time)+'</div></div></div>'
+      ).join(''):'<div class="nc-empty">No hay notificaciones.</div>')+'</div>';
+    const cl=panel.querySelector('#nc-clear');
+    if(cl)cl.onclick=(e)=>{ e.stopPropagation(); _notifLog=[]; render(); _notifBellUpdate(); };
+  };
+  _notifPanelRender=render;
+  render();
+  document.body.appendChild(panel);
+  // posicionar sobre la campana
+  const bell=document.getElementById('tray-bell');
+  const r=bell?bell.getBoundingClientRect():{right:window.innerWidth-8,top:window.innerHeight-40};
+  panel.style.right=Math.max(6,window.innerWidth-r.right)+'px';
+  panel.style.bottom=(window.innerHeight-r.top+8)+'px';
+  // cerrar al hacer clic fuera
+  setTimeout(()=>{
+    const off=(e)=>{ if(!panel.contains(e.target)&&e.target.id!=='tray-bell'&&!(bell&&bell.contains(e.target))){ panel.remove(); _notifPanelRender=null; document.removeEventListener('mousedown',off); } };
+    document.addEventListener('mousedown',off);
+  },0);
+}
+function _notifAgo(t){
+  const s=Math.floor((Date.now()-t)/1000);
+  if(s<60)return 'hace un momento';
+  const m=Math.floor(s/60); if(m<60)return 'hace '+m+' min';
+  const h=Math.floor(m/60); if(h<24)return 'hace '+h+' h';
+  return new Date(t).toLocaleDateString('es-ES');
 }
 
 // ========== SISTEMA DE ARCHIVOS VIRTUAL (Mis documentos) ==========
@@ -2850,6 +3207,11 @@ function openMyDocuments(){
         {label:t('btn.delete'),action:()=>borrar(sel)}
       ]);
     });
+    // OLE: soltar una imagen o un texto aquí crea un archivo directamente
+    osMakeDropTarget(grid,'any',(pl)=>{
+      if(pl.kind==='image'){ const r=fsSave({name:fsUniqueName(pl.name||'Imagen','png'),type:'png',data:pl.data}); if(r.ok){render();announce('Imagen guardada en Mis documentos');} }
+      else if(pl.kind==='text'){ const r=fsSave({name:fsUniqueName(pl.name||'Nota','txt'),type:'txt',data:pl.data}); if(r.ok){render();announce('Texto guardado en Mis documentos');} }
+    });
     _docsRender=render; // para refrescar desde fuera cuando se guarda algo
     (document.getElementById(id)._cleanups=document.getElementById(id)._cleanups||[]).push(()=>{ if(_docsRender===render)_docsRender=null; });
     render();
@@ -2869,6 +3231,7 @@ function fsSaveDialog(type,defaultName,data,existingId,onSaved){
     }
     _docsRefresh();
     announce(t('docs.saved',{n:name}));
+    notify({icon:'&#128190;',title:t('app.docs'),body:t('docs.saved',{n:name})});
     if(onSaved)onSaved(r.id,name);
   });
 }
@@ -3156,12 +3519,15 @@ if(savedVol!==null){masterVolume=savedVol/100;}
 function enterDesktop(){
   document.getElementById('desktop').style.display='block';
   applyI18n(); // traduce el chrome (menú, botones) al idioma guardado
+  restoreEraClass(); // clase de era para la tipografía
   updateTrayLang(); // bandera del idioma en la bandeja
   initDesktop();
   loadSavedAppearance();
   drawStartMenuIcons();
   restoreStickies();
   try{restoreSession();}catch(e){}
+  // Si la PWA se abrió con un archivo (.epub/.pdf) antes de estar lista, abrirlo ahora
+  if(_pendingLaunchFiles){ const f=_pendingLaunchFiles; _pendingLaunchFiles=null; setTimeout(()=>{try{openEbookReader(f[0]);}catch(e){}},400); }
   setTimeout(maybeShowWelcomeTip,1200);
   // Alejandro_Virtual "escribe" al rato de arrancar si aún no has abierto el Messenger
   setTimeout(()=>{if(!_msnOpenedOnce&&!document.getElementById('msn-chat'))msnSetUnread(true);},20000);
@@ -3352,6 +3718,7 @@ function _swShowUpdate(worker){
     '<button type="button" id="update-later" aria-label="'+t('ctx.later')+'">&#10005;</button>';
   document.body.appendChild(bar);
   announce('Hay una nueva versión disponible. Pulsa Actualizar para instalarla.');
+  notify({icon:'&#128260;',title:'Actualización disponible',body:t('update.available'),timeout:8000});
   document.getElementById('update-now').onclick=()=>{
     document.getElementById('update-now').textContent=t('update.updating');
     _swUpdateRequested=true; // desde aquí sí queremos recargar cuando el worker tome el control
@@ -3387,6 +3754,55 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
       setInterval(checkUpd,60*60*1000); // cada hora
     }catch(e){}
   });
+}
+// ========== SHARE TARGET: abrir imágenes compartidas con la app ==========
+function _blobToDataURL(blob){
+  return new Promise((res,rej)=>{ try{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(blob); }catch(e){rej(e);} });
+}
+// Lee la imagen que el service worker guardó al compartir y la abre en el Visor.
+async function openSharedFile(){
+  if(typeof caches==='undefined')return false;
+  try{
+    const c=await caches.open('tos-'+APP_VERSION);
+    const resp=await c.match('shared-file');
+    if(!resp)return false;
+    const name=decodeURIComponent(resp.headers.get('X-Share-Name')||'Compartido');
+    const blob=await resp.blob();
+    await c.delete('shared-file');
+    const dataURL=await _blobToDataURL(blob);
+    openImageViewer();
+    if(_viewerLoadDataURL)_viewerLoadDataURL(dataURL,name);
+    if(typeof notify==='function')notify({icon:'&#128247;',title:'Imagen recibida',body:'Alguien ha compartido «'+name+'» contigo.'});
+    return true;
+  }catch(e){ return false; }
+}
+// Si venimos de un "compartir con", abrir la imagen y limpiar la URL
+if(/[?&]shared=1/.test(location.search)){
+  window.addEventListener('load',()=>{
+    openSharedFile().then((ok)=>{ try{ if(ok&&history.replaceState)history.replaceState(null,'',location.pathname); }catch(e){} });
+  });
+}
+// ========== FILE HANDLING: abrir .epub/.pdf con la PWA instalada ==========
+// El sistema ofrece "Torrecillas OS" al abrir un EPUB/PDF y le pasa el archivo aquí.
+let _pendingLaunchFiles=null;
+function _handleLaunchFiles(files){
+  files=(files||[]).filter(Boolean);
+  if(!files.length)return;
+  const desk=document.getElementById('desktop');
+  if(desk&&desk.style.display==='block'){ openEbookReader(files[0]); } // el lector abre el 1º
+  else{ _pendingLaunchFiles=files; } // el escritorio aún no está listo: se abre al arrancar
+}
+if('launchQueue' in window && window.launchQueue && 'setConsumer' in window.launchQueue){
+  try{
+    window.launchQueue.setConsumer(async (params)=>{
+      try{
+        if(!params||!params.files||!params.files.length)return;
+        const out=[];
+        for(const h of params.files){ try{ out.push(await h.getFile()); }catch(e){} }
+        _handleLaunchFiles(out);
+      }catch(e){}
+    });
+  }catch(e){}
 }
 // Chrome/Edge avisan cuando la app es instalable; guardamos el evento para dispararlo desde el diálogo
 let installPromptEvent=null;
@@ -3797,7 +4213,7 @@ const SESSION_OPENERS={
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
   defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo(),
   emule:()=>openEmule(),outlook:()=>openOutlook(),regedit:()=>openRegedit(),encarta:()=>openEncarta(),
-  loquendo:()=>openLoquendo(),recorder:()=>openRecorder()
+  loquendo:()=>openLoquendo(),recorder:()=>openRecorder(),booth:()=>openPhotoBooth(),tiempo:()=>openTimeMachine(),lector:()=>openEbookReader()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -3948,6 +4364,7 @@ function checkScoreAchievements(){
 }
 // Globo de aviso al desbloquear, estilo XP
 function achToast(a){
+  notify({icon:a.icon,title:'🎉 Logro desbloqueado',body:a.label,sound:false}); // al centro de notificaciones
   const old=document.getElementById('ach-toast');
   if(old)old.remove();
   const t=document.createElement('div');
@@ -4293,6 +4710,7 @@ function openMSN(){
     if(xbtn)xbtn.onclick=()=>msnCloseConfirm(id);
     const msgs=document.getElementById('msn-msgs'),inp=document.getElementById('msn-input');
     const esc=escHtml; // helper global (escapa también comillas)
+    osMakeDropTarget(msgs,'image',(p)=>msnInjectImage(p.data)); // OLE: soltar un dibujo en el chat lo envía
     // Emoticonos clásicos del Messenger
     const emo=s=>s.replace(/:\)/g,'\u{1F642}').replace(/:\(/g,'\u{1F641}').replace(/:P/gi,'\u{1F61B}')
       .replace(/\bxd\b/gi,'\u{1F606}').replace(/\(H\)/gi,'\u{1F60E}').replace(/\(Y\)/gi,'\u{1F44D}').replace(/>:\(/g,'\u{1F620}')
@@ -4995,6 +5413,7 @@ function openWordArt(){
       <input id="wart-text" value="TORRECILLAS" maxlength="24" aria-label="Texto del WordArt" style="flex:1;min-width:0;border:1px solid #7da2ce;border-radius:3px;padding:5px 7px;font-family:inherit;font-size:12px">
       <button id="wart-dl" class="trash-btn">&#11015;&#65039; Descargar PNG</button>
       <button id="wart-savefs" class="trash-btn">&#128190; A Mis documentos</button>
+      <span id="wart-drag" class="trash-btn os-drag-chip" title="Arrastra el WordArt a otra app">&#9995; Arrastrar</span>
     </div>
     <div style="display:flex;gap:4px;flex-wrap:wrap" id="wart-styles">${chips}</div>
     <div style="flex:1;min-height:0;background:#fff;border:1px solid #aca899;display:flex;align-items:center;justify-content:center;overflow:hidden">
@@ -5003,6 +5422,8 @@ function openWordArt(){
   </div>`;
   createWindow('WordArt','&#127344;&#65039;',560,380,content,{session:'wordart',statusbar:false,onCreated:(id,win)=>{
     const canvas=document.getElementById('wart-canvas');
+    const wartDrag=document.getElementById('wart-drag');
+    if(wartDrag)osMakeDragSource(wartDrag,()=>{ let d;try{d=canvas.toDataURL('image/png');}catch(e){return null;} return {kind:'image',data:d,name:(inp&&inp.value.trim())||'WordArt'}; });
     const inp=document.getElementById('wart-text');
     let style=WORDART_STYLES[0].id;
     const redraw=()=>drawWordArt(canvas,inp.value.trim(),style);
@@ -5408,9 +5829,12 @@ function osOpenDroppedFile(f){
     const span=document.createElement('span');
     span.id='tray-batt';
     tray.appendChild(span);
+    let _lowNotified=false;
     const render=()=>{
       const p=Math.round(b.level*100);
       const col=b.charging?'#7ebd2f':p<15?'#d04030':p<40?'#f0ad00':'#7ebd2f';
+      if(!b.charging&&p<=15&&!_lowNotified){ _lowNotified=true; notify({icon:'&#128267;',title:'Batería baja',body:'Queda un '+p+'%. Conecta el cargador.'}); }
+      if(b.charging||p>20)_lowNotified=false;
       span.title='Batería: '+p+'%'+(b.charging?' (cargando)':'');
       span.innerHTML='<svg width="21" height="11" viewBox="0 0 21 11" aria-hidden="true"><rect x="0.5" y="0.5" width="17" height="10" rx="2" fill="none" stroke="#fff" stroke-opacity=".85"/><rect x="18.5" y="3" width="2" height="5" rx="1" fill="#fff" fill-opacity=".85"/><rect x="2" y="2" width="'+Math.max(1,14*b.level)+'" height="7" rx="1" fill="'+col+'"/>'+(b.charging?'<text x="6" y="9" font-size="9" fill="#fff">&#9889;</text>':'')+'</svg>';
     };
@@ -5583,11 +6007,480 @@ function openRecorder(){
   }});
 }
 
+
+// ========== PHOTO BOOTH (webcam estilo MSN 2004) ==========
+// Cámara real con getUserMedia, filtros cutres de la época y cuenta atrás.
+// La foto se guarda en Mis documentos (.png) y se puede descargar.
+const BOOTH_FILTERS=[
+  {id:'normal', label:'Normal'},
+  {id:'bn',     label:'B/N granulado'},
+  {id:'pixel',  label:'Pixelado'},
+  {id:'lowfi',  label:'Webcam 30 kbps'},
+  {id:'sepia',  label:'Sepia'},
+  {id:'verdoso',label:'Visión nocturna'}
+];
+let _boothFilter='normal';
+function openPhotoBooth(){
+  closeStartMenu();
+  if(focusExisting('booth-stage'))return;
+  const chips=BOOTH_FILTERS.map((f,i)=>`<button type="button" class="booth-fx${i===0?' active':''}" data-fx="${f.id}">${f.label}</button>`).join('');
+  const content=`<div id="booth-root" class="booth-root">
+    <div id="booth-stage" class="booth-stage">
+      <video id="booth-video" playsinline muted style="display:none"></video>
+      <canvas id="booth-canvas" role="img" aria-label="Vista previa de la cámara"></canvas>
+      <div id="booth-count" class="booth-count"></div>
+      <div id="booth-msg" class="booth-msg">Permite la cámara para empezar…</div>
+    </div>
+    <div class="booth-fxrow">${chips}</div>
+    <div class="booth-actions">
+      <button type="button" class="g-btn" id="booth-shot">&#128247; ¡Foto! (3s)</button>
+      <button type="button" class="trash-btn" id="booth-savefs" style="display:none">&#128190; Guardar</button>
+      <button type="button" class="trash-btn" id="booth-dl" style="display:none">&#11015;&#65039; Descargar</button>
+      <button type="button" class="trash-btn" id="booth-retry" style="display:none">&#128260; Otra</button>
+    </div>
+  </div>`;
+  createWindow('Photo Booth','&#128247;',360,400,content,{session:'booth',statusbar:false,onCreated:(id,win)=>{
+    const video=document.getElementById('booth-video');
+    const canvas=document.getElementById('booth-canvas');
+    const ctx=canvas.getContext&&canvas.getContext('2d');
+    const msg=document.getElementById('booth-msg'),countEl=document.getElementById('booth-count');
+    const bShot=document.getElementById('booth-shot'),bSave=document.getElementById('booth-savefs'),bDl=document.getElementById('booth-dl'),bRetry=document.getElementById('booth-retry');
+    let stream=null,raf=null,frozen=false,shotData=null;
+    _boothFilter='normal';
+
+    // Aplica el filtro dibujando el vídeo en el canvas (todo en cliente, sin librerías)
+    const paint=()=>{
+      if(!ctx||!video.videoWidth){ return; }
+      const W=canvas.width=320, H=canvas.height=240;
+      ctx.save();
+      // espejo, como las webcams de verdad
+      ctx.translate(W,0);ctx.scale(-1,1);
+      ctx.drawImage(video,0,0,W,H);
+      ctx.restore();
+      applyBoothFilter(ctx,W,H,_boothFilter);
+    };
+    const loop=()=>{ if(!frozen)paint(); raf=requestAnimationFrame(loop); };
+
+    (async()=>{
+      if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+        msg.textContent='Este navegador no da acceso a la cámara (en 2004 tampoco, tranqui).';
+        bShot.disabled=true; return;
+      }
+      try{
+        stream=await navigator.mediaDevices.getUserMedia({video:{width:320,height:240,facingMode:'user'}});
+        video.srcObject=stream;
+        await video.play().catch(()=>{});
+        msg.style.display='none';
+        loop();
+      }catch(e){
+        msg.textContent='Sin permiso para la cámara. Respetable: aquí nadie te graba.';
+        bShot.disabled=true;
+      }
+    })();
+
+    win.querySelectorAll('.booth-fx').forEach(b=>{
+      b.onclick=()=>{
+        _boothFilter=b.dataset.fx;
+        win.querySelectorAll('.booth-fx').forEach(x=>x.classList.toggle('active',x===b));
+        if(frozen&&shotData){ // re-aplicar filtro sobre la foto congelada
+          const img=new Image();
+          img.onload=()=>{ ctx.drawImage(img,0,0,canvas.width,canvas.height); };
+          img.src=shotData;
+        }
+      };
+    });
+
+    const capturar=()=>{
+      frozen=true;
+      paint(); // último frame con filtro ya aplicado
+      shotData=canvas.toDataURL('image/png');
+      try{playTone(880,0.05,'square',0.4);setTimeout(()=>playTone(1200,0.08,'square',0.3),60);}catch(e){}
+      bShot.style.display='none';
+      bSave.style.display='';bDl.style.display='';bRetry.style.display='';
+      // OLE: una vez hecha la foto, el canvas se puede arrastrar a otras apps
+      osMakeDragSource(canvas,()=>frozen&&shotData?{kind:'image',data:shotData,name:'Foto'}:null);
+      announce('Foto hecha');
+    };
+    bShot.onclick=()=>{
+      if(frozen)return;
+      let n=3;
+      bShot.disabled=true;
+      countEl.textContent=n;countEl.classList.add('show');
+      try{playTone(660,0.1,'sine',0.3);}catch(e){}
+      const tick=setInterval(()=>{
+        n--;
+        if(n>0){ countEl.textContent=n; try{playTone(660,0.1,'sine',0.3);}catch(e){} }
+        else{ clearInterval(tick); countEl.classList.remove('show'); capturar(); bShot.disabled=false; }
+      },1000);
+    };
+    bRetry.onclick=()=>{
+      frozen=false;shotData=null;
+      bShot.style.display='';bSave.style.display='none';bDl.style.display='none';bRetry.style.display='none';
+    };
+    bSave.onclick=()=>{ if(shotData)fsSaveDialog('png','Foto',shotData,null); };
+    bDl.onclick=()=>{
+      if(!shotData)return;
+      const a=document.createElement('a');a.download='photobooth-'+Date.now()+'.png';a.href=shotData;a.click();
+    };
+
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      if(raf)cancelAnimationFrame(raf);
+      if(stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){}}
+    });
+  }});
+}
+// Filtros de imagen sobre el canvas ya pintado (manipula getImageData)
+function applyBoothFilter(ctx,W,H,fx){
+  if(fx==='normal')return;
+  let im; try{ im=ctx.getImageData(0,0,W,H); }catch(e){ return; }
+  const d=im.data;
+  if(fx==='bn'){
+    for(let i=0;i<d.length;i+=4){
+      let g=d[i]*0.3+d[i+1]*0.59+d[i+2]*0.11;
+      g+=(Math.random()-0.5)*46; // grano
+      g=g<0?0:g>255?255:g;
+      d[i]=d[i+1]=d[i+2]=g;
+    }
+    ctx.putImageData(im,0,0);
+  }else if(fx==='sepia'){
+    for(let i=0;i<d.length;i+=4){
+      const r=d[i],g=d[i+1],b=d[i+2];
+      d[i]=Math.min(255,r*0.393+g*0.769+b*0.189);
+      d[i+1]=Math.min(255,r*0.349+g*0.686+b*0.168);
+      d[i+2]=Math.min(255,r*0.272+g*0.534+b*0.131);
+    }
+    ctx.putImageData(im,0,0);
+  }else if(fx==='verdoso'){
+    for(let i=0;i<d.length;i+=4){
+      const g=d[i]*0.3+d[i+1]*0.59+d[i+2]*0.11;
+      d[i]=g*0.2;d[i+1]=Math.min(255,g*1.3);d[i+2]=g*0.2;
+    }
+    ctx.putImageData(im,0,0);
+  }else if(fx==='lowfi'){
+    // color reducido (posterizado) + bloques 4px = webcam de garrafón
+    for(let i=0;i<d.length;i+=4){
+      for(let c=0;c<3;c++)d[i+c]=Math.round(d[i+c]/64)*64;
+    }
+    ctx.putImageData(im,0,0);
+    _boothPixelate(ctx,W,H,4);
+  }else if(fx==='pixel'){
+    _boothPixelate(ctx,W,H,8);
+  }
+}
+function _boothPixelate(ctx,W,H,size){
+  // Baja resolución y reescala sin suavizado
+  const tmp=document.createElement('canvas');tmp.width=Math.ceil(W/size);tmp.height=Math.ceil(H/size);
+  const tctx=tmp.getContext&&tmp.getContext('2d'); if(!tctx)return;
+  tctx.drawImage(ctx.canvas,0,0,tmp.width,tmp.height);
+  ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(tmp,0,0,tmp.width,tmp.height,0,0,W,H);
+  ctx.imageSmoothingEnabled=true;
+}
+
+
+// ========== LECTOR DE EBOOKS (EPUB con tipografía total + PDF nativo) ==========
+// EPUB: se descomprime en el navegador (DecompressionStream, sin librerías), se
+// parsea el OPF/índice y cada capítulo se pinta en un iframe aislado (sin scripts
+// del libro) donde inyectamos los ajustes de lectura en vivo. PDF: visor nativo.
+const READER_FONTS=[
+  {id:'serif',   label:'Serif',   css:'Georgia,"Times New Roman",serif'},
+  {id:'sans',    label:'Sans',    css:'"Segoe UI",Tahoma,Arial,sans-serif'},
+  {id:'lectura', label:'Lectura', css:'"Palatino Linotype","Iowan Old Style",Georgia,serif'},
+  {id:'mono',    label:'Mono',    css:'"Courier New",monospace'}
+];
+const READER_THEMES={
+  light:{bg:'#ffffff',fg:'#1a1a1a',label:'Claro'},
+  sepia:{bg:'#f4ecd8',fg:'#5b4636',label:'Sepia'},
+  night:{bg:'#15151b',fg:'#c9c9d2',label:'Nocturno'}
+};
+function readerSettings(){
+  return {
+    size:Store.getInt('tos-reader-size',19),
+    font:Store.get('tos-reader-font')||'serif',
+    lh:parseFloat(Store.get('tos-reader-lh'))||1.6,
+    width:Store.getInt('tos-reader-width',42),
+    theme:Store.get('tos-reader-theme')||'light',
+    justify:Store.get('tos-reader-justify')!=='off',
+    fg:Store.get('tos-reader-fg')||'',
+    bg:Store.get('tos-reader-bg')||''
+  };
+}
+// CSS que se inyecta en el iframe del capítulo con los ajustes actuales
+function readerCSS(){
+  const s=readerSettings();
+  const th=READER_THEMES[s.theme]||READER_THEMES.light;
+  const fg=s.fg||th.fg, bg=s.bg||th.bg;
+  const font=(READER_FONTS.find(f=>f.id===s.font)||READER_FONTS[0]).css;
+  return `html,body{margin:0;padding:0;background:${bg};color:${fg}}
+    body{font-family:${font};font-size:${s.size}px;line-height:${s.lh};text-align:${s.justify?'justify':'left'};
+      hyphens:auto;-webkit-hyphens:auto;padding:24px max(16px,calc((100% - ${s.width}em)/2));box-sizing:border-box;word-wrap:break-word}
+    img,svg,image{max-width:100%!important;height:auto!important}
+    a{color:${s.theme==='night'?'#7db4ff':'#1a5fd0'}}
+    h1,h2,h3,h4{line-height:1.25;color:${fg}}
+    p{margin:0 0 .8em}
+    pre,code{font-family:'Courier New',monospace;white-space:pre-wrap}
+    table{max-width:100%}`;
+}
+// --- ZIP mínimo: lee el directorio central y devuelve nombre -> {method,comp} ---
+function _zipRead(buf){
+  const dv=new DataView(buf), bytes=new Uint8Array(buf);
+  let eocd=-1;
+  for(let i=buf.byteLength-22;i>=0;i--){ if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;} }
+  if(eocd<0)throw new Error('No parece un ZIP/EPUB válido');
+  const cdOff=dv.getUint32(eocd+16,true), cdCount=dv.getUint16(eocd+10,true);
+  const dec=new TextDecoder('utf-8');
+  const files={}; let p=cdOff;
+  for(let n=0;n<cdCount;n++){
+    if(dv.getUint32(p,true)!==0x02014b50)break;
+    const method=dv.getUint16(p+10,true);
+    const compSize=dv.getUint32(p+20,true);
+    const nameLen=dv.getUint16(p+28,true), extraLen=dv.getUint16(p+30,true), commentLen=dv.getUint16(p+32,true);
+    const lho=dv.getUint32(p+42,true);
+    const name=dec.decode(bytes.subarray(p+46,p+46+nameLen));
+    const lhNameLen=dv.getUint16(lho+26,true), lhExtraLen=dv.getUint16(lho+28,true);
+    const dataStart=lho+30+lhNameLen+lhExtraLen;
+    files[name]={method,comp:bytes.subarray(dataStart,dataStart+compSize)};
+    p+=46+nameLen+extraLen+commentLen;
+  }
+  return files;
+}
+async function _zipInflate(entry){
+  if(!entry)return new Uint8Array(0);
+  if(entry.method===0)return entry.comp.slice();
+  if(typeof DecompressionStream==='undefined')throw new Error('Este navegador no puede descomprimir el EPUB (falta DecompressionStream).');
+  const ds=new DecompressionStream('deflate-raw');
+  const stream=new Blob([entry.comp]).stream().pipeThrough(ds);
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+function _zipText(files,name){ const e=files[name]; if(!e)return Promise.resolve(''); return _zipInflate(e).then(u=>new TextDecoder('utf-8').decode(u)); }
+function _dirOf(path){ const i=path.lastIndexOf('/'); return i<0?'':path.slice(0,i+1); }
+function _resolvePath(base,rel){
+  rel=rel.split('#')[0].split('?')[0];
+  if(!rel)return base;
+  const parts=(base+rel).split('/'); const out=[];
+  for(const seg of parts){ if(seg==='..')out.pop(); else if(seg!=='.'&&seg!=='')out.push(seg); }
+  return out.join('/');
+}
+// --- Parsea un EPUB (ArrayBuffer) a {title,author,spine:[href],toc:[{label,href}],files,opfDir} ---
+async function parseEpub(buf){
+  const files=_zipRead(buf);
+  const containerXml=await _zipText(files,'META-INF/container.xml');
+  const cont=new DOMParser().parseFromString(containerXml,'application/xml');
+  const rootfile=cont.querySelector('rootfile');
+  const opfPath=rootfile?rootfile.getAttribute('full-path'):null;
+  if(!opfPath)throw new Error('EPUB sin OPF');
+  const opfDir=_dirOf(opfPath);
+  const opf=new DOMParser().parseFromString(await _zipText(files,opfPath),'application/xml');
+  // Búsqueda por localName: robusta ante namespaces (dc:title, xmlns por defecto del OPF)
+  const byName=(root,ln)=>[...root.getElementsByTagName('*')].filter(e=>e.localName===ln);
+  const first=(root,ln)=>byName(root,ln)[0];
+  const title=((first(opf,'title')||{}).textContent||'Libro');
+  const author=((first(opf,'creator')||{}).textContent||'');
+  // manifest id -> href
+  const man={};
+  byName(opf,'item').forEach(it=>{ if(it.getAttribute('id'))man[it.getAttribute('id')]={href:it.getAttribute('href'),type:it.getAttribute('media-type'),props:it.getAttribute('properties')||''}; });
+  // spine (orden de lectura)
+  const spine=[];
+  byName(opf,'itemref').forEach(ir=>{ const m=man[ir.getAttribute('idref')]; if(m&&/html|xml/.test(m.type||''))spine.push(_resolvePath(opfDir,m.href)); });
+  // TOC: nav (epub3) o ncx (epub2)
+  let toc=[];
+  const navItem=Object.values(man).find(m=>/nav/.test(m.props));
+  if(navItem){
+    const navHref=_resolvePath(opfDir,navItem.href);
+    const navDoc=new DOMParser().parseFromString(await _zipText(files,navHref),'application/xml');
+    const nav=[...navDoc.getElementsByTagName('*')].find(e=>e.localName==='nav')||navDoc;
+    [...nav.getElementsByTagName('*')].filter(e=>e.localName==='a').forEach(a=>toc.push({label:(a.textContent||'').trim(),href:_resolvePath(_dirOf(navHref),a.getAttribute('href')||'')}));
+  }
+  if(!toc.length){
+    const ncxItem=Object.values(man).find(m=>/ncx/.test(m.type||''));
+    if(ncxItem){
+      const ncxHref=_resolvePath(opfDir,ncxItem.href);
+      const ncx=new DOMParser().parseFromString(await _zipText(files,ncxHref),'application/xml');
+      [...ncx.getElementsByTagName('*')].filter(e=>e.localName==='navPoint').forEach(np=>{ const t=[...np.getElementsByTagName('*')].find(e=>e.localName==='text'), c=[...np.getElementsByTagName('*')].find(e=>e.localName==='content'); if(t&&c)toc.push({label:t.textContent.trim(),href:_resolvePath(_dirOf(ncxHref),c.getAttribute('src')||'')}); });
+    }
+  }
+  if(!toc.length)toc=spine.map((h,i)=>({label:'Capítulo '+(i+1),href:h}));
+  return {title:title.trim(),author:author.trim(),spine,toc,files,opfDir};
+}
+
+let _ebookLoadFile=null;
+function openEbookReader(preloadFile){
+  closeStartMenu();
+  if(focusExisting('reader-stage')){ if(preloadFile&&_ebookLoadFile)_ebookLoadFile(preloadFile); return; }
+  const content=`<div id="reader-root" class="reader-root">
+    <div class="reader-toolbar">
+      <button type="button" class="reader-btn" id="rd-open" title="${t('btn.open')}">&#128194; ${t('btn.open')}</button>
+      <button type="button" class="reader-btn" id="rd-prev" title="Anterior" disabled>&#9664;</button>
+      <span class="reader-pos" id="rd-pos">—</span>
+      <button type="button" class="reader-btn" id="rd-next" title="Siguiente" disabled>&#9654;</button>
+      <button type="button" class="reader-btn" id="rd-toc" title="Índice" disabled>&#9776;</button>
+      <button type="button" class="reader-btn reader-aa" id="rd-aa" title="${t('reader.type')}" disabled>A<small>A</small></button>
+      <input type="file" id="rd-file" accept=".epub,.pdf,application/epub+zip,application/pdf" hidden>
+    </div>
+    <div class="reader-stage" id="reader-stage">
+      <div class="reader-empty" id="rd-empty">&#128214;<br><b>${t('reader.title')}</b><br><span>${t('reader.empty')}</span></div>
+      <iframe id="rd-frame" class="reader-frame" title="Contenido del libro" sandbox="allow-same-origin" style="display:none"></iframe>
+      <div id="rd-pdf" class="reader-pdf" style="display:none"></div>
+    </div>
+    <div class="reader-titlebar" id="rd-book"></div>
+    <!-- Panel de índice -->
+    <div class="reader-panel" id="rd-toc-panel" hidden><div class="reader-panel-h">${t('reader.toc')}<button type="button" class="rd-panel-x" data-close aria-label="Cerrar">&#10005;</button></div><div class="reader-toc-list" id="rd-toc-list"></div></div>
+    <!-- Panel de tipografía -->
+    <div class="reader-panel reader-type" id="rd-type-panel" hidden>
+      <div class="reader-panel-h">${t('reader.type')}<button type="button" class="rd-panel-x" data-close aria-label="Cerrar">&#10005;</button></div>
+      <div class="rd-row"><span>${t('reader.size')}</span><button type="button" class="rd-step" data-a="size-">A−</button><span id="rd-size-v" class="rd-val"></span><button type="button" class="rd-step" data-a="size+">A+</button></div>
+      <div class="rd-row"><span>${t('reader.font')}</span><select id="rd-font">${READER_FONTS.map(f=>'<option value="'+f.id+'">'+f.label+'</option>').join('')}</select></div>
+      <div class="rd-row"><span>${t('reader.lh')}</span><input type="range" id="rd-lh" min="1.2" max="2.4" step="0.1"></div>
+      <div class="rd-row"><span>${t('reader.width')}</span><input type="range" id="rd-width" min="26" max="70" step="2"></div>
+      <div class="rd-row"><span>${t('reader.theme')}</span><span class="rd-themes">${Object.keys(READER_THEMES).map(k=>'<button type="button" class="rd-theme" data-th="'+k+'" title="'+READER_THEMES[k].label+'" style="background:'+READER_THEMES[k].bg+';color:'+READER_THEMES[k].fg+'">'+READER_THEMES[k].label[0]+'</button>').join('')}</span></div>
+      <div class="rd-row"><span>${t('reader.custom')}</span><label class="rd-col">Aa <input type="color" id="rd-fg"></label><label class="rd-col">&#9632; <input type="color" id="rd-bg"></label></div>
+      <div class="rd-row"><label class="rd-check"><input type="checkbox" id="rd-justify"> ${t('reader.justify')}</label></div>
+    </div>
+  </div>`;
+  createWindow(t('reader.title'),'&#128214;',580,540,content,{session:'reader',statusbar:false,onCreated:(id,win)=>{
+    const stage=win.querySelector('#reader-stage'), frame=win.querySelector('#rd-frame'), pdfBox=win.querySelector('#rd-pdf'), empty=win.querySelector('#rd-empty');
+    const posEl=win.querySelector('#rd-pos'), bookEl=win.querySelector('#rd-book');
+    const bPrev=win.querySelector('#rd-prev'), bNext=win.querySelector('#rd-next'), bToc=win.querySelector('#rd-toc'), bAa=win.querySelector('#rd-aa');
+    let book=null, idx=0, blobs=[], pdfUrl=null;
+    const freeBlobs=()=>{ blobs.forEach(u=>{try{URL.revokeObjectURL(u);}catch(e){}}); blobs=[]; if(pdfUrl){try{URL.revokeObjectURL(pdfUrl);}catch(e){}pdfUrl=null;} };
+
+    // -- Cargar un archivo (epub o pdf) --
+    const load=(file)=>{
+      if(!file)return;
+      freeBlobs();
+      const name=(file.name||'').toLowerCase();
+      const isPdf=name.endsWith('.pdf')||file.type==='application/pdf';
+      if(isPdf){ openPdf(file); return; }
+      const fr=new FileReader();
+      fr.onload=async()=>{
+        try{
+          book=await parseEpub(fr.result);
+          idx=0;
+          bookEl.textContent=book.title+(book.author?' — '+book.author:'');
+          [bPrev,bNext,bToc,bAa].forEach(b=>b.disabled=false);
+          buildToc();
+          await showChapter(0);
+          notify({icon:'&#128214;',title:t('reader.title'),body:'«'+book.title+'» abierto'});
+        }catch(e){ xpDialog(t('reader.title'),'<div class="dlg-icon">&#128214;</div><div>'+t('reader.fail')+'<br><span class="dlg-sub">'+escHtml(String(e.message||e))+'</span></div>'); }
+      };
+      fr.readAsArrayBuffer(file);
+    };
+    const openPdf=(file)=>{
+      book=null; frame.style.display='none'; empty.style.display='none';
+      [bPrev,bNext,bToc,bAa].forEach(b=>b.disabled=true);
+      try{ pdfUrl=URL.createObjectURL(file); }catch(e){ return; }
+      pdfBox.style.display='block';
+      pdfBox.innerHTML='<iframe class="reader-pdf-frame" src="'+pdfUrl+'#toolbar=1" title="PDF"></iframe><div class="reader-pdf-note">'+t('reader.pdfnote')+'</div>';
+      bookEl.textContent=file.name||'PDF';
+      posEl.textContent='PDF';
+    };
+
+    // -- Renderiza un capítulo del spine en el iframe con los ajustes de lectura --
+    const showChapter=async(i)=>{
+      if(!book||!book.spine.length)return;
+      idx=Math.max(0,Math.min(book.spine.length-1,i));
+      const href=book.spine[idx];
+      let html=''; try{ html=await _zipText(book.files,href); }catch(e){ html='<p>?</p>'; }
+      const doc=new DOMParser().parseFromString(html,'application/xhtml+xml');
+      const body=doc.querySelector('body')||doc.documentElement;
+      // Rehacer imágenes -> blob URLs desde el zip
+      const dir=_dirOf(href);
+      const imgs=[...body.querySelectorAll('img,image')];
+      for(const im of imgs){
+        const attr=im.getAttribute('src')||im.getAttribute('xlink:href')||im.getAttribute('href');
+        if(!attr||/^data:|^https?:/.test(attr))continue;
+        const rp=_resolvePath(dir,attr); const entry=book.files[rp];
+        if(entry){ try{ const u=await _zipInflate(entry); const blob=new Blob([u]); const url=URL.createObjectURL(blob); blobs.push(url); im.setAttribute('src',url); im.removeAttribute('xlink:href'); }catch(e){} }
+      }
+      const inner=body.innerHTML;
+      frame.srcdoc='<!doctype html><html><head><meta charset="utf-8"><style id="reader-style">'+readerCSS()+'</style></head><body>'+inner+'</body></html>';
+      empty.style.display='none'; pdfBox.style.display='none'; frame.style.display='block';
+      posEl.textContent=(idx+1)+' / '+book.spine.length;
+      bPrev.disabled=idx<=0; bNext.disabled=idx>=book.spine.length-1;
+      Store.set('tos-reader-last',book.title);
+      // enlaces internos + scroll arriba al cargar
+      frame.onload=()=>{
+        try{
+          const fd=frame.contentDocument;
+          fd.documentElement.scrollTop=0;
+          // Volver a leer (tocar el libro) cierra los paneles de índice/tipografía
+          fd.addEventListener('mousedown',closePanels,true);
+          fd.addEventListener('touchstart',closePanels,{capture:true,passive:true});
+          fd.querySelectorAll('a[href]').forEach(a=>{
+            const h=a.getAttribute('href');
+            if(h&&!/^https?:|^mailto:/.test(h)){
+              a.addEventListener('click',(e)=>{ e.preventDefault(); const target=_resolvePath(dir,h); const si=book.spine.indexOf(target); if(si>=0)showChapter(si); });
+            }else if(h){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); }
+          });
+        }catch(e){}
+      };
+    };
+    // Aplica los ajustes al capítulo ya cargado sin recargarlo (instantáneo)
+    const applyLive=()=>{
+      try{ const st=frame.contentDocument&&frame.contentDocument.getElementById('reader-style'); if(st)st.textContent=readerCSS(); }catch(e){}
+    };
+
+    const buildToc=()=>{
+      const list=win.querySelector('#rd-toc-list');
+      list.innerHTML=book.toc.map((e,i)=>'<button type="button" class="rd-toc-item" data-i="'+i+'">'+escHtml(e.label||('Sección '+(i+1)))+'</button>').join('');
+      list.querySelectorAll('.rd-toc-item').forEach(b=>{
+        b.onclick=()=>{
+          const e=book.toc[+b.dataset.i]; const target=e.href.split('#')[0];
+          const si=book.spine.indexOf(target); if(si>=0)showChapter(si);
+          win.querySelector('#rd-toc-panel').hidden=true;
+        };
+      });
+    };
+
+    // -- Controles --
+    win.querySelector('#rd-open').onclick=()=>win.querySelector('#rd-file').click();
+    win.querySelector('#rd-file').onchange=(e)=>{ if(e.target.files&&e.target.files[0])load(e.target.files[0]); e.target.value=''; };
+    bPrev.onclick=()=>showChapter(idx-1);
+    bNext.onclick=()=>showChapter(idx+1);
+    const closePanels=()=>{ win.querySelector('#rd-toc-panel').hidden=true; win.querySelector('#rd-type-panel').hidden=true; };
+    win.querySelectorAll('.rd-panel-x[data-close]').forEach(b=>b.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); closePanels(); });
+    const togglePanel=(sel)=>{ const p=win.querySelector(sel); const other=win.querySelector(sel==='#rd-toc-panel'?'#rd-type-panel':'#rd-toc-panel'); other.hidden=true; p.hidden=!p.hidden; };
+    bToc.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); togglePanel('#rd-toc-panel'); };
+    bAa.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); togglePanel('#rd-type-panel'); };
+    // Cerrar los paneles al pulsar fuera de ellos (y no en sus botones)
+    const outside=(e)=>{ if(win.querySelector('#rd-toc-panel').hidden&&win.querySelector('#rd-type-panel').hidden)return; const t=e.target; if(!t.closest||(!t.closest('.reader-panel')&&t!==bToc&&t!==bAa&&!bToc.contains(t)&&!bAa.contains(t)))closePanels(); };
+    document.addEventListener('mousedown',outside,true);
+    (win._cleanups=win._cleanups||[]).push(()=>document.removeEventListener('mousedown',outside,true));
+
+    // Tipografía: leer valores actuales en el panel
+    const sizeV=win.querySelector('#rd-size-v'), fontSel=win.querySelector('#rd-font'), lhR=win.querySelector('#rd-lh'), widthR=win.querySelector('#rd-width'), fgC=win.querySelector('#rd-fg'), bgC=win.querySelector('#rd-bg'), justCk=win.querySelector('#rd-justify');
+    const syncPanel=()=>{
+      const s=readerSettings();
+      sizeV.textContent=s.size+'px'; fontSel.value=s.font; lhR.value=s.lh; widthR.value=s.width; justCk.checked=s.justify;
+      const th=READER_THEMES[s.theme]||READER_THEMES.light;
+      fgC.value=s.fg||th.fg; bgC.value=s.bg||th.bg;
+      win.querySelectorAll('.rd-theme').forEach(b=>b.classList.toggle('active',b.dataset.th===s.theme));
+    };
+    win.querySelectorAll('.rd-step').forEach(b=>{ b.onclick=()=>{ let sz=Store.getInt('tos-reader-size',19); sz=b.dataset.a==='size+'?Math.min(40,sz+2):Math.max(11,sz-2); Store.set('tos-reader-size',sz); syncPanel(); applyLive(); }; });
+    fontSel.onchange=()=>{ Store.set('tos-reader-font',fontSel.value); applyLive(); };
+    lhR.oninput=()=>{ Store.set('tos-reader-lh',lhR.value); applyLive(); };
+    widthR.oninput=()=>{ Store.set('tos-reader-width',widthR.value); applyLive(); };
+    justCk.onchange=()=>{ Store.set('tos-reader-justify',justCk.checked?'on':'off'); applyLive(); };
+    win.querySelectorAll('.rd-theme').forEach(b=>{ b.onclick=()=>{ Store.set('tos-reader-theme',b.dataset.th); Store.del('tos-reader-fg'); Store.del('tos-reader-bg'); syncPanel(); applyLive(); }; });
+    fgC.oninput=()=>{ Store.set('tos-reader-fg',fgC.value); syncPanel(); applyLive(); };
+    bgC.oninput=()=>{ Store.set('tos-reader-bg',bgC.value); syncPanel(); applyLive(); };
+    syncPanel();
+
+    // Teclado: flechas cambian de capítulo (con la ventana activa)
+    const kd=(e)=>{ if(activeWindowId!==id||!book)return; if(e.key==='ArrowRight'){bNext.click();} else if(e.key==='ArrowLeft'){bPrev.click();} };
+    document.addEventListener('keydown',kd);
+
+    _ebookLoadFile=load;
+    (win._cleanups=win._cleanups||[]).push(()=>{ document.removeEventListener('keydown',kd); freeBlobs(); if(_ebookLoadFile===load)_ebookLoadFile=null; });
+    if(preloadFile)load(preloadFile);
+  }});
+}
+
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
-const OS_THEMES=['luna','olive','silver','classic'];
+const OS_THEMES=['luna','olive','silver','classic','aero'];
 function applyTheme(t){
   if(OS_THEMES.indexOf(t)<0)t='luna';
-  document.body.classList.remove('theme-olive','theme-silver','theme-classic');
+  document.body.classList.remove('theme-olive','theme-silver','theme-classic','theme-aero');
   if(t!=='luna')document.body.classList.add('theme-'+t);
   Store.set('tos-theme',t);
   // Un tema completo manda sobre los colores sueltos personalizados
@@ -5599,6 +6492,114 @@ function applyTheme(t){
     const ws=document.getElementById('window-color-style');
     if(ws)ws.remove();
   }
+}
+
+// ========== MÁQUINA DEL TIEMPO (95 → XP → Vista) ==========
+// Un dial que cambia TODO el sistema entre tres eras: tema del chrome, fondo de
+// escritorio, tipografía base y sonido, con una transición de "viaje en el tiempo".
+const OS_ERAS=[
+  {id:'95',   label:'Windows 95',    year:1995, theme:'classic', wp:'teal95', desc:'Grises, biseles y esquinas rectas. La era del disquete.'},
+  {id:'xp',   label:'Windows XP',    year:2001, theme:'luna',    wp:'bliss',  desc:'Azul Luna, la colina Bliss y el botón verde. El clásico.'},
+  {id:'vista',label:'Windows Vista', year:2007, theme:'aero',    wp:'aurora', desc:'Aero Glass: transparencias, brillos y bordes redondeados.'}
+];
+function eraFromTheme(theme){ const e=OS_ERAS.find(e=>e.theme===theme); return e?e.id:'xp'; }
+function currentEra(){ return Store.get('tos-era')||eraFromTheme(Store.get('tos-theme')||'luna'); }
+// Campanilla característica de cada época (arpegio sintetizado distinto)
+function _eraChime(id){
+  try{
+    if(id==='95'){ // acorde ascendente sobrio
+      playTone(392,0.18,'sine',0.4);setTimeout(()=>playTone(523,0.18,'sine',0.4),150);setTimeout(()=>playTone(659,0.3,'sine',0.4),300);
+    }else if(id==='xp'){ // el clásico de 4 notas etéreo
+      playTone(659,0.16,'sine',0.4);setTimeout(()=>playTone(880,0.16,'sine',0.4),120);setTimeout(()=>playTone(587,0.16,'sine',0.4),260);setTimeout(()=>playTone(784,0.4,'sine',0.4),400);
+    }else{ // vista: brillante y cristalino
+      playTone(784,0.14,'triangle',0.35);setTimeout(()=>playTone(1046,0.14,'triangle',0.35),110);setTimeout(()=>playTone(1318,0.14,'triangle',0.35),220);setTimeout(()=>playTone(1568,0.45,'sine',0.35),330);
+    }
+  }catch(e){}
+}
+// Cambia el sistema entero a una era. animate=true muestra la transición temporal.
+function applyEra(id,animate){
+  const e=OS_ERAS.find(e=>e.id===id)||OS_ERAS[1];
+  const swap=()=>{
+    document.body.classList.remove('era-95','era-xp','era-vista');
+    document.body.classList.add('era-'+e.id);
+    applyTheme(e.theme);
+    applyWallpaper(e.wp); Store.set('tos-wp',e.wp); // el fondo también viaja
+    Store.set('tos-era',e.id);
+  };
+  if(animate){
+    timeWarp(e.year, swap, ()=>{ _eraChime(e.id); announce('Bienvenido a '+e.label+', año '+e.year); });
+  }else{ swap(); }
+}
+// Restaura la clase de era al arrancar (para la tipografía) según el tema guardado
+function restoreEraClass(){
+  document.body.classList.remove('era-95','era-xp','era-vista');
+  document.body.classList.add('era-'+currentEra());
+}
+
+// Transición de viaje en el tiempo: cubre la pantalla con un vórtice + el año, hace
+// el cambio a mitad (oculto) y revela la nueva era. Sin parpadeos.
+function timeWarp(year, midCb, doneCb){
+  const old=document.getElementById('time-warp'); if(old)old.remove();
+  const ov=document.createElement('div');
+  ov.id='time-warp';
+  ov.innerHTML='<div class="tw-vortex"></div><div class="tw-scan"></div><div class="tw-year">'+year+'</div>';
+  document.body.appendChild(ov);
+  // whoosh sintetizado (barrido de frecuencia)
+  try{
+    const ac=getAudioCtx&&getAudioCtx();
+    if(ac&&ac.createOscillator){
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.type='sawtooth';o.frequency.setValueAtTime(120,ac.currentTime);
+      o.frequency.exponentialRampToValueAtTime(1400,ac.currentTime+0.45);
+      o.frequency.exponentialRampToValueAtTime(90,ac.currentTime+0.9);
+      g.gain.setValueAtTime(0.0001,ac.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.18*(masterVolume||1),ac.currentTime+0.1);
+      g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+0.9);
+      o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+0.95);
+    }
+  }catch(e){}
+  requestAnimationFrame(()=>ov.classList.add('go'));
+  // a mitad de la animación (con la pantalla cubierta) se hace el cambio real
+  setTimeout(()=>{ try{midCb&&midCb();}catch(e){} },460);
+  setTimeout(()=>{ ov.classList.add('out'); },560);
+  setTimeout(()=>{ ov.remove(); try{doneCb&&doneCb();}catch(e){} },1050);
+}
+
+function openTimeMachine(){
+  closeStartMenu();
+  if(focusExisting('timemachine-root'))return;
+  const idx=Math.max(0,OS_ERAS.findIndex(e=>e.id===currentEra()));
+  const content=`<div id="timemachine-root" class="tm2-root">
+    <div class="tm2-screen" id="tm2-screen">
+      <div class="tm2-mock" id="tm2-mock" aria-hidden="true">
+        <div class="tm2-mini-taskbar"><span class="tm2-mini-start">inicio</span></div>
+        <div class="tm2-mini-win"><div class="tm2-mini-title">Ventana</div><div class="tm2-mini-body"></div></div>
+      </div>
+      <div class="tm2-info">
+        <div class="tm2-year" id="tm2-year"></div>
+        <div class="tm2-name" id="tm2-name"></div>
+        <div class="tm2-desc" id="tm2-desc"></div>
+      </div>
+    </div>
+    <input type="range" id="tm2-slider" min="0" max="${OS_ERAS.length-1}" step="1" value="${idx<0?1:idx}" aria-label="Era del sistema" list="tm2-marks">
+    <div class="tm2-ticks">${OS_ERAS.map(e=>'<span>'+e.year+'</span>').join('')}</div>
+    <div class="tm2-hint">Arrastra el dial y suelta para viajar. Cambia todo el sistema.</div>
+  </div>`;
+  createWindow('Máquina del tiempo','&#9203;',380,340,content,{session:'timemachine',statusbar:false,onCreated:()=>{
+    const slider=document.getElementById('tm2-slider');
+    const yearEl=document.getElementById('tm2-year'),nameEl=document.getElementById('tm2-name'),descEl=document.getElementById('tm2-desc'),screen=document.getElementById('tm2-screen');
+    // Vista previa en vivo mientras arrastras (sin aplicar aún)
+    const preview=(i)=>{
+      const e=OS_ERAS[i]; if(!e)return;
+      yearEl.textContent=e.year; nameEl.textContent=e.label; descEl.textContent=e.desc;
+      screen.dataset.era=e.id;
+    };
+    slider.addEventListener('input',()=>preview(+slider.value));
+    // Al soltar el dial se viaja de verdad, con transición — pero solo si cambia
+    const travel=()=>{ const e=OS_ERAS[+slider.value]; if(e&&e.id!==currentEra())applyEra(e.id,true); };
+    slider.addEventListener('change',travel);
+    preview(+slider.value);
+  }});
 }
 
 // ========== MÓDEM DE 56K (la banda sonora del trauma) ==========
@@ -6103,7 +7104,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -6502,7 +7503,8 @@ function toggleStartMenu(){
   sm.classList.toggle('show');
   // En escritorio, el foco directo al buscador; en móvil no (saltaría el teclado)
   if(sm.classList.contains('show')&&window.innerWidth>600){
-    setTimeout(()=>{const i=document.getElementById('start-search');if(i)try{i.focus();}catch(e){}},60);
+    // El foco al buscador solo si está a la vista (en la era 95 no hay buscador)
+    setTimeout(()=>{const i=document.getElementById('start-search');if(i&&i.offsetParent!==null)try{i.focus();}catch(e){}},60);
   }
 }
 const START_FLYOUTS=[
@@ -7007,7 +8009,8 @@ const WALLPAPERS=[
   {id:'dark',label:'Oscuro',css:'linear-gradient(180deg,#0a0a0a 0%,#1a1a2e 30%,#16213e 60%,#0f3460 100%)'},
   {id:'forest',label:'Bosque',css:'linear-gradient(180deg,#0b3d0b 0%,#1a5c1a 20%,#2d7a2d 40%,#4a9a3a 55%,#6ab850 70%,#a0d880 85%,#d0f0b0 100%)'},
   {id:'rose',label:'Rosa',css:'linear-gradient(180deg,#4a0020 0%,#8b0040 20%,#cc2266 40%,#ff6699 60%,#ff99bb 75%,#ffcce0 90%,#ffe8f0 100%)'},
-  {id:'midnight',label:'Medianoche',css:'linear-gradient(180deg,#000428 0%,#004e92 50%,#000428 100%)'}
+  {id:'midnight',label:'Medianoche',css:'linear-gradient(180deg,#000428 0%,#004e92 50%,#000428 100%)'},
+  {id:'teal95',label:'Teal 95',css:'linear-gradient(135deg,#0a7a7a 0%,#008080 45%,#016b6b 100%)'}
 ];
 
 // Aplica un fondo: "bliss" muestra el SVG vectorial; el resto lo oculta
@@ -7454,10 +8457,12 @@ function openCalculator(){
     const pad=document.getElementById('calc-sci-pad');
     const setMode=(m)=>{
       const esSci=m==='sci';
-      pad.hidden=!esSci;
+      pad.hidden=!esSci; // ahora sí oculta: hay regla .calc-scipad[hidden]{display:none}
       win.querySelectorAll('.calc-mode').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
       Store.set('tos-calc-mode',m);
-      win.style.height=esSci?'470px':'360px';
+      // La científica necesita más alto (fila extra de teclas) y algo más de ancho (5 columnas)
+      win.style.height=esSci?'486px':'360px';
+      if(!win.classList.contains('maximized'))win.style.width=esSci?'300px':'260px';
     };
     win.querySelectorAll('.calc-mode').forEach(b=>{ b.onclick=()=>setMode(b.dataset.m); });
     setMode(Store.get('tos-calc-mode')==='sci'?'sci':'std');
@@ -7739,7 +8744,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -7782,10 +8787,12 @@ function makeStickyEl(note){
   const d=document.createElement('div');
   d.className='sticky-note';d.dataset.id=note.id;
   d.style.cssText=`position:absolute;left:${note.x}px;top:${note.y}px;width:170px;min-height:150px;background:${note.color};box-shadow:2px 3px 10px rgba(0,0,0,.3);z-index:50;display:flex;flex-direction:column;border-radius:2px;font-family:'Comic Sans MS','Trebuchet MS',sans-serif`;
-  d.innerHTML=`<div class="sticky-bar" style="height:20px;cursor:move;background:rgba(0,0,0,.12);display:flex;justify-content:flex-end;align-items:center"><button type="button" class="sticky-del" aria-label="Eliminar nota" style="cursor:pointer;padding:0 7px;font-weight:bold;color:#444">×</button></div>
+  d.innerHTML=`<div class="sticky-bar" style="height:20px;cursor:move;background:rgba(0,0,0,.12);display:flex;justify-content:space-between;align-items:center"><span class="sticky-drag os-drag-chip" title="Arrastra el texto a Mis documentos" style="cursor:grab;padding:0 6px;font-size:11px">&#9995;</span><button type="button" class="sticky-del" aria-label="Eliminar nota" style="cursor:pointer;padding:0 7px;font-weight:bold;color:#444">×</button></div>
   <textarea class="sticky-text" aria-label="Nota adhesiva" style="flex:1;border:none;outline:none;resize:none;background:transparent;padding:7px;font-family:inherit;font-size:13px;color:#222">${(note.text||'').replace(/[<&]/g,c=>c==='<'?'&lt;':'&amp;')}</textarea>`;
   const ta=d.querySelector('.sticky-text');
   ta.addEventListener('input',()=>{note.text=ta.value;persistStickies();});
+  const grip=d.querySelector('.sticky-drag');
+  if(grip)osMakeDragSource(grip,()=>ta.value.trim()?{kind:'text',data:ta.value,name:'Nota'}:null); // OLE: arrastrar el texto
   const del=d.querySelector('.sticky-del');
   const remove=(e)=>{ if(e){e.stopPropagation();e.preventDefault();} if(d._cleanup)d._cleanup(); d.remove(); persistStickies(); };
   del.addEventListener('click',remove);
@@ -7878,6 +8885,7 @@ function openPaint(){
           <button class="game-btn" id="paint-save" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#40c040,#208020)">${t('btn.download')}</button>
           <button class="game-btn" id="paint-wallpaper" style="padding:2px 6px;font-size:10px;margin:0;background:linear-gradient(180deg,#4a90d8,#1f5fa8)" title="Establecer el dibujo como fondo de escritorio">&#128444;&#65039; ${t('paint.wallpaper')}</button>
           <button class="game-btn game-btn-sm" id="paint-print" title="${t('btn.print')}">&#128424;&#65039; ${t('btn.print')}</button>
+          <span class="game-btn game-btn-sm os-drag-chip" id="paint-drag" title="Arrastra el dibujo a otra app (MSN, Mis documentos...)">&#9995; Arrastrar</span>
         </div>
       </div>
     </div>
@@ -8204,6 +9212,22 @@ function openPaint(){
     document.getElementById('paint-open').onclick=()=>document.getElementById('paint-file').click();
     document.getElementById('paint-file').addEventListener('change',(e)=>{if(e.target.files&&e.target.files.length)loadImageIntoPaint(e.target.files[0]);e.target.value='';});
     _paintLoadImage=loadImageIntoPaint;
+    // Cargar una imagen desde un dataURL (para OLE: soltar un dibujo/WordArt/foto)
+    const loadDataURLIntoPaint=(dataURL)=>{
+      const im=new Image();
+      im.onload=()=>{ const c2=canvas.getContext('2d'); if(!c2)return;
+        c2.fillStyle='#fff';c2.fillRect(0,0,canvas.width,canvas.height);
+        const sc=Math.min(canvas.width/im.width,canvas.height/im.height,1);
+        const w2=im.width*sc,h2=im.height*sc;
+        c2.drawImage(im,(canvas.width-w2)/2,(canvas.height-h2)/2,w2,h2);
+        saveState();
+      };
+      im.src=dataURL;
+    };
+    // OLE: el lienzo acepta imágenes soltadas y el dibujo se puede arrastrar a otras apps
+    osMakeDropTarget(canvas,'image',(p)=>loadDataURLIntoPaint(p.data));
+    const paintDrag=document.getElementById('paint-drag');
+    if(paintDrag)osMakeDragSource(paintDrag,()=>{ let d;try{d=canvas.toDataURL('image/png');}catch(e){return null;} return {kind:'image',data:d,name:'Dibujo'}; });
     (document.getElementById(id)._cleanups=document.getElementById(id)._cleanups||[]).push(()=>{if(_paintLoadImage===loadImageIntoPaint)_paintLoadImage=null;});
     // Imprimir de verdad: solo el lienzo, vía iframe oculto
     document.getElementById('paint-print').onclick=()=>{

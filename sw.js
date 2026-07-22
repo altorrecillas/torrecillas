@@ -8,7 +8,7 @@
 // Estrategia de red: red primero para el documento (index.html siempre fresco si hay
 // conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
 // solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.26.0';
+const APP_VERSION = '0.27.0';
 const CACHE = 'tos-' + APP_VERSION;
 const ASSETS = [
   './', './index.html', './og.png', './apple-touch-icon.png',
@@ -37,8 +37,28 @@ self.addEventListener('message', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
+
+  // Share target: el sistema comparte una imagen CON la app instalada (POST). Se
+  // guarda en la caché y se redirige a la app, que la abrirá al cargar (?shared=1).
+  if (e.request.method === 'POST' && url.pathname.endsWith('/share-target')) {
+    e.respondWith((async () => {
+      try {
+        const form = await e.request.formData();
+        const file = form.get('image') || form.get('file') || form.getAll('image')[0];
+        if (file && file.size) {
+          const c = await caches.open(CACHE);
+          await c.put('shared-file', new Response(file, {
+            headers: { 'Content-Type': file.type || 'image/png', 'X-Share-Name': encodeURIComponent(file.name || 'compartido') }
+          }));
+        }
+      } catch (err) { /* si algo falla, se abre la app igualmente */ }
+      return Response.redirect('./?shared=1', 303);
+    })());
+    return;
+  }
+
+  if (e.request.method !== 'GET') return;
   if (url.origin !== location.origin) return; // los proyectos enlazados van directos a la red
 
   if (e.request.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
