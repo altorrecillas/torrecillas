@@ -2825,7 +2825,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.29.0';
+const APP_VERSION = '0.29.1';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -3771,9 +3771,9 @@ const bootMsgInt=setInterval(()=>{
   const el=document.getElementById('boot-status');
   if(el&&bootMsgIdx<bootMsgs.length){
     el.style.opacity='0';
-    setTimeout(()=>{el.textContent=bootMsgs[bootMsgIdx];el.style.opacity='0.9';},250);
+    setTimeout(()=>{el.textContent=bootMsgs[bootMsgIdx];el.style.opacity='0.9';},180);
   }
-},900);
+},600);
 
 setTimeout(()=>{
   clearInterval(bootMsgInt);
@@ -3786,7 +3786,7 @@ setTimeout(()=>{
     wel.classList.remove('show');
     setTimeout(()=>{wel.style.display='none';},600);
   },1400);
-},3700);
+},2500);
 
 function drawStartMenuIcons(){
   const sa=document.querySelector('.start-avatar canvas');
