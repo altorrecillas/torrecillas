@@ -163,6 +163,58 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .welcome-text{color:#fff;font-size:46px;font-style:italic;font-weight:bold;text-shadow:2px 3px 10px rgba(0,0,0,.45);animation:welcomeIn .8s ease both}
 .welcome-text::after{content:'';display:block;height:2px;margin-top:10px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent)}
 @keyframes welcomeIn{0%{opacity:0;transform:translateX(-26px)}100%{opacity:1;transform:none}}
+/* ═══════════════════  § INICIO DE SESIÓN (cuenta local cifrada)  ═══════════════════ */
+#login-screen{position:fixed;inset:0;z-index:9600;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse 90% 65% at 50% 38%,#0b1430 0%,#050810 55%,#000 100%);font-family:Tahoma,'MS Sans Serif',sans-serif}
+#login-screen[hidden]{display:none}
+.login-box{display:flex;flex-direction:column;align-items:center;gap:12px;width:min(320px,88vw);padding:22px;animation:bootIn .5s ease both}
+.login-box.shake{animation:loginShake .4s}
+@keyframes loginShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+.login-avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#3ec5ff,#0080d8);display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 6px 18px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.4);border:2px solid rgba(255,255,255,.25)}
+.login-user{color:#fff;font-size:19px;font-weight:600;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.login-sub{color:#8fa3c8;font-size:11px;margin-top:-8px}
+.login-input{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid #3a4a6a;border-radius:5px;background:rgba(255,255,255,.95);font-size:14px;text-align:center}
+.login-input:focus{outline:2px solid #3c8cf0;border-color:#3c8cf0}
+.login-btn{width:100%;padding:8px;border:1px solid #1a5fd0;border-radius:5px;background:linear-gradient(180deg,#4a90e8,#1c6ad0);color:#fff;font-size:13px;font-weight:bold;cursor:pointer}
+.login-btn:hover{filter:brightness(1.06)}
+.login-btn:disabled{opacity:.6;cursor:default}
+.login-err{color:#ff8080;font-size:11px;min-height:14px;text-align:center}
+.login-guest{width:100%;padding:7px;border:1px solid #3a4a6a;border-radius:5px;background:rgba(255,255,255,.08);color:#cfe0f5;font-size:12px;cursor:pointer;margin-top:2px}
+.login-guest:hover{background:rgba(255,255,255,.16);color:#fff}
+.login-link{background:none;border:none;color:#7fa8e0;font-size:11px;cursor:pointer;text-decoration:underline}
+.login-link:hover{color:#a9c8f0}
+/* Formulario de crear/administrar cuenta */
+.acct-form{display:flex;flex-direction:column;gap:8px;width:100%;font-size:12px}
+.acct-form label{display:flex;flex-direction:column;gap:3px;color:#333}
+.acct-form input{padding:5px 7px;border:1px solid #7f9db9;border-radius:3px;font-size:13px}
+.acct-warn{background:#fff6d8;border:1px solid #e0c060;border-radius:4px;padding:6px 8px;color:#7a5a00;font-size:11px;line-height:1.4}
+.acct-err{color:#c02020;font-size:11px;min-height:14px}
+.acct-strength{height:5px;border-radius:3px;background:#ddd;overflow:hidden}
+.acct-strength i{display:block;height:100%;width:0;transition:width .2s,background .2s}
+/* Campo de contraseña con ojo (ver/ocultar) y aviso de Bloq Mayús */
+.pw-wrap{position:relative;display:block;width:100%}
+.pw-input{padding-right:34px!important}
+.pw-eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;line-height:1;padding:2px 4px}
+.login-caps{color:#ffcf6a;font-size:11px;display:none;text-align:center}
+.login-btn.busy{position:relative;color:transparent}
+.login-btn.busy::after{content:'';position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Selector de avatar en crear cuenta */
+.acct-avatars{display:flex;flex-wrap:wrap;gap:4px}
+.acct-av{width:30px;height:30px;font-size:17px;border:1px solid #cfc9b5;border-radius:6px;background:#fff;cursor:pointer;line-height:1;padding:0}
+.acct-av:hover{background:#eef4ff}
+.acct-av.sel{border-color:#0054e3;background:#cfe3ff;box-shadow:0 0 0 1px #0054e3}
+.acct-lock-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 16px 8px;font-size:12px;color:#333}
+.acct-lock-row select{border:1px solid #7f9db9;border-radius:2px;font-size:12px;padding:2px 4px}
+.start-avatar{position:relative}
+.start-av-emoji{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:24px}
+.acct-actions{display:flex;flex-direction:column;gap:6px;padding:2px 16px 14px}
+.acct-act{padding:9px 12px;border:1px solid #aca899;border-radius:4px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);font-size:12px;cursor:pointer;text-align:center;font-family:Tahoma,'MS Sans Serif',sans-serif;color:#000}
+.acct-act:hover{filter:brightness(1.03)}
+.acct-act.primary{border-color:#0054e3;background:linear-gradient(180deg,#e8f0ff,#c9dcff);font-weight:bold}
+.acct-act.danger{border-color:#c05a5a;color:#a02020}
+.acct-act.danger:hover{background:#ffe8e8}
+/* Red de seguridad: los diálogos con varios botones envuelven en pantallas estrechas */
+.xp-dialog-btns{flex-wrap:wrap}
 
 /* ═══════════════════  § ESCRITORIO  ═══════════════════ */
 #desktop{width:100%;height:100%;position:relative;overflow:hidden;background:transparent}
@@ -465,6 +517,8 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 #start-games-submenu .si-label,#start-utils-submenu .si-label,#start-nostalgia-submenu .si-label{font-weight:normal;font-size:12px}
 #start-utils-toggle.open .si-arrow,#start-nostalgia-toggle.open .si-arrow{transform:rotate(90deg)}
 .start-footer{background:linear-gradient(180deg,#3c7de0,#2456b8);padding:6px 10px;display:flex;justify-content:flex-end;gap:8px}
+.start-acct-btn{background:linear-gradient(180deg,#4a90e8,#1c6ad0);border-color:#1a4fa0}
+.start-acct-btn:hover{background:linear-gradient(180deg,#5aa0f8,#2c7ae0)}
 .start-footer-btn{padding:4px 12px;background:linear-gradient(180deg,#d04040,#a02020);color:#fff;border:1px solid #801010;border-radius:3px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px;font-weight:bold}
 .start-footer-btn:hover{background:linear-gradient(180deg,#e05050,#b03030)}
 .start-footer-btn canvas{display:block}
@@ -2473,6 +2527,24 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 <!-- WELCOME (transicion automatica, sin inicio de sesion) -->
 <div id="welcome-screen"><div class="welcome-text">Bienvenido</div></div>
 
+<!-- INICIO DE SESION (solo si existe una cuenta local cifrada) -->
+<div id="login-screen" hidden>
+  <div class="login-box" id="login-box">
+    <div class="login-avatar" id="login-avatar">&#128100;</div>
+    <div class="login-user" id="login-user"></div>
+    <div class="login-sub" data-i18n="login.sub">Cuenta local cifrada</div>
+    <div class="pw-wrap">
+      <input type="password" id="login-pass" class="login-input pw-input" autocomplete="current-password" data-i18n-ph="login.pass" placeholder="Contrase&ntilde;a" aria-label="Contrase&ntilde;a">
+      <button type="button" class="pw-eye" id="login-eye" aria-label="Mostrar u ocultar contrase&ntilde;a">&#128065;&#65039;</button>
+    </div>
+    <div class="login-caps" id="login-caps" data-i18n="login.caps">Bloq May&uacute;s activado</div>
+    <button type="button" id="login-go" class="login-btn" data-i18n="login.enter">Entrar</button>
+    <div class="login-err" id="login-err" role="alert"></div>
+    <button type="button" id="login-guest" class="login-guest" data-i18n="login.guest">Entrar como invitado</button>
+    <button type="button" id="login-forget" class="login-link" data-i18n="login.forgot">&iquest;Olvidaste la contrase&ntilde;a?</button>
+  </div>
+</div>
+
 <!-- Region viva unica: por aqui se anuncian a los lectores de pantalla los sucesos
      que solo se ven en un canvas o que aparecen sin que el usuario haga nada -->
 <div id="a11y-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
@@ -2631,7 +2703,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
   <div id="start-menu">
     <div class="start-header">
       <div class="start-avatar"><canvas class="msn-avatar-start" aria-hidden="true" width="36" height="36"></canvas></div>
-      <div class="start-username">Usuario</div>
+      <div class="start-username" id="start-username" data-i18n="start.user">Usuario</div>
     </div>
     <div class="start-body">
       <div class="start-95-banner" aria-hidden="true">Torrecillas<b>95</b></div>
@@ -2815,6 +2887,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
       </div>
     </div>
     <div class="start-footer">
+      <button class="start-footer-btn start-acct-btn" onclick="openAccountEntry()" title="Cuenta local cifrada">&#128272; <span data-i18n="app.account">Cuenta</span></button>
       <button class="start-footer-btn" onclick="shutDown()"><canvas id="shutdown-icon" aria-hidden="true" width="16" height="16"></canvas> <span data-i18n="app.shutdown">Apagar</span></button>
     </div>
   </div>
@@ -2825,7 +2898,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.29.1';
+const APP_VERSION = '0.31.2';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -2876,6 +2949,7 @@ const I18N={
   // Botones y acciones comunes
   'btn.ok':{es:'Aceptar', en:'OK', ca:'D’acord', ru:'ОК'},
   'btn.cancel':{es:'Cancelar', en:'Cancel', ca:'Cancel·la', ru:'Отмена'},
+  'btn.close':{es:'Cerrar', en:'Close', ca:'Tanca', ru:'Закрыть'},
   'btn.yes':{es:'Sí', en:'Yes', ca:'Sí', ru:'Да'},
   'btn.no':{es:'No', en:'No', ca:'No', ru:'Нет'},
   'btn.save':{es:'Guardar', en:'Save', ca:'Desa', ru:'Сохранить'},
@@ -3042,6 +3116,53 @@ const I18N={
   'tb.reverse':{es:'Invertir', en:'Reverse', ca:'Invertir', ru:'Обратить'},
   'tb.badjson':{es:'El texto no es JSON válido.', en:'The text is not valid JSON.', ca:'El text no és JSON vàlid.', ru:'Текст не является корректным JSON.'},
   'tb.badb64':{es:'El texto no es Base64 válido.', en:'The text is not valid Base64.', ca:'El text no és Base64 vàlid.', ru:'Текст не является корректным Base64.'},
+  'app.account':{es:'Cuenta', en:'Account', ca:'Compte', ru:'Аккаунт'},
+  'start.user':{es:'Usuario', en:'User', ca:'Usuari', ru:'Пользователь'},
+  'login.sub':{es:'Cuenta local cifrada', en:'Encrypted local account', ca:'Compte local xifrat', ru:'Зашифрованный локальный аккаунт'},
+  'login.pass':{es:'Contraseña', en:'Password', ca:'Contrasenya', ru:'Пароль'},
+  'login.enter':{es:'Entrar', en:'Sign in', ca:'Entrar', ru:'Войти'},
+  'login.forgot':{es:'¿Olvidaste la contraseña?', en:'Forgot your password?', ca:'Has oblidat la contrasenya?', ru:'Забыли пароль?'},
+  'login.guest':{es:'Entrar como invitado', en:'Continue as guest', ca:'Entra com a convidat', ru:'Войти как гость'},
+  'login.caps':{es:'Bloq Mayús activado', en:'Caps Lock is on', ca:'Bloq Majús activat', ru:'Включён Caps Lock'},
+  'login.checking':{es:'Entrando…', en:'Signing in…', ca:'Entrant…', ru:'Вход…'},
+  'login.hintlabel':{es:'Pista:', en:'Hint:', ca:'Pista:', ru:'Подсказка:'},
+  'login.wrong':{es:'Contraseña incorrecta.', en:'Wrong password.', ca:'Contrasenya incorrecta.', ru:'Неверный пароль.'},
+  'login.forgotmsg':{es:'No hay forma de recuperarla: los datos están cifrados con tu contraseña. Puedes restablecer la cuenta, pero se borrarán TODOS los datos.', en:'It cannot be recovered: your data is encrypted with your password. You can reset the account, but ALL data will be erased.', ca:'No es pot recuperar: les dades estan xifrades amb la teva contrasenya. Pots restablir el compte, però s’esborraran TOTES les dades.', ru:'Восстановить нельзя: данные зашифрованы вашим паролем. Можно сбросить аккаунт, но ВСЕ данные будут удалены.'},
+  'login.reset':{es:'Restablecer', en:'Reset', ca:'Restablir', ru:'Сбросить'},
+  'login.resetconfirm':{es:'¿Seguro? Se borrarán la cuenta y todos los datos cifrados. No se puede deshacer.', en:'Are you sure? The account and all encrypted data will be erased. This cannot be undone.', ca:'Segur? S’esborraran el compte i totes les dades xifrades. No es pot desfer.', ru:'Уверены? Аккаунт и все зашифрованные данные будут удалены. Действие необратимо.'},
+  'acct.title':{es:'Cuenta local', en:'Local account', ca:'Compte local', ru:'Локальный аккаунт'},
+  'acct.create':{es:'Crear cuenta', en:'Create account', ca:'Crear compte', ru:'Создать аккаунт'},
+  'acct.intro':{es:'Crea una cuenta local: usuario y contraseña. Todos tus datos (partidas, notas, ajustes…) quedarán cifrados con tu contraseña en este dispositivo.', en:'Create a local account: username and password. All your data (games, notes, settings…) will be encrypted with your password on this device.', ca:'Crea un compte local: usuari i contrasenya. Totes les teves dades (partides, notes, ajustos…) quedaran xifrades amb la teva contrasenya en aquest dispositiu.', ru:'Создайте локальный аккаунт: имя и пароль. Все данные (игры, заметки, настройки…) будут зашифрованы вашим паролем на этом устройстве.'},
+  'acct.user':{es:'Usuario', en:'Username', ca:'Usuari', ru:'Имя пользователя'},
+  'acct.pass':{es:'Contraseña', en:'Password', ca:'Contrasenya', ru:'Пароль'},
+  'acct.pass2':{es:'Repite la contraseña', en:'Repeat password', ca:'Repeteix la contrasenya', ru:'Повторите пароль'},
+  'acct.newpass':{es:'Nueva contraseña', en:'New password', ca:'Nova contrasenya', ru:'Новый пароль'},
+  'acct.warn':{es:'⚠️ Si olvidas la contraseña no hay forma de recuperar los datos. Es cifrado real.', en:'⚠️ If you forget the password there is no way to recover the data. It is real encryption.', ca:'⚠️ Si oblides la contrasenya no hi ha manera de recuperar les dades. És xifratge real.', ru:'⚠️ Если забудете пароль, восстановить данные будет невозможно. Это настоящее шифрование.'},
+  'acct.baduser':{es:'El usuario debe tener al menos 2 caracteres.', en:'Username must be at least 2 characters.', ca:'L’usuari ha de tenir almenys 2 caràcters.', ru:'Имя должно быть не короче 2 символов.'},
+  'acct.badpass':{es:'La contraseña debe tener al menos 4 caracteres.', en:'Password must be at least 4 characters.', ca:'La contrasenya ha de tenir almenys 4 caràcters.', ru:'Пароль должен быть не короче 4 символов.'},
+  'acct.mismatch':{es:'Las contraseñas no coinciden.', en:'Passwords do not match.', ca:'Les contrasenyes no coincideixen.', ru:'Пароли не совпадают.'},
+  'acct.creating':{es:'Cifrando…', en:'Encrypting…', ca:'Xifrant…', ru:'Шифрование…'},
+  'acct.created':{es:'Cuenta creada para {user}. Tus datos ya están cifrados.', en:'Account created for {user}. Your data is now encrypted.', ca:'Compte creat per a {user}. Les teves dades ja estan xifrades.', ru:'Аккаунт для {user} создан. Данные зашифрованы.'},
+  'acct.fail':{es:'No se pudo completar. Inténtalo de nuevo.', en:'Could not complete. Please try again.', ca:'No s’ha pogut completar. Torna-ho a provar.', ru:'Не удалось выполнить. Попробуйте снова.'},
+  'acct.nocrypto':{es:'Tu navegador no permite cifrado seguro (Web Crypto). Prueba con HTTPS.', en:'Your browser does not allow secure encryption (Web Crypto). Try over HTTPS.', ca:'El teu navegador no permet xifratge segur (Web Crypto). Prova amb HTTPS.', ru:'Браузер не поддерживает безопасное шифрование (Web Crypto). Используйте HTTPS.'},
+  'acct.loggedas':{es:'Sesión iniciada como <b>{user}</b>. Tus datos están cifrados.', en:'Signed in as <b>{user}</b>. Your data is encrypted.', ca:'Sessió iniciada com a <b>{user}</b>. Les teves dades estan xifrades.', ru:'Вы вошли как <b>{user}</b>. Данные зашифрованы.'},
+  'acct.logout':{es:'Cerrar sesión', en:'Sign out', ca:'Tanca la sessió', ru:'Выйти'},
+  'acct.changepw':{es:'Cambiar contraseña', en:'Change password', ca:'Canvia la contrasenya', ru:'Сменить пароль'},
+  'acct.remove':{es:'Eliminar cuenta', en:'Delete account', ca:'Elimina el compte', ru:'Удалить аккаунт'},
+  'acct.removeconfirm':{es:'Se descifrarán los datos y se quitará la cuenta (dejarán de estar protegidos). ¿Continuar?', en:'Your data will be decrypted and the account removed (no longer protected). Continue?', ca:'Es desxifraran les dades i es traurà el compte (deixaran d’estar protegides). Continuar?', ru:'Данные будут расшифрованы, а аккаунт удалён (защита снимется). Продолжить?'},
+  'acct.removed':{es:'Cuenta eliminada. Tus datos siguen aquí, sin cifrar.', en:'Account removed. Your data remains, unencrypted.', ca:'Compte eliminat. Les teves dades continuen aquí, sense xifrar.', ru:'Аккаунт удалён. Данные остались, без шифрования.'},
+  'acct.mustlogin':{es:'Debes iniciar sesión primero.', en:'You must sign in first.', ca:'Primer has d’iniciar la sessió.', ru:'Сначала войдите в систему.'},
+  'acct.pwchanged':{es:'Contraseña cambiada.', en:'Password changed.', ca:'Contrasenya canviada.', ru:'Пароль изменён.'},
+  'acct.savefail':{es:'No se pudo guardar cifrado (¿espacio lleno?).', en:'Could not save encrypted (storage full?).', ca:'No s’ha pogut desar xifrat (espai ple?).', ru:'Не удалось сохранить зашифрованно (нет места?).'},
+  'acct.guest':{es:'Invitado', en:'Guest', ca:'Convidat', ru:'Гость'},
+  'acct.avatar':{es:'Avatar', en:'Avatar', ca:'Avatar', ru:'Аватар'},
+  'acct.showpass':{es:'Mostrar u ocultar contraseña', en:'Show or hide password', ca:'Mostra o amaga la contrasenya', ru:'Показать или скрыть пароль'},
+  'acct.hint':{es:'Pista de contraseña', en:'Password hint', ca:'Pista de contrasenya', ru:'Подсказка к паролю'},
+  'acct.hintph':{es:'Algo que solo tú entiendas', en:'Something only you understand', ca:'Alguna cosa que només entenguis tu', ru:'Что-то понятное только вам'},
+  'acct.optional':{es:'opcional', en:'optional', ca:'opcional', ru:'необязательно'},
+  'acct.autolock':{es:'Bloqueo automático', en:'Auto-lock', ca:'Bloqueig automàtic', ru:'Автоблокировка'},
+  'acct.never':{es:'Nunca', en:'Never', ca:'Mai', ru:'Никогда'},
+  'acct.guestmsg':{es:'Estás como invitado: los cambios NO se guardan y no ves los datos de <b>{user}</b>. ¿Iniciar sesión?', en:'You are a guest: changes are NOT saved and you cannot see <b>{user}</b>’s data. Sign in?', ca:'Estàs com a convidat: els canvis NO es desen i no veus les dades de <b>{user}</b>. Iniciar la sessió?', ru:'Вы гость: изменения НЕ сохраняются, и данные <b>{user}</b> недоступны. Войти?'},
   'reader.title':{es:'Lector', en:'Reader', ca:'Lector', ru:'Читалка'},
   'reader.empty':{es:'Abre un EPUB o PDF de tu equipo.', en:'Open an EPUB or PDF from your device.', ca:'Obre un EPUB o PDF del teu equip.', ru:'Откройте EPUB или PDF со своего устройства.'},
   'reader.fail':{es:'No se pudo abrir el libro.', en:'Could not open the book.', ca:'No s’ha pogut obrir el llibre.', ru:'Не удалось открыть книгу.'},
@@ -3077,7 +3198,9 @@ function currentLang(){ const l=Store.get('tos-lang'); return I18N_LANGS.some(x=
 function t(key,vars){
   const e=I18N[key];
   let str=e?(e[currentLang()]||e.es):key;
-  if(vars)for(const k in vars)str=str.replace('{'+k+'}',vars[k]);
+  // split/join (no String.replace) para que un '$' en el valor —p.ej. un nombre de
+  // usuario con '$&'— no se interprete como patrón de reemplazo.
+  if(vars)for(const k in vars)str=str.split('{'+k+'}').join(String(vars[k]));
   return str;
 }
 // Aplica las traducciones a los nodos marcados con data-i18n / data-i18n-attr
@@ -3133,14 +3256,87 @@ let gameInstances = {};
 // ========== STORAGE (acceso unico, tolerante a fallos) ==========
 // Centraliza localStorage: nunca lanza (modo incognito / cuota llena) y
 // unifica el prefijo "tos-" para todas las claves del sistema y los juegos.
+// ========== CUENTA LOCAL + CIFRADO DEL ALMACENAMIENTO ==========
+// Opcional: al crear una cuenta, TODO el estado tos-* se traslada a una "caja
+// fuerte" cifrada (AES-GCM 256) cuya clave se deriva de la contraseña con PBKDF2
+// (200k iteraciones, SHA-256, sal aleatoria). Sin la contraseña no hay forma de
+// recuperar los datos: es cifrado de verdad (si la olvidas, se pierden). Mientras
+// no exista cuenta, Store funciona directo sobre localStorage como siempre.
+// El truco para no tener que volver async todo el sistema: al iniciar sesión se
+// descifra la caja UNA vez a un objeto en memoria (_vault); Store lee/escribe ahí
+// de forma síncrona y un guardado diferido re-cifra la caja a localStorage.
+const VAULT_PLAINTEXT=new Set(['tos-account','tos-vault','tos-lang']); // no se cifran (hacen falta antes de entrar)
+let _acctKey=null, _vault=null, _vaultTmr=null, _vaultFailNotified=false, _guestMode=false;
+function _b64enc(bytes){ let s=''; for(let i=0;i<bytes.length;i++)s+=String.fromCharCode(bytes[i]); return btoa(s); }
+function _b64dec(b64){ const s=atob(b64); const u=new Uint8Array(s.length); for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i); return u; }
+function _cryptoOk(){ return !!(window.crypto&&window.crypto.subtle&&window.crypto.getRandomValues); }
+async function _deriveKey(pw,salt,iter){
+  const base=await window.crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  return window.crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function _encJSON(key,obj){
+  const iv=window.crypto.getRandomValues(new Uint8Array(12));
+  const ct=new Uint8Array(await window.crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(obj))));
+  const out=new Uint8Array(iv.length+ct.length); out.set(iv); out.set(ct,iv.length); return _b64enc(out);
+}
+async function _decJSON(key,b64){
+  const buf=_b64dec(b64), iv=buf.slice(0,12), ct=buf.slice(12);
+  const pt=await window.crypto.subtle.decrypt({name:'AES-GCM',iv},key,ct); return JSON.parse(new TextDecoder().decode(pt));
+}
+function accountInfo(){ try{ return JSON.parse(localStorage.getItem('tos-account')||'null'); }catch(e){ return null; } }
+function hasAccount(){ return !!accountInfo(); }
+function isVaultUnlocked(){ return _vault!==null; }
+function _scheduleVaultPersist(){ if(!_vault||!_acctKey)return; clearTimeout(_vaultTmr); _vaultTmr=setTimeout(()=>{ persistVault(); },150); }
+async function persistVault(){
+  if(!_vault||!_acctKey)return false;
+  try{ localStorage.setItem('tos-vault',await _encJSON(_acctKey,_vault)); _vaultFailNotified=false; return true; }
+  catch(e){ if(!_vaultFailNotified){ _vaultFailNotified=true; try{ notify({icon:'&#128274;',title:t('acct.title'),body:t('acct.savefail')}); }catch(_e){} } return false; }
+}
+async function createAccount(user,password,opts){
+  if(!_cryptoOk())throw new Error('nocrypto');
+  opts=opts||{};
+  const salt=window.crypto.getRandomValues(new Uint8Array(16)); const iter=200000;
+  const key=await _deriveKey(password,salt,iter);
+  // Absorber el estado tos-* actual (menos las claves en claro) dentro de la caja
+  const keys=[]; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.indexOf('tos-')===0&&!VAULT_PLAINTEXT.has(k))keys.push(k); }
+  const vault={}; keys.forEach(k=>{ vault[k]=localStorage.getItem(k); });
+  _acctKey=key; _vault=vault; _guestMode=false;
+  // Guardar la caja cifrada PRIMERO. Si falla (cuota, incógnito), abortar sin dejar
+  // una cuenta a medias: no se escribe tos-account y los datos en claro siguen intactos.
+  const ok=await persistVault();
+  if(!ok){ _acctKey=null; _vault=null; throw new Error('savefail'); }
+  // avatar y pista van en claro (hacen falta en el login, antes de descifrar)
+  localStorage.setItem('tos-account',JSON.stringify({user:String(user),salt:_b64enc(salt),iter:iter,ver:1,ts:Date.now(),avatar:opts.avatar||'',hint:opts.hint||''}));
+  keys.forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} }); // ya está cifrado: borrar el claro
+  return true;
+}
+async function unlockAccount(password){
+  const info=accountInfo(); if(!info||!_cryptoOk())return false;
+  let key; try{ key=await _deriveKey(password,_b64dec(info.salt),info.iter||200000); }catch(e){ return false; }
+  const blob=localStorage.getItem('tos-vault');
+  if(blob==null){ _acctKey=key; _vault={}; return true; } // cuenta sin caja todavía
+  try{ const v=await _decJSON(key,blob); _acctKey=key; _vault=(v&&typeof v==='object')?v:{}; return true; }
+  catch(e){ return false; } // el fallo de autenticación de AES-GCM = contraseña incorrecta
+}
+function lockAccount(){ _acctKey=null; _vault=null; clearTimeout(_vaultTmr); }
+async function removeAccount(){ // descifra: vuelca la caja a localStorage en claro y borra la cuenta
+  if(_vault){ Object.keys(_vault).forEach(k=>{ try{ localStorage.setItem(k,_vault[k]); }catch(e){} }); }
+  try{ localStorage.removeItem('tos-vault'); localStorage.removeItem('tos-account'); }catch(e){}
+  lockAccount();
+}
+
 const Store = {
-  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  get(k){ try{ if(_vault!==null&&!VAULT_PLAINTEXT.has(k))return (k in _vault)?_vault[k]:null; return localStorage.getItem(k); }catch(e){ return null; } },
   getInt(k, def=0){ const n=parseInt(this.get(k),10); return Number.isNaN(n)?def:n; },
   // Devuelve false si no se pudo guardar (cuota llena con fondos/dibujos grandes,
   // modo incognito...) para que quien guarde algo gordo pueda avisar al usuario.
-  set(k,v){ try{ localStorage.setItem(k,v); return true; }catch(e){ return false; } },
-  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+  // Con la caja abierta escribe en memoria (síncrono) y difiere el re-cifrado.
+  set(k,v){ try{ if(_vault!==null&&!VAULT_PLAINTEXT.has(k)){ _vault[k]=String(v); _scheduleVaultPersist(); return true; } localStorage.setItem(k,v); return true; }catch(e){ return false; } },
+  del(k){ try{ if(_vault!==null&&!VAULT_PLAINTEXT.has(k)){ delete _vault[k]; _scheduleVaultPersist(); return; } localStorage.removeItem(k); }catch(e){} }
 };
+// Al ocultar la pestaña o cerrar, forzar el re-cifrado pendiente (por si el diferido no llegó)
+document.addEventListener('visibilitychange',()=>{ if(document.hidden&&_vault&&_acctKey)persistVault(); });
+window.addEventListener('pagehide',()=>{ if(_vault&&_acctKey)persistVault(); });
 
 // ========== INTERVALOS QUE DUERMEN CON LA PESTAÑA OCULTA ==========
 // Los timers de fondo (reloj, estados del MSN...) no pintan nada si nadie mira:
@@ -3743,9 +3939,24 @@ const savedVol=Store.get('tos-volume');
 if(savedVol!==null){masterVolume=savedVol/100;}
 
 // ── Boot sequence: arranque → bienvenida → escritorio (sin pantalla de login) ──
+// El encabezado del menú Inicio muestra el nombre de la cuenta si has iniciado sesión
+function updateStartUsername(){
+  const el=document.getElementById('start-username');
+  const info=(!_guestMode&&hasAccount()&&isVaultUnlocked())?accountInfo():null;
+  if(el)el.textContent=_guestMode?t('acct.guest'):((info&&info.user)?info.user:t('start.user'));
+  // Avatar del encabezado: emoji de la cuenta (o del invitado); si no, el dibujo por defecto
+  const av=document.querySelector('.start-avatar'); if(!av)return;
+  const emoji=_guestMode?'\u{1F464}':((info&&info.avatar)?info.avatar:'');
+  let em=av.querySelector('.start-av-emoji');
+  const cv=av.querySelector('canvas');
+  if(emoji){ if(!em){ em=document.createElement('span'); em.className='start-av-emoji'; av.appendChild(em); } em.textContent=emoji; em.style.display='flex'; if(cv)cv.style.display='none'; }
+  else { if(em)em.style.display='none'; if(cv)cv.style.display=''; }
+}
 function enterDesktop(){
   document.getElementById('desktop').style.display='block';
   applyI18n(); // traduce el chrome (menú, botones) al idioma guardado
+  updateStartUsername(); // nombre de la cuenta en el encabezado (tras applyI18n, que lo resetea)
+  startIdleWatch(); // auto-bloqueo por inactividad (no-op si no hay cuenta/ajuste)
   restoreEraClass(); // clase de era para la tipografía
   updateTrayLang(); // bandera del idioma en la bandeja
   initDesktop();
@@ -3764,6 +3975,193 @@ function enterDesktop(){
   document.addEventListener('keydown',chime,{once:true});
 }
 
+// Dota a un <input type=password> de botón ojo (ver/ocultar) y aviso de Bloq Mayús.
+function attachPwHelpers(input,eyeBtn,warnEl){
+  if(eyeBtn){ eyeBtn.onclick=()=>{ const show=input.type==='password'; input.type=show?'text':'password'; eyeBtn.textContent=show?'🙈':'👁️'; try{ input.focus(); }catch(e){} }; }
+  if(warnEl){ const chk=(e)=>{ let on=false; try{ on=e&&e.getModifierState&&e.getModifierState('CapsLock'); }catch(_e){} warnEl.style.display=on?'block':'none'; };
+    input.addEventListener('keydown',chk); input.addEventListener('keyup',chk); input.addEventListener('blur',()=>{ warnEl.style.display='none'; }); }
+}
+// Avatares disponibles para la cuenta
+const ACCT_AVATARS=['👤','🦊','🐱','🐶','🐧','🦄','🚀','🎮','🌟','🍎','🤖','👾'];
+
+// ========== PANTALLA DE INICIO DE SESIÓN ==========
+function showLogin(){
+  const info=accountInfo(); if(!info){ _showWelcomeThenDesktop(); return; }
+  const scr=document.getElementById('login-screen');
+  document.getElementById('login-user').textContent=info.user||'Usuario';
+  const av=document.getElementById('login-avatar'); if(av)av.textContent=info.avatar||'\u{1F464}';
+  scr.hidden=false;
+  try{ applyI18n(scr); }catch(e){}
+  const pass=document.getElementById('login-pass'), go=document.getElementById('login-go'), err=document.getElementById('login-err'), box=document.getElementById('login-box');
+  attachPwHelpers(pass,document.getElementById('login-eye'),document.getElementById('login-caps'));
+  const attempt=async()=>{
+    if(go.disabled)return;
+    err.textContent=''; go.disabled=true; go.classList.add('busy'); go.textContent=t('login.checking');
+    const ok=await unlockAccount(pass.value);
+    go.disabled=false; go.classList.remove('busy'); go.textContent=t('login.enter');
+    if(ok){ scr.hidden=true; pass.value=''; _showWelcomeThenDesktop(); }
+    else { err.textContent=t('login.wrong'); box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake'); pass.value=''; try{pass.focus();}catch(e){} }
+  };
+  go.onclick=attempt;
+  pass.onkeydown=(e)=>{ if(e.key==='Enter'){ e.preventDefault(); attempt(); } };
+  document.getElementById('login-guest').onclick=()=>{ scr.hidden=true; pass.value=''; enterGuest(); };
+  document.getElementById('login-forget').onclick=()=>{
+    const hint=(accountInfo()||{}).hint;
+    const hintHtml=hint?'<br><br><b>'+t('login.hintlabel')+'</b> '+escHtml(hint):'';
+    xpDialog(t('acct.title'),'<div class="dlg-icon">&#128273;</div><div>'+t('login.forgotmsg')+hintHtml+'</div>',[
+      {label:t('login.reset'),primary:true,action:()=>xpConfirm(t('acct.title'),t('login.resetconfirm'),()=>{ try{ localStorage.removeItem('tos-account'); localStorage.removeItem('tos-vault'); }catch(e){} try{ location.reload(); }catch(e){} },t('login.reset'))},
+      {label:t('btn.cancel')}
+    ]);
+  };
+  setTimeout(()=>{ try{ pass.focus(); }catch(e){} },50);
+}
+// Sesión de invitado: caja EFÍMERA en memoria (sin clave), no se persiste nada y
+// NO se toca la caja cifrada del propietario. Al recargar, desaparece todo.
+function enterGuest(){
+  _acctKey=null; _vault={}; _guestMode=true;
+  const scr=document.getElementById('login-screen'); if(scr)scr.hidden=true;
+  _showWelcomeThenDesktop();
+}
+
+// ========== AUTO-BLOQUEO POR INACTIVIDAD ==========
+// Tras N minutos sin actividad, re-cifra y recarga a la pantalla de login (con
+// sesión real; nunca en invitado). El ajuste (minutos, 0=nunca) vive en la caja.
+let _idleTimer=null, _idleWatching=false;
+function autolockMinutes(){ return Store.getInt('tos-autolock',0); }
+function resetIdleTimer(){
+  if(_idleTimer){ clearTimeout(_idleTimer); _idleTimer=null; }
+  if(_guestMode||!isVaultUnlocked()||!_acctKey)return; // solo con sesión real y cuenta
+  const m=autolockMinutes(); if(!m||m<=0)return;
+  _idleTimer=setTimeout(autoLock,m*60000);
+}
+async function autoLock(){
+  if(!_acctKey||_guestMode)return;
+  try{ await persistVault(); }catch(e){}
+  try{ sessionStorage.setItem('tos-relock','1'); }catch(e){}
+  lockAccount();
+  try{ location.reload(); }catch(e){ /* sin reload: al menos queda bloqueada */ }
+}
+function startIdleWatch(){
+  if(_idleWatching)return; _idleWatching=true;
+  ['mousedown','keydown','touchstart','pointerdown','wheel'].forEach(ev=>document.addEventListener(ev,resetIdleTimer,{passive:true,capture:true}));
+  resetIdleTimer();
+}
+
+// ========== CREAR / ADMINISTRAR CUENTA ==========
+function openAccountEntry(){ closeStartMenu(); if(_guestMode)openGuestMenu(); else if(hasAccount())openAccountManage(); else openCreateAccount(); }
+function openGuestMenu(){
+  const info=accountInfo();
+  xpDialog(t('acct.title'),'<div class="dlg-icon">&#128100;</div><div>'+t('acct.guestmsg',{user:escHtml(info&&info.user||'')})+'</div>',[
+    {label:t('login.enter'),primary:true,action:()=>{ try{ location.reload(); }catch(e){} }},
+    {label:t('btn.close')}
+  ]);
+}
+function openCreateAccount(){
+  closeStartMenu();
+  if(!_cryptoOk()){ xpDialog(t('acct.title'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+t('acct.nocrypto')+'</div>'); return; }
+  if(hasAccount()){ openAccountManage(); return; }
+  const ov=document.createElement('div'); ov.className='xp-dialog-ov'; ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('acct.create'))}" style="width:min(360px,92vw);background:#ece9d8;border:2px solid #0054e3;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);overflow:hidden">
+    <div style="background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">&#128274; ${escHtml(t('acct.create'))}</div>
+    <div style="padding:14px 16px"><div class="acct-form">
+      <p style="margin:0 0 4px;line-height:1.4">${escHtml(t('acct.intro'))}</p>
+      <label>${escHtml(t('acct.avatar'))}<span class="acct-avatars" id="acct-avatars">${ACCT_AVATARS.map((a,i)=>'<button type="button" class="acct-av'+(i===0?' sel':'')+'" data-av="'+a+'">'+a+'</button>').join('')}</span></label>
+      <label>${escHtml(t('acct.user'))}<input id="acct-user" type="text" autocomplete="username" maxlength="40"></label>
+      <label>${escHtml(t('acct.pass'))}<span class="pw-wrap"><input id="acct-pass" class="pw-input" type="password" autocomplete="new-password"><button type="button" class="pw-eye" id="acct-pass-eye" aria-label="${escHtml(t('acct.showpass'))}">&#128065;&#65039;</button></span></label>
+      <div class="acct-strength"><i id="acct-bar"></i></div>
+      <label>${escHtml(t('acct.pass2'))}<input id="acct-pass2" type="password" autocomplete="new-password"></label>
+      <div class="login-caps" id="acct-caps" style="color:#a06a00">${escHtml(t('login.caps'))}</div>
+      <label>${escHtml(t('acct.hint'))} <small style="color:#888">(${escHtml(t('acct.optional'))})</small><input id="acct-hint" type="text" maxlength="80" placeholder="${escHtml(t('acct.hintph'))}"></label>
+      <div class="acct-warn">${escHtml(t('acct.warn'))}</div>
+      <div class="acct-err" id="acct-err" role="alert"></div>
+    </div></div>
+    <div class="xp-dialog-btns" style="padding:0 16px 12px;display:flex;gap:8px;justify-content:flex-end"></div>
+  </div>`;
+  const btns=ov.querySelector('.xp-dialog-btns');
+  const u=ov.querySelector('#acct-user'), p1=ov.querySelector('#acct-pass'), p2=ov.querySelector('#acct-pass2'), errEl=ov.querySelector('#acct-err'), bar=ov.querySelector('#acct-bar'), hintI=ov.querySelector('#acct-hint');
+  let avatar=ACCT_AVATARS[0];
+  ov.querySelectorAll('.acct-av').forEach(b=>b.onclick=()=>{ avatar=b.dataset.av; ov.querySelectorAll('.acct-av').forEach(x=>x.classList.toggle('sel',x===b)); });
+  attachPwHelpers(p1,ov.querySelector('#acct-pass-eye'),ov.querySelector('#acct-caps'));
+  p1.addEventListener('input',()=>{ const b=pwEntropyBits(p1.value); const pct=Math.min(100,Math.round(b/1.28)); bar.style.width=pct+'%'; bar.style.background=b<40?'#d05a5a':b<70?'#d0a05a':'#4ca85a'; });
+  const mk=(label,primary,fn)=>{ const el=document.createElement('button'); el.textContent=label; el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer'; el.onclick=fn; btns.appendChild(el); return el; };
+  const create=mk(t('acct.create'),true,async()=>{
+    const user=u.value.trim();
+    if(user.length<2){ errEl.textContent=t('acct.baduser'); return; }
+    if(p1.value.length<4){ errEl.textContent=t('acct.badpass'); return; }
+    if(p1.value!==p2.value){ errEl.textContent=t('acct.mismatch'); return; }
+    create.disabled=true; errEl.textContent=t('acct.creating');
+    try{ await createAccount(user,p1.value,{avatar:avatar,hint:hintI.value.trim()}); ov.remove(); updateStartUsername(); notify({icon:'&#128274;',title:t('acct.title'),body:t('acct.created',{user:user})}); }
+    catch(e){ create.disabled=false; errEl.textContent=t('acct.fail'); }
+  });
+  mk(t('btn.cancel'),false,()=>ov.remove());
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ u.focus(); }catch(e){} },30);
+}
+function openAccountManage(){
+  closeStartMenu();
+  const info=accountInfo();
+  // Botones apilados a lo ancho: en móvil una fila de 4 no cabía.
+  const ov=document.createElement('div'); ov.className='xp-dialog-ov'; ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('acct.title'))}" style="width:min(340px,92vw);background:#ece9d8;border:2px solid #0054e3;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);overflow:hidden">
+    <div style="background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">&#128274; ${escHtml(t('acct.title'))}</div>
+    <div style="padding:14px 16px 8px;font-size:12px;color:#222;line-height:1.5;display:flex;gap:10px;align-items:center"><span class="dlg-icon" style="flex-shrink:0">${(info&&info.avatar)||'&#128100;'}</span><span>${t('acct.loggedas',{user:escHtml(info&&info.user||'')})}</span></div>
+    <div class="acct-lock-row"><label for="acct-autolock">&#128274; ${escHtml(t('acct.autolock'))}</label>
+      <select id="acct-autolock"><option value="0">${escHtml(t('acct.never'))}</option><option value="1">1 min</option><option value="5">5 min</option><option value="15">15 min</option><option value="30">30 min</option></select></div>
+    <div class="acct-actions"></div>
+  </div>`;
+  const sel=ov.querySelector('#acct-autolock');
+  sel.value=String(autolockMinutes());
+  sel.onchange=()=>{ Store.set('tos-autolock',sel.value); resetIdleTimer(); };
+  const box=ov.querySelector('.acct-actions');
+  const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; el.className='acct-act'+(cls?' '+cls:''); el.onclick=()=>{ ov.remove(); if(fn)fn(); }; box.appendChild(el); };
+  mk(t('acct.logout'),'primary',logout);
+  mk(t('acct.changepw'),'',openChangePassword);
+  mk(t('acct.remove'),'danger',confirmRemoveAccount);
+  mk(t('btn.close'),'',null);
+  document.body.appendChild(ov);
+  const first=box.querySelector('button'); if(first)try{first.focus();}catch(e){}
+}
+async function logout(){
+  if(!hasAccount())return;
+  try{ await persistVault(); }catch(e){}
+  lockAccount();
+  try{ location.reload(); }catch(e){}
+}
+function confirmRemoveAccount(){
+  xpConfirm(t('acct.title'),t('acct.removeconfirm'),async()=>{ await removeAccount(); try{ notify({icon:'&#128275;',title:t('acct.title'),body:t('acct.removed')}); }catch(e){} try{ location.reload(); }catch(e){} },t('acct.remove'));
+}
+function openChangePassword(){
+  if(!hasAccount()||!isVaultUnlocked()){ xpDialog(t('acct.title'),'<div class="dlg-icon">&#128274;</div><div>'+t('acct.mustlogin')+'</div>'); return; }
+  const ov=document.createElement('div'); ov.className='xp-dialog-ov'; ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('acct.changepw'))}" style="width:min(340px,92vw);background:#ece9d8;border:2px solid #0054e3;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);overflow:hidden">
+    <div style="background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">&#128273; ${escHtml(t('acct.changepw'))}</div>
+    <div style="padding:14px 16px"><div class="acct-form">
+      <label>${escHtml(t('acct.newpass'))}<span class="pw-wrap"><input id="acct-np" class="pw-input" type="password" autocomplete="new-password"><button type="button" class="pw-eye" id="acct-np-eye" aria-label="${escHtml(t('acct.showpass'))}">&#128065;&#65039;</button></span></label>
+      <label>${escHtml(t('acct.pass2'))}<input id="acct-np2" type="password" autocomplete="new-password"></label>
+      <div class="login-caps" id="acct-np-caps" style="color:#a06a00">${escHtml(t('login.caps'))}</div>
+      <div class="acct-err" id="acct-nperr" role="alert"></div>
+    </div></div>
+    <div class="xp-dialog-btns" style="padding:0 16px 12px;display:flex;gap:8px;justify-content:flex-end"></div>
+  </div>`;
+  const btns=ov.querySelector('.xp-dialog-btns'); const np=ov.querySelector('#acct-np'), np2=ov.querySelector('#acct-np2'), er=ov.querySelector('#acct-nperr');
+  attachPwHelpers(np,ov.querySelector('#acct-np-eye'),ov.querySelector('#acct-np-caps'));
+  const mk=(label,primary,fn)=>{ const el=document.createElement('button'); el.textContent=label; el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer'; el.onclick=fn; btns.appendChild(el); return el; };
+  const ok=mk(t('btn.ok'),true,async()=>{
+    if(np.value.length<4){ er.textContent=t('acct.badpass'); return; }
+    if(np.value!==np2.value){ er.textContent=t('acct.mismatch'); return; }
+    ok.disabled=true;
+    const info=accountInfo(); const salt=window.crypto.getRandomValues(new Uint8Array(16)); const iter=(info&&info.iter)||200000;
+    const oldKey=_acctKey; // para revertir si falla el re-cifrado (si no, la clave en memoria y la sal guardada quedarían desincronizadas → bloqueo)
+    try{ _acctKey=await _deriveKey(np.value,salt,iter); const saved=await persistVault();
+      if(saved){ localStorage.setItem('tos-account',JSON.stringify(Object.assign({},info,{salt:_b64enc(salt),ts:Date.now()}))); ov.remove(); notify({icon:'&#128273;',title:t('acct.title'),body:t('acct.pwchanged')}); }
+      else { _acctKey=oldKey; ok.disabled=false; er.textContent=t('acct.fail'); }
+    }catch(e){ _acctKey=oldKey; ok.disabled=false; er.textContent=t('acct.fail'); }
+  });
+  mk(t('btn.cancel'),false,()=>ov.remove());
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ np.focus(); }catch(e){} },30);
+}
+
 const bootMsgs=['Iniciando sistema...','Cargando juegos...','Aplicando ajustes...','Preparando escritorio...'];
 let bootMsgIdx=0;
 const bootMsgInt=setInterval(()=>{
@@ -3775,9 +4173,8 @@ const bootMsgInt=setInterval(()=>{
   }
 },600);
 
-setTimeout(()=>{
-  clearInterval(bootMsgInt);
-  document.getElementById('boot-screen').classList.add('hidden');
+// Bienvenida XP → escritorio (tras arrancar o tras iniciar sesión correctamente)
+function _showWelcomeThenDesktop(){
   const wel=document.getElementById('welcome-screen');
   wel.style.display='flex';
   requestAnimationFrame(()=>wel.classList.add('show'));
@@ -3786,7 +4183,16 @@ setTimeout(()=>{
     wel.classList.remove('show');
     setTimeout(()=>{wel.style.display='none';},600);
   },1400);
-},2500);
+}
+// Tras un auto-bloqueo se recarga con esta marca: saltamos la animación y vamos al login
+let _relock=false; try{ if(sessionStorage.getItem('tos-relock')){ sessionStorage.removeItem('tos-relock'); _relock=true; } }catch(e){}
+setTimeout(()=>{
+  clearInterval(bootMsgInt);
+  document.getElementById('boot-screen').classList.add('hidden');
+  // Si hay una cuenta local, pedir la contraseña antes de entrar; si no, escritorio directo
+  if(hasAccount())showLogin();
+  else _showWelcomeThenDesktop();
+},_relock?120:2500);
 
 function drawStartMenuIcons(){
   const sa=document.querySelector('.start-avatar canvas');
@@ -6754,20 +7160,24 @@ function openEbookReader(preloadFile){
 
     // -- Búsqueda dentro del libro (recorre todos los capítulos del spine) --
     let searchT=null;
+    let searchSeq=0;
     const runSearch=async(q)=>{
       const list=win.querySelector('#rd-search-list'); q=(q||'').trim();
+      const my=++searchSeq; // si llega otra búsqueda mientras esta await-ea, esta se descarta
       if(!book){ list.innerHTML=''; return; }
       if(q.length<2){ list.innerHTML='<div class="rd-none">'+escHtml(t('reader.searchhint'))+'</div>'; return; }
       list.innerHTML='<div class="rd-none">'+escHtml(t('reader.searching'))+'</div>';
       const ql=q.toLowerCase(); const results=[]; const token=q;
       for(let ci=0;ci<book.spine.length&&results.length<80;ci++){
         let html=''; try{ html=await _zipText(book.files,book.spine[ci]); }catch(e){ continue; }
+        if(my!==searchSeq)return; // una búsqueda más nueva tomó el relevo
         const text=html.replace(/<[^>]+>/g,' ').replace(/&[a-z#0-9]+;/gi,' ').replace(/\s+/g,' ');
         const tl=text.toLowerCase(); let from=0, hits=0;
         while(hits<3){ const p=tl.indexOf(ql,from); if(p<0)break; const a=Math.max(0,p-32), b=Math.min(text.length,p+token.length+38);
           const snip=(a>0?'…':'')+text.slice(a,p)+'‹'+text.slice(p,p+token.length)+'›'+text.slice(p+token.length,b)+(b<text.length?'…':'');
           results.push({ci,snip}); from=p+token.length; hits++; }
       }
+      if(my!==searchSeq)return;
       if(!results.length){ list.innerHTML='<div class="rd-none">'+escHtml(t('reader.noresults'))+'</div>'; return; }
       list.innerHTML=results.map(r=>'<button type="button" class="rd-sresult" data-ci="'+r.ci+'"><b>'+escHtml(chapterLabel(r.ci))+'</b><span>'+escHtml(r.snip)+'</span></button>').join('');
       list.querySelectorAll('.rd-sresult').forEach(b=>b.onclick=()=>{ showChapter(+b.dataset.ci,0); closePanels(); });
@@ -6933,11 +7343,19 @@ function openImageTools(preloadFile){
 
     // Comprime a un tamaño objetivo (búsqueda binaria de calidad)
     const compressToTarget=async(mime,targetBytes)=>{
+      const src=flatCanvas();
       let lo=0.05,hi=0.96,best=null;
-      for(let i=0;i<9;i++){ const q=(lo+hi)/2; const blob=await new Promise(r=>wc.toBlob(r,mime,q)); if(!blob)break; if(blob.size<=targetBytes){best=blob;lo=q;}else{hi=q;} }
-      return best||await new Promise(r=>wc.toBlob(r,mime,0.4));
+      for(let i=0;i<9;i++){ const q=(lo+hi)/2; const blob=await new Promise(r=>src.toBlob(r,mime,q)); if(!blob)break; if(blob.size<=targetBytes){best=blob;lo=q;}else{hi=q;} }
+      return best||await new Promise(r=>src.toBlob(r,mime,0.4));
     };
-    const exportBlob=(mime,quality)=>new Promise(r=>{ const c=document.createElement('canvas'); c.width=wc.width; c.height=wc.height; const cx=c.getContext('2d'); cx.drawImage(wc,0,0); c.toBlob(r,mime,quality); });
+    // Aplana wc con el filtro de ajustes EN VIVO (brillo/contraste/saturación) para que
+    // lo que se exporta coincida con lo que se ve, aunque no se haya pulsado "Aplicar".
+    const flatCanvas=()=>{
+      if(adjust.brightness===100&&adjust.contrast===100&&adjust.saturate===100)return wc;
+      const c=document.createElement('canvas'); c.width=wc.width; c.height=wc.height; const cx=c.getContext('2d');
+      try{cx.filter=filterStr();}catch(e){} cx.drawImage(wc,0,0); return c;
+    };
+    const exportBlob=(mime,quality)=>new Promise(r=>{ flatCanvas().toBlob(r,mime,quality); });
 
     // -- Paneles de cada herramienta --
     const panels={
@@ -7001,7 +7419,7 @@ function openImageTools(preloadFile){
         const getBlob=async()=>{ if(tgtOn.checked&&!isPng())return compressToTarget(fmt.value,(+tgt.value||200)*1024); return exportBlob(fmt.value, isPng()?undefined:0.92); };
         panel.querySelector('#it-dl').onclick=async()=>{ const blob=await getBlob(); if(!blob)return; const ext=fmt.value.split('/')[1].replace('jpeg','jpg'); const a=document.createElement('a'); a.download='imagen-'+Date.now()+'.'+ext; a.href=URL.createObjectURL(blob); a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); notify({icon:'&#127912;',title:t('it.title'),body:t('it.exported')+' ('+Math.round(blob.size/1024)+' KB)'}); };
         panel.querySelector('#it-tofs').onclick=async()=>{ const blob=await getBlob(); if(!blob)return; const fr=new FileReader(); fr.onload=()=>fsSaveDialog('png','Imagen',fr.result,null); fr.readAsDataURL(blob); };
-        panel.querySelector('#it-wall').onclick=()=>{ try{ const data=wc.toDataURL('image/png'); Store.set('tos-wp-paint',data); Store.set('tos-wp','paint'); applyWallpaper('paint'); notify({icon:'&#128444;&#65039;',title:t('it.title'),body:t('paint.wallpaper')}); }catch(e){} };
+        panel.querySelector('#it-wall').onclick=()=>{ try{ const data=flatCanvas().toDataURL('image/png'); Store.set('tos-wp-paint',data); Store.set('tos-wp','paint'); applyWallpaper('paint'); notify({icon:'&#128444;&#65039;',title:t('it.title'),body:t('paint.wallpaper')}); }catch(e){} };
       }
     };
     const selectTool=(name)=>{
@@ -7017,7 +7435,7 @@ function openImageTools(preloadFile){
     win.querySelector('#it-undo').onclick=undo;
     // OLE: soltar una imagen la carga; el resultado se puede arrastrar a otras apps
     osMakeDropTarget(stage,'image',(p)=>loadImage(p.data,'compartida'));
-    osMakeDragSource(canvas,()=>wc?{kind:'image',data:wc.toDataURL('image/png'),name:'Imagen'}:null);
+    osMakeDragSource(canvas,()=>wc?{kind:'image',data:flatCanvas().toDataURL('image/png'),name:'Imagen'}:null);
     // Redibujar al cambiar el tamaño de la ventana
     const ro=new ResizeObserver(()=>{ if(wc)render(); }); ro.observe(stage);
     (win._cleanups=win._cleanups||[]).push(()=>{ ro.disconnect(); if(panel._cropCleanup)panel._cropCleanup(); if(_imgToolsLoad===loadFile)_imgToolsLoad=null; });
@@ -7110,14 +7528,18 @@ function openNotes(){
       bodyEl.hidden=on; renderEl.hidden=!on;
       win.querySelector('#nt-preview').classList.toggle('active',on);
     };
+    // Vuelca de inmediato la edición pendiente de la nota ACTUAL (antes de cambiar de
+    // nota o cerrar la ventana), si no se perdería lo escrito en los últimos 400 ms.
+    const flushSave=()=>{ if(!saveTmr)return; clearTimeout(saveTmr); saveTmr=null; const n=noteById(curId); if(n){ n.title=titleEl.value; n.body=bodyEl.value; n.ts=Date.now(); persist(); } savedEl.textContent=t('np.saved'); };
     const selectNote=(nid)=>{
+      flushSave(); // guarda lo pendiente de la nota actual antes de sobrescribir el editor
       const n=noteById(nid); if(!n)return;
       curId=nid; showEditor(true); setPreview(false);
       titleEl.value=n.title||''; bodyEl.value=n.body||''; updCount(); renderList();
     };
     const touch=()=>{ savedEl.textContent=t('nt.saving'); clearTimeout(saveTmr); saveTmr=setTimeout(()=>{
       const n=noteById(curId); if(n){ n.title=titleEl.value; n.body=bodyEl.value; n.ts=Date.now(); persist(); }
-      savedEl.textContent=t('np.saved'); renderList();
+      saveTmr=null; savedEl.textContent=t('np.saved'); renderList();
     },400); };
     const newNote=()=>{ const n={id:'n'+Date.now()+Math.random().toString(36).slice(2,6),title:'',body:'',ts:Date.now()}; notes.push(n); persist(); selectNote(n.id); titleEl.focus(); };
     win.querySelector('#nt-new').onclick=newNote;
@@ -7132,7 +7554,7 @@ function openNotes(){
       notes=notes.filter(n=>n.id!==curId); persist(); curId=null; showEditor(false); renderList();
     };
     renderEl.addEventListener('click',(e)=>{ const a=e.target.closest('a.nt-link'); if(a&&a.dataset.url){ e.preventDefault(); window.open(a.dataset.url,'_blank','noopener'); } });
-    (win._cleanups=win._cleanups||[]).push(()=>clearTimeout(saveTmr));
+    (win._cleanups=win._cleanups||[]).push(()=>flushSave()); // al cerrar, no perder lo último escrito
     renderList();
     if(notes.length)selectNote(notes.slice().sort((a,b)=>b.ts-a.ts)[0].id); else showEditor(false);
   }});
@@ -7902,10 +8324,17 @@ function openNetscape(){
 // ========== COPIA DE SEGURIDAD (todo el estado tos-* a un archivo) ==========
 function osExportBackup(){
   const data={};
+  const skip=(k)=>k==='tos-account'||k==='tos-vault'; // no exportar los metadatos/caja de la cuenta
   try{
-    for(let i=0;i<localStorage.length;i++){
-      const k=localStorage.key(i);
-      if(k&&k.indexOf('tos-')===0)data[k]=localStorage.getItem(k);
+    if(isVaultUnlocked()){
+      // Con sesión iniciada, exporta los ajustes DESCIFRADOS (copia portable y restaurable)
+      Object.keys(_vault).forEach(k=>{ if(k.indexOf('tos-')===0&&!skip(k))data[k]=_vault[k]; });
+      const lang=localStorage.getItem('tos-lang'); if(lang!=null)data['tos-lang']=lang;
+    }else{
+      for(let i=0;i<localStorage.length;i++){
+        const k=localStorage.key(i);
+        if(k&&k.indexOf('tos-')===0&&!skip(k))data[k]=localStorage.getItem(k);
+      }
     }
   }catch(e){}
   const json=JSON.stringify({app:'torrecillas-os',version:APP_VERSION,fecha:new Date().toISOString(),data});
@@ -7925,7 +8354,8 @@ function osImportBackup(json,sinConfirmar){
     return false;
   }
   const aplicar=()=>{
-    Object.keys(obj.data).forEach(k=>{if(k.indexOf('tos-')===0)Store.set(k,obj.data[k]);});
+    // No sobrescribir la cuenta/caja actual con datos del backup
+    Object.keys(obj.data).forEach(k=>{if(k.indexOf('tos-')===0&&k!=='tos-account'&&k!=='tos-vault')Store.set(k,obj.data[k]);});
     try{location.reload();}catch(e){}
   };
   if(sinConfirmar){aplicar();return true;}
@@ -7951,7 +8381,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -8456,7 +8886,7 @@ function createWindow(title,icon,width,height,content,opts={}){
 
   win.innerHTML=`
     <div class="window-titlebar">
-      <div class="window-title"><span class="wt-icon">${icon}</span>${title}</div>
+      <div class="window-title"><span class="wt-icon">${icon}</span>${escHtml(title)}</div>
       <div class="window-controls">
         ${isGame?'<button class="btn-restart" onclick="restartGameWindow(\''+id+'\')" title="'+t('win.restart')+'" aria-label="'+t('win.restart')+'">&#8635;</button>':''}
         <button class="btn-minimize" onclick="minimizeWindow('${id}')" title="${t('win.min')}" aria-label="${t('win.min')}">_</button>
@@ -8594,7 +9024,7 @@ function updateTaskbar(){
     if(info.trayOnly&&info.minimized)return; // el MSN minimizado vive solo en su icono de la bandeja
     const item=document.createElement('div');
     item.className='taskbar-item'+(id===activeWindowId&&!info.minimized?' active':'');
-    item.innerHTML=`<span class="item-icon">${info.icon}</span>${info.title}`;
+    item.innerHTML=`<span class="item-icon">${info.icon}</span>${escHtml(info.title)}`;
     item.onclick=()=>{
       if(info.minimized)restoreWindow(id);
       else if(id===activeWindowId)minimizeWindow(id);
@@ -9591,7 +10021,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt')};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
