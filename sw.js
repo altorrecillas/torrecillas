@@ -8,7 +8,7 @@
 // Estrategia de red: red primero para el documento (index.html siempre fresco si hay
 // conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
 // solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.27.0';
+const APP_VERSION = '0.29.0';
 const CACHE = 'tos-' + APP_VERSION;
 const ASSETS = [
   './', './index.html', './og.png', './apple-touch-icon.png',
@@ -45,7 +45,7 @@ self.addEventListener('fetch', (e) => {
     e.respondWith((async () => {
       try {
         const form = await e.request.formData();
-        const file = form.get('image') || form.get('file') || form.getAll('image')[0];
+        const file = form.get('file') || form.get('image') || form.getAll('file')[0] || form.getAll('image')[0];
         if (file && file.size) {
           const c = await caches.open(CACHE);
           await c.put('shared-file', new Response(file, {

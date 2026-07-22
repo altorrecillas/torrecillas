@@ -38,9 +38,13 @@
       "url": "url",
       "files": [
         {
-          "name": "image",
+          "name": "file",
           "accept": [
-            "image/*"
+            "image/*",
+            "application/epub+zip",
+            "application/pdf",
+            ".epub",
+            ".pdf"
           ]
         }
       ]
