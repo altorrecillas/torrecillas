@@ -737,6 +737,20 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .rd-col{display:inline-flex;align-items:center;gap:3px}
 .rd-col input[type=color]{width:26px;height:20px;padding:0;border:1px solid #aca899;cursor:pointer}
 .rd-check{display:flex;align-items:center;gap:5px;cursor:pointer}
+.rd-search-box{padding:6px 8px;border-bottom:1px solid #d8d4c4;background:#f4f2ea;display:flex;gap:5px}
+.rd-search-box input{flex:1;padding:4px 7px;border:1px solid #7f9db9;border-radius:3px;font-size:12px}
+.rd-bm-add{width:100%;background:linear-gradient(180deg,#fff,#e6e3d6);border:1px solid #aca899;border-radius:3px;padding:4px 8px;font-size:11px;cursor:pointer}
+.rd-bm-add:hover{filter:brightness(1.03)}
+.rd-none{padding:12px 10px;color:#888;font-size:11px;text-align:center}
+.rd-mark{display:flex;align-items:center;gap:6px;padding:6px 9px;border-bottom:1px solid #eee;cursor:pointer}
+.rd-mark:hover{background:#eef4ff}
+.rd-mark-t{flex:1;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rd-mark-x{background:none;border:none;color:#a55;cursor:pointer;font-size:12px;padding:0 4px}
+.rd-sresult{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid #eee;padding:6px 9px;cursor:pointer;font-size:11px}
+.rd-sresult:hover{background:#eef4ff}
+.rd-sresult b{display:block;color:#1a4fa0;font-size:11px;margin-bottom:2px}
+.rd-sresult span{color:#444;line-height:1.35}
+.rd-hl-float{position:absolute;z-index:20;width:32px;height:28px;border:1px solid #b58a00;border-radius:6px;background:linear-gradient(180deg,#fff8d0,#ffe86a);cursor:pointer;font-size:15px;box-shadow:0 2px 6px rgba(0,0,0,.3);padding:0}
 /* ═══════════════════  § RETOQUES (editor de imágenes)  ═══════════════════ */
 .it-root{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,'MS Sans Serif',sans-serif;font-size:11px}
 .it-toolbar{display:flex;align-items:center;gap:4px;padding:4px 6px;background:linear-gradient(180deg,#f6f4ec,#e4e0cf);border-bottom:1px solid #aca899;flex-wrap:wrap;flex-shrink:0}
@@ -767,6 +781,70 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .it-panel select{padding:2px 4px;border:1px solid #7f9db9;border-radius:2px;font-size:11px}
 .it-panel small{color:#777;font-size:10px}
 .it-status{background:#e4e0cf;border-top:1px solid #aca899;padding:2px 8px;font-size:10px;color:#555;flex-shrink:0;min-height:15px}
+/* ═══════════════════  § NOTAS (cuaderno Markdown)  ═══════════════════ */
+.nt-root{display:flex;height:100%;background:#ece9d8;font-family:Tahoma,'MS Sans Serif',sans-serif;font-size:11px}
+.nt-side{width:38%;min-width:150px;max-width:230px;display:flex;flex-direction:column;background:#f4f2ea;border-right:1px solid #aca899}
+.nt-side-top{padding:6px;display:flex;flex-direction:column;gap:5px;border-bottom:1px solid #d8d4c4}
+.nt-new{background:linear-gradient(180deg,#cfe3ff,#a9caff);border:1px solid #5a86c0;border-radius:3px;padding:4px 8px;font-size:11px;font-weight:bold;cursor:pointer;color:#000}
+.nt-new:hover{filter:brightness(1.04)}
+.nt-search{padding:3px 6px;border:1px solid #7f9db9;border-radius:3px;font-size:11px}
+.nt-list{flex:1;overflow-y:auto;padding:3px}
+.nt-item{display:block;width:100%;text-align:left;background:transparent;border:none;border-radius:3px;padding:5px 7px;cursor:pointer;border-bottom:1px solid #e4e0d2}
+.nt-item:hover{background:#e7edf7}
+.nt-item.active{background:linear-gradient(180deg,#cfe3ff,#a9caff)}
+.nt-i-title{font-weight:bold;color:#1a3a6a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nt-i-sub{font-size:10px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.nt-none{padding:12px 8px;color:#8a8776;text-align:center;font-size:11px}
+.nt-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.nt-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#8a8776;font-size:30px;text-align:center;padding:16px}
+.nt-empty span{font-size:11px}
+.nt-editor{flex:1;display:flex;flex-direction:column;min-height:0;background:#fff}
+.nt-editor[hidden]{display:none}
+.nt-ebar{display:flex;gap:5px;align-items:center;padding:5px 6px;border-bottom:1px solid #e0ddce;background:#f6f4ec;flex-shrink:0}
+.nt-title{flex:1;border:1px solid transparent;background:transparent;font-size:13px;font-weight:bold;color:#1a3a6a;padding:2px 4px;border-radius:3px}
+.nt-title:focus{outline:none;border-color:#7f9db9;background:#fff}
+.nt-mini{background:linear-gradient(180deg,#fff,#e6e3d6);border:1px solid #aca899;border-radius:3px;padding:2px 7px;font-size:12px;cursor:pointer}
+.nt-mini.active{background:linear-gradient(180deg,#cfe3ff,#a9caff);border-color:#5a86c0}
+.nt-mini.nt-del:hover{background:#ffe0e0;border-color:#c05a5a}
+.nt-body{flex:1;border:none;outline:none;resize:none;padding:10px 12px;font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.5;color:#111;background:#fff;width:100%}
+.nt-body[hidden]{display:none}
+.nt-render{flex:1;overflow-y:auto;padding:10px 14px;font-size:13px;line-height:1.55;color:#111}
+.nt-render[hidden]{display:none}
+.nt-render .nt-h{margin:8px 0 4px;color:#1a3a6a;line-height:1.25}
+.nt-render .nt-h1{font-size:18px}.nt-render .nt-h2{font-size:15px}.nt-render .nt-h3{font-size:13px}
+.nt-render p{margin:4px 0}.nt-render ul{margin:4px 0 4px 18px}.nt-render li{margin:2px 0}
+.nt-render code{background:#f0eee2;border:1px solid #ddd;border-radius:3px;padding:0 3px;font-family:'Consolas',monospace;font-size:12px}
+.nt-render .nt-pre{background:#f6f5ee;border:1px solid #ddd;border-radius:4px;padding:8px 10px;overflow-x:auto;font-family:'Consolas',monospace;font-size:12px;white-space:pre}
+.nt-render .nt-link{color:#0645ad;cursor:pointer;text-decoration:underline}
+.nt-status{flex-shrink:0;border-top:1px solid #e0ddce;padding:3px 9px;font-size:10px;color:#666;background:#f6f4ec}
+@media (max-width:600px){ .nt-side{width:44%;min-width:120px} }
+/* ═══════════════════  § HERRAMIENTAS (QR · contraseñas · texto)  ═══════════════════ */
+.tb-root{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,'MS Sans Serif',sans-serif;font-size:11px}
+.tb-tabs{display:flex;gap:2px;padding:5px 6px 0;background:linear-gradient(180deg,#f6f4ec,#e4e0cf);border-bottom:1px solid #aca899;flex-shrink:0}
+.tb-tab{background:linear-gradient(180deg,#f0eee2,#ddd9c8);border:1px solid #aca899;border-bottom:none;border-radius:5px 5px 0 0;padding:4px 12px;font-size:11px;cursor:pointer;color:#333}
+.tb-tab.active{background:#fff;font-weight:bold;color:#000;position:relative;top:1px}
+.tb-body{flex:1;overflow-y:auto;background:#fff}
+.tb-pane{padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.tb-pane[hidden]{display:none}
+.tb-input{width:100%;border:1px solid #7f9db9;border-radius:3px;padding:6px 8px;font-family:'Consolas','Courier New',monospace;font-size:12px;resize:vertical;box-sizing:border-box}
+.tb-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tb-row label{color:#333}
+.tb-row select{border:1px solid #7f9db9;border-radius:2px;padding:2px 4px;font-size:11px}
+.tb-go{background:linear-gradient(180deg,#cfe3ff,#a9caff);border:1px solid #5a86c0;border-radius:3px;padding:4px 12px;font-size:11px;font-weight:bold;cursor:pointer;color:#000}
+.tb-go:hover{filter:brightness(1.04)}
+.tb-mini{background:linear-gradient(180deg,#fff,#e6e3d6);border:1px solid #aca899;border-radius:3px;padding:3px 9px;font-size:11px;cursor:pointer;color:#000}
+.tb-mini:hover{filter:brightness(1.03)}
+.tb-qr-out{display:flex;justify-content:center;padding:8px;background:#f6f5ee;border:1px solid #e0ddce;border-radius:4px}
+#tb-qr-canvas{max-width:100%;height:auto;image-rendering:pixelated;background:#fff}
+.tb-qr-info{color:#777;font-size:10px;margin-left:auto}
+.tb-pw-out{font-family:'Consolas','Courier New',monospace;font-size:16px;word-break:break-all;background:#f6f5ee;border:1px solid #cfc9b5;border-radius:4px;padding:10px 12px;min-height:22px;user-select:all;color:#111}
+.tb-pw-meter{height:6px;background:#e0ddce;border-radius:3px;overflow:hidden}
+#tb-pw-bar{height:100%;width:0;transition:width .2s,background .2s;border-radius:3px}
+.tb-checks{gap:12px}
+.tb-checks label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;font-family:'Consolas',monospace}
+.tb-txt-stats{color:#666;font-size:10px}
+.tb-txt-btns{gap:5px}
+@media (max-width:600px){ .tb-pw-out{font-size:14px} }
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
@@ -2630,8 +2708,16 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
             <div><div class="si-label">Paint</div></div>
           </button>
           <button type="button" class="start-item" onclick="openImageTools()">
-            <div class="si-icon">&#127912;</div>
+            <div class="si-icon">&#128396;&#65039;</div>
             <div><div class="si-label" data-i18n="it.title">Retoques</div><div class="si-desc" data-i18n="it.desc">Editor de im&aacute;genes local</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openNotes()">
+            <div class="si-icon">&#128210;</div>
+            <div><div class="si-label" data-i18n="nt.title">Notas</div><div class="si-desc" data-i18n="nt.desc">Cuaderno con Markdown</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openToolbox()">
+            <div class="si-icon">&#128736;&#65039;</div>
+            <div><div class="si-label" data-i18n="tb.title">Herramientas</div><div class="si-desc" data-i18n="tb.desc">QR, contrase&ntilde;as y texto</div></div>
           </button>
           <button type="button" class="start-item" onclick="openLoquendo()">
             <div class="si-icon">&#128483;&#65039;</div>
@@ -2923,6 +3009,39 @@ const I18N={
   'it.wall':{es:'Fondo', en:'Wallpaper', ca:'Fons', ru:'Обои'},
   'it.noexif':{es:'Al exportar se eliminan los metadatos EXIF (ubicación, cámara).', en:'Exporting strips EXIF metadata (location, camera).', ca:'En exportar s’eliminen les metadades EXIF (ubicació, càmera).', ru:'При экспорте удаляются метаданные EXIF (геолокация, камера).'},
   'it.exported':{es:'Imagen exportada', en:'Image exported', ca:'Imatge exportada', ru:'Изображение экспортировано'},
+  'nt.title':{es:'Notas', en:'Notes', ca:'Notes', ru:'Заметки'},
+  'nt.desc':{es:'Cuaderno con Markdown', en:'Markdown notebook', ca:'Quadern amb Markdown', ru:'Блокнот с Markdown'},
+  'nt.new':{es:'Nueva', en:'New', ca:'Nova', ru:'Новая'},
+  'nt.search':{es:'Buscar en tus notas…', en:'Search your notes…', ca:'Cerca a les teves notes…', ru:'Поиск по заметкам…'},
+  'nt.pick':{es:'Elige una nota o crea una nueva.', en:'Pick a note or create a new one.', ca:'Tria una nota o crea’n una de nova.', ru:'Выберите заметку или создайте новую.'},
+  'nt.none':{es:'Aún no hay notas.', en:'No notes yet.', ca:'Encara no hi ha notes.', ru:'Заметок пока нет.'},
+  'nt.noresults':{es:'Sin coincidencias.', en:'No matches.', ca:'Sense coincidències.', ru:'Ничего не найдено.'},
+  'nt.untitled':{es:'Sin título', en:'Untitled', ca:'Sense títol', ru:'Без названия'},
+  'nt.preview':{es:'Vista previa (Markdown)', en:'Preview (Markdown)', ca:'Vista prèvia (Markdown)', ru:'Предпросмотр (Markdown)'},
+  'nt.bodyhint':{es:'Escribe con Markdown: # título, **negrita**, *cursiva*, - listas, `código`.', en:'Write in Markdown: # heading, **bold**, *italic*, - lists, `code`.', ca:'Escriu amb Markdown: # títol, **negreta**, *cursiva*, - llistes, `codi`.', ru:'Пишите в Markdown: # заголовок, **жирный**, *курсив*, - списки, `код`.'},
+  'nt.chars':{es:'{n} caracteres', en:'{n} characters', ca:'{n} caràcters', ru:'{n} символов'},
+  'nt.saving':{es:'Guardando…', en:'Saving…', ca:'Desant…', ru:'Сохранение…'},
+  'nt.delconfirm':{es:'¿Eliminar esta nota? No se puede deshacer.', en:'Delete this note? This cannot be undone.', ca:'Vols eliminar aquesta nota? No es pot desfer.', ru:'Удалить эту заметку? Действие необратимо.'},
+  'tb.title':{es:'Herramientas', en:'Tools', ca:'Eines', ru:'Инструменты'},
+  'tb.desc':{es:'QR, contraseñas y texto', en:'QR, passwords and text', ca:'QR, contrasenyes i text', ru:'QR, пароли и текст'},
+  'tb.qr':{es:'QR', en:'QR', ca:'QR', ru:'QR'},
+  'tb.pw':{es:'Contraseñas', en:'Passwords', ca:'Contrasenyes', ru:'Пароли'},
+  'tb.txt':{es:'Texto', en:'Text', ca:'Text', ru:'Текст'},
+  'tb.qrhint':{es:'Escribe una URL o texto para el QR…', en:'Type a URL or text for the QR…', ca:'Escriu una URL o text per al QR…', ru:'Введите URL или текст для QR…'},
+  'tb.eclevel':{es:'Corrección', en:'Correction', ca:'Correcció', ru:'Коррекция'},
+  'tb.generate':{es:'Generar', en:'Generate', ca:'Generar', ru:'Создать'},
+  'tb.qrlong':{es:'El texto es demasiado largo para un QR (máx. ~1 KB).', en:'Text too long for a QR (max ~1 KB).', ca:'El text és massa llarg per a un QR (màx. ~1 KB).', ru:'Текст слишком длинный для QR (макс. ~1 КБ).'},
+  'tb.length':{es:'Longitud', en:'Length', ca:'Longitud', ru:'Длина'},
+  'tb.noambig':{es:'Sin ambiguos (0/O, 1/l)', en:'No look-alikes (0/O, 1/l)', ca:'Sense ambigus (0/O, 1/l)', ru:'Без похожих (0/O, 1/l)'},
+  'tb.copied':{es:'Copiado al portapapeles', en:'Copied to clipboard', ca:'Copiat al porta-retalls', ru:'Скопировано в буфер'},
+  'tb.txthint':{es:'Pega aquí tu texto para transformarlo…', en:'Paste your text here to transform it…', ca:'Enganxa aquí el teu text per transformar-lo…', ru:'Вставьте текст для преобразования…'},
+  'tb.stats':{es:'{c} caracteres · {w} palabras · {l} líneas', en:'{c} characters · {w} words · {l} lines', ca:'{c} caràcters · {w} paraules · {l} línies', ru:'{c} символов · {w} слов · {l} строк'},
+  'tb.trim':{es:'Quitar espacios', en:'Trim spaces', ca:'Treure espais', ru:'Убрать пробелы'},
+  'tb.dedup':{es:'Sin duplicados', en:'Dedupe', ca:'Sense duplicats', ru:'Без дубликатов'},
+  'tb.sort':{es:'Ordenar', en:'Sort', ca:'Ordenar', ru:'Сортировать'},
+  'tb.reverse':{es:'Invertir', en:'Reverse', ca:'Invertir', ru:'Обратить'},
+  'tb.badjson':{es:'El texto no es JSON válido.', en:'The text is not valid JSON.', ca:'El text no és JSON vàlid.', ru:'Текст не является корректным JSON.'},
+  'tb.badb64':{es:'El texto no es Base64 válido.', en:'The text is not valid Base64.', ca:'El text no és Base64 vàlid.', ru:'Текст не является корректным Base64.'},
   'reader.title':{es:'Lector', en:'Reader', ca:'Lector', ru:'Читалка'},
   'reader.empty':{es:'Abre un EPUB o PDF de tu equipo.', en:'Open an EPUB or PDF from your device.', ca:'Obre un EPUB o PDF del teu equip.', ru:'Откройте EPUB или PDF со своего устройства.'},
   'reader.fail':{es:'No se pudo abrir el libro.', en:'Could not open the book.', ca:'No s’ha pogut obrir el llibre.', ru:'Не удалось открыть книгу.'},
@@ -2941,6 +3060,18 @@ const I18N={
   'reader.nonelib':{es:'Tu biblioteca está vacía. Abre un libro para empezar.', en:'Your library is empty. Open a book to begin.', ca:'La teva biblioteca és buida. Obre un llibre per començar.', ru:'Ваша библиотека пуста. Откройте книгу.'},
   'reader.fullscreen':{es:'Pantalla completa', en:'Fullscreen', ca:'Pantalla completa', ru:'Полный экран'},
   'reader.remove':{es:'Quitar de la biblioteca', en:'Remove from library', ca:'Treu de la biblioteca', ru:'Убрать из библиотеки'},
+  'reader.search':{es:'Buscar en el libro', en:'Search the book', ca:'Cerca al llibre', ru:'Поиск по книге'},
+  'reader.searchhint':{es:'Escribe al menos 2 letras…', en:'Type at least 2 letters…', ca:'Escriu almenys 2 lletres…', ru:'Введите минимум 2 буквы…'},
+  'reader.searching':{es:'Buscando…', en:'Searching…', ca:'Cercant…', ru:'Поиск…'},
+  'reader.noresults':{es:'Sin resultados.', en:'No results.', ca:'Sense resultats.', ru:'Ничего не найдено.'},
+  'reader.bookmarks':{es:'Marcadores', en:'Bookmarks', ca:'Marcadors', ru:'Закладки'},
+  'reader.bmadd':{es:'Marcar esta página', en:'Bookmark this page', ca:'Marca aquesta pàgina', ru:'Добавить закладку'},
+  'reader.bmempty':{es:'Aún no hay marcadores.', en:'No bookmarks yet.', ca:'Encara no hi ha marcadors.', ru:'Закладок пока нет.'},
+  'reader.bmsaved':{es:'Marcador guardado', en:'Bookmark saved', ca:'Marcador desat', ru:'Закладка сохранена'},
+  'reader.bmdup':{es:'Ya hay un marcador aquí', en:'There is already a bookmark here', ca:'Ja hi ha un marcador aquí', ru:'Здесь уже есть закладка'},
+  'reader.chapter':{es:'Capítulo {n}', en:'Chapter {n}', ca:'Capítol {n}', ru:'Глава {n}'},
+  'reader.highlight':{es:'Subrayar', en:'Highlight', ca:'Subratlla', ru:'Выделить'},
+  'reader.hlsaved':{es:'Texto subrayado', en:'Text highlighted', ca:'Text subratllat', ru:'Текст выделен'},
 };
 function currentLang(){ const l=Store.get('tos-lang'); return I18N_LANGS.some(x=>x[0]===l)?l:'es'; }
 function t(key,vars){
@@ -4318,7 +4449,7 @@ const SESSION_OPENERS={
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
   defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo(),
   emule:()=>openEmule(),outlook:()=>openOutlook(),regedit:()=>openRegedit(),encarta:()=>openEncarta(),
-  loquendo:()=>openLoquendo(),recorder:()=>openRecorder(),booth:()=>openPhotoBooth(),tiempo:()=>openTimeMachine(),lector:()=>openEbookReader(),retoques:()=>openImageTools()
+  loquendo:()=>openLoquendo(),recorder:()=>openRecorder(),booth:()=>openPhotoBooth(),tiempo:()=>openTimeMachine(),lector:()=>openEbookReader(),retoques:()=>openImageTools(),cuaderno:()=>openNotes(),herramientas:()=>openToolbox()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -6304,6 +6435,7 @@ function readerCSS(){
     h1,h2,h3,h4{line-height:1.25;color:${fg}}
     p{margin:0 0 .8em}
     pre,code{font-family:'Courier New',monospace;white-space:pre-wrap}
+    mark.rd-hl{background:${s.theme==='night'?'#5a4a00':'#fff06a'};color:inherit;border-radius:2px;padding:0 1px}
     table{max-width:100%}`;
 }
 // --- ZIP mínimo: lee el directorio central y devuelve nombre -> {method,comp} ---
@@ -6409,6 +6541,10 @@ async function readerReopen(id){
   openEbookReader(file);
   return true;
 }
+// Marcadores y subrayados por libro (localStorage). Los subrayados guardan el texto
+// para volver a aplicarlos buscándolo al re-renderizar el capítulo (robusto a recargas).
+function readerMarks(id){ try{ const m=JSON.parse(Store.get('tos-reader-marks-'+id)||'{}'); return {bm:Array.isArray(m.bm)?m.bm:[],hl:Array.isArray(m.hl)?m.hl:[]}; }catch(e){ return {bm:[],hl:[]}; } }
+function readerMarksWrite(id,m){ return Store.set('tos-reader-marks-'+id,JSON.stringify(m)); }
 let _ebookLoadFile=null;
 function openEbookReader(preloadFile){
   closeStartMenu();
@@ -6421,6 +6557,8 @@ function openEbookReader(preloadFile){
       <span class="reader-pos" id="rd-pos">—</span>
       <button type="button" class="reader-btn" id="rd-next" title="Siguiente" disabled>&#9654;</button>
       <button type="button" class="reader-btn" id="rd-toc" title="${t('reader.toc')}" disabled>&#9776;</button>
+      <button type="button" class="reader-btn" id="rd-search" title="${t('reader.search')}" disabled>&#128269;</button>
+      <button type="button" class="reader-btn" id="rd-bm" title="${t('reader.bookmarks')}" disabled>&#128278;</button>
       <button type="button" class="reader-btn reader-aa" id="rd-aa" title="${t('reader.type')}" disabled>A<small>A</small></button>
       <button type="button" class="reader-btn" id="rd-full" title="${t('reader.fullscreen')}">${RD_FS_EXPAND}</button>
       <input type="file" id="rd-file" accept=".epub,.pdf,application/epub+zip,application/pdf" hidden>
@@ -6432,6 +6570,12 @@ function openEbookReader(preloadFile){
     </div>
     <div class="reader-titlebar" id="rd-book"></div>
     <div class="reader-panel" id="rd-toc-panel" hidden><div class="reader-panel-h">${t('reader.toc')}<button type="button" class="rd-panel-x" data-close aria-label="Cerrar">&#10005;</button></div><div class="reader-toc-list" id="rd-toc-list"></div></div>
+    <div class="reader-panel" id="rd-search-panel" hidden><div class="reader-panel-h">${t('reader.search')}<button type="button" class="rd-panel-x" data-close aria-label="Cerrar">&#10005;</button></div>
+      <div class="rd-search-box"><input type="search" id="rd-search-in" placeholder="${escHtml(t('reader.searchhint'))}" aria-label="${escHtml(t('reader.search'))}"></div>
+      <div class="reader-toc-list" id="rd-search-list"></div></div>
+    <div class="reader-panel" id="rd-bm-panel" hidden><div class="reader-panel-h">${t('reader.bookmarks')}<button type="button" class="rd-panel-x" data-close aria-label="Cerrar">&#10005;</button></div>
+      <div class="rd-search-box"><button type="button" class="rd-bm-add" id="rd-bm-add">&#128278; ${t('reader.bmadd')}</button></div>
+      <div class="reader-toc-list" id="rd-bm-list"></div></div>
     <div class="reader-panel reader-type" id="rd-type-panel" hidden>
       <div class="reader-panel-h">${t('reader.type')}<button type="button" class="rd-panel-x" data-close aria-label="Cerrar">&#10005;</button></div>
       <div class="rd-row"><span>${t('reader.size')}</span><button type="button" class="rd-step" data-a="size-">A−</button><span id="rd-size-v" class="rd-val"></span><button type="button" class="rd-step" data-a="size+">A+</button></div>
@@ -6448,13 +6592,15 @@ function openEbookReader(preloadFile){
     const stage=win.querySelector('#reader-stage'), frame=win.querySelector('#rd-frame'), pdfBox=win.querySelector('#rd-pdf'), empty=win.querySelector('#rd-empty');
     const posEl=win.querySelector('#rd-pos'), bookEl=win.querySelector('#rd-book');
     const bPrev=win.querySelector('#rd-prev'), bNext=win.querySelector('#rd-next'), bToc=win.querySelector('#rd-toc'), bAa=win.querySelector('#rd-aa');
+    const bSearch=win.querySelector('#rd-search'), bBm=win.querySelector('#rd-bm');
+    const navBtns=[bPrev,bNext,bToc,bAa,bSearch,bBm];
     let book=null, idx=0, blobs=[], pdfUrl=null, bookId=null, resume=null, savePosT=null;
     const freeBlobs=()=>{ blobs.forEach(u=>{try{URL.revokeObjectURL(u);}catch(e){}}); blobs=[]; if(pdfUrl){try{URL.revokeObjectURL(pdfUrl);}catch(e){}pdfUrl=null;} };
 
     // -- Estado vacío = tu biblioteca --
     const showLibrary=()=>{
       book=null; frame.style.display='none'; pdfBox.style.display='none'; empty.style.display='flex';
-      [bPrev,bNext,bToc,bAa].forEach(b=>b.disabled=true); posEl.textContent='—'; bookEl.textContent='';
+      navBtns.forEach(b=>b.disabled=true); posEl.textContent='—'; bookEl.textContent='';
       const lib=readerLib();
       if(!lib.length){ empty.innerHTML='<div class="rd-empty-hero">&#128214;<br><b>'+escHtml(t('reader.title'))+'</b><br><span>'+escHtml(t('reader.empty'))+'</span></div>'; return; }
       empty.innerHTML='<div class="rd-lib-head">&#128218; '+escHtml(t('reader.library'))+'</div><div class="rd-lib-list">'+lib.map(b=>{
@@ -6485,7 +6631,7 @@ function openEbookReader(preloadFile){
           book=await parseEpub(ab);
           idx=0;
           bookEl.textContent=book.title+(book.author?' — '+book.author:'');
-          [bPrev,bNext,bToc,bAa].forEach(b=>b.disabled=false);
+          navBtns.forEach(b=>b.disabled=false);
           buildToc();
           // Registrar en la biblioteca y guardar el blob (una vez) para reabrirlo
           const nid=bookId||readerBookId(book.title,book.author,file.size||ab.byteLength);
@@ -6502,7 +6648,7 @@ function openEbookReader(preloadFile){
     };
     const openPdf=(file)=>{
       book=null; frame.style.display='none'; empty.style.display='none';
-      [bPrev,bNext,bToc,bAa].forEach(b=>b.disabled=true);
+      navBtns.forEach(b=>b.disabled=true);
       try{ pdfUrl=URL.createObjectURL(file); }catch(e){ return; }
       pdfBox.style.display='block';
       pdfBox.innerHTML='<iframe class="reader-pdf-frame" src="'+pdfUrl+'#toolbar=1" title="PDF"></iframe><div class="reader-pdf-note">'+t('reader.pdfnote')+'</div>';
@@ -6536,10 +6682,12 @@ function openEbookReader(preloadFile){
           // reanudar el scroll dentro del capítulo (si venimos de una posición guardada)
           if(scrollPct&&scrollPct>0){ const el=fd.documentElement; el.scrollTop=Math.max(0,(el.scrollHeight-el.clientHeight)*scrollPct); }
           else fd.documentElement.scrollTop=0;
-          fd.addEventListener('mousedown',closePanels,true);
-          fd.addEventListener('touchstart',(e)=>{ closePanels(); onTouchStart(e); },{capture:true,passive:true});
-          fd.addEventListener('touchend',onTouchEnd,{passive:true});
-          fd.addEventListener('scroll',()=>{ const el=fd.documentElement; const max=el.scrollHeight-el.clientHeight; savePos(max>0?el.scrollTop/max:0); },{passive:true});
+          fd.addEventListener('mousedown',()=>{ closePanels(); win._rdHideFloat&&win._rdHideFloat(); },true);
+          fd.addEventListener('touchstart',(e)=>{ closePanels(); win._rdHideFloat&&win._rdHideFloat(); onTouchStart(e); },{capture:true,passive:true});
+          fd.addEventListener('touchend',(e)=>{ onTouchEnd(e); setTimeout(()=>win._rdSelectHook&&win._rdSelectHook(),10); },{passive:true});
+          fd.addEventListener('mouseup',()=>{ setTimeout(()=>win._rdSelectHook&&win._rdSelectHook(),10); });
+          fd.addEventListener('scroll',()=>{ win._rdHideFloat&&win._rdHideFloat(); const el=fd.documentElement; const max=el.scrollHeight-el.clientHeight; savePos(max>0?el.scrollTop/max:0); },{passive:true});
+          win._rdReapply&&win._rdReapply();
           fd.querySelectorAll('a[href]').forEach(a=>{
             const h=a.getAttribute('href');
             if(h&&!/^https?:|^mailto:/.test(h)){ a.addEventListener('click',(e)=>{ e.preventDefault(); const target=_resolvePath(dir,h); const si=book.spine.indexOf(target); if(si>=0)showChapter(si); }); }
@@ -6570,14 +6718,96 @@ function openEbookReader(preloadFile){
     win.querySelector('#rd-lib').onclick=()=>showLibrary();
     bPrev.onclick=()=>showChapter(idx-1);
     bNext.onclick=()=>showChapter(idx+1);
-    const closePanels=()=>{ win.querySelector('#rd-toc-panel').hidden=true; win.querySelector('#rd-type-panel').hidden=true; };
+    const closePanels=()=>{ win.querySelectorAll('.reader-panel').forEach(p=>p.hidden=true); };
     win.querySelectorAll('.rd-panel-x[data-close]').forEach(b=>b.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); closePanels(); });
-    const togglePanel=(sel)=>{ const p=win.querySelector(sel); const other=win.querySelector(sel==='#rd-toc-panel'?'#rd-type-panel':'#rd-toc-panel'); other.hidden=true; p.hidden=!p.hidden; };
+    const togglePanel=(sel)=>{ const p=win.querySelector(sel); const wasHidden=p.hidden; closePanels(); p.hidden=!wasHidden; return !p.hidden; };
     bToc.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); togglePanel('#rd-toc-panel'); };
     bAa.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); togglePanel('#rd-type-panel'); };
-    const outside=(e)=>{ if(win.querySelector('#rd-toc-panel').hidden&&win.querySelector('#rd-type-panel').hidden)return; const t=e.target; if(!t.closest||(!t.closest('.reader-panel')&&t!==bToc&&t!==bAa&&!bToc.contains(t)&&!bAa.contains(t)))closePanels(); };
+    const panelBtns=[bToc,bAa,bSearch,bBm];
+    const outside=(e)=>{ if([...win.querySelectorAll('.reader-panel')].every(p=>p.hidden))return; const t=e.target; if(!t.closest||(!t.closest('.reader-panel')&&!panelBtns.some(b=>b===t||b.contains(t))))closePanels(); };
     document.addEventListener('mousedown',outside,true);
     (win._cleanups=win._cleanups||[]).push(()=>document.removeEventListener('mousedown',outside,true));
+
+    // -- Marcadores --
+    const chapterLabel=(ci)=>{ if(book&&book.toc){ const e=book.toc.find(e=>book.spine.indexOf(e.href.split('#')[0])===ci); if(e&&e.label)return e.label; } return t('reader.chapter',{n:ci+1}); };
+    const renderBookmarks=()=>{
+      const list=win.querySelector('#rd-bm-list'); if(!bookId){ list.innerHTML=''; return; }
+      const m=readerMarks(bookId);
+      if(!m.bm.length){ list.innerHTML='<div class="rd-none">'+escHtml(t('reader.bmempty'))+'</div>'; return; }
+      list.innerHTML=m.bm.slice().sort((a,b)=>a.chapterIdx-b.chapterIdx||a.scrollPct-b.scrollPct).map(bm=>
+        '<div class="rd-mark" data-ci="'+bm.chapterIdx+'" data-sp="'+bm.scrollPct+'"><span class="rd-mark-t">&#128278; '+escHtml(bm.label||chapterLabel(bm.chapterIdx))+'</span><button type="button" class="rd-mark-x" title="'+escHtml(t('reader.remove'))+'">&#10005;</button></div>'
+      ).join('');
+      list.querySelectorAll('.rd-mark').forEach(el=>{
+        el.onclick=(e)=>{ if(e.target.closest('.rd-mark-x'))return; showChapter(+el.dataset.ci,+el.dataset.sp); closePanels(); };
+        el.querySelector('.rd-mark-x').onclick=(e)=>{ e.stopPropagation(); const m2=readerMarks(bookId); m2.bm=m2.bm.filter(b=>!(b.chapterIdx===+el.dataset.ci&&Math.abs(b.scrollPct-(+el.dataset.sp))<0.001)); readerMarksWrite(bookId,m2); renderBookmarks(); };
+      });
+    };
+    win.querySelector('#rd-bm-add').onclick=()=>{
+      if(!bookId||!book)return;
+      let sp=0; try{ const el=frame.contentDocument.documentElement; const max=el.scrollHeight-el.clientHeight; sp=max>0?el.scrollTop/max:0; }catch(e){}
+      const m=readerMarks(bookId);
+      if(m.bm.some(b=>b.chapterIdx===idx&&Math.abs(b.scrollPct-sp)<0.02)){ notify({icon:'&#128278;',title:t('reader.title'),body:t('reader.bmdup')}); return; }
+      m.bm.push({chapterIdx:idx,scrollPct:sp,label:chapterLabel(idx),ts:Date.now()});
+      readerMarksWrite(bookId,m); renderBookmarks(); notify({icon:'&#128278;',title:t('reader.title'),body:t('reader.bmsaved')});
+    };
+    bBm.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); if(togglePanel('#rd-bm-panel'))renderBookmarks(); };
+
+    // -- Búsqueda dentro del libro (recorre todos los capítulos del spine) --
+    let searchT=null;
+    const runSearch=async(q)=>{
+      const list=win.querySelector('#rd-search-list'); q=(q||'').trim();
+      if(!book){ list.innerHTML=''; return; }
+      if(q.length<2){ list.innerHTML='<div class="rd-none">'+escHtml(t('reader.searchhint'))+'</div>'; return; }
+      list.innerHTML='<div class="rd-none">'+escHtml(t('reader.searching'))+'</div>';
+      const ql=q.toLowerCase(); const results=[]; const token=q;
+      for(let ci=0;ci<book.spine.length&&results.length<80;ci++){
+        let html=''; try{ html=await _zipText(book.files,book.spine[ci]); }catch(e){ continue; }
+        const text=html.replace(/<[^>]+>/g,' ').replace(/&[a-z#0-9]+;/gi,' ').replace(/\s+/g,' ');
+        const tl=text.toLowerCase(); let from=0, hits=0;
+        while(hits<3){ const p=tl.indexOf(ql,from); if(p<0)break; const a=Math.max(0,p-32), b=Math.min(text.length,p+token.length+38);
+          const snip=(a>0?'…':'')+text.slice(a,p)+'‹'+text.slice(p,p+token.length)+'›'+text.slice(p+token.length,b)+(b<text.length?'…':'');
+          results.push({ci,snip}); from=p+token.length; hits++; }
+      }
+      if(!results.length){ list.innerHTML='<div class="rd-none">'+escHtml(t('reader.noresults'))+'</div>'; return; }
+      list.innerHTML=results.map(r=>'<button type="button" class="rd-sresult" data-ci="'+r.ci+'"><b>'+escHtml(chapterLabel(r.ci))+'</b><span>'+escHtml(r.snip)+'</span></button>').join('');
+      list.querySelectorAll('.rd-sresult').forEach(b=>b.onclick=()=>{ showChapter(+b.dataset.ci,0); closePanels(); });
+    };
+    win.querySelector('#rd-search-in').oninput=(e)=>{ clearTimeout(searchT); const q=e.target.value; searchT=setTimeout(()=>runSearch(q),250); };
+    bSearch.onclick=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); if(togglePanel('#rd-search-panel')){ const inp=win.querySelector('#rd-search-in'); setTimeout(()=>inp.focus(),30); if(!win.querySelector('#rd-search-list').children.length)runSearch(inp.value); } };
+
+    // -- Subrayados: seleccionar texto en el capítulo → botón flotante → guardar --
+    const hlFloat=document.createElement('button'); hlFloat.type='button'; hlFloat.className='rd-hl-float'; hlFloat.textContent='🖍️'; hlFloat.title=t('reader.highlight'); hlFloat.style.display='none';
+    stage.appendChild(hlFloat);
+    let pendingRange=null;
+    const hideFloat=()=>{ hlFloat.style.display='none'; pendingRange=null; };
+    const wrapRange=(fd,range,save)=>{
+      try{ const mark=fd.createElement('mark'); mark.className='rd-hl'; range.surroundContents(mark);
+        if(save&&bookId){ const txt=(mark.textContent||'').trim(); if(txt){ const m=readerMarks(bookId); m.hl.push({chapterIdx:idx,text:txt.slice(0,300),ts:Date.now()}); readerMarksWrite(bookId,m); notify({icon:'&#128278;',title:t('reader.title'),body:t('reader.hlsaved')}); } }
+        return true;
+      }catch(e){ return false; }
+    };
+    const onFrameSelect=()=>{
+      try{ const fd=frame.contentDocument, sel=fd.getSelection(); if(!sel||sel.isCollapsed||!sel.rangeCount){ hideFloat(); return; }
+        const txt=sel.toString().trim(); if(txt.length<2){ hideFloat(); return; }
+        pendingRange=sel.getRangeAt(0).cloneRange();
+        const rect=sel.getRangeAt(0).getBoundingClientRect(); const fr=frame.getBoundingClientRect(); const sr=stage.getBoundingClientRect();
+        hlFloat.style.display='block';
+        hlFloat.style.left=Math.max(4,Math.min(stage.clientWidth-36,(fr.left-sr.left)+rect.left+rect.width/2-16))+'px';
+        hlFloat.style.top=Math.max(4,(fr.top-sr.top)+rect.top-34)+'px';
+      }catch(e){ hideFloat(); }
+    };
+    hlFloat.onclick=()=>{ if(pendingRange&&frame.contentDocument){ wrapRange(frame.contentDocument,pendingRange,true); try{frame.contentDocument.getSelection().removeAllRanges();}catch(e){} } hideFloat(); };
+    // Re-aplica los subrayados guardados de este capítulo buscando su texto
+    const reapplyHighlights=()=>{
+      if(!bookId)return; const m=readerMarks(bookId); const here=m.hl.filter(h=>h.chapterIdx===idx); if(!here.length)return;
+      try{ const fd=frame.contentDocument, body=fd.body; if(!body)return;
+        here.forEach(h=>{ const walker=fd.createTreeWalker(body,4,null); let node;
+          while((node=walker.nextNode())){ const pos=node.nodeValue.indexOf(h.text.slice(0,60)); if(pos>=0&&!(node.parentNode&&node.parentNode.classList&&node.parentNode.classList.contains('rd-hl'))){ const r=fd.createRange(); r.setStart(node,pos); r.setEnd(node,Math.min(node.nodeValue.length,pos+h.text.length)); wrapRange(fd,r,false); break; } }
+        });
+      }catch(e){}
+    };
+    // se enganchará en el onload del iframe (ver showChapter)
+    win._rdSelectHook=onFrameSelect; win._rdReapply=reapplyHighlights; win._rdHideFloat=hideFloat;
 
     // -- Pantalla completa --
     const bFull=win.querySelector('#rd-full');
@@ -6639,7 +6869,7 @@ function openImageTools(preloadFile){
     <div class="it-panel" id="it-panel" hidden></div>
     <div class="it-status" id="it-status"></div>
   </div>`;
-  createWindow(t('it.title'),'&#127912;',600,520,content,{session:'imgtools',statusbar:false,onCreated:(id,win)=>{
+  createWindow(t('it.title'),'&#128396;&#65039;',600,520,content,{session:'imgtools',statusbar:false,onCreated:(id,win)=>{
     const stage=win.querySelector('#it-stage'), wrap=win.querySelector('#it-canvaswrap'), empty=win.querySelector('#it-empty');
     const canvas=win.querySelector('#it-canvas'), cropBox=win.querySelector('#it-crop'), panel=win.querySelector('#it-panel'), statusEl=win.querySelector('#it-status');
     let wc=null;           // canvas de trabajo (fuente de verdad)
@@ -6793,6 +7023,303 @@ function openImageTools(preloadFile){
     (win._cleanups=win._cleanups||[]).push(()=>{ ro.disconnect(); if(panel._cropCleanup)panel._cropCleanup(); if(_imgToolsLoad===loadFile)_imgToolsLoad=null; });
 
     if(preloadFile)loadFile(preloadFile);
+  }});
+}
+
+// ========== NOTAS — cuaderno real con Markdown, búsqueda y autoguardado ==========
+// Varias notas persistentes en localStorage (tos-notes). Nada sale del dispositivo.
+function notesLoad(){ try{ const a=JSON.parse(Store.get('tos-notes')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function notesSave(a){ return Store.set('tos-notes',JSON.stringify(a)); }
+// Markdown mínimo y seguro: se escapa primero y luego se aplican patrones sobre texto ya escapado.
+function notesMarkdown(src){
+  const esc=escHtml(src||'');
+  const lines=esc.split('\n'); let out=[], inList=false, inCode=false, code=[];
+  const inline=(s)=>s
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*]+)\*/g,'$1<em>$2</em>')
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,'<a href="$1" data-url="$2" class="nt-link">$1</a>');
+  for(const ln of lines){
+    if(/^```/.test(ln)){ if(inCode){ out.push('<pre class="nt-pre">'+code.join('\n')+'</pre>'); code=[]; inCode=false; } else { if(inList){out.push('</ul>');inList=false;} inCode=true; } continue; }
+    if(inCode){ code.push(ln); continue; }
+    const li=ln.match(/^\s*[-*]\s+(.*)$/);
+    if(li){ if(!inList){out.push('<ul>');inList=true;} out.push('<li>'+inline(li[1])+'</li>'); continue; }
+    if(inList){out.push('</ul>');inList=false;}
+    const h=ln.match(/^(#{1,3})\s+(.*)$/);
+    if(h){ const n=h[1].length; out.push('<h'+n+' class="nt-h nt-h'+n+'">'+inline(h[2])+'</h'+n+'>'); continue; }
+    if(/^\s*$/.test(ln)){ out.push(''); continue; }
+    out.push('<p>'+inline(ln)+'</p>');
+  }
+  if(inList)out.push('</ul>');
+  if(inCode)out.push('<pre class="nt-pre">'+code.join('\n')+'</pre>');
+  return out.join('\n');
+}
+function openNotes(){
+  closeStartMenu();
+  if(focusExisting('nt-list'))return;
+  const content=`<div class="nt-root">
+    <div class="nt-side">
+      <div class="nt-side-top">
+        <button type="button" class="nt-new" id="nt-new">&#128221; ${t('nt.new')}</button>
+        <input type="search" id="nt-search" class="nt-search" placeholder="${escHtml(t('nt.search'))}" aria-label="${escHtml(t('nt.search'))}">
+      </div>
+      <div class="nt-list" id="nt-list" role="listbox"></div>
+    </div>
+    <div class="nt-main" id="nt-main">
+      <div class="nt-empty" id="nt-empty">&#128221;<br><span>${t('nt.pick')}</span></div>
+      <div class="nt-editor" id="nt-editor" hidden>
+        <div class="nt-ebar">
+          <input type="text" id="nt-title" class="nt-title" placeholder="${escHtml(t('nt.untitled'))}" aria-label="${escHtml(t('nt.untitled'))}">
+          <button type="button" class="nt-mini" id="nt-preview" title="${t('nt.preview')}">&#128065;&#65039;</button>
+          <button type="button" class="nt-mini nt-del" id="nt-del" title="${t('btn.delete')}">&#128465;&#65039;</button>
+        </div>
+        <textarea id="nt-body" class="nt-body" spellcheck="false" placeholder="${escHtml(t('nt.bodyhint'))}"></textarea>
+        <div class="nt-render" id="nt-render" hidden></div>
+        <div class="nt-status"><span id="nt-saved">${t('np.saved')}</span> · <span id="nt-count"></span></div>
+      </div>
+    </div>
+  </div>`;
+  createWindow(t('nt.title'),'&#128210;',560,440,content,{session:'notas2',statusbar:false,onCreated:(id,win)=>{
+    const listEl=win.querySelector('#nt-list'), searchEl=win.querySelector('#nt-search');
+    const emptyEl=win.querySelector('#nt-empty'), editor=win.querySelector('#nt-editor');
+    const titleEl=win.querySelector('#nt-title'), bodyEl=win.querySelector('#nt-body');
+    const renderEl=win.querySelector('#nt-render'), savedEl=win.querySelector('#nt-saved'), countEl=win.querySelector('#nt-count');
+    let notes=notesLoad(), curId=null, previewing=false, saveTmr=null;
+    const persist=()=>{ notesSave(notes); };
+    const noteById=(nid)=>notes.find(n=>n.id===nid);
+    const fmtDate=(ts)=>{ try{ return new Date(ts).toLocaleDateString(); }catch(e){ return ''; } };
+    const renderList=()=>{
+      const q=(searchEl.value||'').trim().toLowerCase();
+      const arr=notes.slice().sort((a,b)=>b.ts-a.ts).filter(n=>!q||(n.title+' '+n.body).toLowerCase().includes(q));
+      listEl.innerHTML='';
+      if(!arr.length){ listEl.innerHTML='<div class="nt-none">'+(q?escHtml(t('nt.noresults')):escHtml(t('nt.none')))+'</div>'; return; }
+      arr.forEach(n=>{
+        const el=document.createElement('button'); el.type='button'; el.className='nt-item'+(n.id===curId?' active':''); el.setAttribute('role','option');
+        const title=(n.title||'').trim()||t('nt.untitled');
+        const snippet=(n.body||'').replace(/[#*`>-]/g,'').replace(/\s+/g,' ').trim().slice(0,60);
+        el.innerHTML='<div class="nt-i-title">'+escHtml(title)+'</div><div class="nt-i-sub">'+escHtml(fmtDate(n.ts))+(snippet?' · '+escHtml(snippet):'')+'</div>';
+        el.onclick=()=>selectNote(n.id);
+        listEl.appendChild(el);
+      });
+    };
+    const showEditor=(on)=>{ editor.hidden=!on; emptyEl.style.display=on?'none':'flex'; };
+    const updCount=()=>{ const c=bodyEl.value.length; countEl.textContent=t('nt.chars',{n:c}); };
+    const setPreview=(on)=>{
+      previewing=on;
+      if(on){ renderEl.innerHTML=notesMarkdown(bodyEl.value); }
+      bodyEl.hidden=on; renderEl.hidden=!on;
+      win.querySelector('#nt-preview').classList.toggle('active',on);
+    };
+    const selectNote=(nid)=>{
+      const n=noteById(nid); if(!n)return;
+      curId=nid; showEditor(true); setPreview(false);
+      titleEl.value=n.title||''; bodyEl.value=n.body||''; updCount(); renderList();
+    };
+    const touch=()=>{ savedEl.textContent=t('nt.saving'); clearTimeout(saveTmr); saveTmr=setTimeout(()=>{
+      const n=noteById(curId); if(n){ n.title=titleEl.value; n.body=bodyEl.value; n.ts=Date.now(); persist(); }
+      savedEl.textContent=t('np.saved'); renderList();
+    },400); };
+    const newNote=()=>{ const n={id:'n'+Date.now()+Math.random().toString(36).slice(2,6),title:'',body:'',ts:Date.now()}; notes.push(n); persist(); selectNote(n.id); titleEl.focus(); };
+    win.querySelector('#nt-new').onclick=newNote;
+    searchEl.oninput=renderList;
+    titleEl.oninput=()=>{ if(previewing)setPreview(false); touch(); };
+    bodyEl.oninput=()=>{ updCount(); touch(); };
+    win.querySelector('#nt-preview').onclick=()=>setPreview(!previewing);
+    win.querySelector('#nt-del').onclick=async()=>{
+      if(!curId)return;
+      const ok=await xpConfirm(t('nt.title'),t('nt.delconfirm'));
+      if(!ok)return;
+      notes=notes.filter(n=>n.id!==curId); persist(); curId=null; showEditor(false); renderList();
+    };
+    renderEl.addEventListener('click',(e)=>{ const a=e.target.closest('a.nt-link'); if(a&&a.dataset.url){ e.preventDefault(); window.open(a.dataset.url,'_blank','noopener'); } });
+    (win._cleanups=win._cleanups||[]).push(()=>clearTimeout(saveTmr));
+    renderList();
+    if(notes.length)selectNote(notes.slice().sort((a,b)=>b.ts-a.ts)[0].id); else showEditor(false);
+  }});
+}
+
+// ========== HERRAMIENTAS — caja de utilidades (QR · contraseñas · texto) ==========
+// Todo local. El generador de QR es propio (modo byte, Reed-Solomon verificado).
+// --- Núcleo QR (ISO/IEC 18004, versiones 1-10, niveles L/M/Q/H) ---
+const _QR_EXP=new Uint8Array(512), _QR_LOG=new Uint8Array(256);
+(function(){ let x=1; for(let i=0;i<255;i++){ _QR_EXP[i]=x; _QR_LOG[x]=i; x<<=1; if(x&0x100)x^=0x11d; } for(let i=255;i<512;i++)_QR_EXP[i]=_QR_EXP[i-255]; })();
+function _qrMul(a,b){ return (a===0||b===0)?0:_QR_EXP[_QR_LOG[a]+_QR_LOG[b]]; }
+function _qrDivisor(deg){ const r=new Array(deg).fill(0); r[deg-1]=1; let root=1; for(let i=0;i<deg;i++){ for(let j=0;j<r.length;j++){ r[j]=_qrMul(r[j],root); if(j+1<r.length)r[j]^=r[j+1]; } root=_qrMul(root,2); } return r; }
+function _qrEC(data,deg){ const div=_qrDivisor(deg); const res=new Array(deg).fill(0); for(const b of data){ const f=b^res[0]; res.shift(); res.push(0); for(let i=0;i<res.length;i++)res[i]^=_qrMul(div[i],f); } return res; }
+const _QR_ECW={1:[7,10,13,17],2:[10,16,22,28],3:[15,26,18,22],4:[20,18,26,16],5:[26,24,18,22],6:[18,16,24,28],7:[20,18,18,26],8:[24,22,22,26],9:[30,22,20,24],10:[18,26,24,28]};
+const _QR_BLK={1:[[[1,19]],[[1,16]],[[1,13]],[[1,9]]],2:[[[1,34]],[[1,28]],[[1,22]],[[1,16]]],3:[[[1,55]],[[1,44]],[[2,17]],[[2,13]]],4:[[[1,80]],[[2,32]],[[2,24]],[[4,9]]],5:[[[1,108]],[[2,43]],[[2,15],[2,16]],[[2,11],[2,12]]],6:[[[2,68]],[[4,27]],[[4,19]],[[4,15]]],7:[[[2,78]],[[4,31]],[[2,14],[4,15]],[[4,13],[1,14]]],8:[[[2,97]],[[2,38],[2,39]],[[4,18],[2,19]],[[4,14],[2,15]]],9:[[[2,116]],[[3,36],[2,37]],[[4,16],[4,17]],[[4,12],[4,13]]],10:[[[2,68],[2,69]],[[4,43],[1,44]],[[6,19],[2,20]],[[6,15],[2,16]]]};
+const _QR_ALIGN={1:[],2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50]};
+const _QR_EC=['L','M','Q','H'];
+function _qrDataCw(v,l){ let n=0; _QR_BLK[v][l].forEach(([b,d])=>n+=b*d); return n; }
+function _qrPickVer(len,l){ for(let v=1;v<=10;v++){ const cci=(v<10)?8:16; if(Math.ceil((4+cci+len*8)/8)<=_qrDataCw(v,l))return v; } return -1; }
+function _qrBuild(bytes,v,l){
+  const cap=_qrDataCw(v,l), bits=[]; const push=(val,n)=>{ for(let i=n-1;i>=0;i--)bits.push((val>>i)&1); };
+  push(0b0100,4); push(bytes.length,(v<10)?8:16); for(const b of bytes)push(b,8);
+  const capBits=cap*8; for(let i=0;i<4&&bits.length<capBits;i++)bits.push(0); while(bits.length%8!==0)bits.push(0);
+  const cw=[]; for(let i=0;i<bits.length;i+=8){ let x=0; for(let j=0;j<8;j++)x=(x<<1)|bits[i+j]; cw.push(x); }
+  const pad=[0xEC,0x11]; let p=0; while(cw.length<cap){ cw.push(pad[p&1]); p++; }
+  const blocks=[]; let idx=0; _QR_BLK[v][l].forEach(([b,d])=>{ for(let k=0;k<b;k++){ blocks.push(cw.slice(idx,idx+d)); idx+=d; } });
+  const ecLen=_QR_ECW[v][l], ecB=blocks.map(b=>_qrEC(b,ecLen)), out=[], maxD=Math.max(...blocks.map(b=>b.length));
+  for(let i=0;i<maxD;i++)for(const b of blocks)if(i<b.length)out.push(b[i]);
+  for(let i=0;i<ecLen;i++)for(const b of ecB)out.push(b[i]);
+  return out;
+}
+function _qrFmt(l,mask){ const ec=[1,0,3,2][l], data=(ec<<3)|mask; let d=data<<10; for(let i=14;i>=10;i--)if((d>>i)&1)d^=0x537<<(i-10); return ((data<<10)|d)^0x5412; }
+const _QR_MASKS=[(r,c)=>((r+c)%2===0),(r,c)=>(r%2===0),(r,c)=>(c%3===0),(r,c)=>((r+c)%3===0),(r,c)=>((Math.floor(r/2)+Math.floor(c/3))%2===0),(r,c)=>(((r*c)%2)+((r*c)%3)===0),(r,c)=>((((r*c)%2)+((r*c)%3))%2===0),(r,c)=>((((r+c)%2)+((r*c)%3))%2===0)];
+function qrGenerate(text,level){
+  const bytes=Array.from(new TextEncoder().encode(String(text)));
+  const l=Math.max(0,_QR_EC.indexOf((level||'M').toUpperCase()));
+  const v=_qrPickVer(bytes.length,l); if(v<0)throw new Error('qr-too-long');
+  const size=17+v*4, m=[]; for(let i=0;i<size;i++)m.push(new Array(size).fill(null));
+  const finder=(r,c)=>{ for(let i=-1;i<=7;i++)for(let j=-1;j<=7;j++){ const rr=r+i,cc=c+j; if(rr<0||cc<0||rr>=size||cc>=size)continue; const on=(i>=0&&i<=6&&(j===0||j===6))||(j>=0&&j<=6&&(i===0||i===6))||(i>=2&&i<=4&&j>=2&&j<=4); m[rr][cc]=on?1:0; } };
+  finder(0,0); finder(0,size-7); finder(size-7,0);
+  for(let i=8;i<size-8;i++){ if(m[6][i]===null)m[6][i]=(i%2===0)?1:0; if(m[i][6]===null)m[i][6]=(i%2===0)?1:0; }
+  const pos=_QR_ALIGN[v]; for(const ar of pos)for(const ac of pos){ if(m[ar][ac]!==null)continue; for(let i=-2;i<=2;i++)for(let j=-2;j<=2;j++)m[ar+i][ac+j]=(Math.max(Math.abs(i),Math.abs(j))!==1)?1:0; }
+  const mark=(r,c)=>{ if(m[r][c]===null)m[r][c]=-1; };
+  for(let i=0;i<=8;i++){ mark(8,i); mark(i,8); } for(let i=0;i<8;i++){ mark(size-1-i,8); mark(8,size-1-i); } mark(size-8,8);
+  const dm=m.map(row=>row.map(v=>v===-1?null:v));
+  const data=_qrBuild(bytes,v,l); let bi=0, tot=data.length*8, col=size-1, up=true;
+  while(col>0){ if(col===6)col--; for(let n=0;n<size;n++){ const row=up?(size-1-n):n; for(let c=0;c<2;c++){ const cc=col-c; if(dm[row][cc]===null){ let bit=0; if(bi<tot){ bit=(data[bi>>3]>>(7-(bi&7)))&1; bi++; } dm[row][cc]=bit; } } } col-=2; up=!up; }
+  const isFn=(r,c)=>{ if(r<=8&&c<=8)return true; if(r<=8&&c>=size-8)return true; if(r>=size-8&&c<=8)return true; if(r===6||c===6)return true; for(const ar of pos)for(const ac of pos)if(Math.abs(r-ar)<=2&&Math.abs(c-ac)<=2)return true; return false; };
+  const placeFmt=(mat,mask)=>{ const bits=_qrFmt(l,mask), g=(i)=>(bits>>i)&1; for(let i=0;i<=5;i++)mat[8][i]=g(i); mat[8][7]=g(6); mat[8][8]=g(7); mat[7][8]=g(8); for(let i=9;i<=14;i++)mat[14-i][8]=g(i); for(let i=0;i<=7;i++)mat[size-1-i][8]=g(i); for(let i=8;i<=14;i++)mat[8][size-15+i]=g(i); mat[size-8][8]=1; };
+  const penalty=(mat)=>{ let p=0; for(let r=0;r<size;r++){ let run=1; for(let c=1;c<size;c++){ if(mat[r][c]===mat[r][c-1]){run++; if(run===5)p+=3; else if(run>5)p++;} else run=1; } } for(let c=0;c<size;c++){ let run=1; for(let r=1;r<size;r++){ if(mat[r][c]===mat[r-1][c]){run++; if(run===5)p+=3; else if(run>5)p++;} else run=1; } } for(let r=0;r<size-1;r++)for(let c=0;c<size-1;c++){ const x=mat[r][c]; if(x===mat[r][c+1]&&x===mat[r+1][c]&&x===mat[r+1][c+1])p+=3; } let dark=0; for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(mat[r][c])dark++; p+=Math.floor(Math.abs(dark*100/(size*size)-50)/5)*10; return p; };
+  let best=null,bp=Infinity;
+  for(let mk=0;mk<8;mk++){ const mm=dm.map(row=>row.slice()); for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(!isFn(r,c)&&_QR_MASKS[mk](r,c))mm[r][c]^=1; placeFmt(mm,mk); const pen=penalty(mm); if(pen<bp){bp=pen;best=mm;} }
+  return {matrix:best,size:size,version:v,level:_QR_EC[l]};
+}
+
+// --- Fuerza de contraseña (estimación por entropía) ---
+function pwEntropyBits(pw){
+  let pool=0;
+  if(/[a-z]/.test(pw))pool+=26; if(/[A-Z]/.test(pw))pool+=26; if(/[0-9]/.test(pw))pool+=10;
+  if(/[^a-zA-Z0-9]/.test(pw))pool+=33;
+  return pw.length*(pool?Math.log2(pool):0);
+}
+
+// Copiar al portapapeles (con reserva para contextos sin permiso)
+function osCopy(text){
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text); return true; } }catch(e){}
+  try{ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return true; }catch(e){ return false; }
+}
+let _tbSelect=null;
+function openToolbox(initTab){
+  closeStartMenu();
+  if(focusExisting('tb-root')){ if(initTab&&_tbSelect)_tbSelect(initTab); return; }
+  const content=`<div class="tb-root" id="tb-root">
+    <div class="tb-tabs" role="tablist">
+      <button type="button" class="tb-tab" data-tab="qr" role="tab">&#128241; ${t('tb.qr')}</button>
+      <button type="button" class="tb-tab" data-tab="pw" role="tab">&#128273; ${t('tb.pw')}</button>
+      <button type="button" class="tb-tab" data-tab="txt" role="tab">&#128196; ${t('tb.txt')}</button>
+    </div>
+    <div class="tb-body">
+      <section class="tb-pane" data-pane="qr">
+        <textarea id="tb-qr-in" class="tb-input" rows="2" placeholder="${escHtml(t('tb.qrhint'))}">https://torrecillas.cat</textarea>
+        <div class="tb-row"><label>${t('tb.eclevel')}</label>
+          <select id="tb-qr-ec"><option value="L">L</option><option value="M" selected>M</option><option value="Q">Q</option><option value="H">H</option></select>
+          <button type="button" class="tb-go" id="tb-qr-go">${t('tb.generate')}</button></div>
+        <div class="tb-qr-out" id="tb-qr-out"><canvas id="tb-qr-canvas" aria-label="QR"></canvas></div>
+        <div class="tb-row" id="tb-qr-actions" hidden>
+          <button type="button" class="tb-mini" id="tb-qr-dl">&#11015;&#65039; PNG</button>
+          <button type="button" class="tb-mini" id="tb-qr-fs">&#128190; ${t('btn.tofiles')}</button>
+          <span class="tb-qr-info" id="tb-qr-info"></span>
+        </div>
+      </section>
+      <section class="tb-pane" data-pane="pw" hidden>
+        <div class="tb-pw-out" id="tb-pw-out">·</div>
+        <div class="tb-pw-meter"><div id="tb-pw-bar"></div></div>
+        <div class="tb-row"><label>${t('tb.length')}: <b id="tb-pw-len">16</b></label><input type="range" id="tb-pw-range" min="4" max="64" value="16"></div>
+        <div class="tb-row tb-checks">
+          <label><input type="checkbox" id="tb-pw-lower" checked> a-z</label>
+          <label><input type="checkbox" id="tb-pw-upper" checked> A-Z</label>
+          <label><input type="checkbox" id="tb-pw-num" checked> 0-9</label>
+          <label><input type="checkbox" id="tb-pw-sym" checked> !@#</label>
+          <label><input type="checkbox" id="tb-pw-amb"> ${t('tb.noambig')}</label>
+        </div>
+        <div class="tb-row"><button type="button" class="tb-go" id="tb-pw-go">&#128260; ${t('tb.generate')}</button>
+          <button type="button" class="tb-mini" id="tb-pw-copy">&#128203; ${t('btn.copy')}</button></div>
+      </section>
+      <section class="tb-pane" data-pane="txt" hidden>
+        <textarea id="tb-txt-in" class="tb-input" rows="6" placeholder="${escHtml(t('tb.txthint'))}"></textarea>
+        <div class="tb-txt-stats" id="tb-txt-stats"></div>
+        <div class="tb-row tb-txt-btns">
+          <button type="button" class="tb-mini" data-op="upper">MAYÚS</button>
+          <button type="button" class="tb-mini" data-op="lower">minús</button>
+          <button type="button" class="tb-mini" data-op="title">Capitalizar</button>
+          <button type="button" class="tb-mini" data-op="trim">${t('tb.trim')}</button>
+          <button type="button" class="tb-mini" data-op="dedup">${t('tb.dedup')}</button>
+          <button type="button" class="tb-mini" data-op="sort">${t('tb.sort')}</button>
+          <button type="button" class="tb-mini" data-op="reverse">${t('tb.reverse')}</button>
+          <button type="button" class="tb-mini" data-op="json">JSON</button>
+          <button type="button" class="tb-mini" data-op="b64e">Base64 &#8594;</button>
+          <button type="button" class="tb-mini" data-op="b64d">&#8594; texto</button>
+          <button type="button" class="tb-mini" id="tb-txt-copy">&#128203; ${t('btn.copy')}</button>
+        </div>
+      </section>
+    </div>
+  </div>`;
+  createWindow(t('tb.title'),'&#128736;&#65039;',480,470,content,{session:'toolbox',statusbar:false,onCreated:(id,win)=>{
+    // -- Pestañas --
+    const select=(name)=>{ win.querySelectorAll('.tb-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===name)); win.querySelectorAll('.tb-pane').forEach(p=>p.hidden=(p.dataset.pane!==name)); };
+    _tbSelect=select;
+    (win._cleanups=win._cleanups||[]).push(()=>{ if(_tbSelect===select)_tbSelect=null; });
+    win.querySelectorAll('.tb-tab').forEach(b=>b.onclick=()=>select(b.dataset.tab));
+    // -- QR --
+    const qrIn=win.querySelector('#tb-qr-in'), qrCanvas=win.querySelector('#tb-qr-canvas'), qrActions=win.querySelector('#tb-qr-actions'), qrInfo=win.querySelector('#tb-qr-info');
+    const drawQR=()=>{
+      const txt=qrIn.value; if(!txt){ return; }
+      let res; try{ res=qrGenerate(txt,win.querySelector('#tb-qr-ec').value); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon">&#128241;</div><div>'+t('tb.qrlong')+'</div>'); return; }
+      const q=8, quiet=4, dim=(res.size+quiet*2)*q; qrCanvas.width=dim; qrCanvas.height=dim;
+      const cx=qrCanvas.getContext('2d'); cx.fillStyle='#fff'; cx.fillRect(0,0,dim,dim); cx.fillStyle='#000';
+      for(let r=0;r<res.size;r++)for(let c=0;c<res.size;c++)if(res.matrix[r][c])cx.fillRect((c+quiet)*q,(r+quiet)*q,q,q);
+      qrActions.hidden=false; qrInfo.textContent='v'+res.version+' · '+res.level;
+    };
+    win.querySelector('#tb-qr-go').onclick=drawQR;
+    win.querySelector('#tb-qr-ec').onchange=drawQR;
+    win.querySelector('#tb-qr-dl').onclick=()=>{ const a=document.createElement('a'); a.download='qr-'+Date.now()+'.png'; a.href=qrCanvas.toDataURL('image/png'); a.click(); };
+    win.querySelector('#tb-qr-fs').onclick=()=>{ try{ fsSaveDialog('png','QR',qrCanvas.toDataURL('image/png'),null); }catch(e){} };
+    drawQR();
+    // -- Contraseñas --
+    const pwOut=win.querySelector('#tb-pw-out'), pwBar=win.querySelector('#tb-pw-bar'), pwRange=win.querySelector('#tb-pw-range'), pwLen=win.querySelector('#tb-pw-len');
+    const genPw=()=>{
+      const n=+pwRange.value; let sets='';
+      let low='abcdefghijkmnpqrstuvwxyz', up='ABCDEFGHJKLMNPQRSTUVWXYZ', num='23456789', sym='!@#$%^&*-_=+?';
+      if(!win.querySelector('#tb-pw-amb').checked){ low='abcdefghijklmnopqrstuvwxyz'; up='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; num='0123456789'; }
+      if(win.querySelector('#tb-pw-lower').checked)sets+=low;
+      if(win.querySelector('#tb-pw-upper').checked)sets+=up;
+      if(win.querySelector('#tb-pw-num').checked)sets+=num;
+      if(win.querySelector('#tb-pw-sym').checked)sets+=sym;
+      if(!sets){ pwOut.textContent='—'; return; }
+      const buf=new Uint32Array(n); (crypto||window.crypto).getRandomValues(buf);
+      let out=''; for(let i=0;i<n;i++)out+=sets[buf[i]%sets.length];
+      pwOut.textContent=out;
+      const bits=pwEntropyBits(out); const pct=Math.min(100,Math.round(bits/1.28));
+      pwBar.style.width=pct+'%'; pwBar.style.background=bits<40?'#d05a5a':bits<70?'#d0a05a':'#4ca85a';
+    };
+    win.querySelector('#tb-pw-go').onclick=genPw;
+    pwRange.oninput=()=>{ pwLen.textContent=pwRange.value; genPw(); };
+    win.querySelectorAll('#tb-pw-lower,#tb-pw-upper,#tb-pw-num,#tb-pw-sym,#tb-pw-amb').forEach(c=>c.onchange=genPw);
+    win.querySelector('#tb-pw-copy').onclick=()=>{ const v=pwOut.textContent; if(v&&v!=='·'&&v!=='—'){ osCopy(v); notify({icon:'&#128273;',title:t('tb.title'),body:t('tb.copied')}); } };
+    genPw();
+    // -- Herramientas de texto --
+    const txtIn=win.querySelector('#tb-txt-in'), txtStats=win.querySelector('#tb-txt-stats');
+    const updTxt=()=>{ const v=txtIn.value; const words=(v.trim().match(/\S+/g)||[]).length; const lines=v?v.split('\n').length:0;
+      txtStats.textContent=t('tb.stats',{c:v.length,w:words,l:lines}); };
+    txtIn.oninput=updTxt;
+    const ops={
+      upper:v=>v.toUpperCase(), lower:v=>v.toLowerCase(),
+      title:v=>v.replace(/\b\w/g,m=>m.toUpperCase()),
+      trim:v=>v.split('\n').map(l=>l.trim()).join('\n').replace(/\n{3,}/g,'\n\n'),
+      dedup:v=>{ const seen=new Set(),out=[]; v.split('\n').forEach(l=>{ if(!seen.has(l)){seen.add(l);out.push(l);} }); return out.join('\n'); },
+      sort:v=>v.split('\n').sort((a,b)=>a.localeCompare(b)).join('\n'),
+      reverse:v=>Array.from(v).reverse().join(''),
+      json:v=>{ try{ return JSON.stringify(JSON.parse(v),null,2); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+t('tb.badjson')+'</div>'); return v; } },
+      b64e:v=>{ try{ return btoa(unescape(encodeURIComponent(v))); }catch(e){ return v; } },
+      b64d:v=>{ try{ return decodeURIComponent(escape(atob(v.trim()))); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+t('tb.badb64')+'</div>'); return v; } }
+    };
+    win.querySelectorAll('.tb-txt-btns [data-op]').forEach(b=>b.onclick=()=>{ txtIn.value=ops[b.dataset.op](txtIn.value); updTxt(); });
+    win.querySelector('#tb-txt-copy').onclick=()=>{ if(txtIn.value){ osCopy(txtIn.value); notify({icon:'&#128203;',title:t('tb.title'),body:t('tb.copied')}); } };
+    updTxt();
+    select(initTab||'qr');
   }});
 }
 
@@ -7424,7 +7951,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#127912;',openImageTools],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -9064,7 +9591,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt')};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
