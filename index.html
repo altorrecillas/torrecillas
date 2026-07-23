@@ -330,13 +330,28 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .docs-panel{display:flex;flex-direction:column;height:100%;background:#fff;font-family:Tahoma,sans-serif}
 .docs-head{padding:8px 12px;font-size:13px;font-weight:bold;color:#1a4fa0;background:linear-gradient(180deg,#f4f8ff,#e4eefb);border-bottom:1px solid #aca899;flex-shrink:0}
 .docs-head span{font-size:11px;font-weight:normal;color:#666}
+.docs-toolbar{display:flex;align-items:center;gap:6px;padding:5px 8px;background:linear-gradient(180deg,#f4f8ff,#e4eefb);border-bottom:1px solid #aca899;flex-shrink:0}
+.docs-tb{background:linear-gradient(180deg,#fff,#e6eef8);border:1px solid #9db4d0;border-radius:3px;padding:2px 8px;font-size:12px;cursor:pointer;color:#123}
+.docs-tb:hover{background:#eef4ff}
+.docs-tb:disabled{opacity:.4;cursor:default}
+.docs-tb-spacer{flex:1}
+.docs-crumb{font-size:12px;color:#333;display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.docs-crumb-root{background:none;border:none;color:#1a4fa0;cursor:pointer;font-size:12px;padding:0}
+.docs-crumb-root:hover{text-decoration:underline}
 .docs-grid{flex:1;overflow:auto;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,86px);gap:8px;align-content:flex-start}
-.docs-file{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border:1px solid transparent;border-radius:5px;background:none;cursor:pointer;text-align:center}
-.docs-file:hover{background:#eef4ff}
+.docs-file,.docs-folder{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border:1px solid transparent;border-radius:5px;background:none;cursor:pointer;text-align:center}
+.docs-file:hover,.docs-folder:hover{background:#eef4ff}
 .docs-file.sel{background:#cfe0f8;border-color:#7aa5e0}
+.docs-folder .docs-ic{color:#e8b64a}
 .docs-ic{font-size:34px;line-height:1}
 .docs-name{font-size:11px;color:#222;word-break:break-word;max-width:80px;line-height:1.15}
 .docs-date{font-size:9px;color:#999}
+/* Vista de lista */
+.docs-grid.list{display:block;padding:4px}
+.docs-grid.list .docs-file,.docs-grid.list .docs-folder{flex-direction:row;justify-content:flex-start;gap:8px;max-width:none;text-align:left;padding:5px 8px;border-bottom:1px solid #f0f0f0;border-radius:0}
+.docs-grid.list .docs-ic{font-size:20px}
+.docs-grid.list .docs-name{max-width:none;flex:1}
+.docs-grid.list .docs-date{margin-left:auto}
 .docs-empty{grid-column:1/-1;text-align:center;color:#888;padding:30px 10px;font-size:13px}
 .docs-empty span{font-size:11px;color:#aaa}
 .docs-foot{flex-shrink:0;padding:4px 10px;border-top:1px solid #aca899;background:#ece9d8;font-size:10px;color:#555;min-height:20px}
@@ -507,14 +522,14 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 #start-search-row{padding:5px 8px 7px;border-bottom:1px solid #e4e0d0}
 #start-search{width:100%;border:1px solid #7da2ce;border-radius:3px;padding:5px 8px;font-family:Tahoma,sans-serif;font-size:12px;outline:none}
 #start-search:focus{border-color:#0054e3;box-shadow:0 0 3px rgba(0,84,227,.4)}
-.start-left.searching>.start-item,.start-left.searching>.start-separator,.start-left.searching>#start-games-submenu,.start-left.searching>#start-utils-submenu,.start-left.searching>#start-nostalgia-submenu{display:none}
+.start-left.searching>.start-item,.start-left.searching>.start-separator,.start-left.searching>#start-games-submenu,.start-left.searching>#start-herramientas-submenu,.start-left.searching>#start-creatividad-submenu,.start-left.searching>#start-utils-submenu,.start-left.searching>#start-nostalgia-submenu{display:none}
 #start-search-results .start-item{padding:6px 10px}
-#start-games-submenu,#start-utils-submenu,#start-nostalgia-submenu{display:none}
-#start-games-submenu.show,#start-utils-submenu.show,#start-nostalgia-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
+#start-games-submenu,#start-herramientas-submenu,#start-creatividad-submenu,#start-utils-submenu,#start-nostalgia-submenu{display:none}
+#start-games-submenu.show,#start-herramientas-submenu.show,#start-creatividad-submenu.show,#start-utils-submenu.show,#start-nostalgia-submenu.show{display:block;position:absolute;top:0;right:0;bottom:0;width:42%;min-width:140px;background:#eef4ff;border-left:2px solid #1a4fa0;box-shadow:-4px 0 12px rgba(0,0,0,.25);overflow-y:auto;z-index:3;padding:4px 0;animation:subIn .16s ease}
 @keyframes subIn{0%{opacity:0;transform:translateX(14px)}100%{opacity:1;transform:none}}
-#start-games-submenu .start-item,#start-utils-submenu .start-item,#start-nostalgia-submenu .start-item{padding:4px 10px 4px 24px}
-#start-games-submenu .si-icon,#start-utils-submenu .si-icon,#start-nostalgia-submenu .si-icon{width:22px;height:22px;font-size:16px}
-#start-games-submenu .si-label,#start-utils-submenu .si-label,#start-nostalgia-submenu .si-label{font-weight:normal;font-size:12px}
+#start-games-submenu .start-item,#start-herramientas-submenu .start-item,#start-creatividad-submenu .start-item,#start-utils-submenu .start-item,#start-nostalgia-submenu .start-item{padding:4px 10px 4px 24px}
+#start-games-submenu .si-icon,#start-herramientas-submenu .si-icon,#start-creatividad-submenu .si-icon,#start-utils-submenu .si-icon,#start-nostalgia-submenu .si-icon{width:22px;height:22px;font-size:16px}
+#start-games-submenu .si-label,#start-herramientas-submenu .si-label,#start-creatividad-submenu .si-label,#start-utils-submenu .si-label,#start-nostalgia-submenu .si-label{font-weight:normal;font-size:12px}
 #start-utils-toggle.open .si-arrow,#start-nostalgia-toggle.open .si-arrow{transform:rotate(90deg)}
 .start-footer{background:linear-gradient(180deg,#3c7de0,#2456b8);padding:6px 10px;display:flex;justify-content:flex-end;gap:8px}
 .start-acct-btn{background:linear-gradient(180deg,#4a90e8,#1c6ad0);border-color:#1a4fa0}
@@ -899,6 +914,124 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .tb-txt-stats{color:#666;font-size:10px}
 .tb-txt-btns{gap:5px}
 @media (max-width:600px){ .tb-pw-out{font-size:14px} }
+/* ═══════════════════  § CREATIVIDAD (pixel art · memes · ritmos · caleidoscopio)  ═══════════════════ */
+.px-btn{background:linear-gradient(180deg,#fff,#e6e3d6);border:1px solid #aca899;border-radius:3px;padding:3px 9px;font-size:11px;cursor:pointer;color:#000}
+.px-btn:hover{filter:brightness(1.03)}
+.px-root,.meme-root,.drum-root,.kal-root{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,'MS Sans Serif',sans-serif;font-size:11px}
+.px-tools{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:5px 6px;background:linear-gradient(180deg,#f6f4ec,#e4e0cf);border-bottom:1px solid #aca899}
+.px-swatches{display:inline-flex;flex-wrap:wrap;gap:3px}
+.px-sw{width:18px;height:18px;border:1px solid #999;border-radius:3px;cursor:pointer;padding:0}
+.px-sw.sel{outline:2px solid #0054e3;outline-offset:1px}
+.px-sep{width:1px;height:18px;background:#aca899;margin:0 2px}
+.px-tool{background:linear-gradient(180deg,#fff,#e6e3d6);border:1px solid #aca899;border-radius:3px;padding:2px 7px;font-size:13px;cursor:pointer;line-height:1}
+.px-tool.sel{background:linear-gradient(180deg,#cfe3ff,#a9caff);border-color:#5a86c0}
+.px-tools select{border:1px solid #7f9db9;border-radius:2px;font-size:11px}
+.px-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;background:repeating-conic-gradient(#d7d4c6 0% 25%,#e9e6da 0% 50%) 50%/18px 18px;padding:8px}
+#px-grid{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3);cursor:crosshair;image-rendering:pixelated;max-width:100%;touch-action:none}
+.px-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:5px 8px;border-top:1px solid #aca899;background:#ece9d8}
+.px-scale{margin-left:auto;display:inline-flex;align-items:center;gap:4px;color:#555}
+.meme-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 8px;border-bottom:1px solid #aca899;background:linear-gradient(180deg,#f6f4ec,#e4e0cf)}
+.meme-fs{display:inline-flex;align-items:center;gap:5px;color:#444}
+.meme-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;background:#cfcabb;padding:8px}
+.meme-empty{color:#7a7768;text-align:center;font-size:32px}.meme-empty span{font-size:11px}
+#meme-canvas{max-width:100%;box-shadow:0 2px 10px rgba(0,0,0,.35);background:#fff;touch-action:none}
+.meme-fields{display:flex;flex-direction:column;gap:5px;padding:6px 8px;border-top:1px solid #aca899;background:#ece9d8}
+.meme-fields input{padding:5px 7px;border:1px solid #7f9db9;border-radius:3px;font-size:12px}
+.meme-actions{display:flex;gap:6px;padding:0 8px 8px;background:#ece9d8}
+.drum-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 8px;background:linear-gradient(180deg,#f6f4ec,#e4e0cf);border-bottom:1px solid #aca899}
+.drum-play{background:linear-gradient(180deg,#cfe3ff,#a9caff);border:1px solid #5a86c0;border-radius:4px;padding:4px 12px;font-size:12px;font-weight:bold;cursor:pointer}
+.drum-tempo{display:inline-flex;align-items:center;gap:6px;color:#444}
+.drum-grid{flex:1;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:5px;background:#2a2a33}
+.drum-row{display:flex;align-items:center;gap:3px}
+.drum-label{width:52px;flex-shrink:0;color:#cfd3dc;font-size:11px}
+.drum-cell{flex:1;min-width:14px;height:26px;border:1px solid #444;border-radius:3px;background:#3a3a44;cursor:pointer;padding:0}
+.drum-cell.beat{background:#454552}
+.drum-cell.on{background:linear-gradient(180deg,#ffd166,#f4a12e);border-color:#c47e10}
+.drum-cell.cur{box-shadow:inset 0 0 0 2px #7ee0ff}
+.kal-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 8px;background:linear-gradient(180deg,#f6f4ec,#e4e0cf);border-bottom:1px solid #aca899;color:#444}
+.kal-bar select,.kal-bar input[type=color]{border:1px solid #7f9db9;border-radius:2px}
+.kal-bar input[type=color]{width:26px;height:20px;padding:0;cursor:pointer}
+.kal-rainbow{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.kal-stage{flex:1;display:flex;align-items:center;justify-content:center;background:#0c0b10;padding:8px;overflow:auto}
+#kal-canvas{max-width:100%;border-radius:6px;box-shadow:0 0 24px rgba(120,80,200,.35);cursor:crosshair;touch-action:none}
+.kal-actions{display:flex;gap:6px;padding:6px 8px;border-top:1px solid #aca899;background:#ece9d8}
+/* ═══════════════════  § GADGETS DE ESCRITORIO  ═══════════════════ */
+.gadget{border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(232,236,244,.96));box-shadow:0 6px 20px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.6);overflow:hidden;font-family:Tahoma,'MS Sans Serif',sans-serif;backdrop-filter:blur(2px)}
+.gadget-bar{display:flex;align-items:center;justify-content:space-between;height:20px;padding:0 4px 0 8px;cursor:move;background:linear-gradient(180deg,rgba(60,110,190,.9),rgba(30,70,150,.9));color:#fff;font-size:11px}
+.gadget-t{font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gadget-x{background:rgba(255,255,255,.2);border:none;color:#fff;cursor:pointer;font-size:12px;line-height:1;border-radius:3px;padding:0 5px}
+.gadget-x:hover{background:#e05050}
+.gadget-body{padding:8px;display:flex;flex-direction:column;align-items:center;color:#223}
+.gadget-clock-cv{display:block}
+.gadget-notes{width:100%;min-height:110px;border:none;outline:none;resize:none;background:#fffdf0;border-radius:4px;padding:6px;font-family:'Comic Sans MS','Trebuchet MS',sans-serif;font-size:13px;color:#333}
+.gc-head{font-weight:bold;color:#1a4fa0;font-size:12px;margin-bottom:5px;text-align:center}
+.gc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;width:100%;font-size:11px;text-align:center}
+.gc-grid b{color:#888;font-size:9px}
+.gc-grid span{padding:3px 0;color:#333;border-radius:3px}
+.gc-grid .gc-today{background:#e63946;color:#fff;font-weight:bold}
+.gm-row{display:flex;align-items:center;gap:6px;width:100%;margin:3px 0;font-size:11px;color:#334}
+.gm-row span{width:30px}
+.gm-row em{width:32px;text-align:right;color:#556;font-style:normal}
+.gm-bar{flex:1;height:9px;background:#d5d9e3;border-radius:5px;overflow:hidden}
+.gm-bar i{display:block;height:100%;width:0;border-radius:5px;transition:width .8s ease,background .8s}
+.gad-gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:4px 14px 8px}
+.gad-card{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;border:1px solid #cfc9b5;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;color:#222}
+.gad-card:hover{background:#eef4ff;border-color:#5a86c0}
+.gad-ic{font-size:26px}
+/* ═══════════════════  § PALETA DE COMANDOS / PORTAPAPELES / PANEL / LUPA  ═══════════════════ */
+.cmdk-ov{position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,.35);display:flex;align-items:flex-start;justify-content:center;padding-top:12vh}
+.cmdk{width:min(520px,92vw);background:#fbfcfe;border:1px solid #9db4d0;border-radius:10px;box-shadow:0 18px 60px rgba(0,0,0,.5);overflow:hidden;font-family:Tahoma,sans-serif}
+.cmdk-input{width:100%;box-sizing:border-box;border:none;border-bottom:1px solid #e0e6ef;padding:13px 16px;font-size:15px;outline:none;background:#fff}
+.cmdk-list{max-height:min(50vh,340px);overflow-y:auto;padding:5px}
+.cmdk-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:13px;color:#223}
+.cmdk-item.sel{background:linear-gradient(180deg,#4a90e8,#2c72d0);color:#fff}
+.cmdk-ic{width:22px;text-align:center;font-size:16px;flex-shrink:0}
+.cmdk-l{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-h{font-size:10px;opacity:.6}
+.cmdk-item.sel .cmdk-h{opacity:.85}
+.cmdk-none{padding:20px;text-align:center;color:#888;font-size:13px}
+.cmdk-foot{padding:6px 12px;border-top:1px solid #e0e6ef;font-size:10px;color:#889;background:#f2f5fa}
+#tray-clip{position:relative}
+#tray-clip.has::after{content:'';position:absolute;top:-1px;right:-2px;width:6px;height:6px;border-radius:50%;background:#e63946;box-shadow:0 0 3px rgba(230,57,70,.8)}
+.clip-center{position:fixed;bottom:42px;right:6px;width:260px;max-height:55vh;overflow-y:auto;background:#fbfcfe;border:1px solid #9db4d0;border-radius:8px;box-shadow:0 10px 34px rgba(0,0,0,.45);z-index:9200;font-family:Tahoma,sans-serif}
+.clip-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;font-weight:bold;font-size:12px;color:#1a4fa0;border-bottom:1px solid #e0e6ef;background:#eef4fc}
+.clip-clear{background:none;border:1px solid #c9b; color:#a24;border-radius:3px;font-size:10px;padding:1px 6px;cursor:pointer}
+.clip-list{padding:4px}
+.clip-item{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid #f0f0f0;padding:6px 8px;cursor:pointer;font-size:12px;color:#333;font-family:'Consolas',monospace}
+.clip-item span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clip-item:hover{background:#eef4ff}
+.clip-empty{padding:16px;text-align:center;color:#999;font-size:12px}
+.cpl-root{display:flex;flex-direction:column;height:100%;background:#eef2f8;font-family:Tahoma,sans-serif}
+.cpl-hd{padding:10px 14px;font-size:12px;color:#456;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
+.cpl-grid{flex:1;overflow-y:auto;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;align-content:start}
+.cpl-card{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 8px;border:1px solid #cdd7e6;border-radius:8px;background:#fff;cursor:pointer;font-size:12px;color:#234;text-align:center}
+.cpl-card:hover{background:#eaf2ff;border-color:#5a86c0;box-shadow:0 2px 8px rgba(50,100,180,.18)}
+.cpl-ic{font-size:30px;line-height:1}
+.cpl-l{line-height:1.2}
+.mag-ctrl{position:fixed;bottom:44px;left:50%;transform:translateX(-50%);z-index:99999;display:none;align-items:center;gap:6px;background:rgba(20,30,50,.92);color:#fff;border:1px solid #4a6b9c;border-radius:22px;padding:5px 8px;box-shadow:0 6px 20px rgba(0,0,0,.5);font-family:Tahoma,sans-serif;font-size:12px}
+.mag-t{padding:0 4px}
+.mag-b{width:26px;height:26px;border-radius:50%;border:1px solid #5a7bb0;background:#2c3e5e;color:#fff;font-size:14px;cursor:pointer;line-height:1}
+.mag-b:hover{background:#3a5b8e}
+.mag-close{background:#7a3040}
+#mag-z{min-width:30px;text-align:center}
+/* ═══════════════════  § TOUR DE BIENVENIDA  ═══════════════════ */
+.tour-ov{position:fixed;inset:0;z-index:99999;background:rgba(10,20,40,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.tour-card{position:relative;width:min(420px,94vw);background:linear-gradient(180deg,#ffffff,#eef4fc);border:1px solid #9db4d0;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);padding:22px;text-align:center;font-family:Tahoma,sans-serif;animation:tourIn .25s ease}
+@keyframes tourIn{0%{opacity:0;transform:translateY(12px) scale(.97)}100%{opacity:1;transform:none}}
+.tour-x{position:absolute;top:8px;right:10px;background:none;border:none;font-size:15px;color:#889;cursor:pointer}
+.tour-x:hover{color:#333}
+.tour-ic{font-size:52px;line-height:1;margin-bottom:8px}
+.tour-h{font-size:18px;font-weight:bold;color:#1a4fa0;margin-bottom:8px}
+.tour-b{font-size:13px;line-height:1.55;color:#334;min-height:76px}
+.tour-dots{display:flex;justify-content:center;gap:6px;margin:14px 0}
+.tour-dots i{width:8px;height:8px;border-radius:50%;background:#c6d2e2;cursor:pointer;transition:background .2s,transform .2s}
+.tour-dots i.on{background:#2c72d0;transform:scale(1.25)}
+.tour-btns{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tour-ghost{background:none;border:1px solid #aca899;border-radius:5px;padding:7px 16px;font-size:13px;cursor:pointer;color:#456}
+.tour-ghost:hover{background:#eef2f8}
+.tour-go{background:linear-gradient(180deg,#4a90e8,#1c6ad0);border:1px solid #1a5fd0;border-radius:5px;padding:7px 22px;font-size:13px;font-weight:bold;color:#fff;cursor:pointer;margin-left:auto}
+.tour-go:hover{filter:brightness(1.06)}
+@media (max-width:600px){ .tour-ic{font-size:44px} .tour-b{min-height:96px} }
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
@@ -2689,7 +2822,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
     <button id="show-desktop" onclick="toggleShowDesktop()" title="Mostrar escritorio" aria-label="Mostrar escritorio"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.4" y="3" width="13.2" height="10" rx="1.1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.15" y="10.4" width="11.7" height="2.2" rx="0.4" fill="currentColor"/></svg></button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
+      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
       <div id="clock" style="cursor:pointer" onclick="toggleCalendar()" role="button" tabindex="0" aria-label="Fecha y hora"></div>
     </div>
     <div id="volume-popup" style="display:none;position:fixed;bottom:40px;right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
@@ -2716,42 +2849,80 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-games-submenu"></div>
-        <button type="button" class="start-item" onclick="openRecords()">
-          <div class="si-icon">&#127942;</div>
-          <div><div class="si-label" data-i18n="app.records">R&eacute;cords</div><div class="si-desc" data-i18n="app.records.desc">Sal&oacute;n de la fama</div></div>
-        </button>
-        <button type="button" class="start-item" onclick="openAchievements()">
-          <div class="si-icon">&#127941;</div>
-          <div><div class="si-label" data-i18n="app.achievements">Logros</div><div class="si-desc" data-i18n="app.achievements.desc">Lo que llevas conseguido</div></div>
-        </button>
-        <button type="button" class="start-item" onclick="openHelp()">
-          <div class="si-icon">&#10067;</div>
-          <div><div class="si-label" data-i18n="app.help">Ayuda</div><div class="si-desc" data-i18n="app.help.desc">Atajos y trucos (F1)</div></div>
-        </button>
         <div class="start-separator"></div>
-        <button type="button" class="start-item" onclick="openCalculator()">
-          <div class="si-icon">&#128290;</div>
-          <div><div class="si-label" data-i18n="app.calc">Calculadora</div><div class="si-desc" data-i18n="app.calc.desc">Calculadora de Windows</div></div>
-        </button>
-        <button type="button" class="start-item" onclick="openNotepad()">
-          <div class="si-icon">&#128221;</div>
-          <div><div class="si-label" data-i18n="app.notepad">Bloc de notas</div><div class="si-desc" data-i18n="app.notepad.desc">Editor de texto con autoguardado</div></div>
-        </button>
         <button type="button" class="start-item" onclick="openMyDocuments()">
           <div class="si-icon">&#128450;&#65039;</div>
           <div><div class="si-label" data-i18n="app.docs">Mis documentos</div><div class="si-desc" data-i18n="app.docs.desc">Tus notas y dibujos guardados</div></div>
-        </button>
-        <button type="button" class="start-item" onclick="openClock()">
-          <div class="si-icon">&#128340;</div>
-          <div><div class="si-label">Reloj</div><div class="si-desc">Reloj, cron&oacute;metro y temporizador</div></div>
         </button>
         <button type="button" class="start-item" onclick="openMSN()">
           <div class="si-icon">&#128172;</div>
           <div><div class="si-label">MSN Messenger</div><div class="si-desc">Un contacto sigue en l&iacute;nea</div></div>
         </button>
+        <button type="button" class="start-item" id="start-herramientas-toggle" onclick="toggleStartHerramientas(event)">
+          <div class="si-icon">&#128736;&#65039;</div>
+          <div style="flex:1"><div class="si-label" data-i18n="menu.tools">Herramientas</div><div class="si-desc">Calculadora, Bloc, Reloj&hellip;</div></div>
+          <div class="si-arrow">&#9656;</div>
+        </button>
+        <div id="start-herramientas-submenu">
+          <button type="button" class="start-item" onclick="openCalculator()">
+            <div class="si-icon">&#128290;</div>
+            <div><div class="si-label" data-i18n="app.calc">Calculadora</div><div class="si-desc" data-i18n="app.calc.desc">Calculadora de Windows</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openNotepad()">
+            <div class="si-icon">&#128221;</div>
+            <div><div class="si-label" data-i18n="app.notepad">Bloc de notas</div><div class="si-desc" data-i18n="app.notepad.desc">Editor de texto con autoguardado</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openClock()">
+            <div class="si-icon">&#128340;</div>
+            <div><div class="si-label">Reloj</div><div class="si-desc">Reloj, cron&oacute;metro y temporizador</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openTerminal()">
+            <div class="si-icon">&#9000;&#65039;</div>
+            <div><div class="si-label">S&iacute;mbolo del sistema</div><div class="si-desc">Terminal con comandos</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openToolbox()">
+            <div class="si-icon">&#128295;</div>
+            <div><div class="si-label" data-i18n="tb.title">Herramientas</div><div class="si-desc" data-i18n="tb.desc">QR, contrase&ntilde;as y texto</div></div>
+          </button>
+        </div>
+        <button type="button" class="start-item" id="start-creatividad-toggle" onclick="toggleStartCreatividad(event)">
+          <div class="si-icon">&#127912;</div>
+          <div style="flex:1"><div class="si-label" data-i18n="menu.creativity">Creatividad</div><div class="si-desc">WordArt, Paint&hellip;</div></div>
+          <div class="si-arrow">&#9656;</div>
+        </button>
+        <div id="start-creatividad-submenu">
+          <button type="button" class="start-item" onclick="openWordArt()">
+            <div class="si-icon">&#127344;&#65039;</div>
+            <div><div class="si-label">WordArt</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openPaint()">
+            <div class="si-icon">&#127912;</div>
+            <div><div class="si-label">Paint</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openImageTools()">
+            <div class="si-icon">&#128396;&#65039;</div>
+            <div><div class="si-label" data-i18n="it.title">Retoques</div><div class="si-desc" data-i18n="it.desc">Editor de im&aacute;genes local</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openPixelArt()">
+            <div class="si-icon">&#128375;&#65039;</div>
+            <div><div class="si-label" data-i18n="px.title">Pixel Art</div><div class="si-desc" data-i18n="px.desc">Editor de sprites</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openMemeGen()">
+            <div class="si-icon">&#128514;</div>
+            <div><div class="si-label" data-i18n="meme.title">Generador de memes</div><div class="si-desc" data-i18n="meme.desc">Imagen con texto</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openDrumMachine()">
+            <div class="si-icon">&#129345;</div>
+            <div><div class="si-label" data-i18n="drum.title">Caja de ritmos</div><div class="si-desc" data-i18n="drum.desc">Secuenciador</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openKaleidoscope()">
+            <div class="si-icon">&#128302;</div>
+            <div><div class="si-label" data-i18n="kal.title">Caleidoscopio</div><div class="si-desc" data-i18n="kal.desc">Dibujo con simetr&iacute;a</div></div>
+          </button>
+        </div>
         <button type="button" class="start-item" id="start-utils-toggle" onclick="toggleStartUtils(event)">
           <div class="si-icon">&#129520;</div>
-          <div style="flex:1"><div class="si-label" data-i18n="menu.utils">Utilidades</div><div class="si-desc">Winamp, WordArt y m&aacute;s</div></div>
+          <div style="flex:1"><div class="si-label" data-i18n="menu.utils">Utilidades</div><div class="si-desc">Winamp, v&iacute;deo y m&aacute;s</div></div>
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-utils-submenu">
@@ -2767,29 +2938,13 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
             <div class="si-icon">&#127916;</div>
             <div><div class="si-label">Reproductor de v&iacute;deo</div></div>
           </button>
-          <button type="button" class="start-item" onclick="openWordArt()">
-            <div class="si-icon">&#127344;&#65039;</div>
-            <div><div class="si-label">WordArt</div></div>
-          </button>
           <button type="button" class="start-item" onclick="openImageViewer()">
             <div class="si-icon">&#128444;&#65039;</div>
             <div><div class="si-label">Visor de im&aacute;genes</div></div>
           </button>
-          <button type="button" class="start-item" onclick="openPaint()">
-            <div class="si-icon">&#127912;</div>
-            <div><div class="si-label">Paint</div></div>
-          </button>
-          <button type="button" class="start-item" onclick="openImageTools()">
-            <div class="si-icon">&#128396;&#65039;</div>
-            <div><div class="si-label" data-i18n="it.title">Retoques</div><div class="si-desc" data-i18n="it.desc">Editor de im&aacute;genes local</div></div>
-          </button>
           <button type="button" class="start-item" onclick="openNotes()">
             <div class="si-icon">&#128210;</div>
             <div><div class="si-label" data-i18n="nt.title">Notas</div><div class="si-desc" data-i18n="nt.desc">Cuaderno con Markdown</div></div>
-          </button>
-          <button type="button" class="start-item" onclick="openToolbox()">
-            <div class="si-icon">&#128736;&#65039;</div>
-            <div><div class="si-label" data-i18n="tb.title">Herramientas</div><div class="si-desc" data-i18n="tb.desc">QR, contrase&ntilde;as y texto</div></div>
           </button>
           <button type="button" class="start-item" onclick="openLoquendo()">
             <div class="si-icon">&#128483;&#65039;</div>
@@ -2839,13 +2994,13 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
             <div><div class="si-label">Netscape Navigator</div></div>
           </button>
         </div>
-        <button type="button" class="start-item" onclick="openTerminal()">
-          <div class="si-icon">&#9000;&#65039;</div>
-          <div><div class="si-label">S&iacute;mbolo del sistema</div><div class="si-desc">Terminal con comandos</div></div>
-        </button>
         <button type="button" class="start-item" onclick="openStickyNote()">
           <div class="si-icon">&#128204;</div>
           <div><div class="si-label">Nota adhesiva</div><div class="si-desc">Pega una nota en el escritorio</div></div>
+        </button>
+        <button type="button" class="start-item" onclick="openGadgetGallery()">
+          <div class="si-icon">&#129513;</div>
+          <div><div class="si-label" data-i18n="gad.title">Gadgets</div><div class="si-desc" data-i18n="gad.desc">Reloj, calendario, notas&hellip;</div></div>
         </button>
         <div class="start-separator"></div>
         <button type="button" class="start-item" onclick="openAbout()">
@@ -2857,6 +3012,10 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
         <button type="button" class="start-item" onclick="openSettings()">
           <div class="si-icon">&#9881;</div>
           <div><div class="si-label">Ajustes</div></div>
+        </button>
+        <button type="button" class="start-item" onclick="openControlPanel()">
+          <div class="si-icon">&#127898;&#65039;</div>
+          <div><div class="si-label" data-i18n="cpl.title">Panel de Control</div></div>
         </button>
         <div class="start-separator"></div>
         <button type="button" class="start-item" onclick="closeStartMenu();openGamesFolder()">
@@ -2872,17 +3031,21 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
           <div><div class="si-label">Proyectos</div></div>
         </button>
         <div class="start-separator"></div>
-        <button type="button" class="start-item" onclick="openCalculator()">
-          <div class="si-icon">&#128290;</div>
-          <div><div class="si-label">Calculadora</div></div>
+        <button type="button" class="start-item" onclick="openRecords()">
+          <div class="si-icon">&#127942;</div>
+          <div><div class="si-label" data-i18n="app.records">R&eacute;cords</div></div>
         </button>
-        <button type="button" class="start-item" onclick="openPaint()">
-          <div class="si-icon">&#127912;</div>
-          <div><div class="si-label">Paint</div></div>
+        <button type="button" class="start-item" onclick="openAchievements()">
+          <div class="si-icon">&#127941;</div>
+          <div><div class="si-label" data-i18n="app.achievements">Logros</div></div>
         </button>
-        <button type="button" class="start-item" onclick="openNotepad()">
-          <div class="si-icon">&#128221;</div>
-          <div><div class="si-label">Bloc de notas</div></div>
+        <button type="button" class="start-item" onclick="openHelp()">
+          <div class="si-icon">&#10067;</div>
+          <div><div class="si-label" data-i18n="app.help">Ayuda</div></div>
+        </button>
+        <button type="button" class="start-item" onclick="openTour()">
+          <div class="si-icon">&#127881;</div>
+          <div><div class="si-label" data-i18n="tour.title">Tour de bienvenida</div><div class="si-desc" data-i18n="tour.desc">C&oacute;mo funciona todo</div></div>
         </button>
       </div>
     </div>
@@ -2898,7 +3061,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.31.2';
+const APP_VERSION = '0.36.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -2910,6 +3073,8 @@ const I18N={
   'menu.games':       {es:'Juegos', en:'Games', ca:'Jocs', ru:'Игры'},
   'menu.games.desc':  {es:'{n} juegos clásicos', en:'{n} classic games', ca:'{n} jocs clàssics', ru:'{n} классических игр'},
   'menu.utils':       {es:'Utilidades', en:'Utilities', ca:'Utilitats', ru:'Утилиты'},
+  'menu.tools':       {es:'Herramientas', en:'Tools', ca:'Eines', ru:'Инструменты'},
+  'menu.creativity':  {es:'Creatividad', en:'Creativity', ca:'Creativitat', ru:'Творчество'},
   'menu.nostalgia':   {es:'Nostalgia', en:'Nostalgia', ca:'Nostàlgia', ru:'Ностальгия'},
   'app.records':      {es:'Récords', en:'High scores', ca:'Rècords', ru:'Рекорды'},
   'app.records.desc': {es:'Salón de la fama', en:'Hall of fame', ca:'Saló de la fama', ru:'Зал славы'},
@@ -2996,6 +3161,14 @@ const I18N={
   'docs.undone':{es:'No se puede deshacer.', en:'This cannot be undone.', ca:'No es pot desfer.', ru:'Это нельзя отменить.'},
   'docs.renametitle':{es:'Renombrar', en:'Rename', ca:'Reanomena', ru:'Переименовать'},
   'docs.renameq':{es:'Nuevo nombre para «{n}»:', en:'New name for “{n}”:', ca:'Nou nom per a «{n}»:', ru:'Новое имя для «{n}»:'},
+  'docs.up':{es:'Subir', en:'Up', ca:'Amunt', ru:'Вверх'},
+  'docs.newfolder':{es:'Nueva carpeta', en:'New folder', ca:'Nova carpeta', ru:'Новая папка'},
+  'docs.foldername':{es:'Nombre de la carpeta:', en:'Folder name:', ca:'Nom de la carpeta:', ru:'Имя папки:'},
+  'docs.view':{es:'Cambiar vista (iconos/lista)', en:'Toggle view (icons/list)', ca:'Canvia la vista (icones/llista)', ru:'Вид (значки/список)'},
+  'docs.root':{es:'Mis documentos (raíz)', en:'My documents (root)', ca:'Els meus documents (arrel)', ru:'Мои документы (корень)'},
+  'docs.moveto':{es:'Mover a…', en:'Move to…', ca:'Mou a…', ru:'Переместить в…'},
+  'docs.delfolder':{es:'Eliminar carpeta', en:'Delete folder', ca:'Elimina la carpeta', ru:'Удалить папку'},
+  'docs.delfolderq':{es:'¿Eliminar la carpeta «{n}»? Sus archivos volverán a la raíz.', en:'Delete folder “{n}”? Its files return to the root.', ca:'Vols eliminar la carpeta «{n}»? Els fitxers tornaran a l’arrel.', ru:'Удалить папку «{n}»? Её файлы вернутся в корень.'},
   // Bloc de notas
   'np.wrap':{es:'Ajuste de línea', en:'Word wrap', ca:'Ajust de línia', ru:'Перенос строк'},
   'np.saved':{es:'Guardado', en:'Saved', ca:'Desat', ru:'Сохранено'},
@@ -3116,6 +3289,83 @@ const I18N={
   'tb.reverse':{es:'Invertir', en:'Reverse', ca:'Invertir', ru:'Обратить'},
   'tb.badjson':{es:'El texto no es JSON válido.', en:'The text is not valid JSON.', ca:'El text no és JSON vàlid.', ru:'Текст не является корректным JSON.'},
   'tb.badb64':{es:'El texto no es Base64 válido.', en:'The text is not valid Base64.', ca:'El text no és Base64 vàlid.', ru:'Текст не является корректным Base64.'},
+  'px.title':{es:'Pixel Art', en:'Pixel Art', ca:'Pixel Art', ru:'Пиксель-арт'},
+  'px.desc':{es:'Editor de sprites', en:'Sprite editor', ca:'Editor d’sprites', ru:'Редактор спрайтов'},
+  'px.pen':{es:'Lápiz', en:'Pencil', ca:'Llapis', ru:'Карандаш'},
+  'px.erase':{es:'Borrador', en:'Eraser', ca:'Goma', ru:'Ластик'},
+  'px.fill':{es:'Rellenar', en:'Fill', ca:'Omplir', ru:'Заливка'},
+  'px.pick':{es:'Cuentagotas', en:'Eyedropper', ca:'Comptagotes', ru:'Пипетка'},
+  'px.size':{es:'Tamaño de la cuadrícula', en:'Grid size', ca:'Mida de la graella', ru:'Размер сетки'},
+  'px.clear':{es:'Limpiar', en:'Clear', ca:'Neteja', ru:'Очистить'},
+  'px.exportscale':{es:'Escala', en:'Scale', ca:'Escala', ru:'Масштаб'},
+  'meme.title':{es:'Generador de memes', en:'Meme generator', ca:'Generador de memes', ru:'Генератор мемов'},
+  'meme.desc':{es:'Imagen con texto', en:'Image with text', ca:'Imatge amb text', ru:'Картинка с текстом'},
+  'meme.empty':{es:'Abre o arrastra una imagen para empezar.', en:'Open or drop an image to begin.', ca:'Obre o arrossega una imatge per començar.', ru:'Откройте или перетащите изображение.'},
+  'meme.size':{es:'Texto', en:'Text', ca:'Text', ru:'Текст'},
+  'meme.toptext':{es:'Texto de arriba', en:'Top text', ca:'Text de dalt', ru:'Текст сверху'},
+  'meme.bottomtext':{es:'Texto de abajo', en:'Bottom text', ca:'Text de baix', ru:'Текст снизу'},
+  'drum.title':{es:'Caja de ritmos', en:'Drum machine', ca:'Caixa de ritmes', ru:'Драм-машина'},
+  'drum.desc':{es:'Secuenciador', en:'Step sequencer', ca:'Seqüenciador', ru:'Секвенсор'},
+  'drum.play':{es:'Play', en:'Play', ca:'Play', ru:'Играть'},
+  'drum.stop':{es:'Parar', en:'Stop', ca:'Atura', ru:'Стоп'},
+  'drum.tempo':{es:'Tempo', en:'Tempo', ca:'Tempo', ru:'Темп'},
+  'kal.title':{es:'Caleidoscopio', en:'Kaleidoscope', ca:'Calidoscopi', ru:'Калейдоскоп'},
+  'kal.desc':{es:'Dibujo con simetría', en:'Symmetry drawing', ca:'Dibuix amb simetria', ru:'Симметричный рисунок'},
+  'kal.axes':{es:'Ejes', en:'Axes', ca:'Eixos', ru:'Оси'},
+  'kal.brush':{es:'Pincel', en:'Brush', ca:'Pinzell', ru:'Кисть'},
+  'kal.rainbow':{es:'Arcoíris', en:'Rainbow', ca:'Arc de Sant Martí', ru:'Радуга'},
+  'gad.title':{es:'Gadgets', en:'Gadgets', ca:'Gadgets', ru:'Гаджеты'},
+  'gad.desc':{es:'Reloj, calendario, notas…', en:'Clock, calendar, notes…', ca:'Rellotge, calendari, notes…', ru:'Часы, календарь, заметки…'},
+  'gad.intro':{es:'Añade mini-paneles a tu escritorio. Arrástralos donde quieras.', en:'Add mini-panels to your desktop. Drag them anywhere.', ca:'Afegeix mini-panells a l’escriptori. Arrossega’ls on vulguis.', ru:'Добавьте мини-панели на рабочий стол. Перетаскивайте их куда угодно.'},
+  'gad.added':{es:'{name} añadido al escritorio', en:'{name} added to the desktop', ca:'{name} afegit a l’escriptori', ru:'{name} добавлен на рабочий стол'},
+  'gad.clock':{es:'Reloj', en:'Clock', ca:'Rellotge', ru:'Часы'},
+  'gad.calendar':{es:'Calendario', en:'Calendar', ca:'Calendari', ru:'Календарь'},
+  'gad.notes':{es:'Nota rápida', en:'Quick note', ca:'Nota ràpida', ru:'Заметка'},
+  'gad.monitor':{es:'Sistema', en:'System', ca:'Sistema', ru:'Система'},
+  'cmdk.title':{es:'Paleta de comandos', en:'Command palette', ca:'Paleta d’ordres', ru:'Палитра команд'},
+  'cmdk.ph':{es:'Escribe para abrir apps, juegos, acciones…', en:'Type to open apps, games, actions…', ca:'Escriu per obrir apps, jocs, accions…', ru:'Введите, чтобы открыть приложения, игры…'},
+  'cmdk.nav':{es:'moverse', en:'navigate', ca:'moure’s', ru:'выбор'},
+  'cmdk.open':{es:'abrir', en:'open', ca:'obrir', ru:'открыть'},
+  'cmdk.none':{es:'Sin resultados.', en:'No results.', ca:'Sense resultats.', ru:'Ничего не найдено.'},
+  'clip.title':{es:'Portapapeles', en:'Clipboard', ca:'Porta-retalls', ru:'Буфер обмена'},
+  'clip.empty':{es:'Aún no has copiado nada.', en:'Nothing copied yet.', ca:'Encara no has copiat res.', ru:'Пока ничего не скопировано.'},
+  'clip.recopied':{es:'Copiado de nuevo', en:'Copied again', ca:'Copiat de nou', ru:'Скопировано снова'},
+  'cpl.title':{es:'Panel de Control', en:'Control Panel', ca:'Tauler de control', ru:'Панель управления'},
+  'cpl.intro':{es:'Todo tu sistema en un sitio. Elige una categoría.', en:'Your whole system in one place. Pick a category.', ca:'Tot el teu sistema en un lloc. Tria una categoria.', ru:'Вся система в одном месте. Выберите категорию.'},
+  'cpl.appearance':{es:'Apariencia y fondos', en:'Appearance & wallpaper', ca:'Aparença i fons', ru:'Оформление и обои'},
+  'cpl.account':{es:'Cuenta y seguridad', en:'Account & security', ca:'Compte i seguretat', ru:'Аккаунт и безопасность'},
+  'cpl.language':{es:'Idioma', en:'Language', ca:'Idioma', ru:'Язык'},
+  'cpl.sound':{es:'Sonido', en:'Sound', ca:'So', ru:'Звук'},
+  'cpl.backup':{es:'Copia de seguridad', en:'Backup', ca:'Còpia de seguretat', ru:'Резервная копия'},
+  'cpl.gadgets':{es:'Gadgets', en:'Gadgets', ca:'Gadgets', ru:'Гаджеты'},
+  'cpl.tasks':{es:'Administrador de tareas', en:'Task manager', ca:'Gestor de tasques', ru:'Диспетчер задач'},
+  'cpl.magnifier':{es:'Lupa', en:'Magnifier', ca:'Lupa', ru:'Экранная лупа'},
+  'cpl.help':{es:'Ayuda', en:'Help', ca:'Ajuda', ru:'Справка'},
+  'mag.title':{es:'Lupa', en:'Magnifier', ca:'Lupa', ru:'Лупа'},
+  'tour.title':{es:'Tour de bienvenida', en:'Welcome tour', ca:'Tour de benvinguda', ru:'Приветственный тур'},
+  'tour.desc':{es:'Cómo funciona todo', en:'How everything works', ca:'Com funciona tot', ru:'Как всё работает'},
+  'tour.skip':{es:'Saltar', en:'Skip', ca:'Omet', ru:'Пропустить'},
+  'tour.next':{es:'Siguiente', en:'Next', ca:'Següent', ru:'Далее'},
+  'tour.back':{es:'Anterior', en:'Back', ca:'Enrere', ru:'Назад'},
+  'tour.finish':{es:'¡Empezar!', en:'Get started!', ca:'Comença!', ru:'Начать!'},
+  'tour.s1t':{es:'Bienvenido a Torrecillas OS', en:'Welcome to Torrecillas OS', ca:'Benvingut a Torrecillas OS', ru:'Добро пожаловать в Torrecillas OS'},
+  'tour.s1b':{es:'Un escritorio de Windows XP dentro de tu navegador: juegos, apps creativas y utilidades. Funciona sin conexión y sin cuentas en la nube.', en:'A Windows XP desktop inside your browser: games, creative apps and utilities. It works offline and with no cloud accounts.', ca:'Un escriptori de Windows XP dins del navegador: jocs, apps creatives i utilitats. Funciona sense connexió i sense comptes al núvol.', ru:'Рабочий стол Windows XP в браузере: игры, творческие приложения и утилиты. Работает офлайн, без облачных аккаунтов.'},
+  'tour.s2t':{es:'El menú Inicio', en:'The Start menu', ca:'El menú Inici', ru:'Меню «Пуск»'},
+  'tour.s2b':{es:'Pulsa el botón Inicio (abajo a la izquierda) para abrir todo: apps, juegos y carpetas. A la derecha tienes Récords, Logros y Ayuda.', en:'Click Start (bottom-left) to open everything: apps, games and folders. On the right you have Records, Achievements and Help.', ca:'Prem Inici (a baix a l’esquerra) per obrir-ho tot: apps, jocs i carpetes. A la dreta tens Rècords, Assoliments i Ajuda.', ru:'Нажмите «Пуск» (внизу слева), чтобы открыть всё: приложения, игры и папки. Справа — Рекорды, Достижения и Справка.'},
+  'tour.s3t':{es:'Busca lo que sea', en:'Find anything', ca:'Cerca qualsevol cosa', ru:'Найдите что угодно'},
+  'tour.s3b':{es:'Escribe en el buscador del menú, o pulsa Ctrl+K en cualquier momento para el lanzador rápido y abrir cualquier cosa con el teclado.', en:'Type in the menu search, or press Ctrl+K anytime for the quick launcher and open anything from the keyboard.', ca:'Escriu al cercador del menú, o prem Ctrl+K en qualsevol moment per al llançador ràpid i obrir qualsevol cosa amb el teclat.', ru:'Печатайте в поиске меню или нажмите Ctrl+K в любой момент — быстрый запуск с клавиатуры.'},
+  'tour.s4t':{es:'Todo ordenado en carpetas', en:'Everything in folders', ca:'Tot ordenat en carpetes', ru:'Всё разложено по папкам'},
+  'tour.s4b':{es:'Herramientas (calculadora, QR, contraseñas…), Creatividad (Paint, Pixel Art, memes, caja de ritmos…), Utilidades y Nostalgia (Encarta, eMule, Netscape…).', en:'Tools (calculator, QR, passwords…), Creativity (Paint, Pixel Art, memes, drum machine…), Utilities and Nostalgia (Encarta, eMule, Netscape…).', ca:'Eines (calculadora, QR, contrasenyes…), Creativitat (Paint, Pixel Art, memes, caixa de ritmes…), Utilitats i Nostàlgia (Encarta, eMule, Netscape…).', ru:'Инструменты (калькулятор, QR, пароли…), Творчество (Paint, Pixel Art, мемы, драм-машина…), Утилиты и Ностальгия (Encarta, eMule, Netscape…).'},
+  'tour.s5t':{es:'Juegos con récords', en:'Games with high scores', ca:'Jocs amb rècords', ru:'Игры с рекордами'},
+  'tour.s5b':{es:'Snake, Tetris, 2048, Buscaminas, Solitario y más, con récords y logros que desbloquear. También hay una Nostalgia con reliquias de los 2000.', en:'Snake, Tetris, 2048, Minesweeper, Solitaire and more, with records and achievements to unlock. There’s also a Nostalgia folder with 2000s relics.', ca:'Snake, Tetris, 2048, Buscamines, Solitari i més, amb rècords i assoliments per desbloquejar. També hi ha Nostàlgia amb relíquies dels 2000.', ru:'Snake, Tetris, 2048, Сапёр, Косынка и другие — с рекордами и достижениями. Ещё есть папка «Ностальгия» с реликвиями 2000-х.'},
+  'tour.s6t':{es:'Apps de verdad', en:'Real apps', ca:'Apps de veritat', ru:'Настоящие приложения'},
+  'tour.s6b':{es:'Editor de imágenes (Retoques), lector de EPUB/PDF, notas con Markdown, generador de QR y contraseñas, herramientas de texto… todo local.', en:'Image editor (Retoques), EPUB/PDF reader, Markdown notes, QR and password generator, text tools… all local.', ca:'Editor d’imatges (Retocs), lector d’EPUB/PDF, notes amb Markdown, generador de QR i contrasenyes, eines de text… tot local.', ru:'Редактор изображений, читалка EPUB/PDF, заметки в Markdown, генератор QR и паролей, текстовые инструменты… всё локально.'},
+  'tour.s7t':{es:'Tu cuenta cifrada', en:'Your encrypted account', ca:'El teu compte xifrat', ru:'Ваш зашифрованный аккаунт'},
+  'tour.s7b':{es:'Crea una cuenta local con usuario y contraseña: todos tus datos se guardan CIFRADOS en este dispositivo, sin nube. También puedes entrar como invitado.', en:'Create a local account with username and password: all your data is stored ENCRYPTED on this device, no cloud. You can also enter as a guest.', ca:'Crea un compte local amb usuari i contrasenya: totes les teves dades es desen XIFRADES en aquest dispositiu, sense núvol. També pots entrar com a convidat.', ru:'Создайте локальный аккаунт с логином и паролем: все данные хранятся ЗАШИФРОВАННО на этом устройстве, без облака. Можно войти и как гость.'},
+  'tour.s8t':{es:'Hazlo tuyo', en:'Make it yours', ca:'Fes-lo teu', ru:'Настройте под себя'},
+  'tour.s8b':{es:'Cambia el fondo y el tema, añade gadgets al escritorio (reloj, calendario…), viaja entre eras (95/XP/Vista) con la Máquina del tiempo y guarda archivos en Mis documentos.', en:'Change the wallpaper and theme, add desktop gadgets (clock, calendar…), travel between eras (95/XP/Vista) with the Time Machine and save files in My documents.', ca:'Canvia el fons i el tema, afegeix gadgets a l’escriptori (rellotge, calendari…), viatja entre eres (95/XP/Vista) amb la Màquina del temps i desa fitxers a Els meus documents.', ru:'Меняйте обои и тему, добавляйте гаджеты (часы, календарь…), путешествуйте между эпохами (95/XP/Vista) с «Машиной времени» и сохраняйте файлы в «Мои документы».'},
+  'tour.s9t':{es:'¿Dudas?', en:'Questions?', ca:'Dubtes?', ru:'Вопросы?'},
+  'tour.s9b':{es:'Pulsa F1 o abre Ayuda cuando quieras. Este tour está siempre en el menú Inicio, debajo de Ayuda. ¡Explora y disfruta!', en:'Press F1 or open Help anytime. This tour is always in the Start menu, below Help. Explore and enjoy!', ca:'Prem F1 o obre Ajuda quan vulguis. Aquest tour sempre és al menú Inici, sota Ajuda. Explora i gaudeix!', ru:'Нажмите F1 или откройте «Справку» в любой момент. Этот тур всегда в меню «Пуск», под «Справкой». Исследуйте и наслаждайтесь!'},
   'app.account':{es:'Cuenta', en:'Account', ca:'Compte', ru:'Аккаунт'},
   'start.user':{es:'Usuario', en:'User', ca:'Usuari', ru:'Пользователь'},
   'login.sub':{es:'Cuenta local cifrada', en:'Encrypted local account', ca:'Compte local xifrat', ru:'Зашифрованный локальный аккаунт'},
@@ -3516,18 +3766,24 @@ function fsList(){ try{return JSON.parse(Store.get('tos-files')||'[]');}catch(e)
 function _fsWrite(arr){ return Store.set('tos-files',JSON.stringify(arr)); }
 function fsGet(id){ return fsList().find(f=>f.id===id)||null; }
 // Guarda o actualiza. Devuelve {ok,id} — ok=false si no cupo en el almacenamiento.
-function fsSave({id,name,type,data}){
+function fsSave({id,name,type,data,folder}){
   const arr=fsList();
   const now=Date.now();
   if(id){
     const f=arr.find(x=>x.id===id);
-    if(f){ f.name=name||f.name; f.data=data; f.date=now; if(!_fsWrite(arr))return {ok:false}; return {ok:true,id}; }
+    if(f){ f.name=name||f.name; f.data=data; f.date=now; if(folder!==undefined)f.folder=folder||''; if(!_fsWrite(arr))return {ok:false}; return {ok:true,id}; }
   }
   const nid='f'+now+Math.floor(Math.random()*1000);
-  arr.push({id:nid,name:name||'Sin título',type:type||'txt',data:data||'',date:now});
+  arr.push({id:nid,name:name||'Sin título',type:type||'txt',data:data||'',date:now,folder:folder||''});
   if(!_fsWrite(arr))return {ok:false};
   return {ok:true,id:nid};
 }
+// Carpetas (un nivel): lista de nombres en tos-folders; los archivos llevan f.folder
+function fsFolders(){ try{ const a=JSON.parse(Store.get('tos-folders')||'[]'); return Array.isArray(a)?a.filter(x=>typeof x==='string'):[]; }catch(e){ return []; } }
+function fsAddFolder(name){ name=(name||'').trim(); if(!name||name.length>40)return false; const a=fsFolders(); if(a.includes(name))return false; a.push(name); Store.set('tos-folders',JSON.stringify(a)); return true; }
+function fsRemoveFolder(name){ Store.set('tos-folders',JSON.stringify(fsFolders().filter(x=>x!==name))); const arr=fsList(); let ch=false; arr.forEach(f=>{ if((f.folder||'')===name){ f.folder=''; ch=true; } }); if(ch)_fsWrite(arr); }
+function fsRenameFolder(oldN,newN){ newN=(newN||'').trim(); if(!newN||fsFolders().includes(newN))return false; Store.set('tos-folders',JSON.stringify(fsFolders().map(x=>x===oldN?newN:x))); const arr=fsList(); arr.forEach(f=>{ if((f.folder||'')===oldN)f.folder=newN; }); _fsWrite(arr); return true; }
+function fsMove(id,folder){ const arr=fsList(); const f=arr.find(x=>x.id===id); if(f){ f.folder=folder||''; _fsWrite(arr); } }
 function fsRemove(id){ const arr=fsList().filter(f=>f.id!==id); _fsWrite(arr); }
 // Saca un archivo del FS virtual al equipo real (descarga del navegador)
 function fsDownload(id){
@@ -3563,42 +3819,48 @@ function fsOpen(id){
   else if(f.type==='png'){ openImageViewer(); if(_viewerLoadDataURL)_viewerLoadDataURL(f.data,f.name); }
   else if(f.type==='audio'){ openPlayer(); if(_playerAddDataURL)_playerAddDataURL(f.data,f.name+FS_META.audio.ext,true); }
 }
+let _docsCurFolder='';
 function openMyDocuments(){
   closeStartMenu();
   if(focusExisting('docs-panel'))return;
   const content=`<div id="docs-panel" class="docs-panel">
-    <div class="docs-head">&#128193; <span data-i18n="app.docs">Mis documentos</span> <span id="docs-count"></span></div>
+    <div class="docs-toolbar">
+      <button type="button" class="docs-tb" id="docs-up" title="${escHtml(t('docs.up'))}">&#11014;&#65039;</button>
+      <span class="docs-crumb" id="docs-crumb"></span>
+      <span class="docs-tb-spacer"></span>
+      <button type="button" class="docs-tb" id="docs-newfolder" title="${escHtml(t('docs.newfolder'))}">&#128193;+</button>
+      <button type="button" class="docs-tb" id="docs-view" title="${escHtml(t('docs.view'))}">&#9636;</button>
+    </div>
     <div class="docs-grid" id="docs-grid" role="listbox" aria-label="Mis documentos"></div>
     <div class="docs-foot"><span id="docs-foot-txt"></span></div>
   </div>`;
-  createWindow(t('app.docs'),'&#128193;',460,400,content,{session:'docs',statusbar:false,onCreated:(id)=>{
-    let sel=null;
-    const render=()=>{
-      const grid=document.getElementById('docs-grid');
-      if(!grid)return;
-      const arr=fsList().sort((a,b)=>b.date-a.date);
-      if(!arr.length){
-        grid.innerHTML='<div class="docs-empty">'+t('docs.empty')+'<br><span>'+t('docs.empty2')+'</span></div>';
-      }else{
-        grid.innerHTML=arr.map(f=>{
-          const m=FS_META[f.type]||FS_META.txt;
-          const fecha=new Date(f.date).toLocaleDateString('es-ES');
-          return `<button type="button" class="docs-file${sel===f.id?' sel':''}" data-id="${f.id}" aria-label="${escHtml(f.name)}${m.ext}">
-            <div class="docs-ic">${m.icon}</div>
-            <div class="docs-name">${escHtml(f.name)}</div>
-            <div class="docs-date">${fecha}</div>
-          </button>`;
-        }).join('');
-        grid.querySelectorAll('.docs-file').forEach(b=>{
-          b.onclick=()=>{ sel=b.dataset.id; render(); };
-          b.ondblclick=()=>fsOpen(b.dataset.id);
-        });
-      }
-      const foot=document.getElementById('docs-foot-txt');
-      if(foot)foot.textContent=arr.length?t('docs.count',{n:arr.length}):'';
-    };
-    // Toolbar contextual sencilla: renombrar / eliminar mediante teclado o botones flotantes
+  createWindow(t('app.docs'),'&#128193;',480,420,content,{session:'docs',statusbar:false,onCreated:(id)=>{
+    let sel=null; _docsCurFolder=fsFolders().includes(_docsCurFolder)?_docsCurFolder:'';
+    let view=(Store.get('tos-docs-view')==='list')?'list':'icons';
     const grid=document.getElementById('docs-grid');
+    const setCrumb=()=>{ const c=document.getElementById('docs-crumb'); if(!c)return; c.innerHTML='<button type="button" class="docs-crumb-root">&#128193; '+escHtml(t('app.docs'))+'</button>'+(_docsCurFolder?' &#8250; <b>'+escHtml(_docsCurFolder)+'</b>':''); const rb=c.querySelector('.docs-crumb-root'); if(rb)rb.onclick=()=>{ _docsCurFolder=''; sel=null; render(); }; };
+    const render=()=>{
+      if(!grid)return;
+      grid.className='docs-grid'+(view==='list'?' list':'');
+      document.getElementById('docs-up').disabled=!_docsCurFolder;
+      setCrumb();
+      const folders=(_docsCurFolder==='')?fsFolders().slice().sort((a,b)=>a.localeCompare(b)):[];
+      const files=fsList().filter(f=>(f.folder||'')===_docsCurFolder).sort((a,b)=>b.date-a.date);
+      let html='';
+      folders.forEach(fn=>{ const count=fsList().filter(f=>(f.folder||'')===fn).length;
+        html+=`<button type="button" class="docs-folder" data-folder="${escHtml(fn)}" aria-label="${escHtml(fn)}"><div class="docs-ic">&#128193;</div><div class="docs-name">${escHtml(fn)}</div><div class="docs-date">${count}</div></button>`; });
+      files.forEach(f=>{ const m=FS_META[f.type]||FS_META.txt; const fecha=new Date(f.date).toLocaleDateString('es-ES');
+        html+=`<button type="button" class="docs-file${sel===f.id?' sel':''}" data-id="${f.id}" aria-label="${escHtml(f.name)}${m.ext}"><div class="docs-ic">${m.icon}</div><div class="docs-name">${escHtml(f.name)}</div><div class="docs-date">${fecha}</div></button>`; });
+      if(!folders.length&&!files.length){ grid.innerHTML='<div class="docs-empty">'+t('docs.empty')+'<br><span>'+t('docs.empty2')+'</span></div>'; }
+      else grid.innerHTML=html;
+      grid.querySelectorAll('.docs-folder').forEach(b=>{ b.onclick=()=>{ sel=null; }; b.ondblclick=()=>{ _docsCurFolder=b.dataset.folder; sel=null; render(); }; });
+      grid.querySelectorAll('.docs-file').forEach(b=>{ b.onclick=()=>{ sel=b.dataset.id; render(); }; b.ondblclick=()=>fsOpen(b.dataset.id); });
+      const foot=document.getElementById('docs-foot-txt');
+      if(foot)foot.textContent=(folders.length||files.length)?t('docs.count',{n:files.length}):'';
+    };
+    document.getElementById('docs-up').onclick=()=>{ _docsCurFolder=''; sel=null; render(); };
+    document.getElementById('docs-view').onclick=()=>{ view=(view==='icons')?'list':'icons'; Store.set('tos-docs-view',view); render(); };
+    document.getElementById('docs-newfolder').onclick=()=>{ xpPrompt(t('docs.newfolder'),t('docs.foldername'),'',(name)=>{ if(name&&fsAddFolder(name))render(); }); };
     grid.addEventListener('keydown',(e)=>{
       if(!sel)return;
       if(e.key==='Enter'){e.preventDefault();fsOpen(sel);}
@@ -3606,36 +3868,38 @@ function openMyDocuments(){
       else if(e.key==='F2'){e.preventDefault();renombrar(sel);}
       else if((e.ctrlKey||e.metaKey)&&(e.key==='s'||e.key==='S')){e.preventDefault();fsDownload(sel);}
     });
-    const renombrar=(fid)=>{
-      const f=fsGet(fid); if(!f)return;
-      xpPrompt(t('docs.renametitle'),t('docs.renameq',{n:f.name}),f.name,(nombre)=>{
-        if(nombre){ fsRename(fid,nombre); render(); }
-      });
-    };
-    const borrar=(fid)=>{
-      const f=fsGet(fid); if(!f)return;
+    const renombrar=(fid)=>{ const f=fsGet(fid); if(!f)return; xpPrompt(t('docs.renametitle'),t('docs.renameq',{n:f.name}),f.name,(nombre)=>{ if(nombre){ fsRename(fid,nombre); render(); } }); };
+    const borrar=(fid)=>{ const f=fsGet(fid); if(!f)return;
       xpDialog(t('docs.deltitle'),'<div class="dlg-icon">&#128465;&#65039;</div><div>'+t('docs.delq',{n:escHtml(f.name)})+'<br><span class="dlg-sub">'+t('docs.undone')+'</span></div>',[
         {label:t('btn.delete'),primary:true,action:()=>{fsRemove(fid);if(sel===fid)sel=null;render();announce('Documento eliminado');}},
         {label:t('btn.cancel')}
       ]);
     };
-    // clic derecho sobre un archivo: menú renombrar/eliminar
+    const moverA=(fid,x,y)=>{ const opts=[{label:'&#128193; '+t('docs.root'),action:()=>{ fsMove(fid,''); render(); }}]; fsFolders().forEach(fn=>opts.push({label:'&#128193; '+escHtml(fn),action:()=>{ fsMove(fid,fn); render(); }})); showContextMenu(x,y,opts); };
     grid.addEventListener('contextmenu',(e)=>{
+      const ff=e.target.closest('.docs-folder');
+      if(ff){ e.preventDefault(); const fn=ff.dataset.folder;
+        showContextMenu(e.clientX,e.clientY,[
+          {label:t('btn.open'),action:()=>{ _docsCurFolder=fn; sel=null; render(); }},
+          {label:t('btn.rename'),action:()=>xpPrompt(t('docs.renametitle'),t('docs.foldername'),fn,(nm)=>{ if(nm&&fsRenameFolder(fn,nm))render(); })},
+          {label:t('docs.delfolder'),action:()=>xpConfirm(t('docs.deltitle'),t('docs.delfolderq',{n:escHtml(fn)}),()=>{ fsRemoveFolder(fn); render(); })}
+        ]); return; }
       const b=e.target.closest('.docs-file'); if(!b)return;
       e.preventDefault(); sel=b.dataset.id; render();
       showContextMenu(e.clientX,e.clientY,[
         {label:t('btn.open'),action:()=>fsOpen(sel)},
+        {label:t('docs.moveto'),action:()=>moverA(sel,e.clientX,e.clientY)},
         {label:t('btn.download'),action:()=>fsDownload(sel)},
         {label:t('btn.rename'),action:()=>renombrar(sel)},
         {label:t('btn.delete'),action:()=>borrar(sel)}
       ]);
     });
-    // OLE: soltar una imagen o un texto aquí crea un archivo directamente
+    // OLE: soltar una imagen o un texto crea un archivo EN LA CARPETA ACTUAL
     osMakeDropTarget(grid,'any',(pl)=>{
-      if(pl.kind==='image'){ const r=fsSave({name:fsUniqueName(pl.name||'Imagen','png'),type:'png',data:pl.data}); if(r.ok){render();announce('Imagen guardada en Mis documentos');} }
-      else if(pl.kind==='text'){ const r=fsSave({name:fsUniqueName(pl.name||'Nota','txt'),type:'txt',data:pl.data}); if(r.ok){render();announce('Texto guardado en Mis documentos');} }
+      if(pl.kind==='image'){ const r=fsSave({name:fsUniqueName(pl.name||'Imagen','png'),type:'png',data:pl.data,folder:_docsCurFolder}); if(r.ok){render();announce('Imagen guardada en Mis documentos');} }
+      else if(pl.kind==='text'){ const r=fsSave({name:fsUniqueName(pl.name||'Nota','txt'),type:'txt',data:pl.data,folder:_docsCurFolder}); if(r.ok){render();announce('Texto guardado en Mis documentos');} }
     });
-    _docsRender=render; // para refrescar desde fuera cuando se guarda algo
+    _docsRender=render;
     (document.getElementById(id)._cleanups=document.getElementById(id)._cleanups||[]).push(()=>{ if(_docsRender===render)_docsRender=null; });
     render();
   }});
@@ -3909,6 +4173,12 @@ document.addEventListener('keydown',(e)=>{
     openTaskManager();
     return;
   }
+  // Ctrl+K / Cmd+K: paleta de comandos (lanzador rápido)
+  if((e.ctrlKey||e.metaKey)&&!e.altKey&&(e.key==='k'||e.key==='K')){
+    e.preventDefault();
+    const ex=document.getElementById('cmdk-ov'); if(ex){ ex.remove(); } else { openCommandPalette(); }
+    return;
+  }
   // F1: centro de ayuda con los atajos
   if(e.key==='F1'){
     e.preventDefault();
@@ -3963,6 +4233,7 @@ function enterDesktop(){
   loadSavedAppearance();
   drawStartMenuIcons();
   restoreStickies();
+  try{restoreGadgets();}catch(e){}
   try{restoreSession();}catch(e){}
   // Si la PWA se abrió con un archivo (.epub/.pdf) antes de estar lista, abrirlo ahora
   if(_pendingLaunchFiles){ const f=_pendingLaunchFiles; _pendingLaunchFiles=null; setTimeout(()=>{try{openEbookReader(f[0]);}catch(e){}},400); }
@@ -4855,7 +5126,7 @@ const SESSION_OPENERS={
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
   defrag:()=>openDefrag(),player:()=>openPlayer(),mipc:()=>openMiPC(),wordart:()=>openWordArt(),video:()=>openVideo(),
   emule:()=>openEmule(),outlook:()=>openOutlook(),regedit:()=>openRegedit(),encarta:()=>openEncarta(),
-  loquendo:()=>openLoquendo(),recorder:()=>openRecorder(),booth:()=>openPhotoBooth(),tiempo:()=>openTimeMachine(),lector:()=>openEbookReader(),retoques:()=>openImageTools(),cuaderno:()=>openNotes(),herramientas:()=>openToolbox()
+  loquendo:()=>openLoquendo(),recorder:()=>openRecorder(),booth:()=>openPhotoBooth(),tiempo:()=>openTimeMachine(),lector:()=>openEbookReader(),retoques:()=>openImageTools(),cuaderno:()=>openNotes(),herramientas:()=>openToolbox(),pixelart:()=>openPixelArt(),meme:()=>openMemeGen(),ritmos:()=>openDrumMachine(),caleidoscopio:()=>openKaleidoscope()
 };
 let _lastWindowId=null;
 let _restoringSession=false;
@@ -7620,6 +7891,7 @@ function pwEntropyBits(pw){
 
 // Copiar al portapapeles (con reserva para contextos sin permiso)
 function osCopy(text){
+  try{ if(typeof clipRecord==='function')clipRecord(text); }catch(e){}
   try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text); return true; } }catch(e){}
   try{ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return true; }catch(e){ return false; }
 }
@@ -7743,6 +8015,455 @@ function openToolbox(initTab){
     updTxt();
     select(initTab||'qr');
   }});
+}
+
+// ========== GADGETS DE ESCRITORIO (estilo Windows Vista) ==========
+// Mini-paneles arrastrables sobre el escritorio, con posición persistida en tos-gadgets.
+function _drawAnalogClock(cv){
+  const ctx=cv.getContext('2d'), S=cv.width, r=S/2; ctx.clearRect(0,0,S,S);
+  ctx.save(); ctx.translate(r,r);
+  ctx.beginPath(); ctx.arc(0,0,r-3,0,Math.PI*2); ctx.fillStyle='#f6f7fb'; ctx.fill(); ctx.lineWidth=3; ctx.strokeStyle='#5a6b8c'; ctx.stroke();
+  for(let i=0;i<12;i++){ ctx.save(); ctx.rotate(i*Math.PI/6); ctx.beginPath(); ctx.moveTo(0,-(r-8)); ctx.lineTo(0,-(r-14)); ctx.lineWidth=2; ctx.strokeStyle='#8593ad'; ctx.stroke(); ctx.restore(); }
+  const now=new Date(), h=now.getHours()%12, m=now.getMinutes(), s=now.getSeconds();
+  const hand=(ang,len,w,col)=>{ ctx.save(); ctx.rotate(ang); ctx.beginPath(); ctx.moveTo(0,6); ctx.lineTo(0,-len); ctx.lineWidth=w; ctx.lineCap='round'; ctx.strokeStyle=col; ctx.stroke(); ctx.restore(); };
+  hand((h+m/60)*Math.PI/6,r*0.5,4,'#2a3550');
+  hand((m+s/60)*Math.PI/30,r*0.72,3,'#2a3550');
+  hand(s*Math.PI/30,r*0.8,1.5,'#e63946');
+  ctx.beginPath(); ctx.arc(0,0,3,0,Math.PI*2); ctx.fillStyle='#e63946'; ctx.fill();
+  ctx.restore();
+}
+function _renderGadgetCalendar(body){
+  const now=new Date(), y=now.getFullYear(), mo=now.getMonth(), today=now.getDate();
+  const first=new Date(y,mo,1).getDay(), dim=new Date(y,mo+1,0).getDate();
+  const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const wd=['L','M','X','J','V','S','D'];
+  let cells=''; const off=(first+6)%7; // lunes primero
+  for(let i=0;i<off;i++)cells+='<span></span>';
+  for(let d=1;d<=dim;d++)cells+='<span class="'+(d===today?'gc-today':'')+'">'+d+'</span>';
+  body.innerHTML='<div class="gc-head">'+months[mo]+' '+y+'</div><div class="gc-grid">'+wd.map(x=>'<b>'+x+'</b>').join('')+cells+'</div>';
+}
+function _gadgetMonitor(body){
+  body.innerHTML='<div class="gm-row"><span>CPU</span><div class="gm-bar"><i id="gm-cpu"></i></div><em id="gm-cpuv">0%</em></div>'+
+    '<div class="gm-row"><span>RAM</span><div class="gm-bar"><i id="gm-ram"></i></div><em id="gm-ramv">0%</em></div>'+
+    '<div class="gm-row"><span>Red</span><div class="gm-bar"><i id="gm-net"></i></div><em id="gm-netv">0%</em></div>';
+  let cpu=30,ram=55,net=10;
+  const upd=()=>{ if(document.hidden)return;
+    cpu=Math.max(4,Math.min(98,cpu+(Math.random()*30-15))); ram=Math.max(30,Math.min(95,ram+(Math.random()*8-4))); net=Math.max(0,Math.min(100,net+(Math.random()*50-25)));
+    const set=(id,v,c)=>{ const bar=body.querySelector('#gm-'+id), val=body.querySelector('#gm-'+id+'v'); if(bar){bar.style.width=v.toFixed(0)+'%'; bar.style.background=c;} if(val)val.textContent=v.toFixed(0)+'%'; };
+    set('cpu',cpu,cpu>80?'#e63946':'#4caf50'); set('ram',ram,'#4361ee'); set('net',net,'#2a9d8f');
+  };
+  upd();
+  return setInterval(upd,1500);
+}
+const GADGET_DEFS={
+  clock:{ key:'gad.clock', w:148, build(body){ body.innerHTML='<canvas class="gadget-clock-cv" width="128" height="128"></canvas>'; const cv=body.querySelector('canvas'); const draw=()=>_drawAnalogClock(cv); draw(); return setInterval(()=>{ if(!document.hidden)draw(); },1000); } },
+  calendar:{ key:'gad.calendar', w:184, build(body){ _renderGadgetCalendar(body); } },
+  notes:{ key:'gad.notes', w:172, build(body,g){ body.innerHTML='<textarea class="gadget-notes" aria-label="Nota rápida"></textarea>'; const ta=body.querySelector('textarea'); ta.value=g.data||''; ta.oninput=()=>{ g.data=ta.value; persistGadgets(); }; } },
+  monitor:{ key:'gad.monitor', w:176, build(body){ return _gadgetMonitor(body); } }
+};
+function loadGadgets(){ try{ const a=JSON.parse(Store.get('tos-gadgets')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function persistGadgets(){ const arr=[...document.querySelectorAll('.gadget')].map(d=>({id:d._g.id,type:d._g.type,x:parseInt(d.style.left)||20,y:parseInt(d.style.top)||60,data:d._g.data})); Store.set('tos-gadgets',JSON.stringify(arr)); }
+function makeGadgetEl(g){
+  const def=GADGET_DEFS[g.type]; if(!def)return null;
+  const d=document.createElement('div'); d.className='gadget'; d.dataset.id=g.id; d.dataset.type=g.type; d._g=g;
+  d.style.cssText=`position:absolute;left:${g.x}px;top:${g.y}px;width:${def.w}px;z-index:45`;
+  d.innerHTML=`<div class="gadget-bar"><span class="gadget-t">${escHtml(t(def.key))}</span><button type="button" class="gadget-x" aria-label="${escHtml(t('btn.close'))}">×</button></div><div class="gadget-body"></div>`;
+  const body=d.querySelector('.gadget-body');
+  const iv=def.build(body,g);
+  const bar=d.querySelector('.gadget-bar'); let dx,dy,drag=false;
+  const moveTo=(cx,cy)=>{ g.x=Math.max(0,Math.min(window.innerWidth-50,cx-dx)); g.y=Math.max(0,Math.min(window.innerHeight-50,cy-dy)); d.style.left=g.x+'px'; d.style.top=g.y+'px'; };
+  bar.addEventListener('mousedown',e=>{ if(e.target.closest('.gadget-x'))return; drag=true; dx=e.clientX-d.offsetLeft; dy=e.clientY-d.offsetTop; e.preventDefault(); });
+  bar.addEventListener('touchstart',e=>{ if(e.target.closest('.gadget-x'))return; drag=true; dx=e.touches[0].clientX-d.offsetLeft; dy=e.touches[0].clientY-d.offsetTop; e.preventDefault(); },{passive:false});
+  const mm=e=>{ if(drag)moveTo(e.clientX,e.clientY); };
+  const tm=e=>{ if(drag){ moveTo(e.touches[0].clientX,e.touches[0].clientY); e.preventDefault(); } };
+  const up=()=>{ if(drag){ drag=false; persistGadgets(); } };
+  document.addEventListener('mousemove',mm); document.addEventListener('touchmove',tm,{passive:false});
+  document.addEventListener('mouseup',up); document.addEventListener('touchend',up);
+  const del=()=>{ if(iv)clearInterval(iv); document.removeEventListener('mousemove',mm); document.removeEventListener('touchmove',tm); document.removeEventListener('mouseup',up); document.removeEventListener('touchend',up); d.remove(); persistGadgets(); };
+  const xb=d.querySelector('.gadget-x'); xb.addEventListener('click',del); xb.addEventListener('touchend',(e)=>{ e.stopPropagation(); e.preventDefault(); del(); });
+  return d;
+}
+function restoreGadgets(){ const desk=document.getElementById('desktop'); loadGadgets().forEach(g=>{ const el=makeGadgetEl(g); if(el)desk.appendChild(el); }); }
+function addGadget(type){
+  if(!GADGET_DEFS[type])return;
+  const n=document.querySelectorAll('.gadget').length;
+  const g={ id:'g'+Date.now()+Math.floor(Math.random()*999), type, x:window.innerWidth-210, y:20+n*24, data:'' };
+  const el=makeGadgetEl(g); if(!el)return;
+  document.getElementById('desktop').appendChild(el); persistGadgets();
+  try{ notify({icon:'&#129513;',title:t('gad.title'),body:t('gad.added',{name:t(GADGET_DEFS[type].key)}),silent:true}); }catch(e){}
+}
+function openGadgetGallery(){
+  closeStartMenu();
+  const ov=document.createElement('div'); ov.className='xp-dialog-ov'; ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('gad.title'))}" style="width:min(360px,92vw);background:#ece9d8;border:2px solid #0054e3;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);overflow:hidden">
+    <div style="background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">&#129513; ${escHtml(t('gad.title'))}</div>
+    <div style="padding:10px 14px;font-size:12px;color:#333">${escHtml(t('gad.intro'))}</div>
+    <div class="gad-gallery">${Object.keys(GADGET_DEFS).map(k=>'<button type="button" class="gad-card" data-g="'+k+'"><span class="gad-ic">'+({clock:'&#128368;',calendar:'&#128197;',notes:'&#128221;',monitor:'&#128200;'}[k])+'</span><span>'+escHtml(t(GADGET_DEFS[k].key))+'</span></button>').join('')}</div>
+    <div class="xp-dialog-btns" style="padding:6px 16px 12px;display:flex;justify-content:flex-end"><button type="button" id="gad-close" style="font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid #aca899;border-radius:3px;background:#f4f2ec;cursor:pointer">${escHtml(t('btn.close'))}</button></div>
+  </div>`;
+  ov.querySelectorAll('.gad-card').forEach(b=>b.onclick=()=>addGadget(b.dataset.g));
+  ov.querySelector('#gad-close').onclick=()=>ov.remove();
+  document.body.appendChild(ov);
+}
+
+// ========== PIXEL ART — editor de sprites por cuadrícula ==========
+function openPixelArt(){
+  closeStartMenu();
+  if(focusExisting('px-grid'))return;
+  const PAL=['#000000','#ffffff','#e63946','#f4a261','#ffd166','#2a9d8f','#4361ee','#7209b7','#e9c46a','#06d6a0','#118ab2','#ef476f','#8d99ae','#582f0e','#ff7b00','transparent'];
+  const content=`<div class="px-root">
+    <div class="px-tools">
+      <span class="px-swatches" id="px-swatches">${PAL.map((c,i)=>'<button type="button" class="px-sw'+(i===2?' sel':'')+'" data-c="'+c+'" style="background:'+(c==='transparent'?'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 50%/8px 8px':c)+'" title="'+c+'"></button>').join('')}</span>
+      <span class="px-sep"></span>
+      <button type="button" class="px-tool sel" data-t="pen" title="${t('px.pen')}">&#9998;</button>
+      <button type="button" class="px-tool" data-t="erase" title="${t('px.erase')}">&#129003;</button>
+      <button type="button" class="px-tool" data-t="fill" title="${t('px.fill')}">&#128167;</button>
+      <button type="button" class="px-tool" data-t="pick" title="${t('px.pick')}">&#128269;</button>
+      <span class="px-sep"></span>
+      <select id="px-size" title="${t('px.size')}"><option value="8">8×8</option><option value="16" selected>16×16</option><option value="32">32×32</option></select>
+      <button type="button" class="px-btn" id="px-clear">${t('px.clear')}</button>
+    </div>
+    <div class="px-stage"><canvas id="px-grid" role="img" aria-label="Lienzo de pixel art"></canvas></div>
+    <div class="px-actions">
+      <button type="button" class="px-btn" id="px-dl">&#11015;&#65039; PNG</button>
+      <button type="button" class="px-btn" id="px-fs">&#128190; ${t('btn.tofiles')}</button>
+      <span class="px-scale"><label>${t('px.exportscale')}</label><select id="px-scale"><option value="8">×8</option><option value="16" selected>×16</option><option value="24">×24</option></select></span>
+    </div>
+  </div>`;
+  createWindow(t('px.title'),'&#128375;&#65039;',440,470,content,{session:'pixelart',statusbar:false,onCreated:(id,win)=>{
+    const canvas=win.querySelector('#px-grid'), ctx=canvas.getContext('2d');
+    let N=16, cells=new Array(N*N).fill(null), color='#e63946', tool='pen', painting=false;
+    const DISP=384; let cell=DISP/N;
+    const build=(n)=>{ N=n; cell=DISP/N; cells=new Array(N*N).fill(null); canvas.width=DISP; canvas.height=DISP; draw(); };
+    const draw=()=>{
+      ctx.clearRect(0,0,DISP,DISP);
+      for(let y=0;y<N;y++)for(let x=0;x<N;x++){ const c=cells[y*N+x]; if(c){ ctx.fillStyle=c; ctx.fillRect(x*cell,y*cell,cell,cell); } else { ctx.fillStyle=((x+y)&1)?'#e8e8e8':'#ffffff'; ctx.fillRect(x*cell,y*cell,cell,cell); } }
+      ctx.strokeStyle='rgba(0,0,0,.12)'; ctx.lineWidth=1;
+      for(let i=0;i<=N;i++){ ctx.beginPath(); ctx.moveTo(i*cell,0); ctx.lineTo(i*cell,DISP); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0,i*cell); ctx.lineTo(DISP,i*cell); ctx.stroke(); }
+    };
+    const cellAt=(ev)=>{ const p=(ev.touches&&ev.touches[0])||ev; const r=canvas.getBoundingClientRect(); const x=Math.floor((p.clientX-r.left)/(r.width/N)), y=Math.floor((p.clientY-r.top)/(r.height/N)); if(x<0||y<0||x>=N||y>=N)return null; return {x,y,i:y*N+x}; };
+    const flood=(sx,sy,target,repl)=>{ if(target===repl)return; const st=[[sx,sy]]; while(st.length){ const [x,y]=st.pop(); if(x<0||y<0||x>=N||y>=N)continue; if(cells[y*N+x]!==target)continue; cells[y*N+x]=repl; st.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]); } };
+    const apply=(ev)=>{ const c=cellAt(ev); if(!c)return;
+      if(tool==='pick'){ const v=cells[c.i]; if(v){ color=v; win.querySelectorAll('.px-sw').forEach(b=>b.classList.toggle('sel',b.dataset.c===v)); } setTool('pen'); return; }
+      if(tool==='fill'){ flood(c.x,c.y,cells[c.i],tool==='erase'?null:color); draw(); return; }
+      cells[c.i]=(tool==='erase')?null:color; draw();
+    };
+    const setTool=(tl)=>{ tool=tl; win.querySelectorAll('.px-tool').forEach(b=>b.classList.toggle('sel',b.dataset.t===tl)); };
+    canvas.addEventListener('mousedown',(e)=>{ painting=true; apply(e); e.preventDefault(); });
+    canvas.addEventListener('mousemove',(e)=>{ if(painting&&(tool==='pen'||tool==='erase'))apply(e); });
+    document.addEventListener('mouseup',()=>{ painting=false; });
+    canvas.addEventListener('touchstart',(e)=>{ painting=true; apply(e); e.preventDefault(); },{passive:false});
+    canvas.addEventListener('touchmove',(e)=>{ if(painting&&(tool==='pen'||tool==='erase'))apply(e); e.preventDefault(); },{passive:false});
+    document.addEventListener('touchend',()=>{ painting=false; });
+    win.querySelectorAll('.px-sw').forEach(b=>b.onclick=()=>{ color=b.dataset.c; win.querySelectorAll('.px-sw').forEach(x=>x.classList.toggle('sel',x===b)); if(tool==='erase'||tool==='pick')setTool('pen'); });
+    win.querySelectorAll('.px-tool').forEach(b=>b.onclick=()=>setTool(b.dataset.t));
+    win.querySelector('#px-size').onchange=(e)=>build(+e.target.value);
+    win.querySelector('#px-clear').onclick=()=>{ cells=new Array(N*N).fill(null); draw(); };
+    const exportCanvas=()=>{ const s=+win.querySelector('#px-scale').value; const c=document.createElement('canvas'); c.width=N*s; c.height=N*s; const cx=c.getContext('2d'); for(let y=0;y<N;y++)for(let x=0;x<N;x++){ const v=cells[y*N+x]; if(v){ cx.fillStyle=v; cx.fillRect(x*s,y*s,s,s); } } return c; };
+    win.querySelector('#px-dl').onclick=()=>{ const a=document.createElement('a'); a.download='pixelart-'+Date.now()+'.png'; a.href=exportCanvas().toDataURL('image/png'); a.click(); };
+    win.querySelector('#px-fs').onclick=()=>{ try{ fsSaveDialog('png','Pixel Art',exportCanvas().toDataURL('image/png'),null); }catch(e){} };
+    osMakeDragSource(canvas,()=>({kind:'image',data:exportCanvas().toDataURL('image/png'),name:'Pixel Art'}));
+    build(16);
+  }});
+}
+
+// ========== GENERADOR DE MEMES ==========
+let _memeLoad=null;
+function openMemeGen(preloadFile){
+  closeStartMenu();
+  if(focusExisting('meme-canvas')){ if(preloadFile&&_memeLoad)_memeLoad(preloadFile); return; }
+  const content=`<div class="meme-root">
+    <div class="meme-bar">
+      <button type="button" class="px-btn" id="meme-open">&#128194; ${t('btn.open')}</button>
+      <label class="meme-fs">${t('meme.size')} <input type="range" id="meme-fontsize" min="18" max="72" value="40"></label>
+      <input type="file" id="meme-file" accept="image/*" hidden>
+    </div>
+    <div class="meme-stage"><div class="meme-empty" id="meme-empty">&#128444;&#65039;<br><span>${t('meme.empty')}</span></div><canvas id="meme-canvas" style="display:none"></canvas></div>
+    <div class="meme-fields">
+      <input type="text" id="meme-top" placeholder="${escHtml(t('meme.toptext'))}" maxlength="60">
+      <input type="text" id="meme-bottom" placeholder="${escHtml(t('meme.bottomtext'))}" maxlength="60">
+    </div>
+    <div class="meme-actions">
+      <button type="button" class="px-btn" id="meme-dl">&#11015;&#65039; PNG</button>
+      <button type="button" class="px-btn" id="meme-fs">&#128190; ${t('btn.tofiles')}</button>
+    </div>
+  </div>`;
+  createWindow(t('meme.title'),'&#128514;',420,500,content,{session:'meme',statusbar:false,onCreated:(id,win)=>{
+    const canvas=win.querySelector('#meme-canvas'), ctx=canvas.getContext('2d'), empty=win.querySelector('#meme-empty');
+    const topI=win.querySelector('#meme-top'), botI=win.querySelector('#meme-bottom'), fsI=win.querySelector('#meme-fontsize');
+    let img=null;
+    const draw=()=>{
+      if(!img)return;
+      const maxW=380; const sc=Math.min(1,maxW/img.width); canvas.width=Math.round(img.width*sc); canvas.height=Math.round(img.height*sc);
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      const fs=+fsI.value; ctx.font='900 '+fs+'px Impact,"Arial Black",sans-serif'; ctx.textAlign='center'; ctx.lineJoin='round';
+      ctx.fillStyle='#fff'; ctx.strokeStyle='#000'; ctx.lineWidth=Math.max(2,fs/10);
+      const drawText=(txt,y)=>{ if(!txt)return; const up=txt.toUpperCase(); ctx.strokeText(up,canvas.width/2,y); ctx.fillText(up,canvas.width/2,y); };
+      ctx.textBaseline='top'; drawText(topI.value,8);
+      ctx.textBaseline='bottom'; drawText(botI.value,canvas.height-8);
+    };
+    const loadImage=(src)=>{ const im=new Image(); im.onload=()=>{ img=im; empty.style.display='none'; canvas.style.display='block'; draw(); }; im.onerror=()=>{}; im.src=src; };
+    const loadFile=(f)=>{ if(!f||!/^image\//.test(f.type||''))return; const fr=new FileReader(); fr.onload=()=>loadImage(fr.result); fr.readAsDataURL(f); };
+    _memeLoad=loadFile;
+    win.querySelector('#meme-open').onclick=()=>win.querySelector('#meme-file').click();
+    win.querySelector('#meme-file').onchange=(e)=>{ if(e.target.files[0])loadFile(e.target.files[0]); e.target.value=''; };
+    [topI,botI].forEach(el=>el.oninput=draw); fsI.oninput=draw;
+    osMakeDropTarget(win.querySelector('.meme-stage'),'image',(p)=>loadImage(p.data));
+    win.querySelector('#meme-dl').onclick=()=>{ if(!img)return; const a=document.createElement('a'); a.download='meme-'+Date.now()+'.png'; a.href=canvas.toDataURL('image/png'); a.click(); };
+    win.querySelector('#meme-fs').onclick=()=>{ if(!img)return; try{ fsSaveDialog('png','Meme',canvas.toDataURL('image/png'),null); }catch(e){} };
+    osMakeDragSource(canvas,()=>img?{kind:'image',data:canvas.toDataURL('image/png'),name:'Meme'}:null);
+    (win._cleanups=win._cleanups||[]).push(()=>{ if(_memeLoad===loadFile)_memeLoad=null; });
+    if(preloadFile)loadFile(preloadFile);
+  }});
+}
+
+// ========== CAJA DE RITMOS — secuenciador por pasos ==========
+const DRUM_ROWS=[
+  {id:'kick',label:'Kick'},{id:'snare',label:'Snare'},{id:'hat',label:'Hi-hat'},{id:'clap',label:'Clap'},{id:'bass',label:'Bass'}
+];
+function _drumSound(kind){
+  try{ const ctx=getAudioCtx(); const now=ctx.currentTime; const g=ctx.createGain(); g.connect(ctx.destination);
+    const noise=()=>{ const n=ctx.createBufferSource(); const buf=ctx.createBuffer(1,ctx.sampleRate*0.2,ctx.sampleRate); const d=buf.getChannelData(0); for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1; n.buffer=buf; return n; };
+    if(kind==='kick'){ const o=ctx.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(150,now); o.frequency.exponentialRampToValueAtTime(50,now+0.12); g.gain.setValueAtTime(0.9*masterVolume,now); g.gain.exponentialRampToValueAtTime(0.001,now+0.18); o.connect(g); o.start(now); o.stop(now+0.2); }
+    else if(kind==='bass'){ const o=ctx.createOscillator(); o.type='square'; o.frequency.setValueAtTime(110,now); g.gain.setValueAtTime(0.4*masterVolume,now); g.gain.exponentialRampToValueAtTime(0.001,now+0.22); o.connect(g); o.start(now); o.stop(now+0.24); }
+    else { const n=noise(); const f=ctx.createBiquadFilter(); f.type=(kind==='hat')?'highpass':'bandpass'; f.frequency.value=(kind==='hat')?7000:(kind==='clap'?1500:2000); const dur=(kind==='hat')?0.05:(kind==='snare'?0.15:0.1); g.gain.setValueAtTime((kind==='hat'?0.35:0.6)*masterVolume,now); g.gain.exponentialRampToValueAtTime(0.001,now+dur); n.connect(f); f.connect(g); n.start(now); n.stop(now+dur); }
+  }catch(e){}
+}
+function openDrumMachine(){
+  closeStartMenu();
+  if(focusExisting('drum-grid'))return;
+  const STEPS=16;
+  const content=`<div class="drum-root">
+    <div class="drum-top">
+      <button type="button" class="drum-play" id="drum-play">&#9654; ${t('drum.play')}</button>
+      <label class="drum-tempo">${t('drum.tempo')} <input type="range" id="drum-tempo" min="60" max="200" value="120"><b id="drum-bpm">120</b></label>
+      <button type="button" class="px-btn" id="drum-clear">${t('px.clear')}</button>
+    </div>
+    <div class="drum-grid" id="drum-grid"></div>
+  </div>`;
+  createWindow(t('drum.title'),'&#129345;',460,320,content,{session:'drum',statusbar:false,onCreated:(id,win)=>{
+    const grid=win.querySelector('#drum-grid'); let bpm=120, playing=false, timer=null, step=0;
+    let pat=DRUM_ROWS.map(()=>new Array(STEPS).fill(false));
+    try{ const saved=JSON.parse(Store.get('tos-drum')||'null'); if(Array.isArray(saved)&&saved.length===DRUM_ROWS.length)pat=saved.map(r=>{ const a=new Array(STEPS).fill(false); (r||[]).forEach((v,i)=>{ if(i<STEPS)a[i]=!!v; }); return a; }); }catch(e){}
+    const save=()=>Store.set('tos-drum',JSON.stringify(pat));
+    const render=()=>{
+      grid.innerHTML='';
+      DRUM_ROWS.forEach((row,r)=>{
+        const rowEl=document.createElement('div'); rowEl.className='drum-row';
+        rowEl.innerHTML='<span class="drum-label">'+row.label+'</span>';
+        for(let s=0;s<STEPS;s++){ const b=document.createElement('button'); b.type='button'; b.className='drum-cell'+(pat[r][s]?' on':'')+((s%4===0)?' beat':''); b.dataset.r=r; b.dataset.s=s; b.onclick=()=>{ pat[r][s]=!pat[r][s]; b.classList.toggle('on',pat[r][s]); save(); }; rowEl.appendChild(b); }
+        grid.appendChild(rowEl);
+      });
+    };
+    const highlight=()=>{ grid.querySelectorAll('.drum-cell').forEach(c=>c.classList.toggle('cur',+c.dataset.s===step)); };
+    const tick=()=>{ for(let r=0;r<DRUM_ROWS.length;r++)if(pat[r][step])_drumSound(DRUM_ROWS[r].id); highlight(); step=(step+1)%STEPS; };
+    const stop=()=>{ playing=false; if(timer){clearInterval(timer);timer=null;} win.querySelector('#drum-play').innerHTML='&#9654; '+t('drum.play'); grid.querySelectorAll('.drum-cell').forEach(c=>c.classList.remove('cur')); };
+    const play=()=>{ if(playing){stop();return;} playing=true; step=0; win.querySelector('#drum-play').innerHTML='&#9209;&#65039; '+t('drum.stop'); timer=setInterval(tick,60000/bpm/4); };
+    win.querySelector('#drum-play').onclick=play;
+    win.querySelector('#drum-tempo').oninput=(e)=>{ bpm=+e.target.value; win.querySelector('#drum-bpm').textContent=bpm; if(playing){ clearInterval(timer); timer=setInterval(tick,60000/bpm/4); } };
+    win.querySelector('#drum-clear').onclick=()=>{ pat=DRUM_ROWS.map(()=>new Array(STEPS).fill(false)); save(); render(); };
+    (win._cleanups=win._cleanups||[]).push(stop);
+    render();
+  }});
+}
+
+// ========== CALEIDOSCOPIO — dibujo con simetría radial ==========
+function openKaleidoscope(){
+  closeStartMenu();
+  if(focusExisting('kal-canvas'))return;
+  const content=`<div class="kal-root">
+    <div class="kal-bar">
+      <label>${t('kal.axes')} <select id="kal-axes"><option>4</option><option selected>6</option><option>8</option><option>12</option></select></label>
+      <label>${t('kal.brush')} <input type="range" id="kal-brush" min="1" max="18" value="4"></label>
+      <label class="kal-rainbow"><input type="checkbox" id="kal-rainbow" checked> ${t('kal.rainbow')}</label>
+      <input type="color" id="kal-color" value="#e63946">
+      <button type="button" class="px-btn" id="kal-clear">${t('px.clear')}</button>
+    </div>
+    <div class="kal-stage"><canvas id="kal-canvas" role="img" aria-label="Caleidoscopio"></canvas></div>
+    <div class="kal-actions"><button type="button" class="px-btn" id="kal-dl">&#11015;&#65039; PNG</button><button type="button" class="px-btn" id="kal-fs">&#128190; ${t('btn.tofiles')}</button></div>
+  </div>`;
+  createWindow(t('kal.title'),'&#128302;',420,470,content,{session:'kaleido',statusbar:false,onCreated:(id,win)=>{
+    const canvas=win.querySelector('#kal-canvas'), ctx=canvas.getContext('2d');
+    const SZ=380; canvas.width=SZ; canvas.height=SZ;
+    let drawing=false, last=null, hue=0;
+    const clear=()=>{ ctx.fillStyle='#111015'; ctx.fillRect(0,0,SZ,SZ); };
+    const axes=()=>+win.querySelector('#kal-axes').value;
+    const pos=(ev)=>{ const p=(ev.touches&&ev.touches[0])||ev; const r=canvas.getBoundingClientRect(); return {x:(p.clientX-r.left)*(SZ/r.width)-SZ/2,y:(p.clientY-r.top)*(SZ/r.height)-SZ/2}; };
+    const stroke=(a,b)=>{
+      const n=axes(); const rainbow=win.querySelector('#kal-rainbow').checked; const col=rainbow?('hsl('+(hue%360)+',85%,60%)'):win.querySelector('#kal-color').value;
+      hue+=6; ctx.strokeStyle=col; ctx.lineWidth=+win.querySelector('#kal-brush').value; ctx.lineCap='round';
+      ctx.save(); ctx.translate(SZ/2,SZ/2);
+      for(let i=0;i<n;i++){ const ang=(Math.PI*2/n)*i;
+        [1,-1].forEach(m=>{ ctx.save(); ctx.rotate(ang); ctx.scale(1,m); ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.restore(); });
+      }
+      ctx.restore();
+    };
+    const down=(e)=>{ drawing=true; last=pos(e); e.preventDefault(); };
+    const move=(e)=>{ if(!drawing)return; const p=pos(e); stroke(last,p); last=p; e.preventDefault(); };
+    const up=()=>{ drawing=false; };
+    canvas.addEventListener('mousedown',down); canvas.addEventListener('mousemove',move); document.addEventListener('mouseup',up);
+    canvas.addEventListener('touchstart',down,{passive:false}); canvas.addEventListener('touchmove',move,{passive:false}); document.addEventListener('touchend',up);
+    win.querySelector('#kal-clear').onclick=clear;
+    win.querySelector('#kal-dl').onclick=()=>{ const a=document.createElement('a'); a.download='caleidoscopio-'+Date.now()+'.png'; a.href=canvas.toDataURL('image/png'); a.click(); };
+    win.querySelector('#kal-fs').onclick=()=>{ try{ fsSaveDialog('png','Caleidoscopio',canvas.toDataURL('image/png'),null); }catch(e){} };
+    osMakeDragSource(canvas,()=>({kind:'image',data:canvas.toDataURL('image/png'),name:'Caleidoscopio'}));
+    (win._cleanups=win._cleanups||[]).push(()=>{ document.removeEventListener('mouseup',up); document.removeEventListener('touchend',up); });
+    clear();
+  }});
+}
+
+// ========== PALETA DE COMANDOS (Ctrl+K) ==========
+function openCommandPalette(){
+  if(document.getElementById('cmdk-ov'))return;
+  const ov=document.createElement('div'); ov.id='cmdk-ov'; ov.className='cmdk-ov';
+  ov.innerHTML=`<div class="cmdk" role="dialog" aria-label="${escHtml(t('cmdk.title'))}">
+    <input type="text" id="cmdk-input" class="cmdk-input" placeholder="${escHtml(t('cmdk.ph'))}" autocomplete="off" spellcheck="false" aria-label="${escHtml(t('cmdk.title'))}">
+    <div class="cmdk-list" id="cmdk-list" role="listbox"></div>
+    <div class="cmdk-foot">&#8593;&#8595; ${escHtml(t('cmdk.nav'))} · &#8629; ${escHtml(t('cmdk.open'))} · Esc</div>
+  </div>`;
+  document.body.appendChild(ov);
+  const input=ov.querySelector('#cmdk-input'), list=ov.querySelector('#cmdk-list');
+  const all=_searchIndex(); let cur=[], sel=0;
+  const draw=()=>{ list.querySelectorAll('.cmdk-item').forEach((b,i)=>b.classList.toggle('sel',i===sel)); const el=list.querySelector('.cmdk-item.sel'); if(el)el.scrollIntoView({block:'nearest'}); };
+  const render=()=>{
+    const q=_searchNorm(input.value.trim());
+    cur=(q?all.filter(it=>_searchNorm(it.label).includes(q)):all).slice(0,60); sel=0;
+    list.innerHTML=cur.length?cur.map((m,i)=>`<button type="button" class="cmdk-item${i===0?' sel':''}" data-i="${i}"><span class="cmdk-ic">${m.icon}</span><span class="cmdk-l">${escHtml(m.label)}</span><span class="cmdk-h">${escHtml(m.hint)}</span></button>`).join(''):'<div class="cmdk-none">'+escHtml(t('cmdk.none'))+'</div>';
+    list.querySelectorAll('.cmdk-item').forEach(b=>{ b.onmousemove=()=>{ sel=+b.dataset.i; draw(); }; b.onclick=()=>run(+b.dataset.i); });
+  };
+  const close=()=>ov.remove();
+  const run=(i)=>{ const m=cur[i]; close(); if(m&&m.run)try{ m.run(); }catch(e){} };
+  input.oninput=render;
+  input.onkeydown=(e)=>{
+    if(e.key==='ArrowDown'){ e.preventDefault(); sel=Math.min(cur.length-1,sel+1); draw(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); sel=Math.max(0,sel-1); draw(); }
+    else if(e.key==='Enter'){ e.preventDefault(); if(cur.length)run(sel); }
+    else if(e.key==='Escape'){ e.preventDefault(); close(); }
+  };
+  ov.addEventListener('mousedown',(e)=>{ if(e.target===ov)close(); });
+  render();
+  setTimeout(()=>{ try{ input.focus(); }catch(e){} },20);
+}
+
+// ========== HISTORIAL DEL PORTAPAPELES (en memoria, no se persiste) ==========
+// No se guarda en disco a propósito: por aquí pasan contraseñas del generador.
+let _clipLog=[];
+function clipRecord(text){
+  text=String(text==null?'':text); if(!text.trim())return;
+  _clipLog=_clipLog.filter(x=>x!==text); _clipLog.unshift(text); if(_clipLog.length>15)_clipLog.length=15;
+  const bell=document.getElementById('tray-clip'); if(bell)bell.classList.add('has');
+}
+function toggleClipHistory(ev){
+  if(ev){ ev.preventDefault(); ev.stopPropagation(); }
+  const ex=document.getElementById('clip-center'); if(ex){ ex.remove(); return; }
+  const panel=document.createElement('div'); panel.id='clip-center'; panel.className='clip-center';
+  panel.innerHTML=`<div class="clip-head">&#128203; ${escHtml(t('clip.title'))}${_clipLog.length?'<button type="button" id="clip-clear" class="clip-clear">'+escHtml(t('btn.clear'))+'</button>':''}</div>`
+    +(_clipLog.length?('<div class="clip-list">'+_clipLog.map((x,i)=>'<button type="button" class="clip-item" data-i="'+i+'"><span>'+escHtml(x.length>80?x.slice(0,80)+'…':x)+'</span></button>').join('')+'</div>'):'<div class="clip-empty">'+escHtml(t('clip.empty'))+'</div>');
+  document.body.appendChild(panel);
+  const bell=document.getElementById('tray-clip'); if(bell)bell.classList.remove('has');
+  if(window.innerWidth<=600){ panel.style.left='6px'; panel.style.right='6px'; panel.style.width='auto'; }
+  panel.querySelectorAll('.clip-item').forEach(b=>b.onclick=()=>{ const txt=_clipLog[+b.dataset.i]; if(txt){ osCopy(txt); notify({icon:'&#128203;',title:t('clip.title'),body:t('clip.recopied'),silent:true,timeout:1500}); } panel.remove(); });
+  const cc=panel.querySelector('#clip-clear'); if(cc)cc.onclick=(e)=>{ e.stopPropagation(); _clipLog=[]; panel.remove(); };
+  setTimeout(()=>{ const off=(e)=>{ if(!panel.contains(e.target)&&e.target.id!=='tray-clip'){ panel.remove(); document.removeEventListener('mousedown',off,true); } }; document.addEventListener('mousedown',off,true); },0);
+}
+
+// ========== PANEL DE CONTROL (centro de ajustes por categorías) ==========
+function openControlPanel(){
+  closeStartMenu();
+  if(focusExisting('cpl-grid'))return;
+  const cats=[
+    {ic:'&#127912;',key:'cpl.appearance',run:()=>openSettings()},
+    {ic:'&#128272;',key:'cpl.account',run:()=>openAccountEntry()},
+    {ic:'&#127760;',key:'cpl.language',run:()=>setTimeout(toggleLangMenu,0)},
+    {ic:'&#128266;',key:'cpl.sound',run:()=>setTimeout(toggleVolumePopup,0)},
+    {ic:'&#128190;',key:'cpl.backup',run:()=>osExportBackup()},
+    {ic:'&#127899;&#65039;',key:'cpl.gadgets',run:()=>openGadgetGallery()},
+    {ic:'&#128200;',key:'cpl.tasks',run:()=>openTaskManager()},
+    {ic:'&#128269;',key:'cpl.magnifier',run:()=>toggleMagnifier()},
+    {ic:'&#10067;',key:'cpl.help',run:()=>openHelp()}
+  ];
+  const content=`<div class="cpl-root"><div class="cpl-hd">${escHtml(t('cpl.intro'))}</div>
+    <div class="cpl-grid" id="cpl-grid">${cats.map((c,i)=>'<button type="button" class="cpl-card" data-i="'+i+'"><span class="cpl-ic">'+c.ic+'</span><span class="cpl-l">'+escHtml(t(c.key))+'</span></button>').join('')}</div></div>`;
+  createWindow(t('cpl.title'),'&#9881;&#65039;',440,360,content,{session:'controlpanel',statusbar:false,onCreated:(id,win)=>{
+    win.querySelectorAll('.cpl-card').forEach(b=>b.onclick=()=>{ try{ cats[+b.dataset.i].run(); }catch(e){} });
+  }});
+}
+
+// ========== LUPA / MAGNIFIER (zoom de pantalla que sigue al cursor) ==========
+let _magOn=false,_magZoom=2,_magMove=null,_magLast={x:0,y:0};
+function _magApply(x,y){ const d=document.getElementById('desktop'); if(!d)return; _magLast={x,y}; d.style.transformOrigin=x+'px '+y+'px'; d.style.transform='scale('+_magZoom+')'; }
+function setMagnifier(on){
+  const d=document.getElementById('desktop'); if(!d)return;
+  _magOn=on;
+  let panel=document.getElementById('mag-ctrl');
+  if(on){
+    d.style.transition='transform .06s ease-out'; _magApply(window.innerWidth/2,window.innerHeight/2);
+    _magMove=(e)=>{ const p=(e.touches&&e.touches[0])||e; if(p)_magApply(p.clientX,p.clientY); };
+    document.addEventListener('mousemove',_magMove); document.addEventListener('touchmove',_magMove,{passive:true});
+    if(!panel){
+      panel=document.createElement('div'); panel.id='mag-ctrl'; panel.className='mag-ctrl';
+      panel.innerHTML=`<span class="mag-t">&#128269; ${escHtml(t('mag.title'))}</span><button type="button" class="mag-b" data-z="-">&#8722;</button><b id="mag-z"></b><button type="button" class="mag-b" data-z="+">+</button><button type="button" class="mag-b mag-close" data-z="x" aria-label="${escHtml(t('btn.close'))}">&#10005;</button>`;
+      document.body.appendChild(panel);
+      const zl=panel.querySelector('#mag-z');
+      const upd=()=>{ zl.textContent=_magZoom+'×'; _magApply(_magLast.x,_magLast.y); };
+      panel.querySelector('[data-z="-"]').onclick=()=>{ _magZoom=Math.max(1.5,Math.round((_magZoom-0.5)*10)/10); upd(); };
+      panel.querySelector('[data-z="+"]').onclick=()=>{ _magZoom=Math.min(4,Math.round((_magZoom+0.5)*10)/10); upd(); };
+      panel.querySelector('[data-z="x"]').onclick=()=>setMagnifier(false);
+    }
+    panel.querySelector('#mag-z').textContent=_magZoom+'×';
+    panel.style.display='flex';
+  } else {
+    d.style.transform=''; d.style.transformOrigin='';
+    if(_magMove){ document.removeEventListener('mousemove',_magMove); document.removeEventListener('touchmove',_magMove); _magMove=null; }
+    if(panel)panel.style.display='none';
+  }
+}
+function toggleMagnifier(){ setMagnifier(!_magOn); }
+
+// ========== TOUR DE BIENVENIDA (explica el sistema paso a paso) ==========
+const TOUR_STEPS=[
+  {ic:'&#127881;',k:'tour.s1'},
+  {ic:'&#128421;&#65039;',k:'tour.s2'},
+  {ic:'&#128269;',k:'tour.s3'},
+  {ic:'&#128193;',k:'tour.s4'},
+  {ic:'&#127918;',k:'tour.s5'},
+  {ic:'&#128736;&#65039;',k:'tour.s6'},
+  {ic:'&#128274;',k:'tour.s7'},
+  {ic:'&#127912;',k:'tour.s8'},
+  {ic:'&#10067;',k:'tour.s9'}
+];
+function openTour(){
+  closeStartMenu();
+  if(document.getElementById('tour-ov'))return;
+  let i=0;
+  const ov=document.createElement('div'); ov.id='tour-ov'; ov.className='tour-ov';
+  ov.innerHTML=`<div class="tour-card" role="dialog" aria-label="${escHtml(t('tour.title'))}">
+    <button type="button" class="tour-x" id="tour-x" aria-label="${escHtml(t('tour.skip'))}">&#10005;</button>
+    <div class="tour-ic" id="tour-ic"></div>
+    <div class="tour-h" id="tour-h"></div>
+    <div class="tour-b" id="tour-b"></div>
+    <div class="tour-dots" id="tour-dots"></div>
+    <div class="tour-btns"><button type="button" class="tour-ghost" id="tour-back"></button><button type="button" class="tour-go" id="tour-next"></button></div>
+  </div>`;
+  document.body.appendChild(ov);
+  const render=()=>{
+    const s=TOUR_STEPS[i];
+    ov.querySelector('#tour-ic').innerHTML=s.ic;
+    ov.querySelector('#tour-h').textContent=t(s.k+'t');
+    ov.querySelector('#tour-b').textContent=t(s.k+'b');
+    ov.querySelector('#tour-dots').innerHTML=TOUR_STEPS.map((_,n)=>'<i class="'+(n===i?'on':'')+'" data-k="'+n+'"></i>').join('');
+    ov.querySelectorAll('#tour-dots i').forEach(d=>d.onclick=()=>{ i=+d.dataset.k; render(); });
+    const back=ov.querySelector('#tour-back'); back.textContent=t('tour.back'); back.style.visibility=(i===0)?'hidden':'visible';
+    ov.querySelector('#tour-next').textContent=(i===TOUR_STEPS.length-1)?t('tour.finish'):t('tour.next');
+  };
+  const kd=(e)=>{ if(e.key==='ArrowRight'){e.preventDefault();ov.querySelector('#tour-next').click();} else if(e.key==='ArrowLeft'){e.preventDefault();ov.querySelector('#tour-back').click();} else if(e.key==='Escape'){e.preventDefault();close();} };
+  const close=()=>{ document.removeEventListener('keydown',kd,true); ov.remove(); Store.set('tos-tour-guide','done'); };
+  ov.querySelector('#tour-x').onclick=close;
+  ov.querySelector('#tour-back').onclick=()=>{ if(i>0){ i--; render(); } };
+  ov.querySelector('#tour-next').onclick=()=>{ if(i<TOUR_STEPS.length-1){ i++; render(); } else close(); };
+  document.addEventListener('keydown',kd,true);
+  render();
+  setTimeout(()=>{ try{ ov.querySelector('#tour-next').focus(); }catch(e){} },20);
 }
 
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
@@ -8380,8 +9101,8 @@ function _searchIndex(){
    ['Netscape Navigator','&#127760;',openNetscape],['Símbolo del sistema','&#9000;&#65039;',openTerminal],
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
-   ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -8786,6 +9507,8 @@ function toggleStartMenu(){
 }
 const START_FLYOUTS=[
   ['start-games-submenu','start-games-toggle'],
+  ['start-herramientas-submenu','start-herramientas-toggle'],
+  ['start-creatividad-submenu','start-creatividad-toggle'],
   ['start-utils-submenu','start-utils-toggle'],
   ['start-nostalgia-submenu','start-nostalgia-toggle']
 ];
@@ -8814,6 +9537,8 @@ function _toggleStartFlyout(e,subId,togId){
   tog.classList.toggle('open',sub.classList.contains('show'));
 }
 function toggleStartGames(e){_toggleStartFlyout(e,'start-games-submenu','start-games-toggle');}
+function toggleStartHerramientas(e){_toggleStartFlyout(e,'start-herramientas-submenu','start-herramientas-toggle');}
+function toggleStartCreatividad(e){_toggleStartFlyout(e,'start-creatividad-submenu','start-creatividad-toggle');}
 function toggleStartUtils(e){_toggleStartFlyout(e,'start-utils-submenu','start-utils-toggle');}
 function toggleStartNostalgia(e){_toggleStartFlyout(e,'start-nostalgia-submenu','start-nostalgia-toggle');}
 
@@ -8841,6 +9566,7 @@ document.addEventListener('contextmenu',(e)=>{
   showContextMenu(e.clientX,e.clientY,[
     {icon:'&#128260;',label:t('ctx.refresh'),action:()=>initDesktop()},
     {icon:'&#128203;',label:t('ctx.arrange'),action:()=>{Store.del('tos-icon-pos');initDesktop();}},
+    {icon:'&#129513;',label:t('gad.title'),action:()=>openGadgetGallery()},
     {sep:true},
     {icon:'&#127912;',label:'Cambiar fondo',action:()=>openSettings()},
     {icon:'&#9432;',label:'Propiedades',action:()=>openAbout()}
@@ -10021,7 +10747,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
