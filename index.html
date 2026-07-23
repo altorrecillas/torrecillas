@@ -1032,6 +1032,46 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .tour-go{background:linear-gradient(180deg,#4a90e8,#1c6ad0);border:1px solid #1a5fd0;border-radius:5px;padding:7px 22px;font-size:13px;font-weight:bold;color:#fff;cursor:pointer;margin-left:auto}
 .tour-go:hover{filter:brightness(1.06)}
 @media (max-width:600px){ .tour-ic{font-size:44px} .tour-b{min-height:96px} }
+/* ═══════════════════  § PIANO  ═══════════════════ */
+.piano-root{display:flex;flex-direction:column;height:100%;background:#2a2a33;font-family:Tahoma,sans-serif}
+.piano-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 8px;background:linear-gradient(180deg,#3a3a46,#2a2a33);color:#dfe3ea;font-size:12px;border-bottom:1px solid #12121a}
+.piano-bar select{border:1px solid #556;border-radius:3px;font-size:12px;background:#1e1e28;color:#eee;padding:2px 4px}
+.piano-sp{flex:1}
+.piano-lbls{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.px-btn.rec-on{background:linear-gradient(180deg,#ff6b6b,#d02030);color:#fff;border-color:#a01020}
+.piano-keys{flex:1;position:relative;display:flex;padding:10px;gap:3px;background:#15151c;min-height:120px}
+.pk{padding:0;cursor:pointer;border:none}
+.pk-w{flex:1;background:linear-gradient(180deg,#fff,#eceef2);border:1px solid #b7bcc6;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;color:#9aa;font-size:9px;box-shadow:inset 0 -3px 4px rgba(0,0,0,.08)}
+.pk-w.on{background:linear-gradient(180deg,#bcd6ff,#8fb6f0)}
+.pk-b{position:absolute;top:10px;transform:translateX(-50%);width:5.5%;height:58%;background:linear-gradient(180deg,#333,#0a0a0f);border-radius:0 0 4px 4px;z-index:2;box-shadow:0 2px 4px rgba(0,0,0,.5)}
+.pk-b.on{background:linear-gradient(180deg,#4a6bb0,#26407a)}
+.piano-keys.nolbl .pk-w span{display:none}
+.piano-hint{padding:5px 8px;font-size:10px;color:#8a90a0;background:#1e1e28;text-align:center}
+/* ═══════════════════  § AGENDA  ═══════════════════ */
+.agenda-root{display:flex;flex-direction:column;height:100%;background:#f4f7fc;font-family:Tahoma,sans-serif}
+.agenda-bar{display:flex;align-items:center;gap:6px;padding:7px 10px;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
+.ag-month{flex:1;text-align:center;font-weight:bold;color:#1a4fa0;font-size:14px}
+.ag-nav{background:linear-gradient(180deg,#fff,#e6eef8);border:1px solid #9db4d0;border-radius:4px;padding:3px 9px;font-size:12px;cursor:pointer;color:#123}
+.ag-nav:hover{background:#eef4ff}
+.agenda-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:8px}
+.agenda-grid b{text-align:center;font-size:10px;color:#889;padding:2px 0}
+.ag-empty{}
+.ag-day{position:relative;aspect-ratio:1;border:1px solid transparent;border-radius:5px;background:#fff;cursor:pointer;font-size:12px;color:#334;display:flex;align-items:center;justify-content:center}
+.ag-day:hover{background:#eaf2ff;border-color:#9db4d0}
+.ag-day.today{border-color:#e63946;font-weight:bold;color:#c0182a}
+.ag-day.sel{background:linear-gradient(180deg,#cfe3ff,#a9caff);border-color:#5a86c0}
+.ag-dot{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#2c9d50}
+.agenda-day{flex:1;overflow-y:auto;border-top:1px solid #cdd7e6;background:#fff;padding:8px 10px}
+.ag-day-h{display:flex;align-items:center;justify-content:space-between;font-weight:bold;color:#1a4fa0;font-size:13px;margin-bottom:6px}
+.ag-add{background:linear-gradient(180deg,#cfe3ff,#a9caff);border:1px solid #5a86c0;border-radius:4px;padding:2px 9px;font-size:11px;cursor:pointer;font-weight:normal;color:#123}
+.ag-evs{display:flex;flex-direction:column;gap:4px}
+.ag-ev{display:flex;align-items:center;gap:8px;padding:6px 8px;background:#f2f6fc;border:1px solid #dde6f2;border-radius:5px;font-size:12px}
+.ag-ev-t{font-weight:bold;color:#2c72d0;min-width:42px}
+.ag-ev-x{flex:1;color:#223;word-break:break-word}
+.ag-ev-del{background:none;border:none;color:#b55;cursor:pointer;font-size:12px;padding:0 3px}
+.ag-none{color:#889;font-size:12px;text-align:center;padding:14px}
+.gc-grid .gc-ev{position:relative}
+.gc-grid .gc-ev::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#2c9d50}
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
@@ -2884,6 +2924,10 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
             <div class="si-icon">&#128295;</div>
             <div><div class="si-label" data-i18n="tb.title">Herramientas</div><div class="si-desc" data-i18n="tb.desc">QR, contrase&ntilde;as y texto</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openAgenda()">
+            <div class="si-icon">&#128197;</div>
+            <div><div class="si-label" data-i18n="agenda.title">Agenda</div><div class="si-desc" data-i18n="agenda.desc">Calendario y recordatorios</div></div>
+          </button>
         </div>
         <button type="button" class="start-item" id="start-creatividad-toggle" onclick="toggleStartCreatividad(event)">
           <div class="si-icon">&#127912;</div>
@@ -2918,6 +2962,10 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
           <button type="button" class="start-item" onclick="openKaleidoscope()">
             <div class="si-icon">&#128302;</div>
             <div><div class="si-label" data-i18n="kal.title">Caleidoscopio</div><div class="si-desc" data-i18n="kal.desc">Dibujo con simetr&iacute;a</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openPiano()">
+            <div class="si-icon">&#127929;</div>
+            <div><div class="si-label" data-i18n="piano.title">Piano</div><div class="si-desc" data-i18n="piano.desc">Teclado musical</div></div>
           </button>
         </div>
         <button type="button" class="start-item" id="start-utils-toggle" onclick="toggleStartUtils(event)">
@@ -3061,7 +3109,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.36.0';
+const APP_VERSION = '0.37.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -3314,6 +3362,22 @@ const I18N={
   'kal.axes':{es:'Ejes', en:'Axes', ca:'Eixos', ru:'Оси'},
   'kal.brush':{es:'Pincel', en:'Brush', ca:'Pinzell', ru:'Кисть'},
   'kal.rainbow':{es:'Arcoíris', en:'Rainbow', ca:'Arc de Sant Martí', ru:'Радуга'},
+  'piano.title':{es:'Piano', en:'Piano', ca:'Piano', ru:'Пианино'},
+  'piano.desc':{es:'Teclado musical', en:'Musical keyboard', ca:'Teclat musical', ru:'Музыкальная клавиатура'},
+  'piano.instr':{es:'Instrumento', en:'Instrument', ca:'Instrument', ru:'Инструмент'},
+  'piano.grand':{es:'Piano', en:'Grand piano', ca:'Piano', ru:'Рояль'},
+  'piano.organ':{es:'Órgano', en:'Organ', ca:'Orgue', ru:'Орган'},
+  'piano.rec':{es:'Grabar', en:'Record', ca:'Grava', ru:'Запись'},
+  'piano.recstop':{es:'Parar', en:'Stop', ca:'Atura', ru:'Стоп'},
+  'piano.labels':{es:'Notas', en:'Note names', ca:'Notes', ru:'Ноты'},
+  'piano.hint':{es:'Toca con el ratón o con las teclas A W S E D F T G Y H U J…', en:'Play with the mouse or the keys A W S E D F T G Y H U J…', ca:'Toca amb el ratolí o amb les tecles A W S E D F T G Y H U J…', ru:'Играйте мышью или клавишами A W S E D F T G Y H U J…'},
+  'agenda.title':{es:'Agenda', en:'Calendar', ca:'Agenda', ru:'Ежедневник'},
+  'agenda.desc':{es:'Calendario y recordatorios', en:'Calendar & reminders', ca:'Calendari i recordatoris', ru:'Календарь и напоминания'},
+  'agenda.today':{es:'Hoy', en:'Today', ca:'Avui', ru:'Сегодня'},
+  'agenda.new':{es:'Nuevo evento', en:'New event', ca:'Nou esdeveniment', ru:'Новое событие'},
+  'agenda.noev':{es:'Sin eventos este día.', en:'No events this day.', ca:'Sense esdeveniments aquest dia.', ru:'Событий на этот день нет.'},
+  'agenda.prompt':{es:'Escribe el evento (opcional hora al inicio, ej: «17:00 Dentista»):', en:'Type the event (optional time first, e.g. “17:00 Dentist”):', ca:'Escriu l’esdeveniment (hora opcional al principi, ex: «17:00 Dentista»):', ru:'Введите событие (можно время в начале, напр. «17:00 Стоматолог»):'},
+  'agenda.reminder':{es:'Recordatorio', en:'Reminder', ca:'Recordatori', ru:'Напоминание'},
   'gad.title':{es:'Gadgets', en:'Gadgets', ca:'Gadgets', ru:'Гаджеты'},
   'gad.desc':{es:'Reloj, calendario, notas…', en:'Clock, calendar, notes…', ca:'Rellotge, calendari, notes…', ru:'Часы, календарь, заметки…'},
   'gad.intro':{es:'Añade mini-paneles a tu escritorio. Arrástralos donde quieras.', en:'Add mini-panels to your desktop. Drag them anywhere.', ca:'Afegeix mini-panells a l’escriptori. Arrossega’ls on vulguis.', ru:'Добавьте мини-панели на рабочий стол. Перетаскивайте их куда угодно.'},
@@ -4227,6 +4291,8 @@ function enterDesktop(){
   applyI18n(); // traduce el chrome (menú, botones) al idioma guardado
   updateStartUsername(); // nombre de la cuenta en el encabezado (tras applyI18n, que lo resetea)
   startIdleWatch(); // auto-bloqueo por inactividad (no-op si no hay cuenta/ajuste)
+  try{ checkEventReminders(); }catch(e){} // avisos de la Agenda pendientes
+  visibleInterval(()=>{ try{ checkEventReminders(); }catch(e){} },60000); // y cada minuto
   restoreEraClass(); // clase de era para la tipografía
   updateTrayLang(); // bandera del idioma en la bandeja
   initDesktop();
@@ -8038,10 +8104,12 @@ function _renderGadgetCalendar(body){
   const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   const wd=['L','M','X','J','V','S','D'];
   let cells=''; const off=(first+6)%7; // lunes primero
+  const has={}; try{ if(typeof eventsLoad==='function')eventsLoad().forEach(e=>{ has[e.date]=true; }); }catch(e){}
   for(let i=0;i<off;i++)cells+='<span></span>';
-  for(let d=1;d<=dim;d++)cells+='<span class="'+(d===today?'gc-today':'')+'">'+d+'</span>';
+  for(let d=1;d<=dim;d++){ const k=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); cells+='<span class="'+(d===today?'gc-today':'')+(has[k]?' gc-ev':'')+'">'+d+'</span>'; }
   body.innerHTML='<div class="gc-head">'+months[mo]+' '+y+'</div><div class="gc-grid">'+wd.map(x=>'<b>'+x+'</b>').join('')+cells+'</div>';
 }
+function _gadgetCalRefresh(){ try{ document.querySelectorAll('.gadget[data-type="calendar"] .gadget-body').forEach(b=>_renderGadgetCalendar(b)); }catch(e){} }
 function _gadgetMonitor(body){
   body.innerHTML='<div class="gm-row"><span>CPU</span><div class="gm-bar"><i id="gm-cpu"></i></div><em id="gm-cpuv">0%</em></div>'+
     '<div class="gm-row"><span>RAM</span><div class="gm-bar"><i id="gm-ram"></i></div><em id="gm-ramv">0%</em></div>'+
@@ -8464,6 +8532,149 @@ function openTour(){
   document.addEventListener('keydown',kd,true);
   render();
   setTimeout(()=>{ try{ ov.querySelector('#tour-next').focus(); }catch(e){} },20);
+}
+
+// ========== PIANO MUSICAL ==========
+function _noteFreq(midi){ return 440*Math.pow(2,(midi-69)/12); }
+const PIANO_INSTR={
+  piano:{type:'triangle',rel:0.45,gain:0.5,sustain:false},
+  organ:{type:'sine',rel:0.09,gain:0.42,sustain:true},
+  chip:{type:'square',rel:0.28,gain:0.3,sustain:false}
+};
+// Teclas del ordenador → nota MIDI (fila tipo piano)
+const PIANO_KEYMAP={a:60,w:61,s:62,e:63,d:64,f:65,t:66,g:67,y:68,h:69,u:70,j:71,k:72,o:73,l:74,p:75,';':76};
+function openPiano(){
+  closeStartMenu();
+  if(focusExisting('piano-keys'))return;
+  const whites=[60,62,64,65,67,69,71,72,74,76,77,79,81,83];
+  const NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const nameOf=(m)=>NAMES[m%12]+(Math.floor(m/12)-1);
+  let whitesHtml='', blacksHtml='';
+  whites.forEach((m,i)=>{ whitesHtml+='<button type="button" class="pk pk-w" data-m="'+m+'" aria-label="'+nameOf(m)+'"><span>'+nameOf(m)+'</span></button>'; });
+  whites.forEach((m,i)=>{ const deg=m%12; if(deg===4||deg===11)return; // no negra tras E ni B
+    const bm=m+1; const left=((i+1)/whites.length*100);
+    blacksHtml+='<button type="button" class="pk pk-b" data-m="'+bm+'" style="left:'+left+'%" aria-label="'+nameOf(bm)+'"></button>'; });
+  const content=`<div class="piano-root">
+    <div class="piano-bar">
+      <label>${t('piano.instr')} <select id="piano-instr"><option value="piano">${t('piano.grand')}</option><option value="organ">${t('piano.organ')}</option><option value="chip">8-bit</option></select></label>
+      <span class="piano-sp"></span>
+      <button type="button" class="px-btn" id="piano-rec">&#128308; ${t('piano.rec')}</button>
+      <button type="button" class="px-btn" id="piano-play" disabled>&#9654; ${t('drum.play')}</button>
+      <label class="piano-lbls"><input type="checkbox" id="piano-lbls" checked> ${t('piano.labels')}</label>
+    </div>
+    <div class="piano-keys" id="piano-keys">${whitesHtml}${blacksHtml}</div>
+    <div class="piano-hint">${t('piano.hint')}</div>
+  </div>`;
+  createWindow(t('piano.title'),'&#127929;',560,300,content,{session:'piano',statusbar:false,onCreated:(id,win)=>{
+    const keysEl=win.querySelector('#piano-keys');
+    let curInstr='piano', active={}, recording=false, recEvents=[], recStart=0, playTimers=[];
+    const keyEl=(m)=>keysEl.querySelector('.pk[data-m="'+m+'"]');
+    const noteOn=(m)=>{
+      if(active[m])return; const inst=PIANO_INSTR[curInstr];
+      try{ const ctx=getAudioCtx(), now=ctx.currentTime;
+        const osc=ctx.createOscillator(); osc.type=inst.type; osc.frequency.value=_noteFreq(m);
+        const g=ctx.createGain(); g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(inst.gain*masterVolume,now+0.012);
+        if(!inst.sustain)g.gain.exponentialRampToValueAtTime(0.0001,now+0.7);
+        osc.connect(g); g.connect(ctx.destination); osc.start(now);
+        active[m]={osc,g};
+      }catch(e){ active[m]={}; }
+      const el=keyEl(m); if(el)el.classList.add('on');
+      if(recording)recEvents.push({m,t:Date.now()-recStart});
+    };
+    const noteOff=(m)=>{
+      const a=active[m]; const el=keyEl(m); if(el)el.classList.remove('on');
+      if(!a){ return; } delete active[m];
+      try{ const ctx=getAudioCtx(), now=ctx.currentTime, rel=PIANO_INSTR[curInstr].rel;
+        if(a.g){ a.g.gain.cancelScheduledValues(now); a.g.gain.setValueAtTime(Math.max(0.0001,a.g.gain.value),now); a.g.gain.exponentialRampToValueAtTime(0.0001,now+rel); }
+        if(a.osc)a.osc.stop(now+rel+0.05);
+      }catch(e){}
+    };
+    keysEl.querySelectorAll('.pk').forEach(b=>{
+      const m=+b.dataset.m;
+      b.addEventListener('mousedown',(e)=>{ e.preventDefault(); noteOn(m); });
+      b.addEventListener('mouseup',()=>noteOff(m));
+      b.addEventListener('mouseleave',()=>{ if(active[m])noteOff(m); });
+      b.addEventListener('touchstart',(e)=>{ e.preventDefault(); noteOn(m); },{passive:false});
+      b.addEventListener('touchend',(e)=>{ e.preventDefault(); noteOff(m); },{passive:false});
+    });
+    win.querySelector('#piano-instr').onchange=(e)=>curInstr=e.target.value;
+    win.querySelector('#piano-lbls').onchange=(e)=>keysEl.classList.toggle('nolbl',!e.target.checked);
+    const recBtn=win.querySelector('#piano-rec'), playBtn=win.querySelector('#piano-play');
+    recBtn.onclick=()=>{
+      recording=!recording;
+      if(recording){ recEvents=[]; recStart=Date.now(); recBtn.innerHTML='&#9209;&#65039; '+t('piano.recstop'); recBtn.classList.add('rec-on'); playBtn.disabled=true; }
+      else { recBtn.innerHTML='&#128308; '+t('piano.rec'); recBtn.classList.remove('rec-on'); playBtn.disabled=recEvents.length===0; }
+    };
+    playBtn.onclick=()=>{
+      playTimers.forEach(clearTimeout); playTimers=[];
+      recEvents.forEach(ev=>{ playTimers.push(setTimeout(()=>{ noteOn(ev.m); setTimeout(()=>noteOff(ev.m),260); },ev.t)); });
+    };
+    const kd=(e)=>{ if(activeWindowId!==id||e.repeat)return; const m=PIANO_KEYMAP[e.key.toLowerCase()]; if(m!==undefined){ e.preventDefault(); noteOn(m); } };
+    const ku=(e)=>{ const m=PIANO_KEYMAP[e.key.toLowerCase()]; if(m!==undefined)noteOff(m); };
+    document.addEventListener('keydown',kd); document.addEventListener('keyup',ku);
+    (win._cleanups=win._cleanups||[]).push(()=>{ document.removeEventListener('keydown',kd); document.removeEventListener('keyup',ku); playTimers.forEach(clearTimeout); Object.keys(active).forEach(m=>noteOff(+m)); });
+  }});
+}
+
+// ========== AGENDA — calendario con eventos y recordatorios ==========
+function eventsLoad(){ try{ const a=JSON.parse(Store.get('tos-events')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function eventsSave(a){ return Store.set('tos-events',JSON.stringify(a)); }
+function _dayKey(y,m,d){ return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
+function eventsForDay(key){ return eventsLoad().filter(e=>e.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||'')); }
+// Avisos: notifica eventos vencidos en las últimas 24h que aún no se hayan avisado
+function checkEventReminders(){
+  const now=Date.now(); const arr=eventsLoad(); let changed=false;
+  arr.forEach(e=>{ if(e.notified)return; const dt=new Date(e.date+'T'+(e.time||'09:00')+':00').getTime(); if(!isNaN(dt)&&dt<=now&&dt>now-24*3600*1000){ try{ notify({icon:'&#128197;',title:t('agenda.reminder'),body:(e.time?e.time+' · ':'')+e.text}); }catch(_e){} e.notified=true; changed=true; } });
+  if(changed)eventsSave(arr);
+}
+function openAgenda(){
+  closeStartMenu();
+  if(focusExisting('agenda-grid'))return;
+  const content=`<div class="agenda-root">
+    <div class="agenda-bar"><button type="button" class="ag-nav" id="ag-prev">&#9664;</button><span class="ag-month" id="ag-month"></span><button type="button" class="ag-nav" id="ag-next">&#9654;</button><button type="button" class="ag-nav" id="ag-today">${t('agenda.today')}</button></div>
+    <div class="agenda-grid" id="agenda-grid"></div>
+    <div class="agenda-day" id="agenda-day"></div>
+  </div>`;
+  createWindow(t('agenda.title'),'&#128197;',420,470,content,{session:'agenda',statusbar:false,onCreated:(id,win)=>{
+    const now=new Date(); let vy=now.getFullYear(), vm=now.getMonth(), selKey=_dayKey(vy,vm,now.getDate());
+    const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const WD=['L','M','X','J','V','S','D'];
+    const grid=win.querySelector('#agenda-grid'), dayBox=win.querySelector('#agenda-day');
+    const renderGrid=()=>{
+      win.querySelector('#ag-month').textContent=MONTHS[vm]+' '+vy;
+      const first=new Date(vy,vm,1).getDay(), dim=new Date(vy,vm+1,0).getDate(), off=(first+6)%7;
+      const evs=eventsLoad(); const has={}; evs.forEach(e=>{ has[e.date]=true; });
+      const tk=_dayKey(now.getFullYear(),now.getMonth(),now.getDate());
+      let html=WD.map(x=>'<b>'+x+'</b>').join('');
+      for(let i=0;i<off;i++)html+='<span class="ag-empty"></span>';
+      for(let d=1;d<=dim;d++){ const k=_dayKey(vy,vm,d); html+='<button type="button" class="ag-day'+(k===selKey?' sel':'')+(k===tk?' today':'')+'" data-k="'+k+'" data-d="'+d+'">'+d+(has[k]?'<i class="ag-dot"></i>':'')+'</button>'; }
+      grid.innerHTML=html;
+      grid.querySelectorAll('.ag-day').forEach(b=>b.onclick=()=>{ selKey=b.dataset.k; renderGrid(); renderDay(); });
+    };
+    const renderDay=()=>{
+      const list=eventsForDay(selKey);
+      const [y,m,d]=selKey.split('-');
+      let html='<div class="ag-day-h">'+d+' '+MONTHS[+m-1]+' <button type="button" class="ag-add" id="ag-add">+ '+escHtml(t('agenda.new'))+'</button></div>';
+      html+=list.length?('<div class="ag-evs">'+list.map(e=>'<div class="ag-ev" data-id="'+e.id+'"><span class="ag-ev-t">'+(e.time?escHtml(e.time):'—')+'</span><span class="ag-ev-x">'+escHtml(e.text)+'</span><button type="button" class="ag-ev-del" data-id="'+e.id+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10005;</button></div>').join('')+'</div>'):('<div class="ag-none">'+escHtml(t('agenda.noev'))+'</div>');
+      dayBox.innerHTML=html;
+      dayBox.querySelector('#ag-add').onclick=()=>addEvent(selKey);
+      dayBox.querySelectorAll('.ag-ev-del').forEach(b=>b.onclick=()=>{ const arr=eventsLoad().filter(e=>e.id!==b.dataset.id); eventsSave(arr); renderGrid(); renderDay(); try{ _gadgetCalRefresh(); }catch(e){} });
+    };
+    const addEvent=(key)=>{
+      xpPrompt(t('agenda.new'),t('agenda.prompt'),'',(val)=>{
+        val=(val||'').trim(); if(!val)return;
+        const mt=val.match(/^(\d{1,2}:\d{2})\s+(.*)$/); const time=mt?mt[1]:''; const text=mt?mt[2]:val;
+        if(!text.trim())return;
+        const arr=eventsLoad(); arr.push({id:'e'+Date.now()+Math.floor(Math.random()*999),date:key,time:time,text:text.trim(),notified:false});
+        eventsSave(arr); renderGrid(); renderDay();
+        try{ if(typeof _gadgetCalRefresh==='function')_gadgetCalRefresh(); }catch(e){}
+      });
+    };
+    win.querySelector('#ag-prev').onclick=()=>{ vm--; if(vm<0){vm=11;vy--;} renderGrid(); };
+    win.querySelector('#ag-next').onclick=()=>{ vm++; if(vm>11){vm=0;vy++;} renderGrid(); };
+    win.querySelector('#ag-today').onclick=()=>{ vy=now.getFullYear(); vm=now.getMonth(); selKey=_dayKey(vy,vm,now.getDate()); renderGrid(); renderDay(); };
+    renderGrid(); renderDay();
+  }});
 }
 
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
@@ -9102,7 +9313,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -10747,7 +10958,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
