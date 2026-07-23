@@ -2661,6 +2661,11 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .cal-grid .cal-day.other{color:#b5bccb}
 .cal-grid .cal-day.today{background:linear-gradient(180deg,#ff9a3c,#f06a00);color:#fff;font-weight:bold;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .cal-grid .cal-day.wknd:not(.today){color:#c2453a}
+.cal-grid .cal-day.cal-real{cursor:pointer;position:relative}
+.cal-grid .cal-day.cal-real:hover{background:#dceafb}
+.cal-grid .cal-day.today.cal-real:hover{filter:brightness(1.05)}
+.cal-grid .cal-day.has-ev::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#2c9d50}
+.cal-grid .cal-day.today.has-ev::after{background:#fff}
 .cal-foot{padding:0 10px 10px;text-align:right}
 .cal-foot button{font-size:11px;padding:3px 14px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer;color:#1a45b0}
 .cal-foot button:hover{background:linear-gradient(180deg,#fff,#cfe0fa)}
@@ -3109,7 +3114,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.37.0';
+const APP_VERSION = '0.37.1';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4182,6 +4187,10 @@ function toggleCalendar(){
   cp.classList.add('show');
 }
 function hideCalendar(){const cp=document.getElementById('calendar-popup');if(cp)cp.classList.remove('show');}
+// Clic en un día del popup de la hora → abre la Agenda en ese día (comparten tos-events)
+function calOpenDay(key){ hideCalendar(); try{ openAgenda(key); }catch(e){} }
+// Re-pinta el popup si está abierto (para reflejar cambios de la Agenda al instante)
+function _calRefresh(){ const cp=document.getElementById('calendar-popup'); if(cp&&cp.classList.contains('show'))renderCalendar(); }
 function calNav(delta){_calView.setDate(1);_calView.setMonth(_calView.getMonth()+delta);renderCalendar();}
 function calToday(){_calView=new Date();renderCalendar();}
 function renderCalendar(){
@@ -4193,12 +4202,14 @@ function renderCalendar(){
   const startDow=(new Date(y,mo,1).getDay()+6)%7;   // lunes primero
   const daysInMonth=new Date(y,mo+1,0).getDate();
   const prevDays=new Date(y,mo,0).getDate();
+  const has={}; try{ if(typeof eventsLoad==='function')eventsLoad().forEach(e=>{ has[e.date]=true; }); }catch(e){}
   let cells='';
   for(let i=0;i<startDow;i++)cells+=`<div class="cal-day other">${prevDays-startDow+1+i}</div>`;
   for(let d=1;d<=daysInMonth;d++){
     const dow=(new Date(y,mo,d).getDay()+6)%7;
     const isToday=(d===now.getDate()&&mo===now.getMonth()&&y===now.getFullYear());
-    cells+=`<div class="cal-day${isToday?' today':''}${dow>=5?' wknd':''}">${d}</div>`;
+    const key=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    cells+=`<div class="cal-day cal-real${isToday?' today':''}${dow>=5?' wknd':''}${has[key]?' has-ev':''}" role="button" tabindex="0" onclick="calOpenDay('${key}')" title="${has[key]?'Ver eventos de la Agenda':'Añadir a la Agenda'}">${d}</div>`;
   }
   const trailing=(7-((startDow+daysInMonth)%7))%7;
   for(let i=1;i<=trailing;i++)cells+=`<div class="cal-day other">${i}</div>`;
@@ -8627,9 +8638,10 @@ function checkEventReminders(){
   arr.forEach(e=>{ if(e.notified)return; const dt=new Date(e.date+'T'+(e.time||'09:00')+':00').getTime(); if(!isNaN(dt)&&dt<=now&&dt>now-24*3600*1000){ try{ notify({icon:'&#128197;',title:t('agenda.reminder'),body:(e.time?e.time+' · ':'')+e.text}); }catch(_e){} e.notified=true; changed=true; } });
   if(changed)eventsSave(arr);
 }
-function openAgenda(){
+let _agendaGoto=null;
+function openAgenda(targetKey){
   closeStartMenu();
-  if(focusExisting('agenda-grid'))return;
+  if(focusExisting('agenda-grid')){ if(targetKey&&_agendaGoto)_agendaGoto(targetKey); return; }
   const content=`<div class="agenda-root">
     <div class="agenda-bar"><button type="button" class="ag-nav" id="ag-prev">&#9664;</button><span class="ag-month" id="ag-month"></span><button type="button" class="ag-nav" id="ag-next">&#9654;</button><button type="button" class="ag-nav" id="ag-today">${t('agenda.today')}</button></div>
     <div class="agenda-grid" id="agenda-grid"></div>
@@ -8637,6 +8649,7 @@ function openAgenda(){
   </div>`;
   createWindow(t('agenda.title'),'&#128197;',420,470,content,{session:'agenda',statusbar:false,onCreated:(id,win)=>{
     const now=new Date(); let vy=now.getFullYear(), vm=now.getMonth(), selKey=_dayKey(vy,vm,now.getDate());
+    if(targetKey&&/^\d{4}-\d{2}-\d{2}$/.test(targetKey)){ const p=targetKey.split('-'); vy=+p[0]; vm=+p[1]-1; selKey=targetKey; }
     const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const WD=['L','M','X','J','V','S','D'];
     const grid=win.querySelector('#agenda-grid'), dayBox=win.querySelector('#agenda-day');
@@ -8658,7 +8671,7 @@ function openAgenda(){
       html+=list.length?('<div class="ag-evs">'+list.map(e=>'<div class="ag-ev" data-id="'+e.id+'"><span class="ag-ev-t">'+(e.time?escHtml(e.time):'—')+'</span><span class="ag-ev-x">'+escHtml(e.text)+'</span><button type="button" class="ag-ev-del" data-id="'+e.id+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10005;</button></div>').join('')+'</div>'):('<div class="ag-none">'+escHtml(t('agenda.noev'))+'</div>');
       dayBox.innerHTML=html;
       dayBox.querySelector('#ag-add').onclick=()=>addEvent(selKey);
-      dayBox.querySelectorAll('.ag-ev-del').forEach(b=>b.onclick=()=>{ const arr=eventsLoad().filter(e=>e.id!==b.dataset.id); eventsSave(arr); renderGrid(); renderDay(); try{ _gadgetCalRefresh(); }catch(e){} });
+      dayBox.querySelectorAll('.ag-ev-del').forEach(b=>b.onclick=()=>{ const arr=eventsLoad().filter(e=>e.id!==b.dataset.id); eventsSave(arr); renderGrid(); renderDay(); _agendaSync(); });
     };
     const addEvent=(key)=>{
       xpPrompt(t('agenda.new'),t('agenda.prompt'),'',(val)=>{
@@ -8666,16 +8679,20 @@ function openAgenda(){
         const mt=val.match(/^(\d{1,2}:\d{2})\s+(.*)$/); const time=mt?mt[1]:''; const text=mt?mt[2]:val;
         if(!text.trim())return;
         const arr=eventsLoad(); arr.push({id:'e'+Date.now()+Math.floor(Math.random()*999),date:key,time:time,text:text.trim(),notified:false});
-        eventsSave(arr); renderGrid(); renderDay();
-        try{ if(typeof _gadgetCalRefresh==='function')_gadgetCalRefresh(); }catch(e){}
+        eventsSave(arr); renderGrid(); renderDay(); _agendaSync();
       });
     };
     win.querySelector('#ag-prev').onclick=()=>{ vm--; if(vm<0){vm=11;vy--;} renderGrid(); };
     win.querySelector('#ag-next').onclick=()=>{ vm++; if(vm>11){vm=0;vy++;} renderGrid(); };
     win.querySelector('#ag-today').onclick=()=>{ vy=now.getFullYear(); vm=now.getMonth(); selKey=_dayKey(vy,vm,now.getDate()); renderGrid(); renderDay(); };
+    const goto=(key)=>{ if(!/^\d{4}-\d{2}-\d{2}$/.test(key))return; const p=key.split('-'); vy=+p[0]; vm=+p[1]-1; selKey=key; renderGrid(); renderDay(); };
+    _agendaGoto=goto;
+    (win._cleanups=win._cleanups||[]).push(()=>{ if(_agendaGoto===goto)_agendaGoto=null; });
     renderGrid(); renderDay();
   }});
 }
+// Refresca todas las vistas de calendario que compartan tos-events (gadget + popup de la hora)
+function _agendaSync(){ try{ if(typeof _gadgetCalRefresh==='function')_gadgetCalRefresh(); }catch(e){} try{ if(typeof _calRefresh==='function')_calRefresh(); }catch(e){} }
 
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
 const OS_THEMES=['luna','olive','silver','classic','aero'];
