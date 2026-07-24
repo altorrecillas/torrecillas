@@ -2,7 +2,7 @@
   "name": "Torrecillas OS",
   "short_name": "Torrecillas OS",
   "lang": "es",
-  "description": "Un escritorio estilo Windows XP en tu navegador: 15 juegos clasicos, Paint, terminal y portfolio.",
+  "description": "Un escritorio estilo Windows XP en tu navegador: 16 juegos clasicos, Paint, terminal y portfolio.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

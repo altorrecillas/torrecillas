@@ -1160,6 +1160,14 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
 .chess-pc{pointer-events:none;text-shadow:0 1px 1px rgba(0,0,0,.35)}
 .chess-pc.w{color:#fff;-webkit-text-stroke:.5px #555}
 .chess-pc.b{color:#1a1a1a}
+.chess-captures{width:min(360px,86vw);max-width:100%;display:flex;flex-direction:column;gap:2px}
+.chess-cap-row{display:flex;align-items:center;gap:6px;min-height:22px;background:rgba(0,0,0,.18);border-radius:5px;padding:2px 6px}
+.chess-cap-lbl{font-size:10px;color:#cbb89e;width:24px;flex-shrink:0}
+.chess-cap{flex:1;display:flex;flex-wrap:wrap;align-items:center;line-height:1}
+.chess-cap-pc{font-size:16px;margin-right:-2px}
+.chess-cap-pc.w{color:#fff;text-shadow:0 0 1px #555}
+.chess-cap-pc.b{color:#2a2a2a}
+.chess-adv{color:#8fd18f;font-size:11px;margin-left:6px;font-family:Tahoma,sans-serif}
 .chess-actions{display:flex;align-items:center;gap:10px;color:#f0e6d8;font-size:12px}
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
@@ -3212,7 +3220,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.40.0';
+const APP_VERSION = '0.40.1';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -9094,6 +9102,13 @@ function _chApply(st,from,to){
   s.turn=white?'b':'w';
   return s;
 }
+// Devuelve la pieza que se captura con un movimiento (o '' si ninguna), incluida la captura al paso.
+function _chCaptured(st,from,to){
+  const [fr,fc]=from,[tr,tc]=to, p=st.board[fr][fc];
+  if(st.board[tr][tc]!=='')return st.board[tr][tc];
+  if(p&&p.toLowerCase()==='p'&&fc!==tc)return st.board[fr][tc]; // al paso
+  return '';
+}
 function _chLegal(st,forWhite){
   const moves=[];
   for(let i=0;i<8;i++)for(let j=0;j<8;j++){ const p=st.board[i][j]; if(!p||_chIsWhite(p)!==forWhite)continue;
@@ -9130,11 +9145,22 @@ function initChess(){
   const content=`<div id="chess-game" class="chess-root">
     <div class="chess-hud"><span id="chess-status">Tu turno (blancas)</span><label class="chess-lvl">IA <select id="chess-lvl"><option value="1">Fácil</option><option value="2" selected>Normal</option><option value="3">Difícil</option></select></label></div>
     <div class="chess-board" id="chess-board"></div>
+    <div class="chess-captures">
+      <div class="chess-cap-row"><span class="chess-cap-lbl">Tú</span><span class="chess-cap" id="chess-cap-w"></span></div>
+      <div class="chess-cap-row"><span class="chess-cap-lbl">IA</span><span class="chess-cap" id="chess-cap-b"></span></div>
+    </div>
     <div class="chess-actions"><button type="button" class="g-btn" id="chess-new">Nueva partida</button><span id="chess-msg"></span></div>
   </div>`;
   createWindow('Ajedrez','♟️',372,452,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
     const boardEl=win.querySelector('#chess-board'), statusEl=win.querySelector('#chess-status'), msgEl=win.querySelector('#chess-msg');
-    let st, sel=null, legal=[], over=false, thinking=false;
+    let st, sel=null, legal=[], over=false, thinking=false, capW=[], capB=[];
+    const renderCaps=()=>{
+      const val=p=>_CH_VAL[p.toLowerCase()];
+      const sortG=arr=>arr.slice().sort((a,b)=>val(b)-val(a)).map(p=>'<span class="chess-cap-pc '+(_chIsWhite(p)?'w':'b')+'">'+G[p]+'</span>').join('');
+      const adv=capW.reduce((s,p)=>s+val(p),0)-capB.reduce((s,p)=>s+val(p),0);
+      win.querySelector('#chess-cap-w').innerHTML=sortG(capW)+(adv>0?'<b class="chess-adv">+'+Math.round(adv/100)+'</b>':'');
+      win.querySelector('#chess-cap-b').innerHTML=sortG(capB)+(adv<0?'<b class="chess-adv">+'+Math.round(-adv/100)+'</b>':'');
+    };
     const render=()=>{
       boardEl.innerHTML='';
       for(let r=0;r<8;r++)for(let c=0;c<8;c++){ const sq=document.createElement('button'); sq.type='button'; sq.className='chess-sq '+((r+c)%2?'dark':'light'); sq.dataset.r=r; sq.dataset.c=c;
@@ -9150,15 +9176,15 @@ function initChess(){
     const finish=(s)=>{ over=true; if(/Ganas/.test(s)){ try{ const r=useRecord('tos-chess-best'); r.submit(r.value+1); msgEl.textContent='Victorias: '+r.value; }catch(e){} } };
     const onSquare=(r,c)=>{
       if(over||thinking||st.turn!=='w')return;
-      if(sel){ const mv=legal.find(m=>m.to[0]===r&&m.to[1]===c); if(mv){ st=_chApply(st,sel,[r,c]); sel=null; legal=[]; render(); const s=statusOf(false); statusEl.textContent=s; if(over){ finish(s); return; } aiMove(); return; } }
+      if(sel){ const mv=legal.find(m=>m.to[0]===r&&m.to[1]===c); if(mv){ const cap=_chCaptured(st,sel,[r,c]); if(cap)capW.push(cap); st=_chApply(st,sel,[r,c]); sel=null; legal=[]; render(); renderCaps(); const s=statusOf(false); statusEl.textContent=s; if(over){ finish(s); return; } aiMove(); return; } }
       const p=st.board[r][c];
       if(p&&_chIsWhite(p)){ sel=[r,c]; legal=_chLegal(st,true).filter(m=>m.from[0]===r&&m.from[1]===c); } else { sel=null; legal=[]; }
       render();
     };
     const aiMove=()=>{ thinking=true; statusEl.textContent='La IA piensa…';
-      setTimeout(()=>{ const depth=+win.querySelector('#chess-lvl').value; const m=_chBestMove(st,false,depth); if(m)st=_chApply(st,m.from,m.to); thinking=false; render(); const s=statusOf(true); statusEl.textContent=s; if(over)finish(s); },240);
+      setTimeout(()=>{ const depth=+win.querySelector('#chess-lvl').value; const m=_chBestMove(st,false,depth); if(m){ const cap=_chCaptured(st,m.from,m.to); if(cap)capB.push(cap); st=_chApply(st,m.from,m.to); } thinking=false; render(); renderCaps(); const s=statusOf(true); statusEl.textContent=s; if(over)finish(s); },240);
     };
-    const reset=()=>{ st={board:_chessInitBoard(),turn:'w',castle:{K:true,Q:true,k:true,q:true},ep:null}; sel=null; legal=[]; over=false; thinking=false; msgEl.textContent=''; statusEl.textContent='Tu turno (blancas)'; render(); };
+    const reset=()=>{ st={board:_chessInitBoard(),turn:'w',castle:{K:true,Q:true,k:true,q:true},ep:null}; sel=null; legal=[]; over=false; thinking=false; capW=[]; capB=[]; msgEl.textContent=''; statusEl.textContent='Tu turno (blancas)'; render(); renderCaps(); };
     win.querySelector('#chess-new').onclick=reset;
     reset();
   }});
