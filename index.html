@@ -1072,6 +1072,42 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .ag-none{color:#889;font-size:12px;text-align:center;padding:14px}
 .gc-grid .gc-ev{position:relative}
 .gc-grid .gc-ev::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#2c9d50}
+/* ═══════════════════  § SISTEMA: task view · escritorios · centro de acciones · modo oscuro  ═══════════════════ */
+#taskview-btn{background:none;border:none;color:#fff;cursor:pointer;padding:0 7px;height:100%;display:inline-flex;align-items:center;opacity:.9}
+#taskview-btn:hover{opacity:1;background:rgba(255,255,255,.12)}
+#vd-pips{display:inline-flex;align-items:center;gap:3px;padding:0 6px}
+.vd-pip{min-width:20px;height:20px;border:1px solid rgba(255,255,255,.4);border-radius:4px;background:rgba(255,255,255,.12);color:#fff;font-size:11px;cursor:pointer;padding:0 5px}
+.vd-pip.on{background:rgba(255,255,255,.85);color:#1a45b0;font-weight:bold}
+.tv-ov{position:fixed;inset:0;z-index:99000;background:rgba(12,22,44,.82);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.tv-inner{width:min(880px,96vw);max-height:86vh;display:flex;flex-direction:column;gap:12px}
+.tv-desktops{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tv-dbtn,.tv-add{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:Tahoma,sans-serif}
+.tv-dbtn.on{background:#fff;color:#1a45b0;font-weight:bold}
+.tv-add{border-style:dashed}
+.tv-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:6px;align-content:start}
+.tv-card{background:#f4f7fc;border:1px solid #cdd7e6;border-radius:8px;overflow:hidden;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);transition:transform .12s}
+.tv-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.45)}
+.tv-card-h{display:flex;align-items:center;gap:6px;padding:5px 7px;background:linear-gradient(180deg,#4a90e8,#1c6ad0);color:#fff;font-size:12px}
+.tv-ic{font-size:14px}.tv-t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:Tahoma,sans-serif}
+.tv-close{background:rgba(255,255,255,.2);border:none;color:#fff;cursor:pointer;border-radius:3px;font-size:11px;padding:0 5px}
+.tv-close:hover{background:#e05050}
+.tv-thumb{height:74px;display:flex;align-items:center;justify-content:center;font-size:40px;background:repeating-linear-gradient(135deg,#eef2f8 0 10px,#e6ebf3 10px 20px)}
+.tv-move{display:flex;flex-wrap:wrap;gap:4px;padding:5px 6px;background:#fff;border-top:1px solid #eef}
+.tv-mv{background:#eef4ff;border:1px solid #b9cde8;border-radius:3px;font-size:10px;padding:1px 6px;cursor:pointer;color:#1a4fa0}
+.tv-empty{grid-column:1/-1;text-align:center;color:#cdd7e6;padding:40px;font-size:14px}
+.tv-hint{text-align:center;color:#b9c6dc;font-size:11px}
+.ac-center{position:fixed;bottom:42px;right:6px;width:280px;background:linear-gradient(180deg,#fbfdff,#eef2f8);border:1px solid #9db4d0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.45);z-index:9300;font-family:Tahoma,sans-serif;overflow:hidden}
+.ac-head{padding:8px 12px;font-weight:bold;font-size:12px;color:#1a4fa0;border-bottom:1px solid #dde6f2;background:#eaf1fb}
+.ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
+.ac-tile{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;border:1px solid #cdd7e6;border-radius:8px;background:#fff;cursor:pointer;font-size:11px;color:#234}
+.ac-tile:hover{background:#eef4ff}
+.ac-tile.on{background:linear-gradient(180deg,#4a90e8,#1c6ad0);border-color:#1a5fd0;color:#fff}
+.ac-ic{font-size:22px;line-height:1}
+.ac-slider{padding:4px 12px 12px;display:flex;flex-direction:column;gap:5px;font-size:11px;color:#456}
+.ac-slider input{width:100%}
+#dim-layer{position:fixed;inset:0;z-index:8000;pointer-events:none;display:none}
+body.night-mode #desktop{filter:invert(1) hue-rotate(180deg)}
+body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #desktop canvas,body.night-mode #desktop svg,body.night-mode #desktop #xp-bg,body.night-mode #desktop .desktop-icon .icon-img{filter:invert(1) hue-rotate(180deg)}
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
@@ -2865,9 +2901,10 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
       <span data-i18n="start">Inicio</span>
     </button>
     <button id="show-desktop" onclick="toggleShowDesktop()" title="Mostrar escritorio" aria-label="Mostrar escritorio"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.4" y="3" width="13.2" height="10" rx="1.1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.15" y="10.4" width="11.7" height="2.2" rx="0.4" fill="currentColor"/></svg></button>
+    <button id="taskview-btn" onclick="openTaskView()" title="Vista de tareas" aria-label="Vista de tareas"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
+      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-quick" onclick="toggleActionCenter(event)" role="button" tabindex="0" aria-label="Ajustes rápidos" title="Ajustes rápidos" style="cursor:pointer">&#9889;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
       <div id="clock" style="cursor:pointer" onclick="toggleCalendar()" role="button" tabindex="0" aria-label="Fecha y hora"></div>
     </div>
     <div id="volume-popup" style="display:none;position:fixed;bottom:40px;right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
@@ -3114,7 +3151,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.37.1';
+const APP_VERSION = '0.38.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -3383,6 +3420,19 @@ const I18N={
   'agenda.noev':{es:'Sin eventos este día.', en:'No events this day.', ca:'Sense esdeveniments aquest dia.', ru:'Событий на этот день нет.'},
   'agenda.prompt':{es:'Escribe el evento (opcional hora al inicio, ej: «17:00 Dentista»):', en:'Type the event (optional time first, e.g. “17:00 Dentist”):', ca:'Escriu l’esdeveniment (hora opcional al principi, ex: «17:00 Dentista»):', ru:'Введите событие (можно время в начале, напр. «17:00 Стоматолог»):'},
   'agenda.reminder':{es:'Recordatorio', en:'Reminder', ca:'Recordatori', ru:'Напоминание'},
+  'vd.title':{es:'Escritorios', en:'Desktops', ca:'Escriptoris', ru:'Рабочие столы'},
+  'vd.desktop':{es:'Escritorio', en:'Desktop', ca:'Escriptori', ru:'Стол'},
+  'vd.new':{es:'Nuevo', en:'New', ca:'Nou', ru:'Новый'},
+  'vd.switched':{es:'Escritorio {n}', en:'Desktop {n}', ca:'Escriptori {n}', ru:'Рабочий стол {n}'},
+  'tv.hint':{es:'Clic en una ventana para ir a ella · Esc para cerrar', en:'Click a window to switch to it · Esc to close', ca:'Clic en una finestra per anar-hi · Esc per tancar', ru:'Нажмите на окно, чтобы перейти · Esc для закрытия'},
+  'tv.empty':{es:'No hay ventanas en este escritorio.', en:'No windows on this desktop.', ca:'No hi ha finestres en aquest escriptori.', ru:'На этом столе нет окон.'},
+  'ac.title':{es:'Ajustes rápidos', en:'Quick settings', ca:'Ajustos ràpids', ru:'Быстрые настройки'},
+  'ac.dark':{es:'Modo oscuro', en:'Dark mode', ca:'Mode fosc', ru:'Тёмная тема'},
+  'ac.dnd':{es:'No molestar', en:'Do not disturb', ca:'No molestar', ru:'Не беспокоить'},
+  'ac.dndoff':{es:'Avisos activados de nuevo', en:'Notifications back on', ca:'Avisos activats de nou', ru:'Уведомления снова включены'},
+  'ac.mute':{es:'Silenciar', en:'Mute', ca:'Silencia', ru:'Без звука'},
+  'ac.theme':{es:'Cambiar tema', en:'Cycle theme', ca:'Canvia el tema', ru:'Сменить тему'},
+  'ac.brightness':{es:'Brillo', en:'Brightness', ca:'Brillantor', ru:'Яркость'},
   'gad.title':{es:'Gadgets', en:'Gadgets', ca:'Gadgets', ru:'Гаджеты'},
   'gad.desc':{es:'Reloj, calendario, notas…', en:'Clock, calendar, notes…', ca:'Rellotge, calendari, notes…', ru:'Часы, календарь, заметки…'},
   'gad.intro':{es:'Añade mini-paneles a tu escritorio. Arrástralos donde quieras.', en:'Add mini-panels to your desktop. Drag them anywhere.', ca:'Afegeix mini-panells a l’escriptori. Arrossega’ls on vulguis.', ru:'Добавьте мини-панели на рабочий стол. Перетаскивайте их куда угодно.'},
@@ -3755,8 +3805,8 @@ function notify(opts){
   _notifBellUpdate();
   if(_notifPanelRender)_notifPanelRender();
   announce((title?title+'. ':'')+body);
-  // 2) globo emergente (si no está silenciado por sesión de restauración)
-  if(!opts.silent&&!(typeof _restoringSession!=='undefined'&&_restoringSession)){
+  // 2) globo emergente (si no está silenciado por sesión de restauración ni por "No molestar")
+  if(!opts.silent&&!(typeof _restoringSession!=='undefined'&&_restoringSession)&&!(typeof _dnd!=='undefined'&&_dnd)){
     let stack=document.getElementById('notif-stack');
     if(!stack){ stack=document.createElement('div'); stack.id='notif-stack'; document.body.appendChild(stack); }
     const b=document.createElement('div');
@@ -4254,6 +4304,13 @@ document.addEventListener('keydown',(e)=>{
     const ex=document.getElementById('cmdk-ov'); if(ex){ ex.remove(); } else { openCommandPalette(); }
     return;
   }
+  // Ctrl+Alt+←/→: cambiar de escritorio virtual (creando uno a la derecha si hace falta)
+  if(e.ctrlKey&&e.altKey&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){
+    e.preventDefault();
+    if(e.key==='ArrowRight'){ if(_curDesktop>=_desktopCount-1){ const n=addDesktop(); switchDesktop(n); } else switchDesktop(_curDesktop+1); }
+    else switchDesktop(_curDesktop-1);
+    return;
+  }
   // F1: centro de ayuda con los atajos
   if(e.key==='F1'){
     e.preventDefault();
@@ -4304,6 +4361,7 @@ function enterDesktop(){
   startIdleWatch(); // auto-bloqueo por inactividad (no-op si no hay cuenta/ajuste)
   try{ checkEventReminders(); }catch(e){} // avisos de la Agenda pendientes
   visibleInterval(()=>{ try{ checkEventReminders(); }catch(e){} },60000); // y cada minuto
+  try{ restoreSystemToggles(); }catch(e){} // modo oscuro / atenuar / no molestar guardados
   restoreEraClass(); // clase de era para la tipografía
   updateTrayLang(); // bandera del idioma en la bandeja
   initDesktop();
@@ -8694,6 +8752,95 @@ function openAgenda(targetKey){
 // Refresca todas las vistas de calendario que compartan tos-events (gadget + popup de la hora)
 function _agendaSync(){ try{ if(typeof _gadgetCalRefresh==='function')_gadgetCalRefresh(); }catch(e){} try{ if(typeof _calRefresh==='function')_calRefresh(); }catch(e){} }
 
+// ========== ESCRITORIOS VIRTUALES ==========
+let _curDesktop=0, _desktopCount=1;
+function _desktopVisibility(){
+  Object.keys(openWindows).forEach(id=>{ const info=openWindows[id], el=document.getElementById(id); if(!el)return;
+    if((info.desktop||0)!==_curDesktop)el.style.display='none'; else el.style.display=info.minimized?'none':''; });
+  updateTaskbar(); _updateDesktopPips();
+}
+function switchDesktop(n){
+  n=Math.max(0,Math.min(_desktopCount-1,n)); if(n===_curDesktop)return; _curDesktop=n; _desktopVisibility();
+  const list=Object.keys(openWindows).filter(id=>(openWindows[id].desktop||0)===_curDesktop&&!openWindows[id].minimized);
+  if(list.length)focusWindow(list[list.length-1]); else activeWindowId=null;
+  try{ notify({icon:'&#128421;&#65039;',title:t('vd.title'),body:t('vd.switched',{n:n+1}),silent:true,timeout:1200}); }catch(e){}
+  try{ announce(t('vd.switched',{n:n+1})); }catch(e){}
+}
+function addDesktop(){ if(_desktopCount>=4)return _curDesktop; _desktopCount++; _updateDesktopPips(); return _desktopCount-1; }
+function moveWindowToDesktop(id,n){ if(!openWindows[id])return; openWindows[id].desktop=Math.max(0,Math.min(_desktopCount-1,n)); _desktopVisibility(); }
+function _updateDesktopPips(){
+  const tb=document.getElementById('taskbar'); if(!tb)return;
+  let bar=document.getElementById('vd-pips');
+  if(_desktopCount<=1){ if(bar)bar.remove(); return; }
+  if(!bar){ bar=document.createElement('div'); bar.id='vd-pips'; const tray=document.getElementById('system-tray'); tb.insertBefore(bar,tray); }
+  bar.innerHTML='';
+  for(let i=0;i<_desktopCount;i++){ const b=document.createElement('button'); b.type='button'; b.className='vd-pip'+(i===_curDesktop?' on':''); b.textContent=String(i+1); b.title=t('vd.desktop')+' '+(i+1); b.onclick=()=>switchDesktop(i); bar.appendChild(b); }
+}
+
+// ========== VISTA DE TAREAS ==========
+function openTaskView(){
+  const ex=document.getElementById('taskview-ov'); if(ex){ ex.remove(); return; }
+  const ov=document.createElement('div'); ov.id='taskview-ov'; ov.className='tv-ov';
+  ov.innerHTML=`<div class="tv-inner"><div class="tv-desktops" id="tv-desktops"></div><div class="tv-grid" id="tv-grid"></div><div class="tv-hint">${escHtml(t('tv.hint'))}</div></div>`;
+  document.body.appendChild(ov);
+  const grid=ov.querySelector('#tv-grid'), dbar=ov.querySelector('#tv-desktops');
+  const desktopWins=(dsk)=>Object.keys(openWindows).filter(id=>(openWindows[id].desktop||0)===dsk);
+  const renderBar=()=>{
+    dbar.innerHTML='';
+    for(let i=0;i<_desktopCount;i++){ const b=document.createElement('button'); b.type='button'; b.className='tv-dbtn'+(i===_curDesktop?' on':''); b.textContent=t('vd.desktop')+' '+(i+1)+' ('+desktopWins(i).length+')'; b.onclick=()=>{ switchDesktop(i); renderBar(); renderGrid(); }; dbar.appendChild(b); }
+    if(_desktopCount<4){ const add=document.createElement('button'); add.type='button'; add.className='tv-add'; add.textContent='+ '+t('vd.new'); add.onclick=()=>{ const n=addDesktop(); switchDesktop(n); renderBar(); renderGrid(); }; dbar.appendChild(add); }
+  };
+  const renderGrid=()=>{
+    const wins=desktopWins(_curDesktop);
+    if(!wins.length){ grid.innerHTML='<div class="tv-empty">'+escHtml(t('tv.empty'))+'</div>'; return; }
+    grid.innerHTML=wins.map(id=>{ const info=openWindows[id];
+      const moves=Array.from({length:_desktopCount},(_,k)=>k===_curDesktop?'':'<button type="button" class="tv-mv" data-id="'+id+'" data-to="'+k+'">&#8594; '+(k+1)+'</button>').join('');
+      return '<div class="tv-card" data-id="'+id+'"><div class="tv-card-h"><span class="tv-ic">'+info.icon+'</span><span class="tv-t">'+escHtml(info.title)+'</span><button type="button" class="tv-close" data-id="'+id+'" aria-label="'+escHtml(t('btn.close'))+'">&#10005;</button></div><div class="tv-thumb">'+info.icon+'</div><div class="tv-move">'+moves+'</div></div>';
+    }).join('');
+    grid.querySelectorAll('.tv-card').forEach(c=>c.onclick=(e)=>{ if(e.target.closest('.tv-close')||e.target.closest('.tv-mv'))return; const id=c.dataset.id; ov.remove(); if(openWindows[id].minimized)restoreWindow(id); else focusWindow(id); });
+    grid.querySelectorAll('.tv-close').forEach(b=>b.onclick=(e)=>{ e.stopPropagation(); closeWindow(b.dataset.id); renderBar(); renderGrid(); });
+    grid.querySelectorAll('.tv-mv').forEach(b=>b.onclick=(e)=>{ e.stopPropagation(); moveWindowToDesktop(b.dataset.id,+b.dataset.to); renderBar(); renderGrid(); });
+  };
+  ov.addEventListener('mousedown',(e)=>{ if(e.target===ov)ov.remove(); });
+  const esc=(e)=>{ if(e.key==='Escape'){ const o=document.getElementById('taskview-ov'); if(o)o.remove(); document.removeEventListener('keydown',esc,true); } };
+  document.addEventListener('keydown',esc,true);
+  renderBar(); renderGrid();
+}
+
+// ========== CENTRO DE ACCIONES (ajustes rápidos) ==========
+let _dnd=false, _preMute=null;
+function applyDarkMode(on){ document.body.classList.toggle('night-mode',on); Store.set('tos-darkmode',on?'1':'0'); }
+function applyDim(level){ level=Math.max(0,Math.min(0.7,level||0)); let l=document.getElementById('dim-layer'); if(!l){ l=document.createElement('div'); l.id='dim-layer'; document.body.appendChild(l); } l.style.background='rgba(0,0,0,'+level+')'; l.style.display=level>0?'block':'none'; Store.set('tos-dim',String(level)); }
+function restoreSystemToggles(){
+  try{ if(Store.get('tos-darkmode')==='1')document.body.classList.add('night-mode'); }catch(e){}
+  try{ const d=parseFloat(Store.get('tos-dim')||'0'); if(d>0)applyDim(d); }catch(e){}
+  try{ _dnd=Store.get('tos-dnd')==='1'; }catch(e){}
+}
+function toggleActionCenter(ev){
+  if(ev){ ev.preventDefault(); ev.stopPropagation(); }
+  const ex=document.getElementById('action-center'); if(ex){ ex.remove(); return; }
+  const dark=document.body.classList.contains('night-mode'), dim=parseFloat(Store.get('tos-dim')||'0'), muted=masterVolume===0;
+  const panel=document.createElement('div'); panel.id='action-center'; panel.className='ac-center';
+  const tile=(id,ic,label,on)=>'<button type="button" class="ac-tile'+(on?' on':'')+'" data-a="'+id+'"><span class="ac-ic">'+ic+'</span><span class="ac-l">'+escHtml(label)+'</span></button>';
+  panel.innerHTML='<div class="ac-head">&#9889; '+escHtml(t('ac.title'))+'</div><div class="ac-grid">'
+    +tile('dark','&#127769;',t('ac.dark'),dark)
+    +tile('dnd','&#128277;',t('ac.dnd'),_dnd)
+    +tile('mute',muted?'&#128263;':'&#128266;',t('ac.mute'),muted)
+    +tile('theme','&#127912;',t('ac.theme'),false)
+    +'</div><div class="ac-slider"><label>&#128262; '+escHtml(t('ac.brightness'))+'</label><input type="range" id="ac-dim" min="0" max="70" value="'+Math.round(dim*100)+'"></div>';
+  document.body.appendChild(panel);
+  if(window.innerWidth<=600){ panel.style.left='6px'; panel.style.right='6px'; panel.style.width='auto'; }
+  panel.querySelectorAll('.ac-tile').forEach(b=>b.onclick=()=>{
+    const a=b.dataset.a;
+    if(a==='dark'){ applyDarkMode(!document.body.classList.contains('night-mode')); b.classList.toggle('on'); }
+    else if(a==='dnd'){ _dnd=!_dnd; Store.set('tos-dnd',_dnd?'1':'0'); b.classList.toggle('on'); if(!_dnd)try{notify({icon:'&#128276;',title:t('ac.title'),body:t('ac.dndoff'),silent:true,timeout:1400});}catch(e){} }
+    else if(a==='mute'){ if(masterVolume>0){ _preMute=masterVolume; setMasterVolume(0); } else { setMasterVolume(Math.round((_preMute||0.5)*100)); } b.classList.toggle('on'); const ic=b.querySelector('.ac-ic'); if(ic)ic.innerHTML=masterVolume===0?'&#128263;':'&#128266;'; }
+    else if(a==='theme'){ const cur=Store.get('tos-theme')||'luna'; const idx=OS_THEMES.indexOf(cur); applyTheme(OS_THEMES[(idx+1+OS_THEMES.length)%OS_THEMES.length]); }
+  });
+  panel.querySelector('#ac-dim').oninput=(e)=>applyDim((+e.target.value)/100);
+  setTimeout(()=>{ const off=(e)=>{ if(!panel.contains(e.target)&&e.target.id!=='tray-quick'){ panel.remove(); document.removeEventListener('mousedown',off,true); } }; document.addEventListener('mousedown',off,true); },0);
+}
+
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
 const OS_THEMES=['luna','olive','silver','classic','aero'];
 function applyTheme(t){
@@ -9872,7 +10019,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   // Accesibilidad: llevar el foco del teclado a la ventana recién abierta
   try{win.focus({preventScroll:true});}catch(e){win.focus();}
 
-  openWindows[id]={title,icon,minimized:false,maximized:false,prevBounds:null,session:opts.session||_pendingGameSession||null,trayOnly:!!opts.trayOnly};
+  openWindows[id]={title,icon,minimized:false,maximized:false,prevBounds:null,session:opts.session||_pendingGameSession||null,trayOnly:!!opts.trayOnly,desktop:_curDesktop};
   _pendingGameSession=null;
   _lastWindowId=id;
   updateTaskbar();
@@ -9976,6 +10123,7 @@ function updateTaskbar(){
   Object.keys(openWindows).forEach(id=>{
     const info=openWindows[id];
     if(info.trayOnly&&info.minimized)return; // el MSN minimizado vive solo en su icono de la bandeja
+    if((info.desktop||0)!==_curDesktop)return; // solo las ventanas del escritorio virtual actual
     const item=document.createElement('div');
     item.className='taskbar-item'+(id===activeWindowId&&!info.minimized?' active':'');
     item.innerHTML=`<span class="item-icon">${info.icon}</span>${escHtml(info.title)}`;
@@ -10053,18 +10201,19 @@ function getSnapPreview(){
   return _snapPreview;
 }
 function snapKindFor(cx,cy){
-  const W=window.innerWidth;
-  if(cy<=6)return 'max';
-  if(cx<=6)return 'left';
-  if(cx>=W-6)return 'right';
+  const W=window.innerWidth,H=window.innerHeight-36;
+  // Borde superior: esquinas = cuartos, centro = maximizar
+  if(cy<=6){ if(cx<=W*0.18)return 'tl'; if(cx>=W*0.82)return 'tr'; return 'max'; }
+  // Bordes laterales: tercio superior/inferior = cuarto, centro = media pantalla
+  if(cx<=6){ if(cy<=H*0.33)return 'tl'; if(cy>=H*0.66)return 'bl'; return 'left'; }
+  if(cx>=W-6){ if(cy<=H*0.33)return 'tr'; if(cy>=H*0.66)return 'br'; return 'right'; }
   return null;
 }
 function snapRect(kind){
   const W=window.innerWidth,H=window.innerHeight-36;
-  if(kind==='max')return {l:0,t:0,w:W,h:H};
-  if(kind==='left')return {l:0,t:0,w:W/2,h:H};
-  if(kind==='right')return {l:W/2,t:0,w:W/2,h:H};
-  return null;
+  const M={max:[0,0,W,H],left:[0,0,W/2,H],right:[W/2,0,W/2,H],
+    tl:[0,0,W/2,H/2],tr:[W/2,0,W/2,H/2],bl:[0,H/2,W/2,H/2],br:[W/2,H/2,W/2,H/2]}[kind];
+  return M?{l:M[0],t:M[1],w:M[2],h:M[3]}:null;
 }
 function showSnapPreview(kind){
   const p=getSnapPreview(),r=snapRect(kind);
@@ -10077,11 +10226,12 @@ function applySnap(win,kind){
     if(info&&!info.maximized){info.prevBounds={left:win.style.left,top:win.style.top,width:win.style.width,height:win.style.height};info.maximized=true;}
     win.classList.add('maximized');
     win.style.left='0';win.style.top='0';win.style.width='100%';win.style.height='calc(100svh - 36px)';
-  }else{
-    if(info)info.maximized=false;
-    win.classList.remove('maximized');
-    win.style.left=kind==='right'?'50%':'0';win.style.top='0';win.style.width='50%';win.style.height='calc(100svh - 36px)';
+    return;
   }
+  const r=snapRect(kind); if(!r)return;
+  if(info)info.maximized=false;
+  win.classList.remove('maximized');
+  win.style.left=r.l+'px';win.style.top=r.t+'px';win.style.width=r.w+'px';win.style.height=r.h+'px';
 }
 
 // ========== GESTO ÚNICO DE ARRASTRE / REDIMENSIÓN ==========
