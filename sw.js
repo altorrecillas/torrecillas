@@ -8,7 +8,7 @@
 // Estrategia de red: red primero para el documento (index.html siempre fresco si hay
 // conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
 // solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.38.0';
+const APP_VERSION = '0.38.1';
 const CACHE = 'tos-' + APP_VERSION;
 const ASSETS = [
   './', './index.html', './og.png', './apple-touch-icon.png',
