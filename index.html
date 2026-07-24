@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Torrecillas OS">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta property="og:description" content="15 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
+<meta property="og:description" content="16 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
 <meta property="og:url" content="https://torrecillas.cat/">
 <meta property="og:image" content="https://torrecillas.cat/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,12 +22,12 @@
 <meta property="og:image:alt" content="Logo de Torrecillas OS sobre una colina estilo Bliss con el texto: un escritorio XP en tu navegador">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta name="twitter:description" content="15 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
+<meta name="twitter:description" content="16 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
 <meta name="twitter:image" content="https://torrecillas.cat/og.png">
 <!-- Datos estructurados para buscadores (schema.org) -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
-  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 15 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
+  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 16 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
   {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/"},
   {"@type":"ItemList","@id":"https://torrecillas.cat/#proyectos","name":"Proyectos","itemListElement":[
     {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Woodpecker's","url":"https://woodpeckers.es","description":"Web oficial de la hamburguesería Woodpecker's de Gavà"}},
@@ -352,6 +352,14 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .docs-grid.list .docs-ic{font-size:20px}
 .docs-grid.list .docs-name{max-width:none;flex:1}
 .docs-grid.list .docs-date{margin-left:auto}
+/* Papelera de Mis documentos */
+.docs-grid.docs-trash{display:block;padding:6px}
+.docs-trash-hd{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 8px;font-weight:bold;color:#1a4fa0;font-size:13px}
+.docs-empty-btn{background:#ffe8e8;border:1px solid #d0a0a0;color:#a23;border-radius:4px;font-size:11px;padding:2px 8px;cursor:pointer;font-weight:normal}
+.docs-trash-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-bottom:1px solid #f0f0f0;font-size:12px}
+.docs-tr-name{flex:1;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.docs-tr-restore{background:#eef4ff;border:1px solid #b9cde8;color:#1a4fa0;border-radius:3px;font-size:11px;padding:2px 8px;cursor:pointer}
+.docs-tr-del{background:none;border:none;color:#b55;cursor:pointer;font-size:12px;padding:0 4px}
 .docs-empty{grid-column:1/-1;text-align:center;color:#888;padding:30px 10px;font-size:13px}
 .docs-empty span{font-size:11px;color:#aaa}
 .docs-foot{flex-shrink:0;padding:4px 10px;border-top:1px solid #aca899;background:#ece9d8;font-size:10px;color:#555;min-height:20px}
@@ -1000,6 +1008,9 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .clip-item{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid #f0f0f0;padding:6px 8px;cursor:pointer;font-size:12px;color:#333;font-family:'Consolas',monospace}
 .clip-item span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .clip-item:hover{background:#eef4ff}
+.clip-item.clip-img{display:flex;align-items:center;gap:8px}
+.clip-item.clip-img img{width:44px;height:34px;object-fit:cover;border:1px solid #cdd7e6;border-radius:3px;flex-shrink:0;background:repeating-conic-gradient(#ddd 0% 25%,#fff 0% 50%) 50%/8px 8px}
+.clip-item.clip-img span{color:#456;font-family:Tahoma,sans-serif}
 .clip-empty{padding:16px;text-align:center;color:#999;font-size:12px}
 .cpl-root{display:flex;flex-direction:column;height:100%;background:#eef2f8;font-family:Tahoma,sans-serif}
 .cpl-hd{padding:10px 14px;font-size:12px;color:#456;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
@@ -1108,6 +1119,48 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 #dim-layer{position:fixed;inset:0;z-index:8000;pointer-events:none;display:none}
 body.night-mode #desktop{filter:invert(1) hue-rotate(180deg)}
 body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #desktop canvas,body.night-mode #desktop svg,body.night-mode #desktop #xp-bg,body.night-mode #desktop .desktop-icon .icon-img{filter:invert(1) hue-rotate(180deg)}
+/* ═══════════════════  § TABLA PERIÓDICA · CONVERSOR  ═══════════════════ */
+.pt-root{display:flex;flex-direction:column;height:100%;background:#eef2f8;font-family:Tahoma,sans-serif}
+.pt-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 8px;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
+.pt-search{padding:4px 8px;border:1px solid #7f9db9;border-radius:4px;font-size:12px;min-width:180px}
+.pt-legend{display:flex;flex-wrap:wrap;gap:6px;font-size:9px;color:#456}
+.pt-leg{display:inline-flex;align-items:center;gap:3px}
+.pt-leg i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.pt-scroll{flex:1;overflow:auto;padding:8px}
+.pt-grid{display:grid;grid-template-columns:repeat(18,minmax(26px,1fr));grid-auto-rows:minmax(26px,auto);gap:2px;min-width:520px}
+.pt-cell{border:none;border-radius:3px;cursor:pointer;padding:2px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;color:#222;transition:transform .08s}
+.pt-cell:hover{transform:scale(1.12);z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.pt-cell.sel{outline:2px solid #1a3a6a;outline-offset:-1px}
+.pt-cell.dim{opacity:.22}
+.pt-n{font-size:7px;align-self:flex-start;margin-left:2px;color:#000a}
+.pt-s{font-size:12px;font-weight:bold}
+.pt-detail{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:8px 12px;border-top:1px solid #cdd7e6;background:#fff;min-height:44px}
+.pt-d-sym{width:38px;height:38px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;color:#222;flex-shrink:0}
+.pt-d-txt{font-size:12px;color:#234}
+.cv-root{display:flex;flex-direction:column;height:100%;background:#eef2f8;font-family:Tahoma,sans-serif}
+.cv-cats{display:flex;flex-wrap:wrap;gap:4px;padding:7px 8px;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
+.cv-cat{background:linear-gradient(180deg,#fff,#e6eef8);border:1px solid #9db4d0;border-radius:14px;padding:3px 11px;font-size:11px;cursor:pointer;color:#123}
+.cv-cat.on{background:linear-gradient(180deg,#4a90e8,#1c6ad0);border-color:#1a5fd0;color:#fff;font-weight:bold}
+.cv-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px}
+.cv-row{display:flex;gap:8px;width:100%;max-width:280px}
+.cv-num{flex:1;padding:8px 10px;border:1px solid #7f9db9;border-radius:5px;font-size:16px;text-align:right;min-width:0}
+.cv-sel{border:1px solid #7f9db9;border-radius:5px;font-size:13px;padding:0 4px;background:#fff}
+.cv-eq{font-size:22px;color:#5a86c0;cursor:pointer;user-select:none}
+.cv-note{padding:6px 10px;font-size:10px;color:#889;text-align:center;min-height:14px}
+/* ═══════════════════  § AJEDREZ  ═══════════════════ */
+.chess-root{display:flex;flex-direction:column;align-items:center;height:100%;background:#2f2a26;font-family:Tahoma,sans-serif;padding:8px;gap:8px}
+.chess-hud{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:360px;color:#f0e6d8;font-size:12px}
+.chess-lvl select{background:#1e1a16;color:#eee;border:1px solid #6b5b47;border-radius:3px;font-size:11px}
+.chess-board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:min(360px,86vw);max-width:100%;aspect-ratio:1;border:3px solid #6b5b47;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.chess-sq{border:none;padding:0;margin:0;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;box-sizing:border-box;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:min(30px,7vw);line-height:1}
+.chess-sq.light{background:#eeded0}.chess-sq.dark{background:#a9825f}
+.chess-sq.sel{background:#f6d67b!important}
+.chess-sq.mv::after{content:'';position:absolute;width:26%;height:26%;border-radius:50%;background:rgba(40,120,40,.5)}
+.chess-sq.cap{box-shadow:inset 0 0 0 3px rgba(200,50,50,.7)}
+.chess-pc{pointer-events:none;text-shadow:0 1px 1px rgba(0,0,0,.35)}
+.chess-pc.w{color:#fff;-webkit-text-stroke:.5px #555}
+.chess-pc.b{color:#1a1a1a}
+.chess-actions{display:flex;align-items:center;gap:10px;color:#f0e6d8;font-size:12px}
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
@@ -2970,6 +3023,10 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
             <div class="si-icon">&#128197;</div>
             <div><div class="si-label" data-i18n="agenda.title">Agenda</div><div class="si-desc" data-i18n="agenda.desc">Calendario y recordatorios</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openConverter()">
+            <div class="si-icon">&#128207;</div>
+            <div><div class="si-label" data-i18n="cv.title">Conversor</div><div class="si-desc" data-i18n="cv.desc">Unidades y divisas</div></div>
+          </button>
         </div>
         <button type="button" class="start-item" id="start-creatividad-toggle" onclick="toggleStartCreatividad(event)">
           <div class="si-icon">&#127912;</div>
@@ -3051,6 +3108,10 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
           <button type="button" class="start-item" onclick="openEbookReader()">
             <div class="si-icon">&#128214;</div>
             <div><div class="si-label" data-i18n="reader.title">Lector</div><div class="si-desc">EPUB y PDF</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openPeriodicTable()">
+            <div class="si-icon">&#129514;</div>
+            <div><div class="si-label" data-i18n="pt.title">Tabla peri&oacute;dica</div><div class="si-desc" data-i18n="pt.desc">118 elementos</div></div>
           </button>
         </div>
         <button type="button" class="start-item" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
@@ -3151,7 +3212,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.38.1';
+const APP_VERSION = '0.40.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -3259,6 +3320,14 @@ const I18N={
   'docs.moveto':{es:'Mover a…', en:'Move to…', ca:'Mou a…', ru:'Переместить в…'},
   'docs.delfolder':{es:'Eliminar carpeta', en:'Delete folder', ca:'Elimina la carpeta', ru:'Удалить папку'},
   'docs.delfolderq':{es:'¿Eliminar la carpeta «{n}»? Sus archivos volverán a la raíz.', en:'Delete folder “{n}”? Its files return to the root.', ca:'Vols eliminar la carpeta «{n}»? Els fitxers tornaran a l’arrel.', ru:'Удалить папку «{n}»? Её файлы вернутся в корень.'},
+  'docs.trash':{es:'Papelera', en:'Recycle bin', ca:'Paperera', ru:'Корзина'},
+  'docs.totrash':{es:'Se moverá a la papelera (puedes restaurarlo).', en:'It will move to the recycle bin (you can restore it).', ca:'Es mourà a la paperera (pots restaurar-lo).', ru:'Будет перемещён в корзину (можно восстановить).'},
+  'docs.movedtrash':{es:'Movido a la papelera', en:'Moved to recycle bin', ca:'Mogut a la paperera', ru:'Перемещено в корзину'},
+  'docs.restore':{es:'Restaurar', en:'Restore', ca:'Restaura', ru:'Восстановить'},
+  'docs.restored':{es:'Archivo restaurado', en:'File restored', ca:'Fitxer restaurat', ru:'Файл восстановлен'},
+  'docs.trashempty':{es:'La papelera está vacía.', en:'The recycle bin is empty.', ca:'La paperera és buida.', ru:'Корзина пуста.'},
+  'docs.empty3':{es:'Vaciar papelera', en:'Empty bin', ca:'Buida la paperera', ru:'Очистить корзину'},
+  'docs.emptyq':{es:'¿Vaciar la papelera? Los archivos se borrarán definitivamente.', en:'Empty the recycle bin? Files will be permanently deleted.', ca:'Vols buidar la paperera? Els fitxers s’esborraran definitivament.', ru:'Очистить корзину? Файлы будут удалены навсегда.'},
   // Bloc de notas
   'np.wrap':{es:'Ajuste de línea', en:'Word wrap', ca:'Ajust de línia', ru:'Перенос строк'},
   'np.saved':{es:'Guardado', en:'Saved', ca:'Desat', ru:'Сохранено'},
@@ -3433,6 +3502,23 @@ const I18N={
   'ac.mute':{es:'Silenciar', en:'Mute', ca:'Silencia', ru:'Без звука'},
   'ac.theme':{es:'Cambiar tema', en:'Cycle theme', ca:'Canvia el tema', ru:'Сменить тему'},
   'ac.brightness':{es:'Brillo', en:'Brightness', ca:'Brillantor', ru:'Яркость'},
+  'pt.title':{es:'Tabla periódica', en:'Periodic table', ca:'Taula periòdica', ru:'Таблица Менделеева'},
+  'pt.desc':{es:'118 elementos químicos', en:'118 chemical elements', ca:'118 elements químics', ru:'118 химических элементов'},
+  'pt.search':{es:'Buscar elemento (nombre, símbolo o nº)…', en:'Search element (name, symbol or nº)…', ca:'Cerca element (nom, símbol o nº)…', ru:'Поиск элемента (имя, символ, №)…'},
+  'pt.number':{es:'nº', en:'no.', ca:'nº', ru:'№'},
+  'pt.mass':{es:'masa', en:'mass', ca:'massa', ru:'масса'},
+  'cv.title':{es:'Conversor', en:'Converter', ca:'Convertidor', ru:'Конвертер'},
+  'cv.desc':{es:'Unidades y divisas', en:'Units & currency', ca:'Unitats i divises', ru:'Единицы и валюты'},
+  'cv.swap':{es:'Intercambiar', en:'Swap', ca:'Intercanvia', ru:'Поменять'},
+  'cv.rates':{es:'Tasas aproximadas (offline)', en:'Approx. rates (offline)', ca:'Taxes aproximades (offline)', ru:'Приблизительные курсы (офлайн)'},
+  'cv.length':{es:'Longitud', en:'Length', ca:'Longitud', ru:'Длина'},
+  'cv.mass':{es:'Peso', en:'Weight', ca:'Pes', ru:'Вес'},
+  'cv.temp':{es:'Temperatura', en:'Temperature', ca:'Temperatura', ru:'Температура'},
+  'cv.area':{es:'Área', en:'Area', ca:'Àrea', ru:'Площадь'},
+  'cv.speed':{es:'Velocidad', en:'Speed', ca:'Velocitat', ru:'Скорость'},
+  'cv.time':{es:'Tiempo', en:'Time', ca:'Temps', ru:'Время'},
+  'cv.data':{es:'Datos', en:'Data', ca:'Dades', ru:'Данные'},
+  'cv.currency':{es:'Divisas', en:'Currency', ca:'Divises', ru:'Валюты'},
   'gad.title':{es:'Gadgets', en:'Gadgets', ca:'Gadgets', ru:'Гаджеты'},
   'gad.desc':{es:'Reloj, calendario, notas…', en:'Clock, calendar, notes…', ca:'Rellotge, calendari, notes…', ru:'Часы, календарь, заметки…'},
   'gad.intro':{es:'Añade mini-paneles a tu escritorio. Arrástralos donde quieras.', en:'Add mini-panels to your desktop. Drag them anywhere.', ca:'Afegeix mini-panells a l’escriptori. Arrossega’ls on vulguis.', ru:'Добавьте мини-панели на рабочий стол. Перетаскивайте их куда угодно.'},
@@ -3449,6 +3535,8 @@ const I18N={
   'clip.title':{es:'Portapapeles', en:'Clipboard', ca:'Porta-retalls', ru:'Буфер обмена'},
   'clip.empty':{es:'Aún no has copiado nada.', en:'Nothing copied yet.', ca:'Encara no has copiat res.', ru:'Пока ничего не скопировано.'},
   'clip.recopied':{es:'Copiado de nuevo', en:'Copied again', ca:'Copiat de nou', ru:'Скопировано снова'},
+  'clip.image':{es:'Imagen (clic para abrir)', en:'Image (click to open)', ca:'Imatge (clic per obrir)', ru:'Изображение (открыть)'},
+  'clip.imgcopied':{es:'Imagen copiada al portapapeles', en:'Image copied to clipboard', ca:'Imatge copiada al porta-retalls', ru:'Изображение скопировано'},
   'cpl.title':{es:'Panel de Control', en:'Control Panel', ca:'Tauler de control', ru:'Панель управления'},
   'cpl.intro':{es:'Todo tu sistema en un sitio. Elige una categoría.', en:'Your whole system in one place. Pick a category.', ca:'Tot el teu sistema en un lloc. Tria una categoria.', ru:'Вся система в одном месте. Выберите категорию.'},
   'cpl.appearance':{es:'Apariencia y fondos', en:'Appearance & wallpaper', ca:'Aparença i fons', ru:'Оформление и обои'},
@@ -3904,6 +3992,13 @@ function fsRemoveFolder(name){ Store.set('tos-folders',JSON.stringify(fsFolders(
 function fsRenameFolder(oldN,newN){ newN=(newN||'').trim(); if(!newN||fsFolders().includes(newN))return false; Store.set('tos-folders',JSON.stringify(fsFolders().map(x=>x===oldN?newN:x))); const arr=fsList(); arr.forEach(f=>{ if((f.folder||'')===oldN)f.folder=newN; }); _fsWrite(arr); return true; }
 function fsMove(id,folder){ const arr=fsList(); const f=arr.find(x=>x.id===id); if(f){ f.folder=folder||''; _fsWrite(arr); } }
 function fsRemove(id){ const arr=fsList().filter(f=>f.id!==id); _fsWrite(arr); }
+// Papelera de Mis documentos: borrar mueve aquí; se puede restaurar o vaciar.
+function fsTrash(){ try{ const a=JSON.parse(Store.get('tos-files-trash')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function _fsTrashWrite(a){ return Store.set('tos-files-trash',JSON.stringify(a)); }
+function fsToTrash(id){ const f=fsGet(id); if(!f)return; const tr=fsTrash(); tr.unshift(Object.assign({},f,{delFolder:f.folder||'',folder:'',trashed:Date.now()})); if(tr.length>60)tr.length=60; _fsTrashWrite(tr); fsRemove(id); }
+function fsRestore(id){ const tr=fsTrash(); const f=tr.find(x=>x.id===id); if(!f)return; const arr=fsList(); const folder=fsFolders().includes(f.delFolder)?f.delFolder:''; arr.push({id:f.id,name:f.name,type:f.type,data:f.data,date:Date.now(),folder:folder}); _fsWrite(arr); _fsTrashWrite(tr.filter(x=>x.id!==id)); }
+function fsTrashDelete(id){ _fsTrashWrite(fsTrash().filter(x=>x.id!==id)); }
+function fsTrashEmpty(){ _fsTrashWrite([]); }
 // Saca un archivo del FS virtual al equipo real (descarga del navegador)
 function fsDownload(id){
   const f=fsGet(id); if(!f)return;
@@ -3948,6 +4043,7 @@ function openMyDocuments(){
       <span class="docs-crumb" id="docs-crumb"></span>
       <span class="docs-tb-spacer"></span>
       <button type="button" class="docs-tb" id="docs-newfolder" title="${escHtml(t('docs.newfolder'))}">&#128193;+</button>
+      <button type="button" class="docs-tb" id="docs-trash" title="${escHtml(t('docs.trash'))}">&#128465;&#65039;</button>
       <button type="button" class="docs-tb" id="docs-view" title="${escHtml(t('docs.view'))}">&#9636;</button>
     </div>
     <div class="docs-grid" id="docs-grid" role="listbox" aria-label="Mis documentos"></div>
@@ -3957,12 +4053,23 @@ function openMyDocuments(){
     let sel=null; _docsCurFolder=fsFolders().includes(_docsCurFolder)?_docsCurFolder:'';
     let view=(Store.get('tos-docs-view')==='list')?'list':'icons';
     const grid=document.getElementById('docs-grid');
-    const setCrumb=()=>{ const c=document.getElementById('docs-crumb'); if(!c)return; c.innerHTML='<button type="button" class="docs-crumb-root">&#128193; '+escHtml(t('app.docs'))+'</button>'+(_docsCurFolder?' &#8250; <b>'+escHtml(_docsCurFolder)+'</b>':''); const rb=c.querySelector('.docs-crumb-root'); if(rb)rb.onclick=()=>{ _docsCurFolder=''; sel=null; render(); }; };
+    const setCrumb=()=>{ const c=document.getElementById('docs-crumb'); if(!c)return; const tail=_docsCurFolder==='__trash__'?(' &#8250; <b>&#128465;&#65039; '+escHtml(t('docs.trash'))+'</b>'):(_docsCurFolder?' &#8250; <b>'+escHtml(_docsCurFolder)+'</b>':''); c.innerHTML='<button type="button" class="docs-crumb-root">&#128193; '+escHtml(t('app.docs'))+'</button>'+tail; const rb=c.querySelector('.docs-crumb-root'); if(rb)rb.onclick=()=>{ _docsCurFolder=''; sel=null; render(); }; };
+    const renderTrash=()=>{
+      const tr=fsTrash();
+      let html='<div class="docs-trash-hd"><span>&#128465;&#65039; '+escHtml(t('docs.trash'))+'</span>'+(tr.length?'<button type="button" class="docs-empty-btn" id="docs-empty-btn">&#129529; '+escHtml(t('docs.empty3'))+'</button>':'')+'</div>';
+      html+=tr.length?tr.map(f=>{ const m=FS_META[f.type]||FS_META.txt; return '<div class="docs-trash-item"><span class="docs-ic">'+m.icon+'</span><span class="docs-tr-name">'+escHtml(f.name)+m.ext+'</span><button type="button" class="docs-tr-restore" data-id="'+f.id+'">&#8617;&#65039; '+escHtml(t('docs.restore'))+'</button><button type="button" class="docs-tr-del" data-id="'+f.id+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10005;</button></div>'; }).join(''):('<div class="docs-empty">'+escHtml(t('docs.trashempty'))+'</div>');
+      grid.className='docs-grid docs-trash'; grid.innerHTML=html;
+      const eb=grid.querySelector('#docs-empty-btn'); if(eb)eb.onclick=()=>xpConfirm(t('docs.trash'),t('docs.emptyq'),()=>{ fsTrashEmpty(); render(); });
+      grid.querySelectorAll('.docs-tr-restore').forEach(b=>b.onclick=()=>{ fsRestore(b.dataset.id); render(); announce(t('docs.restored')); });
+      grid.querySelectorAll('.docs-tr-del').forEach(b=>b.onclick=()=>{ fsTrashDelete(b.dataset.id); render(); });
+      const foot=document.getElementById('docs-foot-txt'); if(foot)foot.textContent=tr.length+' · '+t('docs.trash');
+    };
     const render=()=>{
       if(!grid)return;
-      grid.className='docs-grid'+(view==='list'?' list':'');
       document.getElementById('docs-up').disabled=!_docsCurFolder;
       setCrumb();
+      if(_docsCurFolder==='__trash__'){ renderTrash(); return; }
+      grid.className='docs-grid'+(view==='list'?' list':'');
       const folders=(_docsCurFolder==='')?fsFolders().slice().sort((a,b)=>a.localeCompare(b)):[];
       const files=fsList().filter(f=>(f.folder||'')===_docsCurFolder).sort((a,b)=>b.date-a.date);
       let html='';
@@ -3980,6 +4087,7 @@ function openMyDocuments(){
     document.getElementById('docs-up').onclick=()=>{ _docsCurFolder=''; sel=null; render(); };
     document.getElementById('docs-view').onclick=()=>{ view=(view==='icons')?'list':'icons'; Store.set('tos-docs-view',view); render(); };
     document.getElementById('docs-newfolder').onclick=()=>{ xpPrompt(t('docs.newfolder'),t('docs.foldername'),'',(name)=>{ if(name&&fsAddFolder(name))render(); }); };
+    document.getElementById('docs-trash').onclick=()=>{ _docsCurFolder='__trash__'; sel=null; render(); };
     grid.addEventListener('keydown',(e)=>{
       if(!sel)return;
       if(e.key==='Enter'){e.preventDefault();fsOpen(sel);}
@@ -3989,8 +4097,8 @@ function openMyDocuments(){
     });
     const renombrar=(fid)=>{ const f=fsGet(fid); if(!f)return; xpPrompt(t('docs.renametitle'),t('docs.renameq',{n:f.name}),f.name,(nombre)=>{ if(nombre){ fsRename(fid,nombre); render(); } }); };
     const borrar=(fid)=>{ const f=fsGet(fid); if(!f)return;
-      xpDialog(t('docs.deltitle'),'<div class="dlg-icon">&#128465;&#65039;</div><div>'+t('docs.delq',{n:escHtml(f.name)})+'<br><span class="dlg-sub">'+t('docs.undone')+'</span></div>',[
-        {label:t('btn.delete'),primary:true,action:()=>{fsRemove(fid);if(sel===fid)sel=null;render();announce('Documento eliminado');}},
+      xpDialog(t('docs.deltitle'),'<div class="dlg-icon">&#128465;&#65039;</div><div>'+t('docs.delq',{n:escHtml(f.name)})+'<br><span class="dlg-sub">'+t('docs.totrash')+'</span></div>',[
+        {label:t('btn.delete'),primary:true,action:()=>{fsToTrash(fid);if(sel===fid)sel=null;render();announce(t('docs.movedtrash'));}},
         {label:t('btn.cancel')}
       ]);
     };
@@ -4725,7 +4833,7 @@ function isStandalone(){
   function injectFallback(){
     const m={
       name:'Torrecillas OS',short_name:'Torrecillas OS',lang:'es',
-      description:'Un escritorio estilo Windows XP en tu navegador: 15 juegos clasicos, Paint, terminal y portfolio.',
+      description:'Un escritorio estilo Windows XP en tu navegador: 16 juegos clasicos, Paint, terminal y portfolio.',
       start_url:location.origin+location.pathname,
       scope:location.origin+location.pathname.replace(/[^/]*$/,''),
       display:'standalone',background_color:'#08286c',theme_color:'#1941a5',
@@ -5325,7 +5433,8 @@ const RECORD_DEFS=[
   {icon:'&#128313;',label:'Conecta 4 · racha',key:'tos-c4-best',unit:'seguidas'},
   {icon:'&#11093;',label:'Tres en raya',key:'tos-ttt-best',unit:'sin perder'},
   {icon:'&#129504;',label:'Memoria',key:'tos-memory-best',unit:'movimientos'},
-  {icon:'&#127183;',label:'Solitario',key:'tos-solitaire-best',unit:'victorias'}
+  {icon:'&#127183;',label:'Solitario',key:'tos-solitaire-best',unit:'victorias'},
+  {icon:'&#9823;&#65039;',label:'Ajedrez',key:'tos-chess-best',unit:'victorias'}
 ];
 // Punto único para la mejor marca de un juego: evita repetir el
 // parseInt(Store.get(...))||0 + comparar + guardar en cada uno, y avisa si la clave
@@ -7816,6 +7925,7 @@ function openImageTools(preloadFile){
           <div class="it-prow it-exprow">
             <button type="button" class="it-apply" id="it-dl">&#11015;&#65039; ${t('btn.download')}</button>
             <button type="button" class="it-mini" id="it-tofs">&#128190; ${t('btn.tofiles')}</button>
+            <button type="button" class="it-mini" id="it-copy">&#128203; ${t('btn.copy')}</button>
             <button type="button" class="it-mini" id="it-wall">&#128444;&#65039; ${t('it.wall')}</button>
           </div><div class="it-prow"><small>${t('it.noexif')}</small></div>`;
         const fmt=panel.querySelector('#it-fmt'), tgtOn=panel.querySelector('#it-tgt-on'), tgt=panel.querySelector('#it-tgt');
@@ -7825,6 +7935,7 @@ function openImageTools(preloadFile){
         const getBlob=async()=>{ if(tgtOn.checked&&!isPng())return compressToTarget(fmt.value,(+tgt.value||200)*1024); return exportBlob(fmt.value, isPng()?undefined:0.92); };
         panel.querySelector('#it-dl').onclick=async()=>{ const blob=await getBlob(); if(!blob)return; const ext=fmt.value.split('/')[1].replace('jpeg','jpg'); const a=document.createElement('a'); a.download='imagen-'+Date.now()+'.'+ext; a.href=URL.createObjectURL(blob); a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); notify({icon:'&#127912;',title:t('it.title'),body:t('it.exported')+' ('+Math.round(blob.size/1024)+' KB)'}); };
         panel.querySelector('#it-tofs').onclick=async()=>{ const blob=await getBlob(); if(!blob)return; const fr=new FileReader(); fr.onload=()=>fsSaveDialog('png','Imagen',fr.result,null); fr.readAsDataURL(blob); };
+        panel.querySelector('#it-copy').onclick=()=>{ try{ clipRecordImage(flatCanvas().toDataURL('image/png')); }catch(e){} };
         panel.querySelector('#it-wall').onclick=()=>{ try{ const data=flatCanvas().toDataURL('image/png'); Store.set('tos-wp-paint',data); Store.set('tos-wp','paint'); applyWallpaper('paint'); notify({icon:'&#128444;&#65039;',title:t('it.title'),body:t('paint.wallpaper')}); }catch(e){} };
       }
     };
@@ -8264,6 +8375,7 @@ function openPixelArt(){
     <div class="px-actions">
       <button type="button" class="px-btn" id="px-dl">&#11015;&#65039; PNG</button>
       <button type="button" class="px-btn" id="px-fs">&#128190; ${t('btn.tofiles')}</button>
+      <button type="button" class="px-btn" id="px-copy">&#128203;</button>
       <span class="px-scale"><label>${t('px.exportscale')}</label><select id="px-scale"><option value="8">×8</option><option value="16" selected>×16</option><option value="24">×24</option></select></span>
     </div>
   </div>`;
@@ -8299,6 +8411,7 @@ function openPixelArt(){
     const exportCanvas=()=>{ const s=+win.querySelector('#px-scale').value; const c=document.createElement('canvas'); c.width=N*s; c.height=N*s; const cx=c.getContext('2d'); for(let y=0;y<N;y++)for(let x=0;x<N;x++){ const v=cells[y*N+x]; if(v){ cx.fillStyle=v; cx.fillRect(x*s,y*s,s,s); } } return c; };
     win.querySelector('#px-dl').onclick=()=>{ const a=document.createElement('a'); a.download='pixelart-'+Date.now()+'.png'; a.href=exportCanvas().toDataURL('image/png'); a.click(); };
     win.querySelector('#px-fs').onclick=()=>{ try{ fsSaveDialog('png','Pixel Art',exportCanvas().toDataURL('image/png'),null); }catch(e){} };
+    win.querySelector('#px-copy').onclick=()=>{ try{ clipRecordImage(exportCanvas().toDataURL('image/png')); }catch(e){} };
     osMakeDragSource(canvas,()=>({kind:'image',data:exportCanvas().toDataURL('image/png'),name:'Pixel Art'}));
     build(16);
   }});
@@ -8484,22 +8597,23 @@ function openCommandPalette(){
 
 // ========== HISTORIAL DEL PORTAPAPELES (en memoria, no se persiste) ==========
 // No se guarda en disco a propósito: por aquí pasan contraseñas del generador.
-let _clipLog=[];
-function clipRecord(text){
-  text=String(text==null?'':text); if(!text.trim())return;
-  _clipLog=_clipLog.filter(x=>x!==text); _clipLog.unshift(text); if(_clipLog.length>15)_clipLog.length=15;
+let _clipLog=[]; // {kind:'text'|'image', data}
+function _clipPush(item){
+  _clipLog=_clipLog.filter(x=>!(x.kind===item.kind&&x.data===item.data)); _clipLog.unshift(item); if(_clipLog.length>15)_clipLog.length=15;
   const bell=document.getElementById('tray-clip'); if(bell)bell.classList.add('has');
 }
+function clipRecord(text){ text=String(text==null?'':text); if(!text.trim())return; _clipPush({kind:'text',data:text}); }
+function clipRecordImage(dataURL){ if(!dataURL||String(dataURL).indexOf('data:image')!==0)return; _clipPush({kind:'image',data:dataURL}); try{ notify({icon:'&#128203;',title:t('clip.title'),body:t('clip.imgcopied'),silent:true,timeout:1500}); }catch(e){} }
 function toggleClipHistory(ev){
   if(ev){ ev.preventDefault(); ev.stopPropagation(); }
   const ex=document.getElementById('clip-center'); if(ex){ ex.remove(); return; }
   const panel=document.createElement('div'); panel.id='clip-center'; panel.className='clip-center';
   panel.innerHTML=`<div class="clip-head">&#128203; ${escHtml(t('clip.title'))}${_clipLog.length?'<button type="button" id="clip-clear" class="clip-clear">'+escHtml(t('btn.clear'))+'</button>':''}</div>`
-    +(_clipLog.length?('<div class="clip-list">'+_clipLog.map((x,i)=>'<button type="button" class="clip-item" data-i="'+i+'"><span>'+escHtml(x.length>80?x.slice(0,80)+'…':x)+'</span></button>').join('')+'</div>'):'<div class="clip-empty">'+escHtml(t('clip.empty'))+'</div>');
+    +(_clipLog.length?('<div class="clip-list">'+_clipLog.map((x,i)=>{ if(x.kind==='image')return '<button type="button" class="clip-item clip-img" data-i="'+i+'"><img src="'+x.data+'" alt=""><span>'+escHtml(t('clip.image'))+'</span></button>'; const tx=x.data; return '<button type="button" class="clip-item" data-i="'+i+'"><span>'+escHtml(tx.length>80?tx.slice(0,80)+'…':tx)+'</span></button>'; }).join('')+'</div>'):'<div class="clip-empty">'+escHtml(t('clip.empty'))+'</div>');
   document.body.appendChild(panel);
   const bell=document.getElementById('tray-clip'); if(bell)bell.classList.remove('has');
   if(window.innerWidth<=600){ panel.style.left='6px'; panel.style.right='6px'; panel.style.width='auto'; }
-  panel.querySelectorAll('.clip-item').forEach(b=>b.onclick=()=>{ const txt=_clipLog[+b.dataset.i]; if(txt){ osCopy(txt); notify({icon:'&#128203;',title:t('clip.title'),body:t('clip.recopied'),silent:true,timeout:1500}); } panel.remove(); });
+  panel.querySelectorAll('.clip-item').forEach(b=>b.onclick=()=>{ const it=_clipLog[+b.dataset.i]; if(it){ if(it.kind==='image'){ try{ openImageViewer(); if(typeof _viewerLoadDataURL==='function')setTimeout(()=>_viewerLoadDataURL(it.data,'Portapapeles'),60); }catch(e){} } else { osCopy(it.data); notify({icon:'&#128203;',title:t('clip.title'),body:t('clip.recopied'),silent:true,timeout:1500}); } } panel.remove(); });
   const cc=panel.querySelector('#clip-clear'); if(cc)cc.onclick=(e)=>{ e.stopPropagation(); _clipLog=[]; panel.remove(); };
   setTimeout(()=>{ const off=(e)=>{ if(!panel.contains(e.target)&&e.target.id!=='tray-clip'){ panel.remove(); document.removeEventListener('mousedown',off,true); } }; document.addEventListener('mousedown',off,true); },0);
 }
@@ -8839,6 +8953,215 @@ function toggleActionCenter(ev){
   });
   panel.querySelector('#ac-dim').oninput=(e)=>applyDim((+e.target.value)/100);
   setTimeout(()=>{ const off=(e)=>{ if(!panel.contains(e.target)&&e.target.id!=='tray-quick'){ panel.remove(); document.removeEventListener('mousedown',off,true); } }; document.addEventListener('mousedown',off,true); },0);
+}
+
+// ========== TABLA PERIÓDICA ==========
+// [símbolo, nombre, masa, categoría] indexado por número atómico.
+const PT_EL=[null,
+['H','Hidrógeno',1.008,'nm'],['He','Helio',4.003,'ng'],['Li','Litio',6.94,'am'],['Be','Berilio',9.012,'ae'],['B','Boro',10.81,'ml'],['C','Carbono',12.011,'nm'],['N','Nitrógeno',14.007,'nm'],['O','Oxígeno',15.999,'nm'],['F','Flúor',18.998,'hg'],['Ne','Neón',20.180,'ng'],
+['Na','Sodio',22.990,'am'],['Mg','Magnesio',24.305,'ae'],['Al','Aluminio',26.982,'pm'],['Si','Silicio',28.085,'ml'],['P','Fósforo',30.974,'nm'],['S','Azufre',32.06,'nm'],['Cl','Cloro',35.45,'hg'],['Ar','Argón',39.948,'ng'],
+['K','Potasio',39.098,'am'],['Ca','Calcio',40.078,'ae'],['Sc','Escandio',44.956,'tm'],['Ti','Titanio',47.867,'tm'],['V','Vanadio',50.942,'tm'],['Cr','Cromo',51.996,'tm'],['Mn','Manganeso',54.938,'tm'],['Fe','Hierro',55.845,'tm'],['Co','Cobalto',58.933,'tm'],['Ni','Níquel',58.693,'tm'],['Cu','Cobre',63.546,'tm'],['Zn','Zinc',65.38,'tm'],['Ga','Galio',69.723,'pm'],['Ge','Germanio',72.630,'ml'],['As','Arsénico',74.922,'ml'],['Se','Selenio',78.971,'nm'],['Br','Bromo',79.904,'hg'],['Kr','Kriptón',83.798,'ng'],
+['Rb','Rubidio',85.468,'am'],['Sr','Estroncio',87.62,'ae'],['Y','Itrio',88.906,'tm'],['Zr','Circonio',91.224,'tm'],['Nb','Niobio',92.906,'tm'],['Mo','Molibdeno',95.95,'tm'],['Tc','Tecnecio',98,'tm'],['Ru','Rutenio',101.07,'tm'],['Rh','Rodio',102.906,'tm'],['Pd','Paladio',106.42,'tm'],['Ag','Plata',107.868,'tm'],['Cd','Cadmio',112.414,'tm'],['In','Indio',114.818,'pm'],['Sn','Estaño',118.710,'pm'],['Sb','Antimonio',121.760,'ml'],['Te','Telurio',127.60,'ml'],['I','Yodo',126.904,'hg'],['Xe','Xenón',131.293,'ng'],
+['Cs','Cesio',132.905,'am'],['Ba','Bario',137.327,'ae'],['La','Lantano',138.905,'ln'],['Ce','Cerio',140.116,'ln'],['Pr','Praseodimio',140.908,'ln'],['Nd','Neodimio',144.242,'ln'],['Pm','Prometio',145,'ln'],['Sm','Samario',150.36,'ln'],['Eu','Europio',151.964,'ln'],['Gd','Gadolinio',157.25,'ln'],['Tb','Terbio',158.925,'ln'],['Dy','Disprosio',162.500,'ln'],['Ho','Holmio',164.930,'ln'],['Er','Erbio',167.259,'ln'],['Tm','Tulio',168.934,'ln'],['Yb','Iterbio',173.045,'ln'],['Lu','Lutecio',174.967,'ln'],['Hf','Hafnio',178.49,'tm'],['Ta','Tántalo',180.948,'tm'],['W','Wolframio',183.84,'tm'],['Re','Renio',186.207,'tm'],['Os','Osmio',190.23,'tm'],['Ir','Iridio',192.217,'tm'],['Pt','Platino',195.084,'tm'],['Au','Oro',196.967,'tm'],['Hg','Mercurio',200.592,'tm'],['Tl','Talio',204.38,'pm'],['Pb','Plomo',207.2,'pm'],['Bi','Bismuto',208.980,'pm'],['Po','Polonio',209,'pm'],['At','Astato',210,'hg'],['Rn','Radón',222,'ng'],
+['Fr','Francio',223,'am'],['Ra','Radio',226,'ae'],['Ac','Actinio',227,'ac'],['Th','Torio',232.038,'ac'],['Pa','Protactinio',231.036,'ac'],['U','Uranio',238.029,'ac'],['Np','Neptunio',237,'ac'],['Pu','Plutonio',244,'ac'],['Am','Americio',243,'ac'],['Cm','Curio',247,'ac'],['Bk','Berkelio',247,'ac'],['Cf','Californio',251,'ac'],['Es','Einstenio',252,'ac'],['Fm','Fermio',257,'ac'],['Md','Mendelevio',258,'ac'],['No','Nobelio',259,'ac'],['Lr','Lawrencio',266,'ac'],['Rf','Rutherfordio',267,'tm'],['Db','Dubnio',268,'tm'],['Sg','Seaborgio',269,'tm'],['Bh','Bohrio',270,'tm'],['Hs','Hasio',269,'tm'],['Mt','Meitnerio',278,'un'],['Ds','Darmstadtio',281,'un'],['Rg','Roentgenio',282,'un'],['Cn','Copernicio',285,'un'],['Nh','Nihonio',286,'un'],['Fl','Flerovio',289,'un'],['Mc','Moscovio',290,'un'],['Lv','Livermorio',293,'un'],['Ts','Teneso',294,'un'],['Og','Oganesón',294,'un']
+];
+const PT_CAT={am:['Alcalinos','#ff8787'],ae:['Alcalinotérreos','#ffc078'],tm:['Transición','#ffe066'],pm:['Otros metales','#b2f2bb'],ml:['Metaloides','#96f2d7'],nm:['No metales','#74c0fc'],hg:['Halógenos','#a5d8ff'],ng:['Gases nobles','#d0bfff'],ln:['Lantánidos','#eebefa'],ac:['Actínidos','#fcc2d7'],un:['Desconocidos','#ced4da']};
+function _ptPositions(){
+  const r=[
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+    [3,4,0,0,0,0,0,0,0,0,0,0,5,6,7,8,9,10],
+    [11,12,0,0,0,0,0,0,0,0,0,0,13,14,15,16,17,18],
+    [19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],
+    [37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54],
+    [55,56,0,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86],
+    [87,88,0,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118]
+  ];
+  const f=[
+    [0,0,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,0],
+    [0,0,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,0]
+  ];
+  const pos={};
+  r.forEach((row,ri)=>row.forEach((n,ci)=>{ if(n)pos[n]=[ci+1,ri+1]; }));
+  f.forEach((row,ri)=>row.forEach((n,ci)=>{ if(n)pos[n]=[ci+1,ri+9]; }));
+  return pos;
+}
+function openPeriodicTable(){
+  closeStartMenu();
+  if(focusExisting('pt-grid'))return;
+  const pos=_ptPositions();
+  let cells='';
+  for(let n=1;n<=118;n++){ const e=PT_EL[n], p=pos[n]; if(!e||!p)continue; const col=PT_CAT[e[3]][1];
+    cells+='<button type="button" class="pt-cell" data-n="'+n+'" style="grid-column:'+p[0]+';grid-row:'+p[1]+';background:'+col+'"><span class="pt-n">'+n+'</span><span class="pt-s">'+e[0]+'</span></button>'; }
+  const legend=Object.keys(PT_CAT).map(k=>'<span class="pt-leg"><i style="background:'+PT_CAT[k][1]+'"></i>'+PT_CAT[k][0]+'</span>').join('');
+  const content=`<div class="pt-root">
+    <div class="pt-bar"><input type="search" id="pt-search" class="pt-search" placeholder="${escHtml(t('pt.search'))}"><span class="pt-legend">${legend}</span></div>
+    <div class="pt-scroll"><div class="pt-grid" id="pt-grid">${cells}</div></div>
+    <div class="pt-detail" id="pt-detail"></div>
+  </div>`;
+  createWindow(t('pt.title'),'&#129514;',640,460,content,{session:'ptable',statusbar:false,onCreated:(id,win)=>{
+    const detail=win.querySelector('#pt-detail');
+    const show=(n)=>{ const e=PT_EL[n]; if(!e)return; detail.innerHTML='<span class="pt-d-sym" style="background:'+PT_CAT[e[3]][1]+'">'+e[0]+'</span><span class="pt-d-txt"><b>'+escHtml(e[1])+'</b> · '+t('pt.number')+' '+n+' · '+t('pt.mass')+' '+e[2]+' u · '+PT_CAT[e[3]][0]+'</span>'; };
+    win.querySelectorAll('.pt-cell').forEach(b=>b.onclick=()=>{ win.querySelectorAll('.pt-cell').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); show(+b.dataset.n); });
+    win.querySelector('#pt-search').oninput=(ev)=>{ const q=(ev.target.value||'').trim().toLowerCase();
+      win.querySelectorAll('.pt-cell').forEach(b=>{ const e=PT_EL[+b.dataset.n]; const hit=!q||e[0].toLowerCase().startsWith(q)||e[1].toLowerCase().includes(q)||String(b.dataset.n)===q; b.classList.toggle('dim',!hit); }); };
+    show(1);
+  }});
+}
+
+// ========== CONVERSOR DE UNIDADES ==========
+const CONV_CATS={
+  length:{units:{m:1,km:1000,cm:0.01,mm:0.001,mi:1609.344,yd:0.9144,ft:0.3048,in:0.0254,'mn':1852}},
+  mass:{units:{kg:1,g:0.001,mg:0.000001,t:1000,lb:0.45359237,oz:0.028349523}},
+  temp:{temp:true,units:{'°C':1,'°F':1,'K':1}},
+  area:{units:{'m²':1,'km²':1000000,'cm²':0.0001,ha:10000,'ft²':0.09290304,ac:4046.8564}},
+  speed:{units:{'m/s':1,'km/h':0.2777778,mph:0.44704,kn:0.5144444}},
+  time:{units:{s:1,min:60,h:3600,d:86400,sem:604800}},
+  data:{units:{B:1,KB:1024,MB:1048576,GB:1073741824,TB:1099511627776}},
+  currency:{units:{EUR:1,USD:1.08,GBP:0.85,JPY:170,CHF:0.95,MXN:19.5,ARS:980,BRL:5.9}}
+};
+function _convTemp(v,from,to){ let c=v; if(from==='°F')c=(v-32)*5/9; else if(from==='K')c=v-273.15; if(to==='°F')return c*9/5+32; if(to==='K')return c+273.15; return c; }
+function convert(cat,v,from,to){
+  const c=CONV_CATS[cat]; if(!c)return NaN; if(c.temp)return _convTemp(v,from,to);
+  return v*c.units[from]/c.units[to];
+}
+function openConverter(){
+  closeStartMenu();
+  if(focusExisting('cv-root'))return;
+  const cats=Object.keys(CONV_CATS);
+  const content=`<div class="cv-root" id="cv-root">
+    <div class="cv-cats" id="cv-cats">${cats.map((k,i)=>'<button type="button" class="cv-cat'+(i===0?' on':'')+'" data-c="'+k+'">'+escHtml(t('cv.'+k))+'</button>').join('')}</div>
+    <div class="cv-body">
+      <div class="cv-row"><input type="number" id="cv-in" class="cv-num" value="1"><select id="cv-from" class="cv-sel"></select></div>
+      <div class="cv-eq" id="cv-swap" title="${escHtml(t('cv.swap'))}">&#8646;</div>
+      <div class="cv-row"><input type="text" id="cv-out" class="cv-num" readonly><select id="cv-to" class="cv-sel"></select></div>
+    </div>
+    <div class="cv-note" id="cv-note"></div>
+  </div>`;
+  createWindow(t('cv.title'),'&#128207;',360,300,content,{session:'converter',statusbar:false,onCreated:(id,win)=>{
+    let cat='length';
+    const fromSel=win.querySelector('#cv-from'), toSel=win.querySelector('#cv-to'), inp=win.querySelector('#cv-in'), out=win.querySelector('#cv-out'), note=win.querySelector('#cv-note');
+    const fillUnits=()=>{ const us=Object.keys(CONV_CATS[cat].units); fromSel.innerHTML=us.map(u=>'<option>'+u+'</option>').join(''); toSel.innerHTML=us.map(u=>'<option>'+u+'</option>').join(''); toSel.selectedIndex=Math.min(1,us.length-1); };
+    const calc=()=>{ const v=parseFloat(inp.value); if(isNaN(v)){ out.value=''; return; } const r=convert(cat,v,fromSel.value,toSel.value); out.value=(Math.abs(r)>=1e6||(Math.abs(r)<1e-4&&r!==0))?r.toExponential(4):(Math.round(r*1e6)/1e6); note.textContent=(cat==='currency')?t('cv.rates'):''; };
+    win.querySelectorAll('.cv-cat').forEach(b=>b.onclick=()=>{ cat=b.dataset.c; win.querySelectorAll('.cv-cat').forEach(x=>x.classList.toggle('on',x===b)); fillUnits(); calc(); });
+    win.querySelector('#cv-swap').onclick=()=>{ const a=fromSel.selectedIndex; fromSel.selectedIndex=toSel.selectedIndex; toSel.selectedIndex=a; calc(); };
+    [inp,fromSel,toSel].forEach(el=>el.oninput=calc);
+    fillUnits(); calc();
+  }});
+}
+
+// ========== AJEDREZ (motor propio + IA minimax) ==========
+function _chessInitBoard(){
+  const back=['r','n','b','q','k','b','n','r'];
+  const b=[back.slice(),Array(8).fill('p'),[],[],[],[],Array(8).fill('P'),back.map(p=>p.toUpperCase())];
+  for(let r=2;r<6;r++)b[r]=Array(8).fill('');
+  return b;
+}
+function _chIsWhite(p){ return p!==''&&p===p.toUpperCase(); }
+function _chInB(r,c){ return r>=0&&r<8&&c>=0&&c<8; }
+function _chClone(st){ return {board:st.board.map(r=>r.slice()),turn:st.turn,castle:Object.assign({},st.castle),ep:st.ep?st.ep.slice():null}; }
+const _CH_KN=[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+const _CH_DB=[[-1,-1],[-1,1],[1,-1],[1,1]], _CH_DR=[[-1,0],[1,0],[0,-1],[0,1]];
+function _chPseudo(st,r,c){
+  const p=st.board[r][c]; if(!p)return []; const white=_chIsWhite(p), type=p.toLowerCase(), out=[];
+  const add=(tr,tc)=>{ if(!_chInB(tr,tc))return false; const q=st.board[tr][tc]; if(q===''){ out.push([tr,tc]); return true; } if(_chIsWhite(q)!==white)out.push([tr,tc]); return false; };
+  if(type==='p'){
+    const dir=white?-1:1, start=white?6:1;
+    if(_chInB(r+dir,c)&&st.board[r+dir][c]===''){ out.push([r+dir,c]); if(r===start&&st.board[r+2*dir][c]==='')out.push([r+2*dir,c]); }
+    [[dir,-1],[dir,1]].forEach(([dr,dc])=>{ const tr=r+dr,tc=c+dc; if(!_chInB(tr,tc))return; const q=st.board[tr][tc]; if(q!==''&&_chIsWhite(q)!==white)out.push([tr,tc]); else if(st.ep&&st.ep[0]===tr&&st.ep[1]===tc)out.push([tr,tc]); });
+  } else if(type==='n'){ _CH_KN.forEach(([dr,dc])=>add(r+dr,c+dc)); }
+  else if(type==='k'){ for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)if(dr||dc)add(r+dr,c+dc); }
+  else { const dirs=type==='q'?_CH_DB.concat(_CH_DR):(type==='b'?_CH_DB:_CH_DR); dirs.forEach(([dr,dc])=>{ let tr=r+dr,tc=c+dc; while(add(tr,tc)){ tr+=dr; tc+=dc; } }); }
+  return out;
+}
+function _chAttacked(st,r,c,byWhite){
+  for(let i=0;i<8;i++)for(let j=0;j<8;j++){ const p=st.board[i][j]; if(!p||_chIsWhite(p)!==byWhite)continue;
+    if(p.toLowerCase()==='p'){ const dir=byWhite?-1:1; if(i+dir===r&&(j-1===c||j+1===c))return true; continue; }
+    if(_chPseudo(st,i,j).some(m=>m[0]===r&&m[1]===c))return true;
+  } return false;
+}
+function _chKing(st,white){ const K=white?'K':'k'; for(let i=0;i<8;i++)for(let j=0;j<8;j++)if(st.board[i][j]===K)return [i,j]; return null; }
+function _chApply(st,from,to){
+  const s=_chClone(st), [fr,fc]=from,[tr,tc]=to, p=s.board[fr][fc], white=_chIsWhite(p), type=p.toLowerCase();
+  s.ep=null;
+  if(type==='p'&&fc!==tc&&s.board[tr][tc]==='')s.board[white?tr+1:tr-1][tc]=''; // en passant
+  s.board[tr][tc]=p; s.board[fr][fc]='';
+  if(type==='p'&&Math.abs(tr-fr)===2)s.ep=[(fr+tr)/2,fc];
+  if(type==='p'&&(tr===0||tr===7))s.board[tr][tc]=white?'Q':'q';
+  if(type==='k'&&Math.abs(tc-fc)===2){ if(tc===6){ s.board[tr][5]=s.board[tr][7]; s.board[tr][7]=''; } else { s.board[tr][3]=s.board[tr][0]; s.board[tr][0]=''; } }
+  if(type==='k'){ if(white){s.castle.K=false;s.castle.Q=false;} else {s.castle.k=false;s.castle.q=false;} }
+  const clr=(rr,cc)=>{ if(rr===7&&cc===0)s.castle.Q=false; if(rr===7&&cc===7)s.castle.K=false; if(rr===0&&cc===0)s.castle.q=false; if(rr===0&&cc===7)s.castle.k=false; };
+  clr(fr,fc); clr(tr,tc);
+  s.turn=white?'b':'w';
+  return s;
+}
+function _chLegal(st,forWhite){
+  const moves=[];
+  for(let i=0;i<8;i++)for(let j=0;j<8;j++){ const p=st.board[i][j]; if(!p||_chIsWhite(p)!==forWhite)continue;
+    const tos=_chPseudo(st,i,j);
+    if(p.toLowerCase()==='k'){ const rank=forWhite?7:0;
+      const kS=forWhite?st.castle.K:st.castle.k, qS=forWhite?st.castle.Q:st.castle.q;
+      if(i===rank&&j===4&&!_chAttacked(st,rank,4,!forWhite)){
+        if(kS&&st.board[rank][5]===''&&st.board[rank][6]===''&&!_chAttacked(st,rank,5,!forWhite)&&!_chAttacked(st,rank,6,!forWhite))tos.push([rank,6]);
+        if(qS&&st.board[rank][3]===''&&st.board[rank][2]===''&&st.board[rank][1]===''&&!_chAttacked(st,rank,3,!forWhite)&&!_chAttacked(st,rank,2,!forWhite))tos.push([rank,2]);
+      }
+    }
+    tos.forEach(to=>{ const ns=_chApply(st,[i,j],to); const k=_chKing(ns,forWhite); if(k&&!_chAttacked(ns,k[0],k[1],!forWhite))moves.push({from:[i,j],to}); });
+  }
+  return moves;
+}
+const _CH_VAL={p:100,n:320,b:330,r:500,q:900,k:20000};
+function _chEval(st){ let s=0; for(let i=0;i<8;i++)for(let j=0;j<8;j++){ const p=st.board[i][j]; if(!p)continue; const v=_CH_VAL[p.toLowerCase()]+(i>1&&i<6&&j>1&&j<6?6:0); s+=_chIsWhite(p)?v:-v; } return s; }
+function _chSearch(st,depth,alpha,beta,forWhite){
+  const moves=_chLegal(st,forWhite);
+  if(moves.length===0){ const k=_chKing(st,forWhite); const chk=k&&_chAttacked(st,k[0],k[1],!forWhite); if(chk)return forWhite?(-99999-depth):(99999+depth); return 0; }
+  if(depth===0)return _chEval(st);
+  if(forWhite){ let best=-1e9; for(const m of moves){ const v=_chSearch(_chApply(st,m.from,m.to),depth-1,alpha,beta,false); if(v>best)best=v; if(best>alpha)alpha=best; if(alpha>=beta)break; } return best; }
+  let best=1e9; for(const m of moves){ const v=_chSearch(_chApply(st,m.from,m.to),depth-1,alpha,beta,true); if(v<best)best=v; if(best<beta)beta=best; if(alpha>=beta)break; } return best;
+}
+function _chBestMove(st,forWhite,depth){
+  const moves=_chLegal(st,forWhite); if(!moves.length)return null;
+  for(let i=moves.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=moves[i]; moves[i]=moves[j]; moves[j]=t; }
+  let best=null, bestV=forWhite?-1e9:1e9;
+  for(const m of moves){ const v=_chSearch(_chApply(st,m.from,m.to),depth-1,-1e9,1e9,!forWhite); if(forWhite?v>bestV:v<bestV){ bestV=v; best=m; } }
+  return best;
+}
+function initChess(){
+  const G={K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙',k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+  const content=`<div id="chess-game" class="chess-root">
+    <div class="chess-hud"><span id="chess-status">Tu turno (blancas)</span><label class="chess-lvl">IA <select id="chess-lvl"><option value="1">Fácil</option><option value="2" selected>Normal</option><option value="3">Difícil</option></select></label></div>
+    <div class="chess-board" id="chess-board"></div>
+    <div class="chess-actions"><button type="button" class="g-btn" id="chess-new">Nueva partida</button><span id="chess-msg"></span></div>
+  </div>`;
+  createWindow('Ajedrez','♟️',372,452,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const boardEl=win.querySelector('#chess-board'), statusEl=win.querySelector('#chess-status'), msgEl=win.querySelector('#chess-msg');
+    let st, sel=null, legal=[], over=false, thinking=false;
+    const render=()=>{
+      boardEl.innerHTML='';
+      for(let r=0;r<8;r++)for(let c=0;c<8;c++){ const sq=document.createElement('button'); sq.type='button'; sq.className='chess-sq '+((r+c)%2?'dark':'light'); sq.dataset.r=r; sq.dataset.c=c;
+        const p=st.board[r][c]; if(p)sq.innerHTML='<span class="chess-pc '+(_chIsWhite(p)?'w':'b')+'">'+G[p]+'</span>';
+        if(sel&&sel[0]===r&&sel[1]===c)sq.classList.add('sel');
+        if(legal.some(m=>m.to[0]===r&&m.to[1]===c))sq.classList.add(p?'cap':'mv');
+        sq.onclick=()=>onSquare(r,c); boardEl.appendChild(sq);
+      }
+    };
+    const statusOf=(forWhite)=>{ const mv=_chLegal(st,forWhite), k=_chKing(st,forWhite), chk=k&&_chAttacked(st,k[0],k[1],!forWhite);
+      if(mv.length===0){ over=true; if(chk)return forWhite?'¡Jaque mate! Gana la IA':'¡Jaque mate! Ganas 🎉'; return 'Tablas (rey ahogado)'; }
+      return chk?(forWhite?'¡Jaque! Te toca':'Jaque a la IA'):(forWhite?'Tu turno (blancas)':'La IA piensa…'); };
+    const finish=(s)=>{ over=true; if(/Ganas/.test(s)){ try{ const r=useRecord('tos-chess-best'); r.submit(r.value+1); msgEl.textContent='Victorias: '+r.value; }catch(e){} } };
+    const onSquare=(r,c)=>{
+      if(over||thinking||st.turn!=='w')return;
+      if(sel){ const mv=legal.find(m=>m.to[0]===r&&m.to[1]===c); if(mv){ st=_chApply(st,sel,[r,c]); sel=null; legal=[]; render(); const s=statusOf(false); statusEl.textContent=s; if(over){ finish(s); return; } aiMove(); return; } }
+      const p=st.board[r][c];
+      if(p&&_chIsWhite(p)){ sel=[r,c]; legal=_chLegal(st,true).filter(m=>m.from[0]===r&&m.from[1]===c); } else { sel=null; legal=[]; }
+      render();
+    };
+    const aiMove=()=>{ thinking=true; statusEl.textContent='La IA piensa…';
+      setTimeout(()=>{ const depth=+win.querySelector('#chess-lvl').value; const m=_chBestMove(st,false,depth); if(m)st=_chApply(st,m.from,m.to); thinking=false; render(); const s=statusOf(true); statusEl.textContent=s; if(over)finish(s); },240);
+    };
+    const reset=()=>{ st={board:_chessInitBoard(),turn:'w',castle:{K:true,Q:true,k:true,q:true},ep:null}; sel=null; legal=[]; over=false; thinking=false; msgEl.textContent=''; statusEl.textContent='Tu turno (blancas)'; render(); };
+    win.querySelector('#chess-new').onclick=reset;
+    reset();
+  }});
 }
 
 // ========== TEMAS COMPLETOS DEL SISTEMA ==========
@@ -9477,7 +9800,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -9641,7 +9964,8 @@ const gamesApps=[
   {key:'solitaire',label:'Solitario',icon:'&#127183;'},
   {key:'pinball',label:'Pinball',icon:'&#128640;'},
   {key:'sudoku',label:'Sudoku',icon:'&#57;&#65039;&#8419;'},
-  {key:'simon',label:'Simon',icon:'&#128191;'}
+  {key:'simon',label:'Simon',icon:'&#128191;'},
+  {key:'chess',label:'Ajedrez',icon:'&#9823;&#65039;'}
 ];
 // Poblar la carpeta desplegable del menu inicio desde la misma lista de juegos
 function buildStartGamesSubmenu(){
@@ -9721,7 +10045,7 @@ function openJuegazos(){
 
 // Subcarpetas dentro de Proyectos (antes eran iconos sueltos del escritorio)
 const PROY_SUBFOLDERS=[
-  {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 15 juegos clásicos del sistema'},
+  {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 16 juegos clásicos del sistema'},
   {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',open:()=>openJuegazos(),desc:'Mis juegos web publicados'}
 ];
 function openProyectos(){
@@ -11126,7 +11450,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
@@ -11870,7 +12194,7 @@ function initPinball(){
   }});
 }
 
-const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game',sudoku:'sudoku-game',simon:'simon-game'};
+const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game',sudoku:'sudoku-game',simon:'simon-game',chess:'chess-game'};
 
 // ========== MOTOR DE JUEGO COMÚN ==========
 // Centraliza el ciclo de vida que antes cada juego duplicaba: bucle rAF con
@@ -11942,6 +12266,7 @@ function openGame(game){
     case 'pinball':initPinball();break;
     case 'sudoku':initSudoku();break;
     case 'simon':initSimon();break;
+    case 'chess':initChess();break;
   }
   _pendingGameSession=null;
 }
