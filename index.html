@@ -1161,13 +1161,13 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
 .chess-pc.w{color:#fff;-webkit-text-stroke:.5px #555}
 .chess-pc.b{color:#1a1a1a}
 .chess-captures{width:min(360px,86vw);max-width:100%;display:flex;flex-direction:column;gap:2px}
-.chess-cap-row{display:flex;align-items:center;gap:6px;min-height:22px;background:rgba(0,0,0,.18);border-radius:5px;padding:2px 6px}
-.chess-cap-lbl{font-size:10px;color:#cbb89e;width:24px;flex-shrink:0}
+.chess-cap-row{display:flex;align-items:center;gap:6px;min-height:22px;background:#e8dcc8;border:1px solid #6b5b47;border-radius:5px;padding:2px 6px}
+.chess-cap-lbl{font-size:10px;font-weight:bold;color:#6b5b47;width:24px;flex-shrink:0}
 .chess-cap{flex:1;display:flex;flex-wrap:wrap;align-items:center;line-height:1}
 .chess-cap-pc{font-size:16px;margin-right:-2px}
-.chess-cap-pc.w{color:#fff;text-shadow:0 0 1px #555}
-.chess-cap-pc.b{color:#2a2a2a}
-.chess-adv{color:#8fd18f;font-size:11px;margin-left:6px;font-family:Tahoma,sans-serif}
+.chess-cap-pc.w{color:#fff;-webkit-text-stroke:.7px #6b5b47;text-shadow:0 0 1px #6b5b47}
+.chess-cap-pc.b{color:#1a1a1a}
+.chess-adv{color:#2c8a2c;font-size:11px;font-weight:bold;margin-left:6px;font-family:Tahoma,sans-serif}
 .chess-actions{display:flex;align-items:center;gap:10px;color:#f0e6d8;font-size:12px}
 #tray-lang{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:middle;line-height:0}
 #tray-lang svg{width:18px;height:12px;display:block;border:1px solid rgba(0,0,0,.35);border-radius:2px;box-shadow:0 0 1px rgba(255,255,255,.4)}
@@ -3220,7 +3220,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.40.1';
+const APP_VERSION = '0.40.2';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
