@@ -1602,7 +1602,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .piano-hint{padding:5px 8px;font-size:10px;color:#8a90a0;background:#1e1e28;text-align:center}
 /* ═══════════════════  § AGENDA  ═══════════════════ */
 .agenda-root{display:flex;flex-direction:column;height:100%;background:#f4f7fc;font-family:Tahoma,sans-serif}
-.agenda-bar{display:flex;align-items:center;gap:6px;padding:7px 10px;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
+.agenda-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:7px 10px;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
 .ag-month{flex:1;text-align:center;font-weight:bold;color:#1a4fa0;font-size:14px}
 .ag-nav{background:linear-gradient(180deg,#fff,#e6eef8);border:1px solid #9db4d0;border-radius:4px;padding:3px 9px;font-size:12px;cursor:pointer;color:#123}
 .ag-nav:hover{background:#eef4ff}
@@ -3321,7 +3321,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .pwm-lock-btns{display:flex;gap:8px;margin-top:6px}
 .pwm-main{display:flex;flex-direction:column;flex:1;min-height:0}
 .pwm-locked[hidden],.pwm-main[hidden]{display:none}
-.pwm-bar{display:flex;align-items:center;gap:6px;padding:6px 8px;background:linear-gradient(180deg,#f4f8ff,#e4eefb);border-bottom:1px solid #aca899;flex-shrink:0}
+.pwm-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 8px;background:linear-gradient(180deg,#f4f8ff,#e4eefb);border-bottom:1px solid #aca899;flex-shrink:0}
 .pwm-search{flex:1;min-width:60px;border:1px solid #7f9db9;border-radius:3px;padding:4px 7px;font-size:12px;font-family:inherit}
 .pwm-count{font-size:11px;color:#7a8aa0;min-width:38px;text-align:right}
 .pwm-btn{padding:5px 11px;border:1px solid #aca899;border-radius:4px;background:linear-gradient(180deg,#fff,#e8e8e0);font-size:12px;font-family:inherit;cursor:pointer;color:#222}
@@ -3700,7 +3700,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .cp-sugit{display:flex;align-items:center;gap:6px;width:100%;border:0;background:none;padding:5px 9px;cursor:pointer;font-family:Tahoma,sans-serif;font-size:12px;text-align:left}
 .cp-sugit:hover,.cp-sugit.on{background:#e8eefc}
 .cp-sugit span{margin-left:auto;color:#9aa1ac;font-size:10px}
-.cp-bar{display:flex;align-items:center;gap:5px;padding:5px 7px;background:#eef2f7;border-bottom:1px solid #cfd6e0}
+.cp-bar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:5px 7px;background:#eef2f7;border-bottom:1px solid #cfd6e0}
 .cp-info{font-size:11px;color:#5a6472;flex:1}
 .cp-body{flex:1;min-height:0;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
 .cp-body[hidden]{display:none}
@@ -3729,12 +3729,17 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .cp-pick-it:hover{background:#eef3fb}
 @media(max-width:600px){
   .cp-cat{max-width:80px}
-  .cp-info{width:100%;flex:none}
+  /* La info se lleva su propia línea y los botones bajan enteros a la siguiente:
+     antes se salían por la derecha y no se veía ni compartir ni el menú. */
+  .cp-info{width:100%;flex:none;order:-1}
+  .cp-bar{justify-content:flex-end}
+  .cp-bar .cp-btn{flex:0 0 auto}
+  #cp-repeat{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
 
 /* ═══════════════════  § EL TIEMPO  ═══════════════════ */
 .tp-root{display:flex;flex-direction:column;height:100%;background:#f2f6fb;font-family:Tahoma,sans-serif;font-size:12px;overflow:hidden}
-.tp-bar{display:flex;align-items:center;gap:4px;padding:5px 7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.tp-bar{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:5px 7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
 .tp-lugares{flex:1;min-width:0;padding:3px 5px;border:1px solid #aca899;border-radius:3px;background:#fff;font-family:Tahoma,sans-serif;font-size:12px}
 .tp-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:3px 8px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer;color:#222}
 .tp-btn:hover{background:linear-gradient(180deg,#fff,#eef3fb);border-color:#5a8fd6}
@@ -4009,7 +4014,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.49.0';
+const APP_VERSION = '0.49.1';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
