@@ -527,7 +527,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           </button>
           <button type="button" class="start-item" onclick="openFichas()">
             <div class="si-icon">&#128199;</div>
-            <div><div class="si-label" data-i18n="fi.title">Fichas</div><div class="si-desc" data-i18n="fi.desc">Estudiar con repetici&oacute;n espaciada</div></div>
+            <div><div class="si-label" data-i18n="fi.title">Fichas (Anki)</div><div class="si-desc" data-i18n="fi.desc">Estudiar con repetici&oacute;n espaciada</div></div>
           </button>
           <button type="button" class="start-item" onclick="openCalculadoras()">
             <div class="si-icon">&#129518;</div>
@@ -3671,11 +3671,23 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .fi-cal.facil{border-color:#a8d0a8;color:#2f7d4b}
 /* Escáner de productos (etiquetas) */
 .off-root{display:flex;flex-direction:column;height:100%;gap:8px;padding:9px;background:#f4f6fa;font-family:Tahoma,sans-serif;overflow-y:auto}
-.off-bar{display:flex;flex-wrap:wrap;gap:5px}
-.off-cod{flex:1;min-width:0;font-family:Tahoma,sans-serif;font-size:13px;padding:5px 8px;border:1px solid #7f9db9;border-radius:4px}
-.off-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:4px 10px;border:1px solid #aca899;border-radius:4px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer}
+.off-bar{display:flex;flex-wrap:wrap;gap:6px}
+.off-cod{flex:1;min-width:120px;font-family:Tahoma,sans-serif;font-size:15px;padding:10px;min-height:44px;box-sizing:border-box;border:1px solid #7f9db9;border-radius:6px}
+/* Botones grandes a propósito: esta app se usa de pie en el súper, con una mano y el
+   carro en la otra. 44 px es el mínimo cómodo para el pulgar. */
+.off-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:Tahoma,sans-serif;font-size:14px;padding:10px 16px;min-height:44px;border:1px solid #aca899;border-radius:6px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer;color:#222}
 .off-btn:hover{background:linear-gradient(180deg,#fff,#eef3fb);border-color:#5a8fd6}
+.off-btn:active{transform:translateY(1px)}
 .off-btn.primary{background:linear-gradient(180deg,#5b9bea,#2f6fb0);border-color:#2f6fb0;color:#fff;font-weight:bold}
+#off-scan{font-size:22px;padding:6px 16px;min-width:58px}
+#off-compra{flex:1;min-width:180px;font-size:15px;min-height:48px;background:linear-gradient(180deg,#63b573,#3f8f5a);border-color:#3f8f5a;color:#fff;font-weight:bold}
+#off-compra:hover{background:linear-gradient(180deg,#6fc47f,#448f5e);border-color:#3f8f5a}
+@media (max-width:600px){
+  .off-bar{gap:7px}
+  .off-cod{flex:1 1 100%}
+  .off-btn{flex:1}
+  #off-scan{flex:0 0 auto}
+}
 .off-vacio{text-align:center;color:#7b8494;font-size:12px;padding:22px 10px;line-height:1.5}
 .off-vacio-ic{font-size:38px;margin-bottom:6px}
 .off-card{background:#fff;border:1px solid #cfd6e0;border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:9px}
@@ -3704,13 +3716,13 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .off-ing{font-size:11px;color:#4a5262}
 .off-ing summary{cursor:pointer;color:#2f6fb0}
 .off-ing div{margin-top:4px;line-height:1.45;color:#5a6472}
-.off-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.off-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
 .off-cache{font-size:10px;color:#7b8494}
 .off-histt{font-size:10px;color:#7b8494;margin:2px 0 4px}
-.off-hitem{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:#fff;border:1px solid #e4e8ee;border-radius:6px;padding:4px 7px;margin-bottom:3px;cursor:pointer;font-family:Tahoma,sans-serif}
+.off-hitem{display:flex;align-items:center;gap:9px;width:100%;min-height:44px;text-align:left;background:#fff;border:1px solid #e4e8ee;border-radius:6px;padding:7px 9px;margin-bottom:4px;cursor:pointer;font-family:Tahoma,sans-serif}
 .off-hitem:hover{border-color:#5a8fd6;background:#f7faff}
-.off-hns{width:20px;height:20px;border-radius:4px;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.off-hn{font-size:11.5px;color:#3a4150;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.off-hns{width:26px;height:26px;border-radius:5px;color:#fff;font-size:13px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.off-hn{font-size:12.5px;color:#3a4150;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .off-nota{font-size:9.5px;color:#7b8494;line-height:1.45;background:#eef1f5;border-radius:5px;padding:6px 8px}
 /* Aviso de lluvia (radar) */
 .rd-root{display:flex;flex-direction:column;height:100%;gap:7px;padding:8px;background:#0a1024;color:#e8f0ff;font-family:Tahoma,sans-serif;overflow-y:auto}
@@ -4273,7 +4285,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.54.0';
+const APP_VERSION = '0.54.2';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -5036,7 +5048,7 @@ const I18N={
   'gs.budget':{es:'Presupuesto del mes', en:'Monthly budget', ca:'Pressupost del mes', ru:'Бюджет месяца'},
   'gs.setbudget':{es:'Poner un presupuesto', en:'Set a budget', ca:'Posa un pressupost', ru:'Задать бюджет'},
   'gs.budgetq':{es:'Presupuesto mensual en € (0 = sin presupuesto)', en:'Monthly budget in € (0 = none)', ca:'Pressupost mensual en € (0 = cap)', ru:'Месячный бюджет в € (0 — без бюджета)'},
-  'fi.title':{es:'Fichas', en:'Flashcards', ca:'Fitxes', ru:'Карточки'},
+  'fi.title':{es:'Fichas (Anki)', en:'Flashcards (Anki)', ca:'Fitxes (Anki)', ru:'Карточки (Anki)'},
   'fi.desc':{es:'Estudiar con repetición espaciada', en:'Study with spaced repetition', ca:'Estudia amb repetició espaiada', ru:'Учёба с интервальным повторением'},
   'fi.deck':{es:'Mazo', en:'Deck', ca:'Bloc', ru:'Колода'},
   'fi.deck.default':{es:'General', en:'General', ca:'General', ru:'Общая'},
