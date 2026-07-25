@@ -8,8 +8,9 @@
 // Estrategia de red: red primero para el documento (index.html siempre fresco si hay
 // conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
 // solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.40.2';
+const APP_VERSION = '0.43.0';
 const CACHE = 'tos-' + APP_VERSION;
+const NET_TIMEOUT = 3000; // ms que se espera a la red antes de tirar de caché (documento)
 const ASSETS = [
   './', './index.html', './og.png', './apple-touch-icon.png',
   './manifest.webmanifest', './icon-192.png', './icon-512.png'
@@ -62,19 +63,26 @@ self.addEventListener('fetch', (e) => {
   if (url.origin !== location.origin) return; // los proyectos enlazados van directos a la red
 
   if (e.request.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
-    e.respondWith(
-      fetch(e.request)
-        .then((r) => {
-          const copy = r.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, copy));
-          return r;
-        })
-        .catch(() =>
-          caches.match(e.request)
-            .then((r) => r || caches.match('./index.html'))
-            .then((r) => r || caches.match('./'))
-        )
-    );
+    e.respondWith((async () => {
+      const net = fetch(e.request).then((r) => {
+        const copy = r.clone();
+        caches.open(CACHE).then((c) => c.put(e.request, copy));
+        return r;
+      });
+      const cached = (await caches.match(e.request))
+        || (await caches.match('./index.html'))
+        || (await caches.match('./'));
+      if (!cached) return net; // primera visita: no hay más remedio que esperar a la red
+      // Red primero, pero con paciencia limitada: en una conexión móvil mala esperar
+      // indefinidamente por 1 MB de HTML dejaba la pantalla en blanco teniendo una
+      // copia usable guardada. A los NET_TIMEOUT ms se sirve la caché y la descarga
+      // sigue por detrás, así que la próxima carga ya trae la versión nueva.
+      e.waitUntil(net.catch(() => {}));
+      return Promise.race([
+        net.catch(() => cached),
+        new Promise((res) => setTimeout(() => res(cached), NET_TIMEOUT))
+      ]);
+    })());
     return;
   }
 
