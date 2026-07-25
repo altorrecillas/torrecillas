@@ -4187,7 +4187,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.53.1';
+const APP_VERSION = '0.53.2';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4955,6 +4955,11 @@ const I18N={
   'rd.place':{es:'Sitio que se vigila', en:'Place being watched', ca:'Lloc que es vigila', ru:'Наблюдаемое место'},
   'rd.radius':{es:'Radio de vigilancia', en:'Watch radius', ca:'Radi de vigilància', ru:'Радиус наблюдения'},
   'rd.map':{es:'Mapa de fondo', en:'Base map', ca:'Mapa de fons', ru:'Карта-подложка'},
+  'rd.map.color':{es:'en color', en:'colour', ca:'en color', ru:'цветная'},
+  'rd.map.claro':{es:'claro', en:'light', ca:'clar', ru:'светлая'},
+  'rd.map.oscuro':{es:'oscuro', en:'dark', ca:'fosc', ru:'тёмная'},
+  'rd.map.off':{es:'sin mapa', en:'no map', ca:'sense mapa', ru:'без карты'},
+  'rd.search':{es:'Buscar una ciudad', en:'Search for a city', ca:'Cerca una ciutat', ru:'Найти город'},
   'rd.refresh':{es:'Mirar ahora', en:'Check now', ca:'Mira ara', ru:'Проверить сейчас'},
   'rd.dry':{es:'Sin lluvia en {r} km a la redonda', en:'No rain within {r} km', ca:'Sense pluja en {r} km a la rodona', ru:'Дождя нет в радиусе {r} км'},
   'rd.now':{es:'Está lloviendo aquí', en:'It is raining here', ca:'Està plovent aquí', ru:'Здесь идёт дождь'},
@@ -14542,19 +14547,29 @@ function rvURL(path,tx,ty,z,color){ return RV_TILES+path+'/256/'+z+'/'+tx+'/'+ty
 // teselas de OSM NO se les pega directamente: su política de uso desaconseja
 // expresamente que las apps tiren de ellos. La atribución va en la propia ventana,
 // como piden ambos.
-const MAPA_URL='https://basemaps.cartocdn.com/dark_all/';
+const MAPA_BASE='https://basemaps.cartocdn.com/';
 const MAPA_ATRIB='&copy; OpenStreetMap &middot; &copy; CARTO';
+// Tres fondos, medidos de verdad antes de elegir el orden (luminancia media de una
+// tesela): voyager 240/255, claro 243/255, oscuro **14/255** — el oscuro es casi negro
+// y por eso NO es el que viene puesto. Se deja porque de noche apetece, pero se pinta
+// con un realce de brillo para que se distinga algo.
+const MAPA_ESTILOS=[
+  {id:'color',ruta:'rastertiles/voyager',brillo:1,alfa:0.88},
+  {id:'claro',ruta:'light_all',brillo:1,alfa:0.9},
+  {id:'oscuro',ruta:'dark_all',brillo:1.75,alfa:0.78}
+];
+function mapaEstilo(id){ return MAPA_ESTILOS.filter(e=>e.id===id)[0]||MAPA_ESTILOS[0]; }
 let _mapaCache=null; // {clave,canvas}: el fondo no cambia, se reaprovecha entre fotogramas
-function rvURLMapa(tx,ty,z){ return MAPA_URL+z+'/'+tx+'/'+ty+'.png'; }
+function rvURLMapa(tx,ty,z,estilo){ return MAPA_BASE+mapaEstilo(estilo).ruta+'/'+z+'/'+tx+'/'+ty+'.png'; }
 // IMPORTANTE: el mapa se compone en SU PROPIO canvas, nunca debajo del radar. Si se
 // pintara en el mismo, todos los píxeles pasarían a ser opacos y el análisis —que se
 // basa exactamente en el alfa— daría lluvia en todas partes.
-function rvCargaMapa(lat,lon,z,radioKm){
+function rvCargaMapa(lat,lon,z,radioKm,estilo){
   return new Promise((res)=>{
     const teselas=rvTeselas(lat,lon,z,radioKm);
     const n=Math.round(Math.sqrt(teselas.length));
     const c=rvTileXY(lat,lon,z);
-    const clave=z+':'+c.tx+':'+c.ty+':'+n;
+    const clave=z+':'+c.tx+':'+c.ty+':'+n+':'+mapaEstilo(estilo).id;
     if(_mapaCache&&_mapaCache.clave===clave)return res(_mapaCache.canvas);
     let cv=null,ctx=null;
     try{ cv=document.createElement('canvas'); ctx=cv.getContext('2d'); }catch(e){}
@@ -14568,7 +14583,7 @@ function rvCargaMapa(lat,lon,z,radioKm){
       im.crossOrigin='anonymous';
       im.onload=()=>{ try{ ctx.drawImage(im,(tt.dx+medio)*256,(tt.dy+medio)*256); }catch(e){} if(!--quedan)fin(); };
       im.onerror=()=>{ if(!--quedan)fin(); }; // sin mapa se sigue viendo el radar
-      im.src=rvURLMapa(tt.tx,tt.ty,z);
+      im.src=rvURLMapa(tt.tx,tt.ty,z,estilo);
     });
     if(!teselas.length)fin();
   });
@@ -14676,6 +14691,7 @@ function openRadar(){
   const content=`<div class="rd-root" id="rd-root">
     <div class="rd-bar">
       <select id="rd-lugar" class="rd-sel" aria-label="${escHtml(t('rd.place'))}"></select>
+      <button type="button" class="rd-btn" id="rd-buscar" title="${escHtml(t('rd.search'))}">&#128269;</button>
       <button type="button" class="rd-btn" id="rd-gps" title="${escHtml(t('tp.gps'))}">&#127919;</button>
       <button type="button" class="rd-btn" id="rd-upd" title="${escHtml(t('rd.refresh'))}">&#128260;</button>
       <button type="button" class="rd-btn" id="rd-mapa" title="${escHtml(t('rd.map'))}" aria-pressed="true">&#128506;&#65039;</button>
@@ -14695,7 +14711,7 @@ function openRadar(){
     const $=(s)=>win.querySelector(s);
     let est=null, cargando=false, mapaCv=null;
     const cfg=radarCfg();
-    let conMapa=cfg.mapa!==false;
+    let conMapa=cfg.mapa!==false, estilo=mapaEstilo(cfg.estilo).id;
     $('#rd-radio').value=String(cfg.radio||RV_RADIO_DEF);
     $('#rd-aviso').checked=!!cfg.aviso;
     // Lugares: los mismos que El tiempo
@@ -14716,21 +14732,27 @@ function openRadar(){
       const fr=est&&est.ultimoFrame&&est.ultimoFrame.img;
       const rPx=fr?radio/fr.kmPx:0;
       // 1) el mapa debajo, para situarte; 2) el eco encima, semitransparente
+      const eMapa=mapaEstilo(estilo);
       if(mapaCv&&conMapa&&fr){
+        // El fondo oscuro se realza: tal cual sale casi negro (14/255 de luminancia)
+        try{ if(eMapa.brillo!==1)ctx.filter='brightness('+eMapa.brillo+') contrast(1.08)'; }catch(e){}
         try{ ctx.drawImage(mapaCv,fr.cx-rPx,fr.cy-rPx,rPx*2,rPx*2,0,0,W,H); }catch(e){}
+        try{ ctx.filter='none'; }catch(e){}
       }
       if(fr&&fr.canvas){
-        ctx.globalAlpha=(mapaCv&&conMapa)?0.78:1; // con mapa detrás, la lluvia deja verlo
+        ctx.globalAlpha=(mapaCv&&conMapa)?eMapa.alfa:1; // con mapa detrás, la lluvia deja verlo
         try{ ctx.drawImage(fr.canvas,fr.cx-rPx,fr.cy-rPx,rPx*2,rPx*2,0,0,W,H); }catch(e){}
         ctx.globalAlpha=1;
       }
       // Anillos de distancia, cardinales y tú en el centro
-      ctx.strokeStyle='rgba(140,180,230,.35)'; ctx.lineWidth=1;
+      // Sobre un mapa claro, los anillos blancos no se ven: se pintan oscuros
+      const claro=conMapa&&mapaCv&&estilo!=='oscuro';
+      ctx.strokeStyle=claro?'rgba(20,40,70,.45)':'rgba(140,180,230,.35)'; ctx.lineWidth=1;
       [1/3,2/3,1].forEach(f=>{ ctx.beginPath(); ctx.arc(cx,cy,cx*f,0,7); ctx.stroke(); });
       ctx.setLineDash([3,5]);
       ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle='rgba(190,215,245,.75)'; ctx.font='bold 10px Tahoma,sans-serif'; ctx.textAlign='center';
+      ctx.fillStyle=claro?'rgba(15,30,55,.8)':'rgba(190,215,245,.75)'; ctx.font='bold 10px Tahoma,sans-serif'; ctx.textAlign='center';
       ctx.fillText('N',cx,11); ctx.fillText('S',cx,H-3); ctx.fillText('E',W-7,cy+4); ctx.fillText('O',7,cy+4);
       ctx.fillText(Math.round(radio/3)+' km',cx+cx/3+16,cy-4);
       ctx.fillText(radio+' km',cx,cy-cx+12);
@@ -14766,24 +14788,34 @@ function openRadar(){
       cargando=true; pinta();
       const radio=+$('#rd-radio').value||RV_RADIO_DEF;
       const lug=radarLugar();
-      if(conMapa&&lug)rvCargaMapa(lug.lat,lug.lon,RV_Z,radio).then(cv=>{ mapaCv=cv; pintaMapa(); }).catch(()=>{});
+      if(conMapa&&lug)rvCargaMapa(lug.lat,lug.lon,RV_Z,radio,estilo).then(cv=>{ mapaCv=cv; pintaMapa(); }).catch(()=>{});
       radarComprueba({radio:radio}).then(r=>{
         cargando=false; est=r; pinta();
         if(r)radarAvisaSiToca(r);
       }).catch(()=>{ cargando=false; pinta(); });
     };
     $('#rd-upd').onclick=()=>carga();
+    // Un solo botón para cuatro estados: colores → claro → oscuro → sin mapa
     const pintaBotonMapa=()=>{
       const b=$('#rd-mapa');
+      const nombre=conMapa?t('rd.map.'+estilo):t('rd.map.off');
       b.setAttribute('aria-pressed',conMapa?'true':'false');
+      b.setAttribute('aria-label',t('rd.map')+': '+nombre);
+      b.title=t('rd.map')+': '+nombre;
       b.classList.toggle('off',!conMapa);
       $('#rd-atrib').hidden=!conMapa;
     };
     $('#rd-mapa').onclick=()=>{
-      conMapa=!conMapa;
-      const c=radarCfg(); c.mapa=conMapa; radarCfgWrite(c);
+      const orden=MAPA_ESTILOS.map(e=>e.id).concat(['off']);
+      const actual=conMapa?estilo:'off';
+      const sig=orden[(orden.indexOf(actual)+1)%orden.length];
+      conMapa=sig!=='off';
+      if(conMapa)estilo=sig;
+      const c=radarCfg(); c.mapa=conMapa; c.estilo=estilo; radarCfgWrite(c);
+      mapaCv=null; _mapaCache=null;
       pintaBotonMapa();
-      if(conMapa&&!mapaCv)carga(); else pintaMapa();
+      announce(t('rd.map')+': '+(conMapa?t('rd.map.'+estilo):t('rd.map.off')));
+      if(conMapa)carga(); else pintaMapa();
     };
     pintaBotonMapa();
     $('#rd-radio').onchange=()=>{ const c=radarCfg(); c.radio=+$('#rd-radio').value; radarCfgWrite(c); carga(); };
@@ -14793,6 +14825,29 @@ function openRadar(){
       const l=tpLugares().filter(x=>tpKey(x)===$('#rd-lugar').value)[0];
       if(!l)return;
       const c=radarCfg(); c.lugar={lat:l.lat,lon:l.lon,name:l.name}; radarCfgWrite(c); olvidaMapa(); carga();
+    };
+    // Elegir sitio a mano: mismo buscador de ciudades que El tiempo (Open-Meteo) y la
+    // ciudad elegida se guarda en la lista COMPARTIDA, así aparece también allí.
+    const usaLugar=(l)=>{
+      const c=radarCfg();
+      c.lugar={lat:l.lat,lon:l.lon,name:l.name};
+      radarCfgWrite(c);
+      const lista=tpLugares();
+      if(!lista.some(x=>tpKey(x)===tpKey(l)))tpLugaresWrite(lista.concat([{name:l.name,lat:l.lat,lon:l.lon,zona:l.zona||'',pais:l.pais||''}]));
+      pintaLugares(); olvidaMapa(); carga();
+    };
+    $('#rd-buscar').onclick=()=>{
+      xpPrompt(t('rd.title'),t('tp.searchq'),'',(v)=>{
+        if(!v||!v.trim())return;
+        $('#rd-estado').textContent=t('tp.searching');
+        tpBuscaCiudad(v.trim()).then(res=>{
+          if(!res.length){ xpDialog(t('rd.title'),'<div class="dlg-icon">&#128269;</div><div>'+escHtml(t('tp.nocity',{c:v}))+'</div>'); pinta(); return; }
+          const ov=xpDialog(t('rd.title'),'<div class="dlg-icon">&#127758;</div><div class="tp-pick">'
+            +res.map((r,i)=>'<div class="tp-pickrow"><button type="button" class="tp-pickit" data-i="'+i+'">'+escHtml(r.name)
+              +'<span>'+escHtml((r.zona?r.zona+' · ':'')+r.pais)+'</span></button></div>').join('')+'</div>');
+          ov.querySelectorAll('.tp-pickit').forEach(b=>b.onclick=()=>{ ov.remove(); usaLugar(res[+b.dataset.i]); });
+        }).catch(()=>{ $('#rd-estado').textContent=t('tp.fail'); });
+      });
     };
     $('#rd-gps').onclick=()=>{
       if(!navigator.geolocation){ xpDialog(t('rd.title'),'<div class="dlg-icon">&#127758;</div><div>'+escHtml(t('tp.nogps'))+'</div>'); return; }
