@@ -8,7 +8,7 @@
 // Estrategia de red: red primero para el documento (index.html siempre fresco si hay
 // conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
 // solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.43.0';
+const APP_VERSION = '0.45.0';
 const CACHE = 'tos-' + APP_VERSION;
 const NET_TIMEOUT = 3000; // ms que se espera a la red antes de tirar de caché (documento)
 const ASSETS = [
