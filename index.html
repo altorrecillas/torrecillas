@@ -525,6 +525,10 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
             <div class="si-icon">&#128295;</div>
             <div><div class="si-label" data-i18n="tb.title">Herramientas</div><div class="si-desc" data-i18n="tb.desc">QR, contrase&ntilde;as y texto</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openCalculadoras()">
+            <div class="si-icon">&#129518;</div>
+            <div><div class="si-label" data-i18n="kk.title">Calculadoras</div><div class="si-desc" data-i18n="kk.desc">Hipoteca, IVA, porcentajes, fechas&hellip;</div></div>
+          </button>
           <button type="button" class="start-item" onclick="openConverter()">
             <div class="si-icon">&#128207;</div>
             <div><div class="si-label" data-i18n="cv.title">Conversor</div><div class="si-desc" data-i18n="cv.desc">Unidades y divisas</div></div>
@@ -568,6 +572,10 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <button type="button" class="start-item" onclick="openTiempo()">
             <div class="si-icon">&#9925;</div>
             <div><div class="si-label" data-i18n="tp.title">El tiempo</div><div class="si-desc" data-i18n="tp.desc">Por horas y 7 d&iacute;as</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openRadar()">
+            <div class="si-icon">&#127783;&#65039;</div>
+            <div><div class="si-label" data-i18n="rd.title">Aviso de lluvia</div><div class="si-desc" data-i18n="rd.desc">Radar: d&oacute;nde est&aacute; la lluvia y cu&aacute;ndo llega</div></div>
           </button>
           <button type="button" class="start-item" onclick="openAgenda()">
             <div class="si-icon">&#128197;</div>
@@ -678,6 +686,10 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <button type="button" class="start-item" onclick="openLectorQR()">
             <div class="si-icon">&#128307;</div>
             <div><div class="si-label" data-i18n="qrl.title">Lector de c&oacute;digos</div><div class="si-desc" data-i18n="qrl.desc">Lee QR y c&oacute;digos de barras</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openSensores()">
+            <div class="si-icon">&#129517;</div>
+            <div><div class="si-label" data-i18n="hm.title">Herramientas del m&oacute;vil</div><div class="si-desc" data-i18n="hm.desc">Nivel, br&uacute;jula, son&oacute;metro y linterna</div></div>
           </button>
         </div>
         <button type="button" class="start-item" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
@@ -3614,7 +3626,105 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .gs-presu-bar i{display:block;height:100%;background:linear-gradient(90deg,#4c8c4a,#c58a2b);border-radius:5px}
 .gs-presu.over .gs-presu-bar i{background:#c0533f}
 .gs-presu-s{font-size:10px;color:#6b7280}
+/* Aviso de lluvia (radar) */
+.rd-root{display:flex;flex-direction:column;height:100%;gap:7px;padding:8px;background:#0a1024;color:#e8f0ff;font-family:Tahoma,sans-serif;overflow-y:auto}
+.rd-bar{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.rd-sel{flex:1;min-width:90px;font-family:Tahoma,sans-serif;font-size:11px;padding:3px 5px;border:1px solid #2a3a6a;border-radius:4px;background:#16224a;color:#e8f0ff}
+.rd-radio{flex:0 0 auto;min-width:64px}
+.rd-btn{font-size:13px;padding:3px 8px;border:1px solid #2a3a6a;border-radius:4px;background:#16224a;color:#cfe4ff;cursor:pointer}
+.rd-btn:hover{background:#22336a}
+.rd-estado{font-size:13px;line-height:1.4;background:rgba(255,255,255,.06);border-radius:6px;padding:8px 10px;border-left:3px solid #3a5a9a}
+.rd-estado.e-lloviendo,.rd-estado.e-viene{border-left-color:#ffd166;background:rgba(255,209,102,.12)}
+.rd-estado.e-seco{border-left-color:#5ad07a}
+.rd-mapa{position:relative;align-self:center;line-height:0}
+.rd-mapa canvas{max-width:100%;height:auto;border-radius:8px;border:1px solid #2a3a6a}
+.rd-atrib{position:absolute;left:6px;bottom:5px;font-size:8px;color:#9fb3d0;background:rgba(10,16,36,.7);border-radius:3px;padding:1px 5px;line-height:1.5}
+.rd-atrib[hidden]{display:none}
+.rd-btn.off{opacity:.45}
+.rd-hora{position:absolute;right:6px;bottom:5px;font-size:10px;color:#9fb3d0;background:rgba(10,16,36,.7);border-radius:3px;padding:1px 5px;line-height:1.4}
+.rd-mint{font-size:10px;color:#9fb3d0;margin-bottom:3px}
+.rd-bars{display:flex;align-items:flex-end;gap:2px;height:44px}
+.rd-b{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px}
+.rd-b i{display:block;width:100%;background:#2a3a6a;border-radius:2px 2px 0 0}
+.rd-b.on i{background:linear-gradient(180deg,#8fd3ff,#2f6fb0)}
+.rd-b span{font-size:8px;color:#7f93b0;height:9px}
+.rd-avisocheck{display:flex;align-items:flex-start;gap:7px;cursor:pointer;background:rgba(255,255,255,.06);border-radius:6px;padding:7px 8px}
+.rd-avisocheck span{display:flex;flex-direction:column}
+.rd-avisocheck b{font-size:12px}
+.rd-avisocheck i{font-style:normal;font-size:10px;color:#9fb3d0;line-height:1.35}
+.rd-nota{font-size:10px;color:#8fa3c8;line-height:1.4;background:rgba(255,209,102,.1);border-radius:5px;padding:6px 8px}
+/* Herramientas del móvil (sensores) */
+.hm-root{display:flex;flex-direction:column;height:100%;background:#0d1326;color:#e8f0ff;font-family:Rajdhani,sans-serif}
+.hm-tabs{display:flex;flex-wrap:wrap;gap:2px;padding:5px 5px 0;background:#101a34;border-bottom:1px solid #2a3a6a}
+.hm-tab{flex:1;min-width:70px;font-family:Rajdhani,sans-serif;font-size:12px;font-weight:600;padding:5px 4px;border:1px solid #2a3a6a;border-bottom:none;border-radius:5px 5px 0 0;background:#16224a;color:#9fc2f0;cursor:pointer}
+.hm-tab.on{background:#0d1326;color:#fff}
+.hm-body{flex:1;overflow-y:auto;padding:12px;display:flex}
+.hm-pane{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+.hm-pane[hidden]{display:none}
+.hm-pane canvas{max-width:100%;height:auto}
+.hm-val{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.hm-aviso{font-size:11px;color:#9fb3d0;text-align:center;line-height:1.4;background:rgba(255,255,255,.06);border-radius:5px;padding:6px 8px}
+.hm-aviso[hidden]{display:none}
+.hm-db{font-size:42px;font-weight:700;font-variant-numeric:tabular-nums;color:#8fd3ff}
+.hm-barra{width:100%;height:12px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden}
+.hm-barra i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5ad07a,#e8b73c,#ff5577);border-radius:6px;transition:width .1s linear}
+.hm-luzic{font-size:78px;line-height:1;opacity:.35;transition:opacity .2s,text-shadow .2s}
+.hm-luzic.on{opacity:1;text-shadow:0 0 34px rgba(255,220,120,.95)}
+/* Calculadoras prácticas */
+.kk-root{display:flex;flex-direction:column;height:100%;background:#f4f6fa;font-family:Tahoma,sans-serif}
+.kk-tabs{display:flex;flex-wrap:wrap;gap:2px;padding:5px 5px 0;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.kk-tab{font-family:Tahoma,sans-serif;font-size:11px;padding:4px 9px;border:1px solid #aca899;border-bottom:none;border-radius:4px 4px 0 0;background:#e8e6dd;color:#4a5262;cursor:pointer}
+.kk-tab.on{background:#f4f6fa;color:#1a3d7c;font-weight:bold}
+.kk-body{flex:1;overflow-y:auto;padding:10px}
+.kk-pane{display:flex;flex-direction:column;gap:7px}
+.kk-pane[hidden]{display:none}
+.kk-f{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:#3a4150}
+.kk-f input{width:44%;min-width:110px;font-family:Tahoma,sans-serif;font-size:13px;padding:4px 7px;border:1px solid #7f9db9;border-radius:3px;text-align:right}
+.kk-r3{display:flex;flex-direction:column;gap:7px}
+.kk-chk{display:flex;align-items:center;gap:6px;font-size:11px;color:#5a6472}
+.kk-res{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid #cfd6e0;border-radius:6px;padding:7px 9px;margin-top:3px}
+.kk-row{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#4a5262;padding:1px 0}
+.kk-row b{color:#1a3d7c}
+.kk-row.big{font-size:15px;border-top:1px solid #eef1f5;margin-top:3px;padding-top:5px}
+.kk-row.big b{color:#2f6fb0}
+.kk-tabla{margin-top:6px;font-size:10.5px;background:#fff;border:1px solid #cfd6e0;border-radius:6px;overflow:hidden}
+.kk-th,.kk-tr{display:grid;grid-template-columns:34px 1fr 1fr 1fr;gap:4px;padding:3px 7px}
+.kk-th{background:#eef3fb;color:#4a5262;font-weight:bold}
+.kk-tr{border-top:1px solid #f0f2f5;color:#4a5262}
+.kk-tr span:not(:first-child),.kk-th span:not(:first-child){text-align:right}
+/* Reloj: alarmas, temporizador y cronómetro */
+.clk-pane{flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;padding:11px;overflow-y:auto}
+.clk-disp{font-size:38px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.clk-disp.run{color:#8fd3ff;text-shadow:0 0 12px rgba(143,211,255,.45)}
+.clk-sub{font-size:11px;opacity:.75;min-height:14px;text-align:center}
+.clk-presets{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.clk-preset{font-family:Rajdhani,sans-serif;font-size:13px;font-weight:600;padding:4px 10px;border:1px solid #3a5a9a;border-radius:14px;background:rgba(255,255,255,.08);color:#cfe4ff;cursor:pointer}
+.clk-preset:hover{background:rgba(143,211,255,.25);color:#fff}
+.clk-newalarm{display:flex;gap:5px;align-items:center;width:100%;flex-wrap:wrap;justify-content:center}
+.clk-time,.clk-name,.clk-num{font-family:Rajdhani,sans-serif;font-size:14px;padding:4px 7px;border:1px solid #3a5a9a;border-radius:4px;background:rgba(255,255,255,.92);color:#12203a}
+.clk-name{flex:1;min-width:90px}
+.clk-num{width:64px;text-align:center}
+.clk-unit{font-size:11px;opacity:.75}
+.clk-list{width:100%;display:flex;flex-direction:column;gap:4px}
+.clk-al{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid #2a3a6a;border-radius:6px;padding:5px 8px}
+.clk-al.off{opacity:.45}
+.clk-al-h{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.clk-al-n{flex:1;font-size:11px;opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.clk-al-on,.clk-al-x{background:none;border:none;color:#cfe4ff;font-size:15px;cursor:pointer;padding:0 3px}
+.clk-al-x{font-size:12px;opacity:.6}
+.clk-al-x:hover{opacity:1;color:#ff8080}
+.clk-vacio{font-size:11px;opacity:.6;text-align:center;padding:10px}
+.clk-lap{display:flex;gap:8px;font-size:11px;font-variant-numeric:tabular-nums;border-bottom:1px solid rgba(255,255,255,.08);padding:2px 4px}
+.clk-lap span{opacity:.6;width:28px}
+.clk-lap b{flex:1}
+.clk-lap i{font-style:normal;opacity:.6}
 .gs-nopresu{text-align:center}
+.gs-meta{margin-top:6px}
+.gs-meta .gs-presu-bar i{background:linear-gradient(90deg,#3a6ea5,#4c8c4a)}
+.gs-meta.done{border-color:#a8d0a8;background:#f2faf2}
+.gs-meta.done .gs-presu-bar i{background:#4c8c4a}
+.gs-metabtn{font-family:Tahoma,sans-serif;font-size:9px;padding:1px 6px;border:1px solid #cfd6e0;border-radius:3px;background:#f7f9fc;color:#5a6472;cursor:pointer}
+.gs-metabtn:hover{background:#eef3fb;border-color:#5a8fd6}
 .gs-two{display:flex;gap:8px;flex-wrap:wrap}
 .gs-donut{flex:0 0 auto;width:200px;display:flex;align-items:center;justify-content:center}
 #gs-cv-cat{width:180px;height:150px}
@@ -4077,7 +4187,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.51.0';
+const APP_VERSION = '0.53.1';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4417,6 +4527,10 @@ const I18N={
   'qrl.vc.tel':{es:'Teléfono', en:'Phone', ca:'Telèfon', ru:'Телефон'},
   'qrl.vc.mail':{es:'Correo', en:'Email', ca:'Correu', ru:'Почта'},
   'qrl.a.open':{es:'Abrir', en:'Open', ca:'Obre', ru:'Открыть'},
+  'qrl.t.barras':{es:'Código de barras', en:'Barcode', ca:'Codi de barres', ru:'Штрихкод'},
+  'qrl.a.shop':{es:'Añadir a la compra', en:'Add to the shopping list', ca:'Afegeix a la compra', ru:'Добавить в список покупок'},
+  'qrl.a.name':{es:'¿Qué producto es el {c}? Se guardará para la próxima vez.', en:'What product is {c}? It will be remembered next time.', ca:'Quin producte és el {c}? Es desarà per a la propera vegada.', ru:'Что за товар {c}? Запомним на следующий раз.'},
+  'qrl.a.added':{es:'{n} va a la lista de la compra.', en:'{n} added to the shopping list.', ca:'{n} va a la llista de la compra.', ru:'{n} добавлено в список покупок.'},
   'qrl.a.copy':{es:'Copiar', en:'Copy', ca:'Copia', ru:'Копировать'},
   'qrl.a.copypw':{es:'Copiar la contraseña', en:'Copy the password', ca:'Copia la contrasenya', ru:'Копировать пароль'},
   'qrl.a.call':{es:'Llamar', en:'Call', ca:'Truca', ru:'Позвонить'},
@@ -4673,6 +4787,8 @@ const I18N={
   'pin.tooeasy':{es:'Ese PIN es demasiado obvio.', en:'That PIN is far too obvious.', ca:'Aquest PIN és massa obvi.', ru:'Такой PIN слишком очевиден.'},
   'pin.done':{es:'PIN puesto. La próxima vez entras con él.', en:'PIN set. Next time you get in with it.', ca:'PIN posat. La pròxima vegada entres amb ell.', ru:'PIN задан. В следующий раз входите с ним.'},
   'pin.removeq':{es:'¿Quitar el PIN? Volverás a entrar solo con la contraseña.', en:'Remove the PIN? You will go back to the password only.', ca:'Treure el PIN? Tornaràs a entrar només amb la contrasenya.', ru:'Убрать PIN? Вход снова только по паролю.'},
+  'pin.removeq.bio':{es:'¿Quitar el PIN? Se quitará también la huella (necesita el PIN de respaldo) y volverás a entrar solo con la contraseña.', en:'Remove the PIN? The fingerprint goes with it (it needs the PIN as a fallback) and you will go back to the password only.', ca:'Treure el PIN? També es traurà l’empremta (necessita el PIN de reserva) i tornaràs a entrar només amb la contrasenya.', ru:'Убрать PIN? Отпечаток тоже будет убран (ему нужен запасной PIN), и вход снова только по паролю.'},
+  'pin.bio.needpin':{es:'La huella necesita un PIN de respaldo: el sensor puede no leerte (dedo mojado, guantes) y desde otro dispositivo no hay huella registrada. Pon primero un PIN y activamos la huella a continuación.', en:'The fingerprint needs a PIN as a fallback: the sensor may not read you (wet finger, gloves) and on another device there is no fingerprint enrolled. Set a PIN first and we will enable the fingerprint right after.', ca:'L’empremta necessita un PIN de reserva: el sensor pot no llegir-te (dit mullat, guants) i des d’un altre dispositiu no hi ha cap empremta registrada. Posa primer un PIN i tot seguit activem l’empremta.', ru:'Отпечатку нужен запасной PIN: сенсор может не прочитать палец (мокрый, перчатки), а на другом устройстве отпечатка нет. Сначала задайте PIN, затем включим отпечаток.'},
   'pin.removed':{es:'PIN quitado.', en:'PIN removed.', ca:'PIN tret.', ru:'PIN убран.'},
   'pin.wrong':{es:'PIN incorrecto. Te quedan {n} intentos.', en:'Wrong PIN. {n} tries left.', ca:'PIN incorrecte. Et queden {n} intents.', ru:'Неверный PIN. Осталось попыток: {n}.'},
   'pin.left':{es:'Te quedan {n} intentos.', en:'{n} tries left.', ca:'Et queden {n} intents.', ru:'Осталось попыток: {n}.'},
@@ -4834,6 +4950,150 @@ const I18N={
   'gs.budget':{es:'Presupuesto del mes', en:'Monthly budget', ca:'Pressupost del mes', ru:'Бюджет месяца'},
   'gs.setbudget':{es:'Poner un presupuesto', en:'Set a budget', ca:'Posa un pressupost', ru:'Задать бюджет'},
   'gs.budgetq':{es:'Presupuesto mensual en € (0 = sin presupuesto)', en:'Monthly budget in € (0 = none)', ca:'Pressupost mensual en € (0 = cap)', ru:'Месячный бюджет в € (0 — без бюджета)'},
+  'rd.title':{es:'Aviso de lluvia', en:'Rain alert', ca:'Avís de pluja', ru:'Дождь рядом'},
+  'rd.desc':{es:'Radar: dónde está la lluvia y cuándo llega', en:'Radar: where the rain is and when it arrives', ca:'Radar: on és la pluja i quan arriba', ru:'Радар: где дождь и когда придёт'},
+  'rd.place':{es:'Sitio que se vigila', en:'Place being watched', ca:'Lloc que es vigila', ru:'Наблюдаемое место'},
+  'rd.radius':{es:'Radio de vigilancia', en:'Watch radius', ca:'Radi de vigilància', ru:'Радиус наблюдения'},
+  'rd.map':{es:'Mapa de fondo', en:'Base map', ca:'Mapa de fons', ru:'Карта-подложка'},
+  'rd.refresh':{es:'Mirar ahora', en:'Check now', ca:'Mira ara', ru:'Проверить сейчас'},
+  'rd.dry':{es:'Sin lluvia en {r} km a la redonda', en:'No rain within {r} km', ca:'Sense pluja en {r} km a la rodona', ru:'Дождя нет в радиусе {r} км'},
+  'rd.now':{es:'Está lloviendo aquí', en:'It is raining here', ca:'Està plovent aquí', ru:'Здесь идёт дождь'},
+  'rd.coming':{es:'Lluvia a {km} km al {d} · llega en unos {n} min', en:'Rain {km} km to the {d} · arriving in about {n} min', ca:'Pluja a {km} km al {d} · arriba en uns {n} min', ru:'Дождь в {km} км на {d} · придёт примерно через {n} мин'},
+  'rd.near':{es:'Lluvia a {km} km al {d}, pero no viene hacia aquí', en:'Rain {km} km to the {d}, but not heading here', ca:'Pluja a {km} km al {d}, però no ve cap aquí', ru:'Дождь в {km} км на {d}, но идёт мимо'},
+  'rd.forecast':{es:'El modelo da {mm} mm en unos {n} min', en:'The model expects {mm} mm in about {n} min', ca:'El model dona {mm} mm en uns {n} min', ru:'Модель ожидает {mm} мм примерно через {n} мин'},
+  'rd.next2h':{es:'Próximas 4 horas (mm por cuarto de hora)', en:'Next 4 hours (mm per quarter)', ca:'Pròximes 4 hores (mm per quart)', ru:'Ближайшие 4 часа (мм за 15 мин)'},
+  'rd.alert':{es:'Avisarme si viene lluvia', en:'Warn me when rain is coming', ca:'Avisa’m si ve pluja', ru:'Предупредить о дожде'},
+  'rd.alert.d':{es:'Comprueba el radar cada 5 minutos y avisa si la lluvia llega en menos de una hora', en:'Checks the radar every 5 minutes and warns if rain arrives within an hour', ca:'Comprova el radar cada 5 minuts i avisa si la pluja arriba en menys d’una hora', ru:'Проверяет радар каждые 5 минут и предупреждает, если дождь придёт в течение часа'},
+  'rd.alert.on':{es:'Aviso de lluvia activado', en:'Rain alert on', ca:'Avís de pluja activat', ru:'Оповещение о дожде включено'},
+  'rd.limit':{es:'Aviso honesto: esto suena mientras Torrecillas OS esté abierto, aunque sea en una pestaña de fondo. Sin servidor propio no hay notificaciones con todo cerrado.', en:'Honest warning: this rings while Torrecillas OS is open, even in a background tab. Without a server of our own there are no notifications with everything closed.', ca:'Avís honest: això sona mentre Torrecillas OS estigui obert, encara que sigui en una pestanya de fons. Sense servidor propi no hi ha notificacions amb tot tancat.', ru:'Честное предупреждение: это работает, пока Torrecillas OS открыт, пусть и в фоновой вкладке. Без своего сервера уведомлений при закрытом приложении не будет.'},
+  'rd.fail':{es:'No se ha podido leer el radar', en:'Could not read the radar', ca:'No s’ha pogut llegir el radar', ru:'Не удалось получить радар'},
+  'rd.gadget':{es:'Lluvia', en:'Rain', ca:'Pluja', ru:'Дождь'},
+  'hm.title':{es:'Herramientas del móvil', en:'Phone tools', ca:'Eines del mòbil', ru:'Инструменты телефона'},
+  'hm.desc':{es:'Nivel, brújula, sonómetro y linterna', en:'Level, compass, sound meter and torch', ca:'Nivell, brúixola, sonòmetre i llanterna', ru:'Уровень, компас, шумомер и фонарик'},
+  'hm.level':{es:'Nivel', en:'Level', ca:'Nivell', ru:'Уровень'},
+  'hm.compass':{es:'Brújula', en:'Compass', ca:'Brúixola', ru:'Компас'},
+  'hm.sound':{es:'Sonómetro', en:'Sound meter', ca:'Sonòmetre', ru:'Шумомер'},
+  'hm.torch':{es:'Linterna', en:'Torch', ca:'Llanterna', ru:'Фонарик'},
+  'hm.flat':{es:'nivelado', en:'level', ca:'anivellat', ru:'ровно'},
+  'hm.nosensor':{es:'Este equipo no tiene ese sensor (es cosa del móvil).', en:'This device has no such sensor (that is a phone thing).', ca:'Aquest equip no té aquest sensor (és cosa del mòbil).', ru:'На этом устройстве нет такого датчика (это для телефона).'},
+  'hm.noperm':{es:'No has dado permiso para usar los sensores de movimiento.', en:'Permission to use the motion sensors was not granted.', ca:'No has donat permís per fer servir els sensors de moviment.', ru:'Нет разрешения на использование датчиков движения.'},
+  'hm.sound.start':{es:'Empezar a medir', en:'Start measuring', ca:'Comença a mesurar', ru:'Начать измерение'},
+  'hm.sound.stop':{es:'Parar', en:'Stop', ca:'Atura', ru:'Стоп'},
+  'hm.sound.peak':{es:'Máximo {n} dB', en:'Peak {n} dB', ca:'Màxim {n} dB', ru:'Пик {n} дБ'},
+  'hm.sound.note':{es:'Orientativo: sin calibrar contra un sonómetro de verdad, el número es aproximado.', en:'Rough guide: without calibrating against a real sound meter this number is approximate.', ca:'Orientatiu: sense calibrar contra un sonòmetre de veritat, el número és aproximat.', ru:'Ориентировочно: без калибровки по настоящему шумомеру число приблизительное.'},
+  'hm.sound.nomic':{es:'No he podido usar el micrófono.', en:'I could not use the microphone.', ca:'No he pogut fer servir el micròfon.', ru:'Не удалось использовать микрофон.'},
+  'hm.torch.on':{es:'Encender', en:'Turn on', ca:'Encén', ru:'Включить'},
+  'hm.torch.off':{es:'Apagar', en:'Turn off', ca:'Apaga', ru:'Выключить'},
+  'hm.torch.note':{es:'Usa el flash de la cámara trasera. En un ordenador no hay nada que encender.', en:'Uses the rear camera flash. On a computer there is nothing to turn on.', ca:'Fa servir el flaix de la càmera del darrere. En un ordinador no hi ha res per encendre.', ru:'Использует вспышку задней камеры. На компьютере включать нечего.'},
+  'hm.torch.no':{es:'Esta cámara no deja encender el flash desde el navegador.', en:'This camera will not let the browser turn on the flash.', ca:'Aquesta càmera no deixa encendre el flaix des del navegador.', ru:'Эта камера не позволяет включить вспышку из браузера.'},
+  'hm.dir.n':{es:'N', en:'N', ca:'N', ru:'С'},
+  'hm.dir.ne':{es:'NE', en:'NE', ca:'NE', ru:'СВ'},
+  'hm.dir.e':{es:'E', en:'E', ca:'E', ru:'В'},
+  'hm.dir.se':{es:'SE', en:'SE', ca:'SE', ru:'ЮВ'},
+  'hm.dir.s':{es:'S', en:'S', ca:'S', ru:'Ю'},
+  'hm.dir.so':{es:'SO', en:'SW', ca:'SO', ru:'ЮЗ'},
+  'hm.dir.o':{es:'O', en:'W', ca:'O', ru:'З'},
+  'hm.dir.no':{es:'NO', en:'NW', ca:'NO', ru:'СЗ'},
+  'hm.n.quiet':{es:'como una biblioteca', en:'like a library', ca:'com una biblioteca', ru:'как в библиотеке'},
+  'hm.n.home':{es:'una casa tranquila', en:'a quiet home', ca:'una casa tranquil·la', ru:'тихий дом'},
+  'hm.n.talk':{es:'conversación normal', en:'normal conversation', ca:'conversa normal', ru:'обычный разговор'},
+  'hm.n.street':{es:'calle con tráfico', en:'busy street', ca:'carrer amb trànsit', ru:'улица с движением'},
+  'hm.n.loud':{es:'esto ya molesta', en:'this is getting loud', ca:'això ja molesta', ru:'уже слишком громко'},
+  'kk.title':{es:'Calculadoras', en:'Calculators', ca:'Calculadores', ru:'Калькуляторы'},
+  'kk.desc':{es:'Hipoteca, IVA, porcentajes, fechas…', en:'Mortgage, VAT, percentages, dates…', ca:'Hipoteca, IVA, percentatges, dates…', ru:'Ипотека, НДС, проценты, даты…'},
+  'kk.hipoteca':{es:'Hipoteca', en:'Mortgage', ca:'Hipoteca', ru:'Ипотека'},
+  'kk.factura':{es:'Factura', en:'Invoice', ca:'Factura', ru:'Счёт'},
+  'kk.pct':{es:'%', en:'%', ca:'%', ru:'%'},
+  'kk.regla':{es:'Regla de 3', en:'Rule of 3', ca:'Regla de 3', ru:'Пропорция'},
+  'kk.fechas':{es:'Fechas', en:'Dates', ca:'Dates', ru:'Даты'},
+  'kk.propina':{es:'Propina', en:'Tip', ca:'Propina', ru:'Чаевые'},
+  'kk.viaje':{es:'Viaje', en:'Trip', ca:'Viatge', ru:'Поездка'},
+  'kk.h.capital':{es:'Importe del préstamo (€)', en:'Loan amount (€)', ca:'Import del préstec (€)', ru:'Сумма кредита (€)'},
+  'kk.h.tin':{es:'Interés anual (TIN %)', en:'Annual interest (%)', ca:'Interès anual (TIN %)', ru:'Годовая ставка (%)'},
+  'kk.h.years':{es:'Años', en:'Years', ca:'Anys', ru:'Лет'},
+  'kk.h.fee':{es:'Cuota al mes', en:'Monthly payment', ca:'Quota al mes', ru:'Платёж в месяц'},
+  'kk.h.interest':{es:'Intereses', en:'Interest', ca:'Interessos', ru:'Проценты'},
+  'kk.h.total':{es:'Total a devolver', en:'Total repaid', ca:'Total a tornar', ru:'Всего к возврату'},
+  'kk.h.months':{es:'Mensualidades', en:'Payments', ca:'Mensualitats', ru:'Платежей'},
+  'kk.h.year':{es:'Año', en:'Year', ca:'Any', ru:'Год'},
+  'kk.h.paid':{es:'Amortizado', en:'Principal', ca:'Amortitzat', ru:'Погашено'},
+  'kk.h.pending':{es:'Pendiente', en:'Left', ca:'Pendent', ru:'Остаток'},
+  'kk.f.base':{es:'Base imponible (€)', en:'Net amount (€)', ca:'Base imposable (€)', ru:'Сумма без налога (€)'},
+  'kk.f.iva':{es:'IVA (%)', en:'VAT (%)', ca:'IVA (%)', ru:'НДС (%)'},
+  'kk.f.irpf':{es:'Retención IRPF (%)', en:'Withholding (%)', ca:'Retenció IRPF (%)', ru:'Удержание (%)'},
+  'kk.f.tocharge':{es:'A cobrar', en:'To collect', ca:'A cobrar', ru:'К получению'},
+  'kk.p.a':{es:'Número A', en:'Number A', ca:'Número A', ru:'Число A'},
+  'kk.p.b':{es:'Número B', en:'Number B', ca:'Número B', ru:'Число B'},
+  'kk.p.of':{es:'{a}% de {b}', en:'{a}% of {b}', ca:'{a}% de {b}', ru:'{a}% от {b}'},
+  'kk.p.is':{es:'{a} es este % de {b}', en:'{a} is this % of {b}', ca:'{a} és aquest % de {b}', ru:'{a} — это % от {b}'},
+  'kk.p.change':{es:'Variación de {a} a {b}', en:'Change from {a} to {b}', ca:'Variació de {a} a {b}', ru:'Изменение с {a} до {b}'},
+  'kk.p.disc':{es:'{b} con {a}% de descuento', en:'{b} with {a}% off', ca:'{b} amb {a}% de descompte', ru:'{b} со скидкой {a}%'},
+  'kk.r.a':{es:'Si A', en:'If A', ca:'Si A', ru:'Если A'},
+  'kk.r.b':{es:'son B', en:'is B', ca:'són B', ru:'это B'},
+  'kk.r.c':{es:'entonces C', en:'then C', ca:'llavors C', ru:'тогда C'},
+  'kk.r.inv':{es:'Inversa (a más, menos)', en:'Inverse (more means less)', ca:'Inversa (a més, menys)', ru:'Обратная (больше — меньше)'},
+  'kk.d.from':{es:'Desde', en:'From', ca:'Des de', ru:'С'},
+  'kk.d.to':{es:'Hasta', en:'To', ca:'Fins a', ru:'По'},
+  'kk.d.days':{es:'Días', en:'Days', ca:'Dies', ru:'Дней'},
+  'kk.d.weeks':{es:'Semanas', en:'Weeks', ca:'Setmanes', ru:'Недель'},
+  'kk.d.working':{es:'Días laborables', en:'Working days', ca:'Dies feiners', ru:'Рабочих дней'},
+  'kk.d.exact':{es:'Exactamente', en:'Exactly', ca:'Exactament', ru:'Точно'},
+  'kk.d.ymd':{es:'{a} años, {m} meses y {d} días', en:'{a} years, {m} months and {d} days', ca:'{a} anys, {m} mesos i {d} dies', ru:'{a} г., {m} мес. и {d} дн.'},
+  'kk.t.bill':{es:'Cuenta (€)', en:'Bill (€)', ca:'Compte (€)', ru:'Счёт (€)'},
+  'kk.t.pct':{es:'Propina (%)', en:'Tip (%)', ca:'Propina (%)', ru:'Чаевые (%)'},
+  'kk.t.people':{es:'Personas', en:'People', ca:'Persones', ru:'Человек'},
+  'kk.t.tip':{es:'Propina', en:'Tip', ca:'Propina', ru:'Чаевые'},
+  'kk.t.total':{es:'Total con propina', en:'Total with tip', ca:'Total amb propina', ru:'Итого с чаевыми'},
+  'kk.t.each':{es:'Cada uno', en:'Each', ca:'Cadascú', ru:'С каждого'},
+  'kk.v.km':{es:'Kilómetros', en:'Kilometres', ca:'Quilòmetres', ru:'Километры'},
+  'kk.v.cons':{es:'Consumo (l/100 km)', en:'Consumption (l/100 km)', ca:'Consum (l/100 km)', ru:'Расход (л/100 км)'},
+  'kk.v.price':{es:'Precio del litro (€)', en:'Price per litre (€)', ca:'Preu del litre (€)', ru:'Цена литра (€)'},
+  'kk.v.people':{es:'Personas', en:'People', ca:'Persones', ru:'Человек'},
+  'kk.v.round':{es:'Ida y vuelta', en:'Round trip', ca:'Anada i tornada', ru:'Туда и обратно'},
+  'kk.v.dist':{es:'Distancia', en:'Distance', ca:'Distància', ru:'Расстояние'},
+  'kk.v.fuel':{es:'Combustible', en:'Fuel', ca:'Combustible', ru:'Топливо'},
+  'kk.v.cost':{es:'Coste', en:'Cost', ca:'Cost', ru:'Стоимость'},
+  'kk.v.each':{es:'Cada uno', en:'Each', ca:'Cadascú', ru:'С каждого'},
+  'clk.alarm':{es:'Alarma', en:'Alarm', ca:'Alarma', ru:'Будильник'},
+  'clk.alarm.name':{es:'Para qué (opcional)', en:'What for (optional)', ca:'Per a què (opcional)', ru:'Для чего (необязательно)'},
+  'clk.alarmset':{es:'Alarma puesta a las {h}', en:'Alarm set for {h}', ca:'Alarma posada a les {h}', ru:'Будильник на {h}'},
+  'clk.noalarms':{es:'Sin alarmas. Pon una y sonará aunque cierres el reloj.', en:'No alarms. Set one and it will ring even with the clock closed.', ca:'Sense alarmes. Posa’n una i sonarà encara que tanquis el rellotge.', ru:'Будильников нет. Поставьте — он прозвонит даже с закрытыми часами.'},
+  'clk.timer':{es:'Temporizador', en:'Timer', ca:'Temporitzador', ru:'Таймер'},
+  'clk.chrono':{es:'Cronómetro', en:'Stopwatch', ca:'Cronòmetre', ru:'Секундомер'},
+  'clk.minutes':{es:'minutos', en:'minutes', ca:'minuts', ru:'минут'},
+  'clk.start':{es:'Iniciar', en:'Start', ca:'Inicia', ru:'Старт'},
+  'clk.pause':{es:'Pausar', en:'Pause', ca:'Pausa', ru:'Пауза'},
+  'clk.resume':{es:'Seguir', en:'Resume', ca:'Continua', ru:'Продолжить'},
+  'clk.cancel':{es:'Quitar', en:'Clear', ca:'Treu', ru:'Сбросить'},
+  'clk.reset':{es:'Reiniciar', en:'Reset', ca:'Reinicia', ru:'Сброс'},
+  'clk.lap':{es:'Vuelta', en:'Lap', ca:'Volta', ru:'Круг'},
+  'clk.stop':{es:'Vale', en:'OK', ca:'D’acord', ru:'Ясно'},
+  'clk.paused':{es:'en pausa', en:'paused', ca:'en pausa', ru:'на паузе'},
+  'clk.nothing':{es:'Nada en marcha', en:'Nothing running', ca:'Res en marxa', ru:'Ничего не запущено'},
+  'clk.timerdone':{es:'¡Tiempo! {n}', en:'Time is up! {n}', ca:'Temps! {n}', ru:'Время вышло! {n}'},
+  'clk.pomo':{es:'Pomodoro', en:'Pomodoro', ca:'Pomodoro', ru:'Помодоро'},
+  'clk.pomo.work':{es:'A trabajar', en:'Focus', ca:'A treballar', ru:'Работа'},
+  'clk.pomo.rest':{es:'Descanso', en:'Break', ca:'Descans', ru:'Перерыв'},
+  'clk.pomo.round':{es:'ronda {n}', en:'round {n}', ca:'ronda {n}', ru:'раунд {n}'},
+  'clk.pomo.torest':{es:'Ronda {n} hecha. Descansa.', en:'Round {n} done. Take a break.', ca:'Ronda {n} feta. Descansa.', ru:'Раунд {n} закончен. Отдохните.'},
+  'clk.pomo.towork':{es:'Se acabó el descanso. A ello.', en:'Break is over. Back to it.', ca:'S’ha acabat el descans. A la feina.', ru:'Перерыв окончен. За работу.'},
+  'clk.fromrecipe':{es:'Temporizador de {n}', en:'{n} timer', ca:'Temporitzador de {n}', ru:'Таймер: {n}'},
+  'gs.goal':{es:'Meta de ahorro', en:'Savings goal', ca:'Meta d’estalvi', ru:'Цель накоплений'},
+  'gs.goal.set':{es:'Ponerme una meta de ahorro', en:'Set a savings goal', ca:'Posa’m una meta d’estalvi', ru:'Поставить цель накоплений'},
+  'gs.goal.help':{es:'Lo ahorrado no se apunta a mano: es el saldo real (ingresos menos gastos) desde el mes que elijas. Un mes malo resta.', en:'Savings are not typed in: it is your real balance (income minus expenses) from the month you pick. A bad month subtracts.', ca:'L’estalviat no s’apunta a mà: és el saldo real (ingressos menys despeses) des del mes que triïs. Un mes dolent resta.', ru:'Накопления не вводятся вручную: это реальный баланс (доходы минус расходы) с выбранного месяца. Плохой месяц вычитается.'},
+  'gs.goal.name':{es:'Para qué es (viaje, coche…)', en:'What it is for (trip, car…)', ca:'Per a què és (viatge, cotxe…)', ru:'На что (поездка, машина…)'},
+  'gs.goal.amount':{es:'Cuánto quiero juntar (€)', en:'How much to save (€)', ca:'Quant vull ajuntar (€)', ru:'Сколько накопить (€)'},
+  'gs.goal.date':{es:'Para cuándo', en:'By when', ca:'Per a quan', ru:'К какому сроку'},
+  'gs.goal.from':{es:'Contar desde el mes', en:'Count from month', ca:'Compta des del mes', ru:'Считать с месяца'},
+  'gs.goal.badamount':{es:'Pon una cantidad.', en:'Enter an amount.', ca:'Posa-hi una quantitat.', ru:'Укажите сумму.'},
+  'gs.goal.baddate':{es:'Esa fecha ya ha pasado.', en:'That date is in the past.', ca:'Aquesta data ja ha passat.', ru:'Эта дата уже прошла.'},
+  'gs.goal.left':{es:'Faltan {e} · {s} por semana', en:'{e} to go · {s} per week', ca:'Falten {e} · {s} per setmana', ru:'Осталось {e} · {s} в неделю'},
+  'gs.goal.leftnodate':{es:'Faltan {e}', en:'{e} to go', ca:'Falten {e}', ru:'Осталось {e}'},
+  'gs.goal.done':{es:'¡Meta conseguida!', en:'Goal reached!', ca:'Meta aconseguida!', ru:'Цель достигнута!'},
+  'gs.goal.late':{es:'Se pasó la fecha y faltan {e}', en:'Past the date and {e} short', ca:'S’ha passat la data i falten {e}', ru:'Срок прошёл, не хватает {e}'},
+  'gs.goal.by':{es:'para el {f}', en:'by {f}', ca:'per al {f}', ru:'к {f}'},
+  'gs.goal.delq':{es:'¿Quitar la meta de ahorro?', en:'Remove the savings goal?', ca:'Treure la meta d’estalvi?', ru:'Убрать цель накоплений?'},
+  'gs.goal.reached':{es:'Has llegado a «{n}»: {e} juntados.', en:'You reached “{n}”: {e} saved.', ca:'Has arribat a «{n}»: {e} ajuntats.', ru:'Цель «{n}» достигнута: {e} накоплено.'},
   'gs.left':{es:'Te quedan {e} para {d} días', en:'{e} left for {d} days', ca:'Et queden {e} per a {d} dies', ru:'Осталось {e} на {d} дней'},
   'gs.over':{es:'Te has pasado {e}', en:'{e} over budget', ca:'T’has passat {e}', ru:'Превышение на {e}'},
   'gs.forecast':{es:'a este ritmo, {e} a fin de mes', en:'at this rate, {e} by month end', ca:'a aquest ritme, {e} a final de mes', ru:'такими темпами {e} к концу месяца'},
@@ -5004,6 +5264,7 @@ const I18N={
   'cv.desc':{es:'Unidades y divisas', en:'Units & currency', ca:'Unitats i divises', ru:'Единицы и валюты'},
   'cv.swap':{es:'Intercambiar', en:'Swap', ca:'Intercanvia', ru:'Поменять'},
   'cv.rates':{es:'Tasas aproximadas (offline)', en:'Approx. rates (offline)', ca:'Taxes aproximades (offline)', ru:'Приблизительные курсы (офлайн)'},
+  'cv.rates.real':{es:'Cambio oficial del BCE · {f}', en:'Official ECB rates · {f}', ca:'Canvi oficial del BCE · {f}', ru:'Официальный курс ЕЦБ · {f}'},
   'cv.length':{es:'Longitud', en:'Length', ca:'Longitud', ru:'Длина'},
   'cv.mass':{es:'Peso', en:'Weight', ca:'Pes', ru:'Вес'},
   'cv.temp':{es:'Temperatura', en:'Temperature', ca:'Temperatura', ru:'Температура'},
@@ -5446,9 +5707,13 @@ async function pinActivar(pin){
   try{ await autoLoginBorrar(); }catch(e){}
   return true;
 }
+// Quitar el PIN se lleva la huella por delante: la huella EXIGE un PIN de respaldo
+// (ver `bioActivar`), así que dejarla sola sería dejar un cerrojo sin llave de repuesto
+// el día que el sensor no lea o cambies de dedo.
 async function pinQuitar(){
   try{ localStorage.removeItem('tos-pin'); }catch(e){}
-  if(!bioActivo())await _llaveBorrar(PIN_ID); // si la huella sigue puesta, la llave se queda
+  try{ localStorage.removeItem('tos-bio'); }catch(e){}
+  await _llaveBorrar(PIN_ID);
   return true;
 }
 // Devuelve 'ok' | 'mal' | 'bloqueado' | 'no'
@@ -5478,6 +5743,10 @@ function bioSoportado(){ try{ return !!(window.PublicKeyCredential&&navigator.cr
 function bioActivo(){ try{ return !!localStorage.getItem('tos-bio'); }catch(e){ return false; } }
 async function bioActivar(){
   if(!_acctKey||!hasAccount()||!bioSoportado())return false;
+  // Sin PIN no hay huella: el sensor falla (dedo mojado, guantes, sensor roto) y en un
+  // móvil ajeno no hay ninguno registrado. El PIN es la salida de emergencia que no
+  // depende del hardware. La UI, además, te lleva a ponerlo antes de llegar aquí.
+  if(!pinActivo())return false;
   const info=accountInfo()||{};
   try{
     const cred=await navigator.credentials.create({publicKey:{
@@ -6227,6 +6496,9 @@ function enterDesktop(){
   try{ checkEventReminders(); }catch(e){} // avisos de la Agenda pendientes
   try{ tkRecordatorios(); }catch(e){} // y lo que vence hoy en Tareas
   try{ osActualizaBadge(); }catch(e){}  // contador sobre el icono de la app instalada
+  try{ gastosAvisaMeta(); }catch(e){}   // ¿ya has llegado a la meta de ahorro?
+  try{ relojArranca(); }catch(e){}      // latido de alarmas y temporizador (suenan con el Reloj cerrado)
+  try{ if(radarCfg().aviso)radarArranca(); }catch(e){} // vigilancia del radar de lluvia, si la dejaste puesta
   try{ enganchaMenuInicioLargo(); }catch(e){} // mantener pulsado = sacar al escritorio
   try{ osPidePersistencia(); }catch(e){}    // que el navegador no desaloje los datos
   try{ osAvisaCopia(); }catch(e){}          // y recordatorio de copia si toca
@@ -6377,7 +6649,9 @@ function _pinMontaLogin(info){
       if(ok){ document.getElementById('login-screen').hidden=true; _showWelcomeThenDesktop(); }
       else err.textContent=t('pin.biofail');
     };
-    if(!bBio.hidden&&!pinActivo())setTimeout(()=>bBio.click(),300);
+    // Con huella puesta se lanza sola: el sistema pinta su hoja y, si la cancelas o
+    // falla, el teclado del PIN sigue detrás esperando.
+    if(!bBio.hidden)setTimeout(()=>{ if(!document.getElementById('login-pinbox').hidden)bBio.click(); },400);
   }
   const bPass=document.getElementById('pin-pass');
   if(bPass)bPass.onclick=_pinAContrasena;
@@ -6507,7 +6781,7 @@ function openAccountManage(){
 // ---- Poner / quitar el PIN desde la cuenta ----
 // El aviso NO es decorativo: es la diferencia entre un cerrojo y el cifrado, y el
 // usuario tiene que poder decidir con eso delante.
-function openPinSet(){
+function openPinSet(alTerminar){
   if(!hasAccount()||!isVaultUnlocked()){ xpDialog(t('pin.title'),'<div class="dlg-icon">&#128274;</div><div>'+t('acct.mustlogin')+'</div>'); return null; }
   if(!_cryptoOk()){ xpDialog(t('pin.title'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+escHtml(t('acct.nocrypto'))+'</div>'); return null; }
   const ov=document.createElement('div'); ov.className='xp-dialog-ov';
@@ -6540,7 +6814,11 @@ function openPinSet(){
     err.classList.remove('on');
     go.disabled=true; go.classList.add('busy');
     const ok=await pinActivar(a);
-    if(ok){ ov.remove(); notify({icon:'&#128273;',title:t('pin.title'),body:t('pin.done')}); }
+    if(ok){
+      ov.remove();
+      notify({icon:'&#128273;',title:t('pin.title'),body:t('pin.done')});
+      if(alTerminar)alTerminar(); // p.ej. seguir con la huella
+    }
     else { go.disabled=false; go.classList.remove('busy'); fallo(t('acct.fail')); }
   });
   mk(t('btn.cancel'),'',()=>ov.remove());
@@ -6549,13 +6827,25 @@ function openPinSet(){
   return ov;
 }
 function pinConfirmaQuitar(){
-  xpConfirm(t('pin.title'),t('pin.removeq'),()=>{ pinQuitar().then(()=>{ try{ notify({icon:'&#128273;',title:t('pin.title'),body:t('pin.removed')}); }catch(e){} }); },t('pin.remove'));
+  // Si hay huella puesta, se va con el PIN: hay que decirlo ANTES de quitarlo
+  xpConfirm(t('pin.title'),t(bioActivo()?'pin.removeq.bio':'pin.removeq'),
+    ()=>{ pinQuitar().then(()=>{ try{ notify({icon:'&#128273;',title:t('pin.title'),body:t('pin.removed')}); }catch(e){} }); },
+    t('pin.remove'));
 }
+// La huella necesita un PIN de respaldo. En vez de decir que no, se ofrece ponerlo y
+// se encadena: PIN → huella, sin volver a buscar el menú.
 function pinActivaHuella(){
+  if(!pinActivo()){
+    xpDialog(t('pin.title'),'<div class="dlg-icon">&#9757;&#65039;</div><div>'+escHtml(t('pin.bio.needpin'))+'</div>',[
+      {label:t('pin.set'),primary:true,action:()=>openPinSet(pinActivaHuella)},
+      {label:t('btn.cancel')}
+    ]);
+    return;
+  }
   xpConfirm(t('pin.title'),t('pin.bio.q'),()=>{
     bioActivar().then(ok=>{
-      if(ok)notify({icon:'&#128302;',title:t('pin.title'),body:t('pin.bio.done')});
-      else xpDialog(t('pin.title'),'<div class="dlg-icon">&#128302;</div><div>'+escHtml(t('pin.bio.fail'))+'</div>');
+      if(ok)notify({icon:'&#9757;&#65039;',title:t('pin.title'),body:t('pin.bio.done')});
+      else xpDialog(t('pin.title'),'<div class="dlg-icon">&#9757;&#65039;</div><div>'+escHtml(t('pin.bio.fail'))+'</div>');
     });
   },t('pin.bio.set'));
 }
@@ -10660,7 +10950,8 @@ const GADGET_DEFS={
   notes:{ key:'gad.notes', w:172, build(body,g){ body.innerHTML='<textarea class="gadget-notes" aria-label="Nota rápida"></textarea>'; const ta=body.querySelector('textarea'); ta.value=g.data||''; ta.oninput=()=>{ g.data=ta.value; persistGadgets(); }; } },
   monitor:{ key:'gad.monitor', w:176, build(body){ return _gadgetMonitor(body); } },
   luz:{ key:'luz.gadget', w:168, build(body){ return _gadgetLuz(body); } },
-  tiempo:{ key:'tp.gadget', w:150, build(body){ return _gadgetTiempo(body); } }
+  tiempo:{ key:'tp.gadget', w:150, build(body){ return _gadgetTiempo(body); } },
+  radar:{ key:'rd.gadget', w:168, build(body){ return _gadgetRadar(body); } }
 };
 // Gadget del precio de la luz: tira de la caché de la app y refresca cada 10 min
 function _gadgetLuz(body){
@@ -11397,6 +11688,385 @@ function openPeriodicTable(){
   }});
 }
 
+// ========== HERRAMIENTAS DEL MÓVIL (nivel, brújula, sonómetro, linterna) ==========
+// Cuatro cosas que el teléfono ya sabe hacer y que se buscan sueltas en tiendas de
+// apps llenas de anuncios. Todo con los sensores del navegador y sin red. Cada
+// herramienta comprueba SU soporte por separado: en un portátil saldrá el sonómetro y
+// no la brújula, y lo dice en vez de fingir una aguja que no se mueve.
+function _hmOrientaSoportado(){ return typeof window!=='undefined'&&'DeviceOrientationEvent' in window; }
+function _hmPidePermisoOrienta(){
+  // iOS exige pedirlo con un gesto del usuario; Android no tiene este método
+  try{
+    const D=window.DeviceOrientationEvent;
+    if(D&&typeof D.requestPermission==='function')return D.requestPermission().then(r=>r==='granted').catch(()=>false);
+  }catch(e){}
+  return Promise.resolve(true);
+}
+// Rumbo a punto cardinal, en el idioma que toque
+function hmCardinal(grados){
+  const g=((+grados||0)%360+360)%360;
+  const i=Math.round(g/45)%8;
+  return t('hm.dir.'+['n','ne','e','se','s','so','o','no'][i]);
+}
+// Nivel de burbuja: de los ángulos del móvil a la posición de la burbuja (-1..1)
+function hmBurbuja(beta,gamma,tope){
+  tope=tope||30; // más de 30° ya no se ve: se pega al borde
+  const cl=(v)=>Math.max(-1,Math.min(1,(+v||0)/tope));
+  return {x:cl(gamma),y:cl(beta),nivelado:Math.abs(+beta||0)<1.2&&Math.abs(+gamma||0)<1.2};
+}
+// Nivel de sonido aproximado a partir del RMS de la señal (dBFS + una referencia).
+// Se avisa en la propia app: sin calibrar contra un sonómetro de verdad esto es
+// orientativo, no una medida legal.
+function hmDecibelios(datos){
+  if(!datos||!datos.length)return 0;
+  let suma=0;
+  for(let i=0;i<datos.length;i++){ const v=(datos[i]-128)/128; suma+=v*v; }
+  const rms=Math.sqrt(suma/datos.length);
+  if(rms<=0)return 0;
+  const db=20*Math.log10(rms)+94; // 94 dB = 1 Pa, referencia típica de micro
+  return Math.max(0,Math.round(db*10)/10);
+}
+function openSensores(){
+  closeStartMenu();
+  if(focusExisting('hm-root'))return;
+  const content=`<div class="hm-root" id="hm-root">
+    <div class="hm-tabs">
+      <button type="button" class="hm-tab on" data-t="nivel">&#128207; ${escHtml(t('hm.level'))}</button>
+      <button type="button" class="hm-tab" data-t="brujula">&#129517; ${escHtml(t('hm.compass'))}</button>
+      <button type="button" class="hm-tab" data-t="sonido">&#128266; ${escHtml(t('hm.sound'))}</button>
+      <button type="button" class="hm-tab" data-t="luz">&#128161; ${escHtml(t('hm.torch'))}</button>
+    </div>
+    <div class="hm-body">
+      <div class="hm-pane" data-p="nivel">
+        <canvas id="hm-nivel" width="240" height="240" role="img" aria-label="${escHtml(t('hm.level'))}"></canvas>
+        <div class="hm-val" id="hm-nivel-v">—</div>
+        <div class="hm-aviso" id="hm-nivel-a" hidden></div>
+      </div>
+      <div class="hm-pane" data-p="brujula" hidden>
+        <canvas id="hm-brujula" width="240" height="240" role="img" aria-label="${escHtml(t('hm.compass'))}"></canvas>
+        <div class="hm-val" id="hm-bruj-v">—</div>
+        <div class="hm-aviso" id="hm-bruj-a" hidden></div>
+      </div>
+      <div class="hm-pane" data-p="sonido" hidden>
+        <div class="hm-db" id="hm-db">—</div>
+        <div class="hm-barra"><i id="hm-db-bar"></i></div>
+        <div class="hm-val" id="hm-db-txt"></div>
+        <button type="button" class="g-btn" id="hm-db-go">${escHtml(t('hm.sound.start'))}</button>
+        <div class="hm-aviso">${escHtml(t('hm.sound.note'))}</div>
+      </div>
+      <div class="hm-pane" data-p="luz" hidden>
+        <div class="hm-luzic" id="hm-luz-ic">&#128161;</div>
+        <button type="button" class="g-btn" id="hm-luz-go">${escHtml(t('hm.torch.on'))}</button>
+        <div class="hm-aviso" id="hm-luz-a">${escHtml(t('hm.torch.note'))}</div>
+      </div>
+    </div>
+  </div>`;
+  createWindow(t('hm.title'),'&#129517;',330,430,content,{session:'sensores',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    let beta=0,gamma=0,rumbo=null,hayOrienta=false;
+    // ---- Pestañas ----
+    const ver=(cual)=>{
+      win.querySelectorAll('.hm-tab').forEach(b=>b.classList.toggle('on',b.dataset.t===cual));
+      win.querySelectorAll('.hm-pane').forEach(p=>{ p.hidden=p.dataset.p!==cual; });
+    };
+    win.querySelectorAll('.hm-tab').forEach(b=>b.onclick=()=>ver(b.dataset.t));
+    // ---- Nivel y brújula (mismo sensor) ----
+    const onOrienta=(e)=>{
+      hayOrienta=true;
+      beta=+e.beta||0; gamma=+e.gamma||0;
+      // iOS da el rumbo ya corregido; en el resto, alpha con brújula absoluta
+      if(typeof e.webkitCompassHeading==='number')rumbo=e.webkitCompassHeading;
+      else if(e.absolute&&typeof e.alpha==='number')rumbo=(360-e.alpha)%360;
+      else if(typeof e.alpha==='number'&&rumbo===null)rumbo=(360-e.alpha)%360;
+    };
+    const sinSensor=(el,txt)=>{ if(el){ el.hidden=false; el.textContent=txt; } };
+    if(_hmOrientaSoportado()){
+      _hmPidePermisoOrienta().then(ok=>{
+        if(ok)window.addEventListener('deviceorientation',onOrienta,true);
+        else { sinSensor($('#hm-nivel-a'),t('hm.noperm')); sinSensor($('#hm-bruj-a'),t('hm.noperm')); }
+      });
+      // Si a los 2 s no ha llegado ni un evento, este equipo no tiene el sensor
+      setTimeout(()=>{ if(!hayOrienta){ sinSensor($('#hm-nivel-a'),t('hm.nosensor')); sinSensor($('#hm-bruj-a'),t('hm.nosensor')); } },2000);
+    }else{ sinSensor($('#hm-nivel-a'),t('hm.nosensor')); sinSensor($('#hm-bruj-a'),t('hm.nosensor')); }
+    const cvN=$('#hm-nivel'), ctxN=cvN&&cvN.getContext('2d');
+    const cvB=$('#hm-brujula'), ctxB=cvB&&cvB.getContext('2d');
+    const pintaNivel=()=>{
+      if(!ctxN)return;
+      const W=240,R=104,cx=120,cy=120;
+      const b=hmBurbuja(beta,gamma);
+      ctxN.clearRect(0,0,W,W);
+      ctxN.strokeStyle='#3a5a9a'; ctxN.lineWidth=2;
+      ctxN.beginPath(); ctxN.arc(cx,cy,R,0,7); ctxN.stroke();
+      ctxN.strokeStyle='#2a3a6a';
+      ctxN.beginPath(); ctxN.arc(cx,cy,R/2,0,7); ctxN.stroke();
+      ctxN.beginPath(); ctxN.moveTo(cx-R,cy); ctxN.lineTo(cx+R,cy); ctxN.moveTo(cx,cy-R); ctxN.lineTo(cx,cy+R); ctxN.stroke();
+      ctxN.fillStyle=b.nivelado?'#5ad07a':'#8fd3ff';
+      ctxN.beginPath(); ctxN.arc(cx+b.x*R,cy+b.y*R,17,0,7); ctxN.fill();
+      ctxN.strokeStyle='rgba(255,255,255,.5)'; ctxN.lineWidth=1.5;
+      ctxN.beginPath(); ctxN.arc(cx+b.x*R,cy+b.y*R,17,0,7); ctxN.stroke();
+      $('#hm-nivel-v').textContent=hayOrienta?(Math.round(beta*10)/10)+'° / '+(Math.round(gamma*10)/10)+'°'+(b.nivelado?' · '+t('hm.flat'):''):'—';
+    };
+    const pintaBrujula=()=>{
+      if(!ctxB)return;
+      const cx=120,cy=120,R=100, g=rumbo==null?0:rumbo;
+      ctxB.clearRect(0,0,240,240);
+      ctxB.strokeStyle='#3a5a9a'; ctxB.lineWidth=2;
+      ctxB.beginPath(); ctxB.arc(cx,cy,R,0,7); ctxB.stroke();
+      ctxB.save(); ctxB.translate(cx,cy); ctxB.rotate(-g*Math.PI/180);
+      for(let i=0;i<36;i++){
+        const a=i*10*Math.PI/180, larga=i%9===0;
+        ctxB.strokeStyle=larga?'#cfe4ff':'#2a3a6a'; ctxB.lineWidth=larga?2:1;
+        ctxB.beginPath(); ctxB.moveTo(Math.sin(a)*(R-(larga?16:8)),-Math.cos(a)*(R-(larga?16:8)));
+        ctxB.lineTo(Math.sin(a)*R,-Math.cos(a)*R); ctxB.stroke();
+      }
+      ctxB.fillStyle='#ff5577'; ctxB.beginPath(); ctxB.moveTo(0,-R+18); ctxB.lineTo(-13,10); ctxB.lineTo(0,0); ctxB.lineTo(13,10); ctxB.closePath(); ctxB.fill();
+      ctxB.fillStyle='#cfe4ff'; ctxB.beginPath(); ctxB.moveTo(0,R-18); ctxB.lineTo(-13,-10); ctxB.lineTo(0,0); ctxB.lineTo(13,-10); ctxB.closePath(); ctxB.fill();
+      ctxB.restore();
+      $('#hm-bruj-v').textContent=rumbo==null?'—':Math.round(rumbo)+'° '+hmCardinal(rumbo);
+    };
+    const pinta=()=>{ pintaNivel(); pintaBrujula(); };
+    const pintaInt=setInterval(()=>{ if(!win.classList.contains('minimized'))pinta(); },100);
+    pinta();
+    // ---- Sonómetro ----
+    let audioStream=null, analizador=null, sonInt=null;
+    const paraSon=()=>{
+      if(sonInt){ clearInterval(sonInt); sonInt=null; }
+      if(audioStream){ try{ audioStream.getTracks().forEach(x=>x.stop()); }catch(e){} audioStream=null; }
+      analizador=null;
+      $('#hm-db-go').textContent=t('hm.sound.start');
+    };
+    $('#hm-db-go').onclick=async()=>{
+      if(sonInt){ paraSon(); return; }
+      try{
+        audioStream=await navigator.mediaDevices.getUserMedia({audio:true});
+        const ctx=getAudioCtx();
+        const src=ctx.createMediaStreamSource(audioStream);
+        analizador=ctx.createAnalyser(); analizador.fftSize=1024;
+        src.connect(analizador); // no se conecta a la salida: no queremos acople
+        const buf=new Uint8Array(analizador.fftSize);
+        let pico=0;
+        $('#hm-db-go').textContent=t('hm.sound.stop');
+        sonInt=setInterval(()=>{
+          analizador.getByteTimeDomainData(buf);
+          const db=hmDecibelios(buf);
+          pico=Math.max(pico,db);
+          $('#hm-db').textContent=db.toFixed(1)+' dB';
+          $('#hm-db-bar').style.width=Math.max(0,Math.min(100,(db-30)/70*100))+'%';
+          $('#hm-db-txt').textContent=t('hm.sound.peak',{n:pico.toFixed(1)})+' · '+hmRuido(db);
+        },120);
+      }catch(e){ $('#hm-db-txt').textContent=t('hm.sound.nomic'); paraSon(); }
+    };
+    // ---- Linterna ----
+    let luzStream=null, luzOn=false;
+    const paraLuz=()=>{
+      if(luzStream){ try{ luzStream.getTracks().forEach(x=>x.stop()); }catch(e){} luzStream=null; }
+      luzOn=false; $('#hm-luz-ic').classList.remove('on'); $('#hm-luz-go').textContent=t('hm.torch.on');
+    };
+    $('#hm-luz-go').onclick=async()=>{
+      if(luzOn){ paraLuz(); return; }
+      try{
+        luzStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+        const track=luzStream.getVideoTracks()[0];
+        const caps=track.getCapabilities?track.getCapabilities():{};
+        if(!caps||!caps.torch){ paraLuz(); $('#hm-luz-a').textContent=t('hm.torch.no'); return; }
+        await track.applyConstraints({advanced:[{torch:true}]});
+        luzOn=true; $('#hm-luz-ic').classList.add('on'); $('#hm-luz-go').textContent=t('hm.torch.off');
+      }catch(e){ paraLuz(); $('#hm-luz-a').textContent=t('hm.torch.no'); }
+    };
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      clearInterval(pintaInt);
+      try{ window.removeEventListener('deviceorientation',onOrienta,true); }catch(e){}
+      paraSon(); paraLuz();
+    });
+  }});
+}
+// Etiqueta de a qué suena ese nivel, que un número suelto no dice nada
+function hmRuido(db){
+  if(db<35)return t('hm.n.quiet');
+  if(db<55)return t('hm.n.home');
+  if(db<70)return t('hm.n.talk');
+  if(db<85)return t('hm.n.street');
+  return t('hm.n.loud');
+}
+
+// ========== CALCULADORAS PRÁCTICAS ==========
+// Las cuentas que uno acaba buscando en webs llenas de anuncios: la cuota de la
+// hipoteca, el IVA de una factura, un porcentaje, una regla de tres, cuántos días
+// faltan, la propina y lo que cuesta un viaje en coche. Todas son funciones puras
+// (fáciles de probar) y la ventana solo las llama y pinta.
+// Cuota de un préstamo francés: c = C·i/(1-(1+i)^-n). Con interés 0 es dividir.
+function calcHipoteca(capital,tinAnual,anios){
+  capital=+capital||0; tinAnual=+tinAnual||0; anios=+anios||0;
+  const n=Math.round(anios*12);
+  if(capital<=0||n<=0)return null;
+  const i=tinAnual/100/12;
+  const cuota=i>0?(capital*i)/(1-Math.pow(1+i,-n)):capital/n;
+  const total=cuota*n;
+  // Cuadro de amortización por AÑOS (mes a mes en 30 años son 360 filas ilegibles)
+  const cuadro=[];
+  let pendiente=capital;
+  for(let a=1;a<=Math.ceil(n/12)&&pendiente>0.005;a++){
+    let intAnio=0, amortAnio=0;
+    for(let m=0;m<12&&(a-1)*12+m<n;m++){
+      const int=pendiente*i;
+      const amort=Math.min(pendiente,cuota-int);
+      intAnio+=int; amortAnio+=amort; pendiente-=amort;
+    }
+    cuadro.push({anio:a,intereses:Math.round(intAnio*100)/100,amortizado:Math.round(amortAnio*100)/100,pendiente:Math.round(Math.max(0,pendiente)*100)/100});
+  }
+  return {cuota:Math.round(cuota*100)/100,meses:n,total:Math.round(total*100)/100,
+    intereses:Math.round((total-capital)*100)/100,cuadro:cuadro};
+}
+// Factura de autónomo: base + IVA − retención de IRPF
+function calcFactura(base,iva,irpf){
+  base=+base||0; iva=+iva||0; irpf=+irpf||0;
+  const cIva=Math.round(base*iva)/100, cIrpf=Math.round(base*irpf)/100;
+  return {base:Math.round(base*100)/100,iva:Math.round(cIva*100)/100,irpf:Math.round(cIrpf*100)/100,
+    total:Math.round((base+cIva-cIrpf)*100)/100, conIva:Math.round((base+cIva)*100)/100};
+}
+// Los cuatro porcentajes que se preguntan siempre
+function calcPorcentajes(a,b){
+  a=+a||0; b=+b||0;
+  return {
+    deB:Math.round(b*a)/100,                                  // el a% de b
+    esDe:b?Math.round(a/b*10000)/100:0,                       // a es el ?% de b
+    variacion:a?Math.round((b-a)/Math.abs(a)*10000)/100:0,    // de a a b, ¿cuánto sube?
+    descuento:Math.round((b-b*a/100)*100)/100                 // b con un a% de descuento
+  };
+}
+function calcReglaTres(a,b,c,inversa){
+  a=+a||0; b=+b||0; c=+c||0;
+  if(!a)return 0;
+  return Math.round((inversa?(a*b)/c:(b*c)/a)*10000)/10000;
+}
+// Días entre dos fechas (y la edad, que es la misma cuenta con otro nombre)
+function calcFechas(d1,d2){
+  const a=new Date(String(d1)+'T12:00:00'), b=new Date(String(d2)+'T12:00:00');
+  if(isNaN(a)||isNaN(b))return null;
+  const dias=Math.round((b-a)/86400000);
+  const ini=dias<0?b:a, fin=dias<0?a:b;
+  let anios=fin.getFullYear()-ini.getFullYear();
+  let meses=fin.getMonth()-ini.getMonth();
+  let d=fin.getDate()-ini.getDate();
+  if(d<0){ meses--; d+=new Date(fin.getFullYear(),fin.getMonth(),0).getDate(); }
+  if(meses<0){ anios--; meses+=12; }
+  return {dias:dias,absDias:Math.abs(dias),semanas:Math.round(Math.abs(dias)/7*10)/10,
+    laborables:_diasLaborables(ini,fin),anios:anios,meses:meses,resto:d};
+}
+function _diasLaborables(a,b){
+  let n=0; const d=new Date(a.getTime());
+  while(d<b){ const w=d.getDay(); if(w!==0&&w!==6)n++; d.setDate(d.getDate()+1); }
+  return n;
+}
+function calcPropina(total,pct,personas){
+  total=+total||0; pct=+pct||0; personas=Math.max(1,Math.round(+personas||1));
+  const propina=Math.round(total*pct)/100;
+  const con=Math.round((total+propina)*100)/100;
+  return {propina:Math.round(propina*100)/100,total:con,porPersona:Math.round(con/personas*100)/100};
+}
+function calcViaje(km,litros100,precio,personas,ida){
+  km=+km||0; litros100=+litros100||0; precio=+precio||0;
+  personas=Math.max(1,Math.round(+personas||1));
+  const kmTot=ida?km*2:km;
+  const litros=kmTot*litros100/100;
+  const coste=litros*precio;
+  return {km:Math.round(kmTot*10)/10,litros:Math.round(litros*100)/100,
+    coste:Math.round(coste*100)/100,porPersona:Math.round(coste/personas*100)/100};
+}
+const CALC_TABS=['hipoteca','factura','pct','regla','fechas','propina','viaje'];
+function openCalculadoras(inicial){
+  closeStartMenu();
+  if(focusExisting('kk-root')){ if(inicial&&_kkTab)_kkTab(inicial); return; }
+  const num=(id,ph,val,paso)=>'<label class="kk-f"><span>'+escHtml(ph)+'</span><input type="number" id="'+id+'" value="'+val+'"'+(paso?' step="'+paso+'"':'')+' inputmode="decimal"></label>';
+  const content=`<div class="kk-root" id="kk-root">
+    <div class="kk-tabs">${CALC_TABS.map((k,i)=>'<button type="button" class="kk-tab'+(i===0?' on':'')+'" data-t="'+k+'">'+escHtml(t('kk.'+k))+'</button>').join('')}</div>
+    <div class="kk-body">
+      <div class="kk-pane" data-p="hipoteca">
+        ${num('kk-h-cap',t('kk.h.capital'),'150000')}${num('kk-h-tin',t('kk.h.tin'),'3.2','0.05')}${num('kk-h-any',t('kk.h.years'),'25')}
+        <div class="kk-res" id="kk-h-res"></div>
+        <div class="kk-tabla" id="kk-h-tabla"></div>
+      </div>
+      <div class="kk-pane" data-p="factura" hidden>
+        ${num('kk-f-base',t('kk.f.base'),'1000')}${num('kk-f-iva',t('kk.f.iva'),'21')}${num('kk-f-irpf',t('kk.f.irpf'),'15')}
+        <div class="kk-res" id="kk-f-res"></div>
+      </div>
+      <div class="kk-pane" data-p="pct" hidden>
+        ${num('kk-p-a',t('kk.p.a'),'20')}${num('kk-p-b',t('kk.p.b'),'250')}
+        <div class="kk-res" id="kk-p-res"></div>
+      </div>
+      <div class="kk-pane" data-p="regla" hidden>
+        <div class="kk-r3">${num('kk-r-a',t('kk.r.a'),'3')}${num('kk-r-b',t('kk.r.b'),'12')}${num('kk-r-c',t('kk.r.c'),'7')}</div>
+        <label class="kk-chk"><input type="checkbox" id="kk-r-inv"> <span>${escHtml(t('kk.r.inv'))}</span></label>
+        <div class="kk-res" id="kk-r-res"></div>
+      </div>
+      <div class="kk-pane" data-p="fechas" hidden>
+        <label class="kk-f"><span>${escHtml(t('kk.d.from'))}</span><input type="date" id="kk-d-1"></label>
+        <label class="kk-f"><span>${escHtml(t('kk.d.to'))}</span><input type="date" id="kk-d-2"></label>
+        <div class="kk-res" id="kk-d-res"></div>
+      </div>
+      <div class="kk-pane" data-p="propina" hidden>
+        ${num('kk-t-total',t('kk.t.bill'),'48.50','0.01')}${num('kk-t-pct',t('kk.t.pct'),'10')}${num('kk-t-per',t('kk.t.people'),'4')}
+        <div class="kk-res" id="kk-t-res"></div>
+      </div>
+      <div class="kk-pane" data-p="viaje" hidden>
+        ${num('kk-v-km',t('kk.v.km'),'300')}${num('kk-v-l',t('kk.v.cons'),'6.5','0.1')}${num('kk-v-p',t('kk.v.price'),'1.55','0.01')}${num('kk-v-per',t('kk.v.people'),'2')}
+        <label class="kk-chk"><input type="checkbox" id="kk-v-ida" checked> <span>${escHtml(t('kk.v.round'))}</span></label>
+        <div class="kk-res" id="kk-v-res"></div>
+      </div>
+    </div>
+  </div>`;
+  createWindow(t('kk.title'),'&#129518;',400,470,content,{session:'calculadoras',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s), v=(s)=>parseFloat(($(s)||{}).value)||0;
+    const eur=(n)=>gastoFmt(n);
+    const fila=(k,val,fuerte)=>'<div class="kk-row'+(fuerte?' big':'')+'"><span>'+escHtml(k)+'</span><b>'+escHtml(val)+'</b></div>';
+    const ver=(cual)=>{
+      win.querySelectorAll('.kk-tab').forEach(b=>b.classList.toggle('on',b.dataset.t===cual));
+      win.querySelectorAll('.kk-pane').forEach(p=>{ p.hidden=p.dataset.p!==cual; });
+      calcula();
+    };
+    _kkTab=ver;
+    win.querySelectorAll('.kk-tab').forEach(b=>b.onclick=()=>ver(b.dataset.t));
+    const calcula=()=>{
+      // Hipoteca
+      const h=calcHipoteca(v('#kk-h-cap'),v('#kk-h-tin'),v('#kk-h-any'));
+      $('#kk-h-res').innerHTML=h?fila(t('kk.h.fee'),eur(h.cuota),true)+fila(t('kk.h.interest'),eur(h.intereses))+fila(t('kk.h.total'),eur(h.total))+fila(t('kk.h.months'),String(h.meses)):'';
+      $('#kk-h-tabla').innerHTML=h?'<div class="kk-th"><span>'+escHtml(t('kk.h.year'))+'</span><span>'+escHtml(t('kk.h.interest'))+'</span><span>'+escHtml(t('kk.h.paid'))+'</span><span>'+escHtml(t('kk.h.pending'))+'</span></div>'
+        +h.cuadro.map(f=>'<div class="kk-tr"><span>'+f.anio+'</span><span>'+eur(f.intereses)+'</span><span>'+eur(f.amortizado)+'</span><span>'+eur(f.pendiente)+'</span></div>').join(''):'';
+      // Factura
+      const f=calcFactura(v('#kk-f-base'),v('#kk-f-iva'),v('#kk-f-irpf'));
+      $('#kk-f-res').innerHTML=fila(t('kk.f.base'),eur(f.base))+fila('IVA',eur(f.iva))+fila('IRPF','−'+eur(f.irpf))+fila(t('kk.f.tocharge'),eur(f.total),true);
+      // Porcentajes
+      const a=v('#kk-p-a'), b=v('#kk-p-b'), p=calcPorcentajes(a,b);
+      $('#kk-p-res').innerHTML=fila(t('kk.p.of',{a:a,b:b}),String(p.deB),true)
+        +fila(t('kk.p.is',{a:a,b:b}),p.esDe+' %')
+        +fila(t('kk.p.change',{a:a,b:b}),(p.variacion>0?'+':'')+p.variacion+' %')
+        +fila(t('kk.p.disc',{a:a,b:b}),String(p.descuento));
+      // Regla de tres
+      const inv=$('#kk-r-inv').checked;
+      $('#kk-r-res').innerHTML=fila('x',String(calcReglaTres(v('#kk-r-a'),v('#kk-r-b'),v('#kk-r-c'),inv)),true);
+      // Fechas
+      const d=calcFechas($('#kk-d-1').value,$('#kk-d-2').value);
+      $('#kk-d-res').innerHTML=d?fila(t('kk.d.days'),String(d.dias),true)+fila(t('kk.d.weeks'),String(d.semanas).replace('.',','))
+        +fila(t('kk.d.working'),String(d.laborables))+fila(t('kk.d.exact'),t('kk.d.ymd',{a:d.anios,m:d.meses,d:d.resto})):'';
+      // Propina
+      const pr=calcPropina(v('#kk-t-total'),v('#kk-t-pct'),v('#kk-t-per'));
+      $('#kk-t-res').innerHTML=fila(t('kk.t.tip'),eur(pr.propina))+fila(t('kk.t.total'),eur(pr.total))+fila(t('kk.t.each'),eur(pr.porPersona),true);
+      // Viaje
+      const vi=calcViaje(v('#kk-v-km'),v('#kk-v-l'),v('#kk-v-p'),v('#kk-v-per'),$('#kk-v-ida').checked);
+      $('#kk-v-res').innerHTML=fila(t('kk.v.dist'),vi.km+' km')+fila(t('kk.v.fuel'),vi.litros+' l')+fila(t('kk.v.cost'),eur(vi.coste))+fila(t('kk.v.each'),eur(vi.porPersona),true);
+    };
+    // Fechas por defecto: de hoy a fin de año, que es la consulta típica
+    const hoy=tkHoyISO();
+    $('#kk-d-1').value=hoy;
+    $('#kk-d-2').value=hoy.slice(0,4)+'-12-31';
+    win.querySelectorAll('input').forEach(el=>{ el.oninput=calcula; el.onchange=calcula; });
+    calcula();
+    if(inicial)ver(inicial);
+    (win._cleanups=win._cleanups||[]).push(()=>{ _kkTab=null; });
+  }});
+}
+let _kkTab=null;
+
 // ========== CONVERSOR DE UNIDADES ==========
 const CONV_CATS={
   length:{units:{m:1,km:1000,cm:0.01,mm:0.001,mi:1609.344,yd:0.9144,ft:0.3048,in:0.0254,'mn':1852}},
@@ -11408,6 +12078,38 @@ const CONV_CATS={
   data:{units:{B:1,KB:1024,MB:1048576,GB:1073741824,TB:1099511627776}},
   currency:{units:{EUR:1,USD:1.08,GBP:0.85,JPY:170,CHF:0.95,MXN:19.5,ARS:980,BRL:5.9}}
 };
+// ---- Divisas con tasas de verdad (BCE vía Frankfurter: gratis, sin clave, CORS) ----
+// Las cifras de arriba son el respaldo de fábrica y se quedan como último recurso: al
+// abrir el conversor se piden las del día y se guardan en `tos-conv-tasas`. Con la
+// caché fresca (menos de 12 h) ni se pregunta, y sin conexión se sigue convirtiendo
+// con lo último que se vio, diciendo de cuándo es.
+const CONV_TASAS_TTL=12*3600*1000, CONV_API='https://api.frankfurter.app/latest?from=EUR';
+function convTasasCache(){
+  try{ const o=JSON.parse(Store.get('tos-conv-tasas')||'null'); return (o&&o.rates&&typeof o.rates==='object')?o:null; }catch(e){ return null; }
+}
+function convAplicaTasas(o){
+  if(!o||!o.rates)return false;
+  const u=CONV_CATS.currency.units;
+  // La unidad base es el EUR y el resto se guarda como "cuántos euros vale uno"
+  Object.keys(u).forEach(k=>{ const r=+o.rates[k]; if(k!=='EUR'&&r>0)u[k]=1/r; });
+  Object.keys(o.rates).forEach(k=>{ const r=+o.rates[k]; if(r>0&&u[k]==null)u[k]=1/r; }); // divisas nuevas
+  return true;
+}
+async function convCargaTasas(forzar){
+  const ya=convTasasCache();
+  if(ya&&!forzar&&(Date.now()-(+ya.ts||0))<CONV_TASAS_TTL){ convAplicaTasas(ya); return ya; }
+  if(ya)convAplicaTasas(ya); // mientras llega la respuesta, lo de ayer es mejor que lo de fábrica
+  try{
+    const r=await fetch(CONV_API);
+    if(!r.ok)throw new Error('http');
+    const j=await r.json();
+    if(!j||!j.rates)throw new Error('formato');
+    const o={ts:Date.now(),fecha:j.date||'',rates:j.rates};
+    Store.set('tos-conv-tasas',JSON.stringify(o));
+    convAplicaTasas(o);
+    return o;
+  }catch(e){ return ya; } // sin red: con lo cacheado, o con las de fábrica
+}
 function _convTemp(v,from,to){ let c=v; if(from==='°F')c=(v-32)*5/9; else if(from==='K')c=v-273.15; if(to==='°F')return c*9/5+32; if(to==='K')return c+273.15; return c; }
 function convert(cat,v,from,to){
   const c=CONV_CATS[cat]; if(!c)return NaN; if(c.temp)return _convTemp(v,from,to);
@@ -11430,11 +12132,18 @@ function openConverter(){
     let cat='length';
     const fromSel=win.querySelector('#cv-from'), toSel=win.querySelector('#cv-to'), inp=win.querySelector('#cv-in'), out=win.querySelector('#cv-out'), note=win.querySelector('#cv-note');
     const fillUnits=()=>{ const us=Object.keys(CONV_CATS[cat].units); fromSel.innerHTML=us.map(u=>'<option>'+u+'</option>').join(''); toSel.innerHTML=us.map(u=>'<option>'+u+'</option>').join(''); toSel.selectedIndex=Math.min(1,us.length-1); };
-    const calc=()=>{ const v=parseFloat(inp.value); if(isNaN(v)){ out.value=''; return; } const r=convert(cat,v,fromSel.value,toSel.value); out.value=(Math.abs(r)>=1e6||(Math.abs(r)<1e-4&&r!==0))?r.toExponential(4):(Math.round(r*1e6)/1e6); note.textContent=(cat==='currency')?t('cv.rates'):''; };
+    const notaTasas=()=>{
+      if(cat!=='currency')return '';
+      const c=convTasasCache();
+      return c&&c.fecha?t('cv.rates.real',{f:c.fecha}):t('cv.rates');
+    };
+    const calc=()=>{ const v=parseFloat(inp.value); if(isNaN(v)){ out.value=''; return; } const r=convert(cat,v,fromSel.value,toSel.value); out.value=(Math.abs(r)>=1e6||(Math.abs(r)<1e-4&&r!==0))?r.toExponential(4):(Math.round(r*1e6)/1e6); note.textContent=notaTasas(); };
     win.querySelectorAll('.cv-cat').forEach(b=>b.onclick=()=>{ cat=b.dataset.c; win.querySelectorAll('.cv-cat').forEach(x=>x.classList.toggle('on',x===b)); fillUnits(); calc(); });
     win.querySelector('#cv-swap').onclick=()=>{ const a=fromSel.selectedIndex; fromSel.selectedIndex=toSel.selectedIndex; toSel.selectedIndex=a; calc(); };
     [inp,fromSel,toSel].forEach(el=>el.oninput=calc);
     fillUnits(); calc();
+    // Tasas del día en segundo plano: si llegan, se repinta con las de verdad
+    convCargaTasas().then(()=>{ try{ if(cat==='currency'){ fillUnits(); } calc(); }catch(e){} });
   }});
 }
 
@@ -12233,8 +12942,43 @@ function qrlAnaliza(txt){
   if(/^tel:/i.test(s))return {tipo:'tel',valor:s,tel:s.slice(4)};
   if(/^mailto:/i.test(s))return {tipo:'mail',valor:s,mail:s.slice(7)};
   if(/^geo:/i.test(s))return {tipo:'geo',valor:s};
+  // Código de barras de producto (EAN-13/8, UPC-A): solo cifras y con dígito de
+  // control válido. Sin la comprobación, cualquier número suelto de un QR pasaría por
+  // producto; con ella, lo que llega del lector de barras es casi seguro un artículo.
+  if(/^\d{8}$|^\d{12,13}$/.test(s)&&eanValido(s))return {tipo:'barras',valor:s,nombre:eanNombre(s)};
 
   return {tipo:'texto',valor:s};
+}
+// Dígito de control EAN/UPC: suma ponderada 3-1 de derecha a izquierda
+function eanValido(cod){
+  const d=String(cod||'').split('').map(Number);
+  if(d.some(isNaN)||d.length<8)return false;
+  const ctrl=d.pop();
+  let suma=0;
+  d.reverse().forEach((n,i)=>{ suma+=n*(i%2===0?3:1); });
+  return ((10-(suma%10))%10)===ctrl;
+}
+// Los nombres que le has puesto tú a cada código: la primera vez se pregunta, y a
+// partir de ahí ese paquete de café ya se llama café.
+function eanNombres(){ try{ const o=JSON.parse(Store.get('tos-barcodes')||'{}'); return (o&&typeof o==='object')?o:{}; }catch(e){ return {}; } }
+function eanNombre(cod){ return eanNombres()[String(cod)]||''; }
+function eanGuardaNombre(cod,nombre){
+  nombre=String(nombre||'').trim();
+  if(!nombre)return false;
+  const o=eanNombres();
+  o[String(cod)]=nombre.slice(0,40);
+  return Store.set('tos-barcodes',JSON.stringify(o));
+}
+// Del código a la lista de la compra, adivinando el pasillo por el nombre
+function eanALaCompra(cod,nombre,alHecho){
+  const mete=(n)=>{
+    eanGuardaNombre(cod,n);
+    cpImporta([{name:n,qty:1}],true);
+    if(alHecho)alHecho(n);
+  };
+  const ya=eanNombre(cod);
+  if(ya){ mete(ya); return; }
+  xpPrompt(t('cp.title'),t('qrl.a.name',{c:cod}),'',(v)=>{ if(v&&v.trim())mete(v.trim()); });
 }
 function qrlHistorial(){ try{ const a=JSON.parse(Store.get('tos-qr-hist')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 function qrlGuarda(txt){
@@ -12291,6 +13035,7 @@ function openLectorQR(){
       if(a.tipo==='tel'||a.tipo==='vcard'&&a.tel)acciones.push(['&#128222; '+t('qrl.a.call'),()=>{ try{ window.open('tel:'+(a.tel||''),'_self'); }catch(e){} }]);
       if(a.tipo==='mail'||a.tipo==='vcard'&&a.mail)acciones.push(['&#9993;&#65039; '+t('qrl.a.mail'),()=>{ try{ window.open('mailto:'+(a.mail||''),'_self'); }catch(e){} }]);
       if(a.tipo==='paquete')acciones.push(['&#128229; '+t('sh.import'),()=>{ const p=osLeePaquete(a.valor); if(p)osImportaPaquete(p); }]);
+      if(a.tipo==='barras')acciones.push(['&#128722; '+t('qrl.a.shop'),()=>eanALaCompra(a.valor,a.nombre,(n)=>{ announce(t('qrl.a.added',{n:n})); muestra(a.valor); })]);
       acciones.push(['&#128203; '+t('qrl.a.copy'),()=>{ osCopy(a.valor); announce(t('sh.copied')); }]);
       acciones.push(['&#128221; '+t('qrl.a.note'),()=>openNotepad({name:t('qrl.title'),text:a.valor})]);
       const detalle=a.tipo==='wifi'?('<div class="qrl-kv"><span>'+escHtml(t('qrl.wifi.net'))+'</span><b>'+escHtml(a.ssid||'—')+'</b></div>'
@@ -12299,7 +13044,8 @@ function openLectorQR(){
         :a.tipo==='vcard'?('<div class="qrl-kv"><span>'+escHtml(t('qrl.vc.name'))+'</span><b>'+escHtml(a.nombre||'—')+'</b></div>'
           +(a.tel?'<div class="qrl-kv"><span>'+escHtml(t('qrl.vc.tel'))+'</span><b>'+escHtml(a.tel)+'</b></div>':'')
           +(a.mail?'<div class="qrl-kv"><span>'+escHtml(t('qrl.vc.mail'))+'</span><b>'+escHtml(a.mail)+'</b></div>':''))
-        :'<div class="qrl-valor">'+escHtml(a.valor)+'</div>';
+        :'<div class="qrl-valor">'+escHtml(a.valor)+'</div>'
+          +(a.tipo==='barras'&&a.nombre?'<div class="qrl-kv"><span>'+escHtml(t('cp.title'))+'</span><b>'+escHtml(a.nombre)+'</b></div>':'');
       $('#qrl-res').innerHTML='<div class="qrl-card"><div class="qrl-tipo">'+escHtml(t('qrl.t.'+a.tipo))+'</div>'+detalle
         +'<div class="qrl-acts">'+acciones.map((_,i)=>'<button type="button" class="qrl-act" data-a="'+i+'">'+acciones[i][0]+'</button>').join('')+'</div></div>';
       $('#qrl-res').querySelectorAll('.qrl-act').forEach(b=>b.onclick=()=>acciones[+b.dataset.a][1]());
@@ -12463,6 +13209,7 @@ function openRecetas(){
             +'<button type="button" class="rc-mini" data-add="'+escHtml(r.id)+'">&#128722; '+escHtml(t('rc.addshop'))+'</button>'
             +'<button type="button" class="rc-mini" data-edit="'+escHtml(r.id)+'">&#9998; '+escHtml(t('btn.edit'))+'</button>'
             +'<button type="button" class="rc-mini" data-share="'+escHtml(r.id)+'">&#128228; '+escHtml(t('rc.share'))+'</button>'
+            +(r.t?'<button type="button" class="rc-mini" data-timer="'+escHtml(r.id)+'">&#9200; '+(+r.t)+"'"+'</button>':'')
             +'<button type="button" class="rc-mini" data-pdf="'+escHtml(r.id)+'">&#128196; PDF</button>'
             +'<button type="button" class="rc-mini danger" data-del="'+escHtml(r.id)+'">&#10006;</button>'
           +'</div></div>':'')
@@ -12478,6 +13225,15 @@ function openRecetas(){
       });
       body.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editor(porId(b.dataset.edit)));
       body.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>mandaCompra([porId(b.dataset.add)]));
+      // El tiempo de la receta, directo al temporizador del Reloj (que suena aunque
+      // cierres las dos ventanas y te vayas a hacer otra cosa)
+      body.querySelectorAll('[data-timer]').forEach(b=>b.onclick=()=>{
+        const r=porId(b.dataset.timer);
+        if(!r||!r.t)return;
+        relojNuevoTemporizador(+r.t*60,t('clk.fromrecipe',{n:r.n||''}));
+        openClock('timer');
+        announce(t('clk.fromrecipe',{n:r.n||''}));
+      });
       body.querySelectorAll('[data-pdf]').forEach(b=>b.onclick=()=>{
         const r=porId(b.dataset.pdf);
         if(r)try{ pdfEntrega(recetaPDF(r),(r.n||'receta').replace(/[\\/:*?"<>|]/g,'_')+'.pdf',r.n||t('rc.title')); }catch(e){}
@@ -13654,6 +14410,431 @@ function _gadgetTiempo(body){
   return setInterval(()=>{ if(document.hidden)return; pinta(); },900000);
 }
 
+// ========== AVISO DE LLUVIA (radar de verdad, estilo Rain Alarm) ==========
+// El radar de RainViewer es gratis y sirve sus teselas con CORS abierto, así que se
+// pueden LEER LOS PÍXELES en un canvas: eso permite mirar el eco de lluvia alrededor
+// de ti, ver cómo se mueve entre fotograma y fotograma y estimar cuándo te llega.
+//
+// DECISIÓN, después de mirar las teselas de verdad: **no se deduce la intensidad del
+// color**. Al comparar dos esquemas de color el servidor devolvió los mismos píxeles,
+// y conviven familias distintas (azul = lluvia, beige = nieve) con alfas graduadas,
+// así que cualquier tabla de color→dBZ sería adivinar. Lo que sí es seguro es el
+// ALFA: hay eco o no lo hay. De ahí el reparto de trabajo:
+//   · el radar dice DÓNDE está la lluvia, hacia dónde va y CUÁNDO llega;
+//   · Open-Meteo (minutely_15, que ya usa El tiempo) dice CUÁNTO va a caer en mm.
+// Cada uno en lo que es fiable.
+//
+// LIMITACIÓN, dicha también dentro de la app: esto avisa mientras Torrecillas OS esté
+// abierto (aunque sea en una pestaña de fondo). Sin servidor no hay notificaciones
+// push, y `periodicsync` se despierta cada muchas horas: inútil para una tormenta que
+// llega en veinte minutos.
+const RV_MAPS='https://api.rainviewer.com/public/weather-maps.json';
+const RV_TILES='https://tilecache.rainviewer.com';
+const RV_Z=7;                 // ~0,9 km por píxel a nuestras latitudes
+const RV_RADIO_DEF=50;        // km que se vigilan por defecto
+const RADAR_CADA=5*60*1000;   // cada cuánto se comprueba con el aviso puesto
+const RADAR_REPETIR=45*60*1000; // no repetir el mismo aviso antes de 45 min
+let _rvMapa=null, _rvMapaTs=0, _radarInt=null, _radarHook=null;
+
+// --- Geometría de teselas (Web Mercator, la de todos los mapas) ---
+function rvTileXY(lat,lon,z){
+  const n=Math.pow(2,z);
+  const x=(lon+180)/360*n;
+  const rad=lat*Math.PI/180;
+  const y=(1-Math.log(Math.tan(rad)+1/Math.cos(rad))/Math.PI)/2*n;
+  return {x:x,y:y,tx:Math.floor(x),ty:Math.floor(y),px:(x-Math.floor(x))*256,py:(y-Math.floor(y))*256};
+}
+function rvKmPorPixel(lat,z){ return 156.54303392*Math.cos(lat*Math.PI/180)/Math.pow(2,z); }
+// Rumbo desde el centro: dx a la derecha (este), dy hacia abajo (sur)
+function rvRumbo(dx,dy){ return (Math.atan2(dx,-dy)*180/Math.PI+360)%360; }
+// Analiza un cuadro de píxeles ya compuesto. `img` es {data,width} como un ImageData.
+function rvAnaliza(img,cx,cy,kmPx,radioKm){
+  const res={cerca:null,cobertura:0,pixeles:0,mirados:0};
+  if(!img||!img.data||!img.width)return res;
+  const d=img.data, W=img.width, H=Math.floor(d.length/4/W);
+  const rPx=Math.max(1,Math.round(radioKm/kmPx));
+  let sx=0, sy=0;
+  for(let y=Math.max(0,cy-rPx);y<=Math.min(H-1,cy+rPx);y++){
+    for(let x=Math.max(0,cx-rPx);x<=Math.min(W-1,cx+rPx);x++){
+      const dx=x-cx, dy=y-cy, dPx=Math.sqrt(dx*dx+dy*dy);
+      if(dPx>rPx)continue;
+      res.mirados++;
+      if(d[(y*W+x)*4+3]<40)continue; // el alfa es lo único de fiar: hay eco o no
+      res.pixeles++;
+      sx+=dx; sy+=dy;
+      // OJO: se compara la distancia CRUDA. Redondeando antes, dos píxeles a la misma
+      // décima empataban y ganaba el primero del barrido, lo que desviaba el rumbo.
+      const km=dPx*kmPx;
+      if(!res.cerca||km<res.cerca.crudo)res.cerca={crudo:km,km:Math.round(km*10)/10,rumbo:Math.round(rvRumbo(dx,dy))};
+    }
+  }
+  res.cobertura=res.mirados?Math.round(res.pixeles/res.mirados*1000)/10:0;
+  if(res.pixeles)res.centro={rumbo:Math.round(rvRumbo(sx/res.pixeles,sy/res.pixeles)),km:Math.round(Math.sqrt(sx*sx+sy*sy)/res.pixeles*kmPx*10)/10};
+  return res;
+}
+// De varias muestras {t(ms), km} sale la velocidad de acercamiento y los minutos que
+// faltan. Regresión simple: una célula nueva que aparece más cerca no desvía el cálculo
+// tanto como usar solo los dos últimos fotogramas.
+function rvEta(muestras){
+  const m=(muestras||[]).filter(x=>x&&x.km!=null).slice(-4);
+  if(m.length<2)return {acercandose:false,velocidad:0,minutos:null};
+  const t0=m[0].t;
+  let sx=0,sy=0,sxx=0,sxy=0;
+  m.forEach(p=>{ const x=(p.t-t0)/60000, y=p.km; sx+=x; sy+=y; sxx+=x*x; sxy+=x*y; });
+  const n=m.length, den=n*sxx-sx*sx;
+  const pend=den?(n*sxy-sx*sy)/den:0;   // km por minuto (negativo = se acerca)
+  const vel=Math.round(-pend*100)/100;
+  const ultima=m[m.length-1].km;
+  if(vel<=0.05)return {acercandose:false,velocidad:vel,minutos:null}; // parada o alejándose
+  return {acercandose:true,velocidad:vel,minutos:Math.max(0,Math.round(ultima/vel))};
+}
+// Junta el análisis del radar con los mm de Open-Meteo y decide qué se le dice al
+// usuario. Devuelve un estado con todo lo necesario para pintar y para avisar.
+function radarEstado(muestras,radioKm,mmProximos){
+  const ult=muestras&&muestras.length?muestras[muestras.length-1]:null;
+  const eta=rvEta(muestras);
+  const mm=+((mmProximos||{}).mm)||0, enMin=(mmProximos||{}).min;
+  if(!ult||ult.km==null)return {estado:'seco',km:null,rumbo:null,minutos:null,mm:mm,texto:t('rd.dry',{r:radioKm})};
+  if(ult.km<=2)return {estado:'lloviendo',km:ult.km,rumbo:ult.rumbo,minutos:0,mm:mm,texto:t('rd.now')};
+  if(eta.acercandose&&eta.minutos!=null&&eta.minutos<=90)
+    return {estado:'viene',km:ult.km,rumbo:ult.rumbo,minutos:eta.minutos,velocidad:eta.velocidad,mm:mm,
+      texto:t('rd.coming',{km:ult.km,d:hmCardinal(ult.rumbo),n:eta.minutos})};
+  if(mm>0.1&&enMin!=null&&enMin<=120)
+    return {estado:'previsto',km:ult.km,rumbo:ult.rumbo,minutos:enMin,mm:mm,texto:t('rd.forecast',{n:enMin,mm:mm})};
+  return {estado:'cerca',km:ult.km,rumbo:ult.rumbo,minutos:null,mm:mm,
+    texto:t('rd.near',{km:ult.km,d:hmCardinal(ult.rumbo)})};
+}
+// --- Ajustes ---
+function radarCfg(){
+  let o=null; try{ o=JSON.parse(Store.get('tos-radar')||'null'); }catch(e){}
+  return Object.assign({aviso:false,radio:RV_RADIO_DEF,lugar:null,ultimo:0,ultimoEstado:''},o||{});
+}
+function radarCfgWrite(o){ return Store.set('tos-radar',JSON.stringify(o)); }
+function radarLugar(){
+  const c=radarCfg();
+  if(c.lugar&&c.lugar.lat!=null)return c.lugar;
+  const l=tpLugares()[0];
+  return l?{lat:l.lat,lon:l.lon,name:l.name}:null;
+}
+// --- Red ---
+function rvMapa(force){
+  if(!force&&_rvMapa&&(Date.now()-_rvMapaTs)<5*60*1000)return Promise.resolve(_rvMapa);
+  return tpFetchJSON(RV_MAPS).then(j=>{ _rvMapa=j; _rvMapaTs=Date.now(); return j; });
+}
+function rvFotogramas(mapa,n){
+  const r=(mapa&&mapa.radar)||{};
+  const todos=(r.past||[]).concat(r.nowcast||[]);
+  return n?todos.slice(-n):todos;
+}
+// Teselas que hacen falta para cubrir el radio pedido alrededor del punto
+function rvTeselas(lat,lon,z,radioKm){
+  const c=rvTileXY(lat,lon,z);
+  const rPx=radioKm/rvKmPorPixel(lat,z);
+  const n=Math.max(1,Math.ceil((rPx+Math.max(c.px,256-c.px))/256));
+  const out=[];
+  for(let dy=-n;dy<=n;dy++)for(let dx=-n;dx<=n;dx++)out.push({tx:c.tx+dx,ty:c.ty+dy,dx:dx,dy:dy});
+  return out;
+}
+function rvURL(path,tx,ty,z,color){ return RV_TILES+path+'/256/'+z+'/'+tx+'/'+ty+'/'+(color==null?2:color)+'/0_0.png'; }
+// --- Mapa base, para saber DÓNDE está esa mancha de lluvia ---
+// Se usa el CDN de mapas de CARTO (teselas de OpenStreetMap ya rasterizadas): está
+// pensado para incrustarlo, sirve con CORS y cachea seis meses. A los servidores de
+// teselas de OSM NO se les pega directamente: su política de uso desaconseja
+// expresamente que las apps tiren de ellos. La atribución va en la propia ventana,
+// como piden ambos.
+const MAPA_URL='https://basemaps.cartocdn.com/dark_all/';
+const MAPA_ATRIB='&copy; OpenStreetMap &middot; &copy; CARTO';
+let _mapaCache=null; // {clave,canvas}: el fondo no cambia, se reaprovecha entre fotogramas
+function rvURLMapa(tx,ty,z){ return MAPA_URL+z+'/'+tx+'/'+ty+'.png'; }
+// IMPORTANTE: el mapa se compone en SU PROPIO canvas, nunca debajo del radar. Si se
+// pintara en el mismo, todos los píxeles pasarían a ser opacos y el análisis —que se
+// basa exactamente en el alfa— daría lluvia en todas partes.
+function rvCargaMapa(lat,lon,z,radioKm){
+  return new Promise((res)=>{
+    const teselas=rvTeselas(lat,lon,z,radioKm);
+    const n=Math.round(Math.sqrt(teselas.length));
+    const c=rvTileXY(lat,lon,z);
+    const clave=z+':'+c.tx+':'+c.ty+':'+n;
+    if(_mapaCache&&_mapaCache.clave===clave)return res(_mapaCache.canvas);
+    let cv=null,ctx=null;
+    try{ cv=document.createElement('canvas'); ctx=cv.getContext('2d'); }catch(e){}
+    if(!ctx)return res(null);
+    const lado=n*256, medio=(n-1)/2;
+    cv.width=lado; cv.height=lado;
+    let quedan=teselas.length;
+    const fin=()=>{ _mapaCache={clave:clave,canvas:cv}; res(cv); };
+    teselas.forEach(tt=>{
+      const im=new Image();
+      im.crossOrigin='anonymous';
+      im.onload=()=>{ try{ ctx.drawImage(im,(tt.dx+medio)*256,(tt.dy+medio)*256); }catch(e){} if(!--quedan)fin(); };
+      im.onerror=()=>{ if(!--quedan)fin(); }; // sin mapa se sigue viendo el radar
+      im.src=rvURLMapa(tt.tx,tt.ty,z);
+    });
+    if(!teselas.length)fin();
+  });
+}
+// Compone las teselas de un fotograma en un canvas centrado en el punto. Devuelve
+// también el ImageData para analizarlo. Sin canvas (jsdom) devuelve null y todo lo
+// que depende de esto se salta con elegancia.
+function rvCargaFrame(path,lat,lon,z,radioKm){
+  return new Promise((res)=>{
+    let cv=null,ctx=null;
+    try{ cv=document.createElement('canvas'); ctx=cv.getContext('2d'); }catch(e){}
+    if(!ctx)return res(null);
+    const teselas=rvTeselas(lat,lon,z,radioKm);
+    const n=Math.round(Math.sqrt(teselas.length));
+    const lado=n*256;
+    cv.width=lado; cv.height=lado;
+    const c=rvTileXY(lat,lon,z), medio=(n-1)/2;
+    const cx=Math.round((medio+ (c.px/256))*256), cy=Math.round((medio+(c.py/256))*256);
+    let quedan=teselas.length;
+    const fin=()=>{
+      let img=null;
+      try{ img=ctx.getImageData(0,0,lado,lado); }catch(e){}
+      res(img?{data:img.data,width:lado,cx:cx,cy:cy,kmPx:rvKmPorPixel(lat,z),canvas:cv}:null);
+    };
+    teselas.forEach(tt=>{
+      const im=new Image();
+      im.crossOrigin='anonymous'; // sin esto el canvas queda "sucio" y no se puede leer
+      im.onload=()=>{ try{ ctx.drawImage(im,(tt.dx+medio)*256,(tt.dy+medio)*256); }catch(e){} if(!--quedan)fin(); };
+      im.onerror=()=>{ if(!--quedan)fin(); };
+      im.src=rvURL(path,tt.tx,tt.ty,z,2);
+    });
+    if(!teselas.length)fin();
+  });
+}
+// mm y minutos hasta la primera precipitación según Open-Meteo (cuarto de hora)
+function rvNowcast(lat,lon){
+  const url='https://api.open-meteo.com/v1/forecast?latitude='+(+lat).toFixed(3)+'&longitude='+(+lon).toFixed(3)
+    +'&minutely_15=precipitation,precipitation_probability&forecast_hours=6&timezone=auto';
+  return tpFetchJSON(url).then(j=>{
+    const M=(j&&j.minutely_15)||{};
+    const ahora=Date.now();
+    const pasos=[];
+    (M.time||[]).forEach((tm,i)=>{
+      const ts=new Date(tm).getTime();
+      if(isNaN(ts)||ts<ahora-15*60000)return;
+      pasos.push({t:ts,min:Math.round((ts-ahora)/60000),mm:+(M.precipitation||[])[i]||0,pp:+(M.precipitation_probability||[])[i]||0});
+    });
+    const prim=pasos.filter(p=>p.mm>0.1)[0]||null;
+    return {pasos:pasos.slice(0,16),mm:prim?prim.mm:0,min:prim?Math.max(0,prim.min):null};
+  }).catch(()=>({pasos:[],mm:0,min:null}));
+}
+// Una comprobación completa: radar (3 fotogramas para el movimiento) + nowcast
+function radarComprueba(opts){
+  opts=opts||{};
+  const lug=opts.lugar||radarLugar();
+  if(!lug)return Promise.resolve(null);
+  const radio=opts.radio||radarCfg().radio||RV_RADIO_DEF;
+  return rvMapa().then(mapa=>{
+    const frames=rvFotogramas(mapa,3);
+    if(!frames.length)return null;
+    return Promise.all(frames.map(f=>rvCargaFrame(f.path,lug.lat,lug.lon,RV_Z,radio)
+        .then(img=>({t:(f.time||0)*1000,img:img}))))
+      .then(cargados=>{
+        const muestras=cargados.map(c=>{
+          if(!c.img)return {t:c.t,km:null};
+          const a=rvAnaliza(c.img,c.img.cx,c.img.cy,c.img.kmPx,radio);
+          return {t:c.t,km:a.cerca?a.cerca.km:null,rumbo:a.cerca?a.cerca.rumbo:null,cobertura:a.cobertura};
+        });
+        return rvNowcast(lug.lat,lug.lon).then(now=>{
+          const est=radarEstado(muestras,radio,now);
+          est.muestras=muestras; est.nowcast=now; est.lugar=lug;
+          est.ultimoFrame=cargados[cargados.length-1]||null;
+          return est;
+        });
+      });
+  }).catch(()=>null);
+}
+// El aviso: solo si el estado lo merece y no se ha avisado hace nada
+function radarAvisaSiToca(est){
+  if(!est)return false;
+  const c=radarCfg();
+  if(!c.aviso)return false;
+  const merece=(est.estado==='viene'&&est.minutos!=null&&est.minutos<=60)||est.estado==='lloviendo';
+  if(!merece){ if(est.estado==='seco'&&c.ultimoEstado!=='seco'){ c.ultimoEstado='seco'; radarCfgWrite(c); } return false; }
+  if(c.ultimoEstado===est.estado&&(Date.now()-(+c.ultimo||0))<RADAR_REPETIR)return false;
+  c.ultimo=Date.now(); c.ultimoEstado=est.estado; radarCfgWrite(c);
+  try{ notify({icon:'&#127783;&#65039;',title:t('rd.title'),body:est.texto,timeout:14000,action:()=>openRadar()}); }catch(e){}
+  try{ if(navigator.vibrate)navigator.vibrate([200,120,200]); }catch(e){}
+  try{ playTone(700,0.18,'sine',0.35); setTimeout(()=>playTone(520,0.26,'sine',0.3),200); }catch(e){}
+  return true;
+}
+function radarArranca(){
+  if(_radarInt)return;
+  // setInterval normal: la gracia es que avise con la pestaña de fondo. Si el aviso
+  // está apagado no se pide nada a la red, solo se mira un booleano.
+  _radarInt=setInterval(()=>{
+    if(!radarCfg().aviso)return;
+    radarComprueba().then(est=>{ radarAvisaSiToca(est); if(_radarHook)_radarHook(est); });
+  },RADAR_CADA);
+}
+
+function openRadar(){
+  closeStartMenu();
+  if(focusExisting('rd-root'))return;
+  const content=`<div class="rd-root" id="rd-root">
+    <div class="rd-bar">
+      <select id="rd-lugar" class="rd-sel" aria-label="${escHtml(t('rd.place'))}"></select>
+      <button type="button" class="rd-btn" id="rd-gps" title="${escHtml(t('tp.gps'))}">&#127919;</button>
+      <button type="button" class="rd-btn" id="rd-upd" title="${escHtml(t('rd.refresh'))}">&#128260;</button>
+      <button type="button" class="rd-btn" id="rd-mapa" title="${escHtml(t('rd.map'))}" aria-pressed="true">&#128506;&#65039;</button>
+      <select id="rd-radio" class="rd-sel rd-radio" aria-label="${escHtml(t('rd.radius'))}">
+        <option value="20">20 km</option><option value="50" selected>50 km</option><option value="80">80 km</option>
+      </select>
+    </div>
+    <div class="rd-estado" id="rd-estado">${escHtml(t('tp.loading'))}</div>
+    <div class="rd-mapa"><canvas id="rd-cv" width="300" height="300" role="img" aria-label="${escHtml(t('rd.title'))}"></canvas>
+      <div class="rd-hora" id="rd-hora"></div>
+      <div class="rd-atrib" id="rd-atrib">${MAPA_ATRIB}</div></div>
+    <div class="rd-min" id="rd-min"></div>
+    <label class="rd-avisocheck"><input type="checkbox" id="rd-aviso"> <span><b>${escHtml(t('rd.alert'))}</b><i>${escHtml(t('rd.alert.d'))}</i></span></label>
+    <div class="rd-nota">${escHtml(t('rd.limit'))}</div>
+  </div>`;
+  createWindow(t('rd.title'),'&#127783;&#65039;',340,520,content,{session:'radar',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    let est=null, cargando=false, mapaCv=null;
+    const cfg=radarCfg();
+    let conMapa=cfg.mapa!==false;
+    $('#rd-radio').value=String(cfg.radio||RV_RADIO_DEF);
+    $('#rd-aviso').checked=!!cfg.aviso;
+    // Lugares: los mismos que El tiempo
+    const pintaLugares=()=>{
+      const ls=tpLugares(), act=radarLugar();
+      $('#rd-lugar').innerHTML=ls.length?ls.map(l=>'<option value="'+escHtml(tpKey(l))+'"'+(act&&tpKey(l)===tpKey(act)?' selected':'')+'>'+escHtml(l.name)+'</option>').join('')
+        :'<option value="">'+escHtml(t('tp.noplace'))+'</option>';
+    };
+    pintaLugares();
+    const pintaMapa=()=>{
+      const cv=$('#rd-cv'); let ctx=null;
+      try{ ctx=cv.getContext('2d'); }catch(e){}
+      if(!ctx)return;
+      const W=cv.width, H=cv.height, cx=W/2, cy=H/2;
+      const radio=+$('#rd-radio').value||RV_RADIO_DEF;
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#0a1024'; ctx.fillRect(0,0,W,H);
+      const fr=est&&est.ultimoFrame&&est.ultimoFrame.img;
+      const rPx=fr?radio/fr.kmPx:0;
+      // 1) el mapa debajo, para situarte; 2) el eco encima, semitransparente
+      if(mapaCv&&conMapa&&fr){
+        try{ ctx.drawImage(mapaCv,fr.cx-rPx,fr.cy-rPx,rPx*2,rPx*2,0,0,W,H); }catch(e){}
+      }
+      if(fr&&fr.canvas){
+        ctx.globalAlpha=(mapaCv&&conMapa)?0.78:1; // con mapa detrás, la lluvia deja verlo
+        try{ ctx.drawImage(fr.canvas,fr.cx-rPx,fr.cy-rPx,rPx*2,rPx*2,0,0,W,H); }catch(e){}
+        ctx.globalAlpha=1;
+      }
+      // Anillos de distancia, cardinales y tú en el centro
+      ctx.strokeStyle='rgba(140,180,230,.35)'; ctx.lineWidth=1;
+      [1/3,2/3,1].forEach(f=>{ ctx.beginPath(); ctx.arc(cx,cy,cx*f,0,7); ctx.stroke(); });
+      ctx.setLineDash([3,5]);
+      ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='rgba(190,215,245,.75)'; ctx.font='bold 10px Tahoma,sans-serif'; ctx.textAlign='center';
+      ctx.fillText('N',cx,11); ctx.fillText('S',cx,H-3); ctx.fillText('E',W-7,cy+4); ctx.fillText('O',7,cy+4);
+      ctx.fillText(Math.round(radio/3)+' km',cx+cx/3+16,cy-4);
+      ctx.fillText(radio+' km',cx,cy-cx+12);
+      // La lluvia más cercana, señalada
+      if(est&&est.km!=null&&est.rumbo!=null&&est.km<=radio){
+        const a=(est.rumbo-90)*Math.PI/180, r=est.km/radio*cx;
+        const ex=cx+Math.cos(a)*r, ey=cy+Math.sin(a)*r;
+        ctx.strokeStyle='#ffd166'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(ex,ey,9,0,7); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey); ctx.globalAlpha=.5; ctx.stroke(); ctx.globalAlpha=1;
+      }
+      ctx.fillStyle='#5ad07a'; ctx.beginPath(); ctx.arc(cx,cy,4.5,0,7); ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(cx,cy,4.5,0,7); ctx.stroke();
+    };
+    const pintaMinutos=()=>{
+      const pasos=(est&&est.nowcast&&est.nowcast.pasos)||[];
+      if(!pasos.length){ $('#rd-min').innerHTML=''; return; }
+      const max=Math.max(0.5,...pasos.map(p=>p.mm));
+      $('#rd-min').innerHTML='<div class="rd-mint">'+escHtml(t('rd.next2h'))+'</div><div class="rd-bars">'
+        +pasos.map((p,i)=>'<div class="rd-b'+(p.mm>0.1?' on':'')+'" title="'+p.min+' min · '+p.mm+' mm">'
+          +'<i style="height:'+Math.max(2,Math.round(p.mm/max*30))+'px"></i>'
+          +(i%4===0?'<span>'+p.min+"'"+'</span>':'<span></span>')+'</div>').join('')+'</div>';
+    };
+    const pinta=()=>{
+      $('#rd-estado').textContent=cargando?t('tp.loading'):(est?est.texto:t('rd.fail'));
+      $('#rd-estado').className='rd-estado'+(est?' e-'+est.estado:'');
+      $('#rd-hora').textContent=(est&&est.muestras&&est.muestras.length&&est.muestras[est.muestras.length-1].t)
+        ? new Date(est.muestras[est.muestras.length-1].t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : '';
+      pintaMapa(); pintaMinutos();
+    };
+    const carga=()=>{
+      if(cargando)return;
+      cargando=true; pinta();
+      const radio=+$('#rd-radio').value||RV_RADIO_DEF;
+      const lug=radarLugar();
+      if(conMapa&&lug)rvCargaMapa(lug.lat,lug.lon,RV_Z,radio).then(cv=>{ mapaCv=cv; pintaMapa(); }).catch(()=>{});
+      radarComprueba({radio:radio}).then(r=>{
+        cargando=false; est=r; pinta();
+        if(r)radarAvisaSiToca(r);
+      }).catch(()=>{ cargando=false; pinta(); });
+    };
+    $('#rd-upd').onclick=()=>carga();
+    const pintaBotonMapa=()=>{
+      const b=$('#rd-mapa');
+      b.setAttribute('aria-pressed',conMapa?'true':'false');
+      b.classList.toggle('off',!conMapa);
+      $('#rd-atrib').hidden=!conMapa;
+    };
+    $('#rd-mapa').onclick=()=>{
+      conMapa=!conMapa;
+      const c=radarCfg(); c.mapa=conMapa; radarCfgWrite(c);
+      pintaBotonMapa();
+      if(conMapa&&!mapaCv)carga(); else pintaMapa();
+    };
+    pintaBotonMapa();
+    $('#rd-radio').onchange=()=>{ const c=radarCfg(); c.radio=+$('#rd-radio').value; radarCfgWrite(c); carga(); };
+    // Cambiar de sitio invalida el fondo cacheado
+    const olvidaMapa=()=>{ mapaCv=null; _mapaCache=null; };
+    $('#rd-lugar').onchange=()=>{
+      const l=tpLugares().filter(x=>tpKey(x)===$('#rd-lugar').value)[0];
+      if(!l)return;
+      const c=radarCfg(); c.lugar={lat:l.lat,lon:l.lon,name:l.name}; radarCfgWrite(c); olvidaMapa(); carga();
+    };
+    $('#rd-gps').onclick=()=>{
+      if(!navigator.geolocation){ xpDialog(t('rd.title'),'<div class="dlg-icon">&#127758;</div><div>'+escHtml(t('tp.nogps'))+'</div>'); return; }
+      $('#rd-estado').textContent=t('tp.locating');
+      navigator.geolocation.getCurrentPosition((pos)=>{
+        const c=radarCfg();
+        c.lugar={lat:pos.coords.latitude,lon:pos.coords.longitude,name:t('tp.here')};
+        radarCfgWrite(c); pintaLugares(); olvidaMapa(); carga();
+      },()=>{ $('#rd-estado').textContent=t('tp.nogps'); },{timeout:10000,maximumAge:300000});
+    };
+    $('#rd-aviso').onchange=()=>{
+      const c=radarCfg(); c.aviso=$('#rd-aviso').checked; c.ultimo=0; c.ultimoEstado=''; radarCfgWrite(c);
+      if(c.aviso){
+        radarArranca();
+        // El aviso solo se ve de verdad si el navegador deja notificar
+        try{ if(typeof Notification!=='undefined'&&Notification.permission==='default')Notification.requestPermission(); }catch(e){}
+        announce(t('rd.alert.on'));
+        carga();
+      }
+    };
+    _radarHook=(r)=>{ if(r){ est=r; pinta(); } };
+    (win._cleanups=win._cleanups||[]).push(()=>{ _radarHook=null; });
+    pinta();
+    carga();
+  }});
+}
+// Gadget: el mismo estado en pequeño, en el escritorio
+function _gadgetRadar(body){
+  const pinta=(est)=>{
+    const c=radarCfg();
+    body.innerHTML='<div class="gl-wrap"><div class="gt-ic">&#127783;&#65039;</div>'
+      +'<div class="gl-sub">'+escHtml(est?est.texto:t('tp.loading'))+'</div>'
+      +(c.aviso?'<div class="gl-sub">&#128276; '+escHtml(t('rd.alert.on'))+'</div>':'')+'</div>';
+  };
+  pinta(null);
+  body.style.cursor='pointer';
+  body.onclick=()=>openRadar();
+  const tira=()=>{ if(document.hidden)return; radarComprueba().then(est=>{ pinta(est); radarAvisaSiToca(est); }); };
+  tira();
+  return setInterval(tira,10*60000);
+}
+
 // ========== LISTA DE LA COMPRA ==========
 // Lo importante de una lista de la compra es escribir rápido: por eso el campo de
 // texto entiende "2 leche 1,20", adivina el pasillo solo y propone lo que sueles
@@ -14021,6 +15202,70 @@ function gastosAll(){ try{ const a=JSON.parse(Store.get('tos-gastos')||'[]'); re
 function gastosWrite(arr){ return Store.set('tos-gastos',JSON.stringify(arr)); }
 function gastosFijos(){ try{ const a=JSON.parse(Store.get('tos-gastos-fijos')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 function gastosFijosWrite(arr){ return Store.set('tos-gastos-fijos',JSON.stringify(arr)); }
+// ---- Metas de ahorro ----
+// Una meta es "2.000 € para el 1 de agosto". Lo ahorrado NO se apunta a mano: es el
+// saldo real (ingresos - gastos) de los meses desde que empezó la meta, que es el
+// dinero que de verdad te ha sobrado. Un mes malo resta, como en la vida.
+function gastosMeta(){ try{ const o=JSON.parse(Store.get('tos-gastos-meta')||'null'); return (o&&o.obj>0)?o:null; }catch(e){ return null; } }
+function gastosMetaWrite(m){ return m?Store.set('tos-gastos-meta',JSON.stringify(m)):Store.del('tos-gastos-meta')||true; }
+function gastosMetaProgreso(m,hoy){
+  m=m||gastosMeta();
+  if(!m)return null;
+  const ahora=hoy||new Date();
+  const desde=String(m.desde||gastosMesActual());
+  let ahorrado=0;
+  gastosAll().forEach(g=>{
+    const ym=gastosYM(g.d);
+    if(ym<desde)return;
+    ahorrado+=(g.t==='i'?1:-1)*(+g.a||0);
+  });
+  ahorrado=Math.round(ahorrado*100)/100;
+  const obj=+m.obj||0;
+  const falta=Math.round(Math.max(0,obj-ahorrado)*100)/100;
+  const pct=obj>0?Math.max(0,Math.min(100,Math.round(ahorrado/obj*100))):0;
+  // Semanas que quedan hasta la fecha (mínimo 1, para no dividir por cero el último día)
+  let semanas=0, dias=0;
+  if(m.fecha){
+    dias=Math.ceil((new Date(m.fecha+'T23:59:59')-ahora)/86400000);
+    semanas=Math.max(1,Math.ceil(dias/7));
+  }
+  return {ahorrado:ahorrado,obj:obj,falta:falta,pct:pct,dias:dias,semanas:semanas,
+    porSemana:(m.fecha&&falta>0)?Math.round(falta/semanas*100)/100:0,
+    lograda:ahorrado>=obj&&obj>0, tarde:!!(m.fecha&&dias<0&&falta>0)};
+}
+// 2026-12-24 → 24/12/2026 (en el idioma de quien mira)
+function _fechaCorta(iso){
+  try{ const d=new Date(String(iso)+'T12:00:00'); return isNaN(d)?String(iso):d.toLocaleDateString(); }catch(e){ return String(iso); }
+}
+// Aviso de meta conseguida, UNA vez por meta (la marca lleva el objetivo y la fecha,
+// así que ponerse una meta nueva vuelve a poder avisar)
+function gastosAvisaMeta(){
+  const m=gastosMeta(); if(!m)return false;
+  const p=gastosMetaProgreso(m);
+  if(!p||!p.lograda)return false;
+  const marca=String(m.obj)+'|'+(m.fecha||'')+'|'+(m.desde||'');
+  if(Store.get('tos-gastos-metaok')===marca)return false;
+  Store.set('tos-gastos-metaok',marca);
+  try{ notify({icon:'&#127919;',title:t('gs.goal'),body:t('gs.goal.reached',{n:m.n||t('gs.goal'),e:gastoFmt(p.ahorrado)}),action:()=>openGastos()}); }catch(e){}
+  return true;
+}
+// Tarjeta de la meta en el resumen (o el botón para ponerse una)
+function _gsMetaHTML(){
+  const m=gastosMeta();
+  if(!m)return '<div class="gs-nopresu"><button type="button" class="gs-btn" id="gs-setmeta">&#127919; '+escHtml(t('gs.goal.set'))+'</button></div>';
+  const p=gastosMetaProgreso(m);
+  const estado=p.lograda?t('gs.goal.done')
+    :p.tarde?t('gs.goal.late',{e:gastoFmt(p.falta)})
+    :m.fecha?t('gs.goal.left',{e:gastoFmt(p.falta),s:gastoFmt(p.porSemana)})
+    :t('gs.goal.leftnodate',{e:gastoFmt(p.falta)});
+  return '<div class="gs-presu gs-meta'+(p.lograda?' done':(p.tarde?' over':''))+'">'
+    +'<div class="gs-presu-t"><span>&#127919; '+escHtml(m.n||t('gs.goal'))+'</span>'
+    +'<b>'+gastoFmt(p.ahorrado)+' / '+gastoFmt(p.obj)+'</b></div>'
+    +'<div class="gs-presu-bar"><i style="width:'+p.pct+'%"></i></div>'
+    +'<div class="gs-presu-s">'+escHtml(estado)+(m.fecha?' · '+escHtml(t('gs.goal.by',{f:_fechaCorta(m.fecha)})):'')
+    +' <button type="button" class="gs-metabtn" id="gs-editmeta">'+escHtml(t('btn.edit'))+'</button>'
+    +' <button type="button" class="gs-metabtn" id="gs-delmeta">'+escHtml(t('btn.delete'))+'</button></div></div>';
+}
 function gastosPresu(){ try{ const o=JSON.parse(Store.get('tos-gastos-presu')||'{}'); return (o&&typeof o==='object')?o:{}; }catch(e){ return {}; } }
 function gastosPresuWrite(o){ return Store.set('tos-gastos-presu',JSON.stringify(o)); }
 function gastoNum(v){
@@ -14209,6 +15454,7 @@ function openGastos(){
           +'<div class="gs-presu-s">'+escHtml(r.gasto>tope?t('gs.over',{e:gastoFmt(r.gasto-tope)}):t('gs.left',{e:gastoFmt(tope-r.gasto),d:Math.max(0,r.diasMes-r.nDias)}))
           +' · '+escHtml(t('gs.forecast',{e:gastoFmt(r.prevision)}))+'</div></div>'
           :'<div class="gs-nopresu"><button type="button" class="gs-btn" id="gs-setpresu">'+escHtml(t('gs.setbudget'))+'</button></div>')
+        +_gsMetaHTML()
         +'<div class="gs-two">'
         +'<div class="gs-card gs-donut"><canvas id="gs-cv-cat" width="220" height="150" role="img" aria-label="'+escHtml(t('gs.bycat'))+'"></canvas></div>'
         +'<div class="gs-card gs-catlist">'+(cats.length?cats.map(k=>{
@@ -14224,6 +15470,9 @@ function openGastos(){
       pintaDonut($('#gs-cv-cat'),r.porCat,r.gasto);
       pintaDias($('#gs-cv-dia'),r.porDia,r.diasMes,r.mediaDia);
       const sp=$('#gs-setpresu'); if(sp)sp.onclick=pideeBudget;
+      const sm=$('#gs-setmeta'); if(sm)sm.onclick=()=>pideMeta(sync);
+      const em=$('#gs-editmeta'); if(em)em.onclick=()=>pideMeta(sync);
+      const qm=$('#gs-delmeta'); if(qm)qm.onclick=()=>xpConfirm(t('gs.goal'),t('gs.goal.delq'),()=>{ gastosMetaWrite(null); sync(); },t('btn.delete'));
       body.querySelectorAll('.gs-catrow').forEach(b=>b.onclick=()=>{ filtroCat=b.dataset.cat; vista='lista'; sync(); });
     };
     // ---- Movimientos ----
@@ -14356,6 +15605,43 @@ function openGastos(){
         gastosPresuWrite(p);
         sync();
       });
+    };
+    // ---- Meta de ahorro ----
+    const pideMeta=(alGuardar)=>{
+      const m=gastosMeta()||{};
+      const hoy=tkHoyISO();
+      const ov=document.createElement('div'); ov.className='xp-dialog-ov';
+      ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+      ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('gs.goal'))}" class="bkx-dlg">
+        <div class="bkx-title">&#127919; ${escHtml(t('gs.goal'))}</div>
+        <div class="bkx-body">
+          <p class="bkx-desc">${escHtml(t('gs.goal.help'))}</p>
+          <div class="bkx-pw">
+            <input type="text" class="meta-n" maxlength="40" placeholder="${escHtml(t('gs.goal.name'))}" aria-label="${escHtml(t('gs.goal.name'))}" value="${escHtml(m.n||'')}">
+            <input type="text" inputmode="decimal" class="meta-o" placeholder="${escHtml(t('gs.goal.amount'))}" aria-label="${escHtml(t('gs.goal.amount'))}" value="${m.obj?String(m.obj).replace('.',','):''}">
+            <label style="font-size:11px;color:#5a6472">${escHtml(t('gs.goal.date'))}<input type="date" class="meta-f" aria-label="${escHtml(t('gs.goal.date'))}" value="${escHtml(m.fecha||'')}"></label>
+            <label style="font-size:11px;color:#5a6472">${escHtml(t('gs.goal.from'))}<input type="month" class="meta-d" aria-label="${escHtml(t('gs.goal.from'))}" value="${escHtml(m.desde||gastosMesActual())}"></label>
+          </div>
+          <div class="bkx-err" role="alert"></div>
+        </div>
+        <div class="xp-dialog-btns bkx-btns"></div>
+      </div>`;
+      const q=(c)=>ov.querySelector('.'+c);
+      const btns=q('bkx-btns'), err=q('bkx-err');
+      const mk=(l,cls,fn)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=l; if(cls)b.className=cls; b.onclick=fn; btns.appendChild(b); return b; };
+      mk(t('btn.ok'),'primary',()=>{
+        const obj=gastoNum(q('meta-o').value);
+        if(!obj){ err.textContent=t('gs.goal.badamount'); err.classList.add('on'); return; }
+        const fecha=q('meta-f').value||'';
+        if(fecha&&fecha<hoy){ err.textContent=t('gs.goal.baddate'); err.classList.add('on'); return; }
+        gastosMetaWrite({n:q('meta-n').value.trim(),obj:obj,fecha:fecha,desde:q('meta-d').value||gastosMesActual()});
+        ov.remove();
+        if(alGuardar)alGuardar();
+      });
+      mk(t('btn.cancel'),'',()=>ov.remove());
+      document.body.appendChild(ov);
+      setTimeout(()=>{ try{ q('meta-o').focus(); }catch(e){} },30);
+      return ov;
     };
     // ---- Gastos fijos ----
     const abreFijos=()=>{
@@ -17384,7 +18670,7 @@ const BACKUP_CATS=[
   {id:'juegos',ic:'&#127942;',keys:['tos-achievements','tos-played'],re:/-best/},
   {id:'docs',ic:'&#128450;&#65039;',keys:['tos-files','tos-files-trash','tos-folders','tos-sheet']},
   {id:'notas',ic:'&#128221;',keys:['tos-notes','tos-notepad','tos-stickies']},
-  {id:'dia',ic:'&#128197;',keys:['tos-events','tos-recetas','tos-menu','tos-habitos'],pref:['tos-gastos','tos-tareas','tos-compra','tos-tiempo','tos-luz']},
+  {id:'dia',ic:'&#128197;',keys:['tos-events','tos-recetas','tos-menu','tos-habitos','tos-barcodes','tos-alarmas','tos-timer','tos-radar'],pref:['tos-gastos','tos-tareas','tos-compra','tos-tiempo','tos-luz']},
   {id:'claves',ic:'&#128273;',keys:['tos-keys'],warn:true},
   {id:'lector',ic:'&#128214;',pref:['tos-reader']},
   {id:'otros',ic:'&#128230;'} // cajón de sastre: MSN, Outlook, eMule, historial de QR, ritmos...
@@ -17751,7 +19037,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128224;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Calculadoras (hipoteca, IVA, %)','&#129518;',openCalculadoras],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Aviso de lluvia (radar)','&#127783;&#65039;',openRadar],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128224;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Herramientas del móvil (nivel, brújula)','&#129517;',openSensores],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -19407,9 +20693,134 @@ function openNotepad(opts){
 }
 
 // ========== RELOJ Y CRONÓMETRO ==========
-function openClock(){
+// ========== ALARMAS Y TEMPORIZADOR ==========
+// Lo importante de un temporizador de cocina es que suene aunque hayas cerrado la
+// ventana, así que el estado NO vive en la ventana: vive en el almacenamiento
+// (`tos-alarmas` y `tos-timer`) y lo vigila un latido del sistema que arranca con el
+// escritorio. El temporizador guarda la hora de FIN absoluta, no los segundos que
+// quedan, para que no se retrase si el móvil frena los temporizadores en segundo plano.
+const POMO_TRABAJO=25*60, POMO_DESCANSO=5*60, POMO_LARGO=15*60;
+let _relojInt=null, _relojHook=null, _relojTab=null; // hooks de la ventana del Reloj, si está abierta
+function alarmas(){ try{ const a=JSON.parse(Store.get('tos-alarmas')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function alarmasWrite(a){ return Store.set('tos-alarmas',JSON.stringify(a.slice(0,12))); }
+function alarmaNueva(hhmm,nombre){
+  const m=/^(\d{1,2}):(\d{2})$/.exec(String(hhmm||'').trim());
+  if(!m)return null;
+  const h=+m[1], mi=+m[2];
+  if(h>23||mi>59)return null;
+  const a=alarmas();
+  const al={id:'al'+Date.now()+Math.floor(Math.random()*999),h:h,m:mi,n:String(nombre||'').slice(0,40),on:true,ultima:''};
+  a.push(al);
+  a.sort((x,y)=>(x.h*60+x.m)-(y.h*60+y.m));
+  alarmasWrite(a);
+  return al;
+}
+function alarmaBorra(id){ return alarmasWrite(alarmas().filter(a=>a.id!==id)); }
+function alarmaToggle(id,on){
+  const a=alarmas();
+  const x=a.filter(y=>y.id===id)[0];
+  if(!x)return false;
+  x.on=on==null?!x.on:!!on;
+  if(x.on)x.ultima=''; // al reactivarla puede volver a sonar hoy
+  return alarmasWrite(a);
+}
+function temporizador(){ try{ const o=JSON.parse(Store.get('tos-timer')||'null'); return (o&&(o.fin||o.pausa))?o:null; }catch(e){ return null; } }
+function temporizadorWrite(o){ if(!o){ Store.del('tos-timer'); return true; } return Store.set('tos-timer',JSON.stringify(o)); }
+function temporizadorRestante(o){
+  o=o||temporizador();
+  if(!o)return 0;
+  if(o.pausa)return Math.max(0,Math.round(o.pausa));
+  return Math.max(0,Math.round((o.fin-Date.now())/1000));
+}
+function relojNuevoTemporizador(seg,nombre,pomo){
+  seg=Math.max(1,Math.round(+seg||0));
+  const o={fin:Date.now()+seg*1000,total:seg,n:String(nombre||'').slice(0,40)};
+  if(pomo)o.pomo=pomo;
+  temporizadorWrite(o);
+  if(_relojHook)_relojHook();
+  return o;
+}
+function temporizadorPausa(){
+  const o=temporizador(); if(!o||o.pausa)return false;
+  o.pausa=temporizadorRestante(o); o.fin=0;
+  temporizadorWrite(o); if(_relojHook)_relojHook();
+  return true;
+}
+function temporizadorSigue(){
+  const o=temporizador(); if(!o||!o.pausa)return false;
+  o.fin=Date.now()+o.pausa*1000; o.pausa=0;
+  temporizadorWrite(o); if(_relojHook)_relojHook();
+  return true;
+}
+function temporizadorCancela(){ temporizadorWrite(null); if(_relojHook)_relojHook(); return true; }
+// Aviso sonoro + vibración + notificación. Si el escritorio está delante, además un
+// diálogo, que una alarma que solo hace "pop" en una esquina no despierta a nadie.
+function relojSuena(titulo,cuerpo,conDialogo){
+  try{ notify({icon:'&#9200;',title:titulo,body:cuerpo,timeout:12000}); }catch(e){}
+  try{ if(navigator.vibrate)navigator.vibrate([300,150,300,150,600]); }catch(e){}
+  try{ relojPitido(); }catch(e){}
+  try{
+    const desk=document.getElementById('desktop');
+    if(conDialogo!==false&&desk&&desk.style.display==='block'&&!document.hidden)
+      xpDialog(titulo,'<div class="dlg-icon">&#9200;</div><div>'+escHtml(cuerpo)+'</div>',[{label:t('clk.stop'),primary:true}]);
+  }catch(e){}
+}
+// Tres pitidos cortos: suena a despertador sin llegar a ser insufrible. Se usa
+// `playTone`, que es el camino común de sonido del sistema (respeta el volumen).
+function relojPitido(){
+  playTone(880,0.22,'square',0.4);
+  setTimeout(()=>playTone(880,0.22,'square',0.4),320);
+  setTimeout(()=>playTone(1046,0.3,'square',0.45),640);
+}
+// El latido: una vez por segundo mira si toca sonar algo. Barato a propósito.
+function relojTick(){
+  try{
+    const ahora=new Date();
+    const hoy=tkHoyISO(ahora);
+    // --- Alarmas ---
+    const al=alarmas();
+    let cambio=false;
+    al.forEach(a=>{
+      if(!a.on||a.ultima===hoy)return;
+      if(a.h!==ahora.getHours()||a.m!==ahora.getMinutes())return;
+      a.ultima=hoy; cambio=true;
+      relojSuena(t('clk.alarm'),(a.n||t('clk.alarm'))+' · '+_hhmm(a.h,a.m));
+    });
+    if(cambio){ alarmasWrite(al); if(_relojHook)_relojHook(); }
+    // --- Temporizador ---
+    const o=temporizador();
+    if(o&&!o.pausa&&temporizadorRestante(o)<=0){
+      const nombre=o.n||t('clk.timer');
+      if(o.pomo){
+        // Pomodoro: al acabar una fase empieza la siguiente sola
+        const ronda=(+o.pomo.ronda||1);
+        const trabajando=o.pomo.fase==='trabajo';
+        const sig=trabajando?((ronda%4===0)?POMO_LARGO:POMO_DESCANSO):POMO_TRABAJO;
+        const fase=trabajando?'descanso':'trabajo';
+        relojNuevoTemporizador(sig,t(fase==='trabajo'?'clk.pomo.work':'clk.pomo.rest'),
+          {fase:fase,ronda:trabajando?ronda:ronda+1});
+        relojSuena(t('clk.pomo'),t(trabajando?'clk.pomo.torest':'clk.pomo.towork',{n:ronda}));
+      }else{
+        temporizadorWrite(null);
+        relojSuena(t('clk.timer'),t('clk.timerdone',{n:nombre}));
+      }
+      if(_relojHook)_relojHook();
+    }
+  }catch(e){}
+}
+function relojArranca(){
+  if(_relojInt)return;
+  relojTick();
+  // setInterval normal (no visibleInterval): una alarma tiene que sonar precisamente
+  // cuando NO estás mirando la pestaña.
+  _relojInt=setInterval(relojTick,1000);
+}
+function _hhmm(h,m){ return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
+function _msSeg(s){ s=Math.max(0,Math.round(s)); const h=Math.floor(s/3600); const m=Math.floor(s%3600/60), g=s%60;
+  return (h?String(h).padStart(2,'0')+':':'')+String(m).padStart(2,'0')+':'+String(g).padStart(2,'0'); }
+function openClock(pestana){
   closeStartMenu();
-  if(focusExisting('clock-canvas'))return;
+  if(focusExisting('clock-canvas')){ if(pestana&&_relojTab)_relojTab(pestana); return; }
   const tabBtn='flex:1;padding:6px;border:none;background:#dfe7f5;cursor:pointer;font-family:Rajdhani,sans-serif;font-size:13px;font-weight:600;color:#1a45b0';
   const content=`<div style="display:flex;flex-direction:column;height:100%;background:#0d1326;color:#fff;font-family:Rajdhani,sans-serif">
     <div style="display:flex;flex-direction:column;align-items:center;padding:14px;gap:6px">
@@ -19418,23 +20829,41 @@ function openClock(){
       <div id="clock-day" style="font-size:12px;opacity:.8"></div>
     </div>
     <div style="display:flex">
-      <button class="clk-tab" data-t="chrono" style="${tabBtn};background:#2b71b9;color:#fff">Cronómetro</button>
-      <button class="clk-tab" data-t="timer" style="${tabBtn}">Temporizador</button>
+      <button class="clk-tab" data-t="alarm" style="${tabBtn}">${escHtml(t('clk.alarm'))}</button>
+      <button class="clk-tab" data-t="timer" style="${tabBtn};background:#2b71b9;color:#fff">${escHtml(t('clk.timer'))}</button>
+      <button class="clk-tab" data-t="chrono" style="${tabBtn}">${escHtml(t('clk.chrono'))}</button>
     </div>
-    <div id="clk-chrono" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:12px">
-      <div id="chrono-disp" style="font-size:34px;font-weight:700;font-variant-numeric:tabular-nums">00:00.0</div>
-      <div style="display:flex;gap:8px">
-        <button id="chrono-go" class="g-btn">Iniciar</button>
-        <button id="chrono-reset" class="g-btn g-btn-alt">Reiniciar</button>
+    <div id="clk-alarm" class="clk-pane" style="display:none">
+      <div class="clk-newalarm">
+        <input type="time" id="alarm-h" class="clk-time" value="07:30" aria-label="${escHtml(t('clk.alarm'))}">
+        <input type="text" id="alarm-n" class="clk-name" maxlength="40" placeholder="${escHtml(t('clk.alarm.name'))}" aria-label="${escHtml(t('clk.alarm.name'))}">
+        <button id="alarm-add" class="g-btn">&#10133;</button>
+      </div>
+      <div id="alarm-list" class="clk-list"></div>
+    </div>
+    <div id="clk-timer" class="clk-pane" style="display:flex">
+      <div id="timer-disp" class="clk-disp">00:00</div>
+      <div id="timer-sub" class="clk-sub"></div>
+      <div class="clk-presets" id="timer-presets"></div>
+      <div class="clk-newalarm">
+        <input type="number" id="timer-min" class="clk-num" min="1" max="600" value="10" aria-label="${escHtml(t('clk.minutes'))}">
+        <span class="clk-unit">${escHtml(t('clk.minutes'))}</span>
+        <button id="timer-custom" class="g-btn">${escHtml(t('clk.start'))}</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <button id="timer-go" class="g-btn">${escHtml(t('clk.pause'))}</button>
+        <button id="timer-stop" class="g-btn g-btn-alt">${escHtml(t('clk.cancel'))}</button>
+        <button id="timer-pomo" class="g-btn g-btn-alt">&#127813; ${escHtml(t('clk.pomo'))}</button>
       </div>
     </div>
-    <div id="clk-timer" style="flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:12px">
-      <div id="timer-disp" style="font-size:34px;font-weight:700;font-variant-numeric:tabular-nums">00:30</div>
-      <input type="range" id="timer-set" min="5" max="600" step="5" value="30" style="width:80%">
+    <div id="clk-chrono" class="clk-pane" style="display:none">
+      <div id="chrono-disp" class="clk-disp">00:00.0</div>
       <div style="display:flex;gap:8px">
-        <button id="timer-go" class="g-btn">Iniciar</button>
-        <button id="timer-reset" class="g-btn g-btn-alt">Reiniciar</button>
+        <button id="chrono-go" class="g-btn">${escHtml(t('clk.start'))}</button>
+        <button id="chrono-lap" class="g-btn g-btn-alt">${escHtml(t('clk.lap'))}</button>
+        <button id="chrono-reset" class="g-btn g-btn-alt">${escHtml(t('clk.reset'))}</button>
       </div>
+      <div id="chrono-laps" class="clk-list"></div>
     </div>
   </div>`;
   createWindow('Reloj','&#128340;',300,440,content,{session:'reloj',statusbar:false,onCreated:(id,win)=>{
@@ -19457,37 +20886,90 @@ function openClock(){
     }
     drawClock();const clkInt=setInterval(drawClock,200);
     (win._cleanups=win._cleanups||[]).push(()=>clearInterval(clkInt));
-    // Tabs
-    document.querySelectorAll('.clk-tab').forEach(b=>b.onclick=()=>{
-      document.querySelectorAll('.clk-tab').forEach(x=>{x.style.background='#dfe7f5';x.style.color='#1a45b0';});
-      b.style.background='#2b71b9';b.style.color='#fff';
-      document.getElementById('clk-chrono').style.display=b.dataset.t==='chrono'?'flex':'none';
-      document.getElementById('clk-timer').style.display=b.dataset.t==='timer'?'flex':'none';
-    });
-    // Cronómetro
-    let chRun=false,chAcc=0,chStart=0,chTick=null;
-    const chDisp=document.getElementById('chrono-disp');
-    function chShow(){const t=chAcc+(chRun?performance.now()-chStart:0);const cs=Math.floor(t/100);chDisp.textContent=String(Math.floor(cs/600)).padStart(2,'0')+':'+String(Math.floor(cs/10)%60).padStart(2,'0')+'.'+(cs%10);}
-    document.getElementById('chrono-go').onclick=function(){
-      if(chRun){chAcc+=performance.now()-chStart;chRun=false;clearInterval(chTick);this.textContent='Iniciar';}
-      else{chStart=performance.now();chRun=true;chTick=setInterval(chShow,50);this.textContent='Pausar';}
+    // ---- Pestañas ----
+    const paneles={alarm:'clk-alarm',timer:'clk-timer',chrono:'clk-chrono'};
+    const vePestana=(cual)=>{
+      win.querySelectorAll('.clk-tab').forEach(x=>{
+        const on=x.dataset.t===cual;
+        x.style.background=on?'#2b71b9':'#dfe7f5'; x.style.color=on?'#fff':'#1a45b0';
+      });
+      Object.keys(paneles).forEach(k=>{ const el=win.querySelector('#'+paneles[k]); if(el)el.style.display=(k===cual)?'flex':'none'; });
     };
-    document.getElementById('chrono-reset').onclick=()=>{chRun=false;chAcc=0;clearInterval(chTick);document.getElementById('chrono-go').textContent='Iniciar';chShow();};
+    win.querySelectorAll('.clk-tab').forEach(b=>b.onclick=()=>vePestana(b.dataset.t));
+    _relojTab=vePestana;
+
+    // ---- Alarmas ----
+    const listaAl=win.querySelector('#alarm-list');
+    const pintaAlarmas=()=>{
+      const al=alarmas();
+      listaAl.innerHTML=al.length?al.map(a=>'<div class="clk-al'+(a.on?'':' off')+'">'
+        +'<button type="button" class="clk-al-on" data-on="'+a.id+'" aria-pressed="'+(a.on?'true':'false')+'">'+(a.on?'&#128276;':'&#128277;')+'</button>'
+        +'<span class="clk-al-h">'+_hhmm(a.h,a.m)+'</span>'
+        +'<span class="clk-al-n">'+escHtml(a.n||'')+'</span>'
+        +'<button type="button" class="clk-al-x" data-del="'+a.id+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10005;</button></div>').join('')
+        :'<div class="clk-vacio">'+escHtml(t('clk.noalarms'))+'</div>';
+      listaAl.querySelectorAll('[data-on]').forEach(b=>b.onclick=()=>{ alarmaToggle(b.dataset.on); pintaAlarmas(); });
+      listaAl.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ alarmaBorra(b.dataset.del); pintaAlarmas(); });
+    };
+    win.querySelector('#alarm-add').onclick=()=>{
+      const hh=win.querySelector('#alarm-h').value, nn=win.querySelector('#alarm-n').value;
+      if(!alarmaNueva(hh,nn))return;
+      win.querySelector('#alarm-n').value='';
+      pintaAlarmas();
+      announce(t('clk.alarmset',{h:hh}));
+    };
+
+    // ---- Temporizador (el estado es del sistema, no de esta ventana) ----
+    const tDisp=win.querySelector('#timer-disp'), tSub=win.querySelector('#timer-sub');
+    const PRESETS=[1,3,5,10,15,30];
+    win.querySelector('#timer-presets').innerHTML=PRESETS.map(m=>'<button type="button" class="clk-preset" data-m="'+m+'">'+m+"'"+'</button>').join('');
+    win.querySelectorAll('.clk-preset').forEach(b=>b.onclick=()=>{ relojNuevoTemporizador(+b.dataset.m*60,''); pintaTimer(); });
+    win.querySelector('#timer-custom').onclick=()=>{
+      const m=Math.max(1,Math.min(600,+win.querySelector('#timer-min').value||0));
+      relojNuevoTemporizador(m*60,''); pintaTimer();
+    };
+    win.querySelector('#timer-go').onclick=()=>{ const o=temporizador(); if(!o)return; if(o.pausa)temporizadorSigue(); else temporizadorPausa(); pintaTimer(); };
+    win.querySelector('#timer-stop').onclick=()=>{ temporizadorCancela(); pintaTimer(); };
+    win.querySelector('#timer-pomo').onclick=()=>{ relojNuevoTemporizador(POMO_TRABAJO,t('clk.pomo.work'),{fase:'trabajo',ronda:1}); pintaTimer(); };
+    function pintaTimer(){
+      const o=temporizador();
+      const seg=temporizadorRestante(o);
+      tDisp.textContent=o?_msSeg(seg):'--:--';
+      tDisp.classList.toggle('run',!!(o&&!o.pausa));
+      tSub.textContent=!o?t('clk.nothing')
+        :(o.pomo?t(o.pomo.fase==='trabajo'?'clk.pomo.work':'clk.pomo.rest')+' · '+t('clk.pomo.round',{n:o.pomo.ronda||1})
+          :(o.n||''))+(o.pausa?' · '+t('clk.paused'):'');
+      const go=win.querySelector('#timer-go');
+      go.textContent=(o&&o.pausa)?t('clk.resume'):t('clk.pause');
+      go.disabled=!o; win.querySelector('#timer-stop').disabled=!o;
+    }
+
+    // ---- Cronómetro con vueltas ----
+    let chRun=false,chAcc=0,chStart=0,chTick=null,vueltas=[];
+    const chDisp=win.querySelector('#chrono-disp'), lapsEl=win.querySelector('#chrono-laps');
+    const chMs=()=>chAcc+(chRun?performance.now()-chStart:0);
+    const chFmt=(ms)=>{ const cs=Math.floor(ms/100); return String(Math.floor(cs/600)).padStart(2,'0')+':'+String(Math.floor(cs/10)%60).padStart(2,'0')+'.'+(cs%10); };
+    function chShow(){ chDisp.textContent=chFmt(chMs()); }
+    win.querySelector('#chrono-go').onclick=function(){
+      if(chRun){ chAcc+=performance.now()-chStart; chRun=false; clearInterval(chTick); this.textContent=t('clk.start'); }
+      else{ chStart=performance.now(); chRun=true; chTick=setInterval(chShow,50); this.textContent=t('clk.pause'); }
+    };
+    win.querySelector('#chrono-lap').onclick=()=>{
+      if(!chRun&&!chAcc)return;
+      const total=chMs(), previa=vueltas.length?vueltas[vueltas.length-1].total:0;
+      vueltas.push({total:total,parcial:total-previa});
+      lapsEl.innerHTML=vueltas.slice().reverse().map((v,i)=>'<div class="clk-lap"><span>#'+(vueltas.length-i)+'</span><b>'+chFmt(v.parcial)+'</b><i>'+chFmt(v.total)+'</i></div>').join('');
+    };
+    win.querySelector('#chrono-reset').onclick=()=>{ chRun=false; chAcc=0; vueltas=[]; clearInterval(chTick); win.querySelector('#chrono-go').textContent=t('clk.start'); lapsEl.innerHTML=''; chShow(); };
     (win._cleanups).push(()=>clearInterval(chTick));
-    // Temporizador
-    let tRun=false,tRemain=30,tTick=null;
-    const tDisp=document.getElementById('timer-disp'),tSet=document.getElementById('timer-set');
-    const tShow=()=>{tDisp.textContent=String(Math.floor(tRemain/60)).padStart(2,'0')+':'+String(Math.floor(tRemain%60)).padStart(2,'0');};
-    tSet.oninput=()=>{if(!tRun){tRemain=+tSet.value;tShow();}};
-    document.getElementById('timer-go').onclick=function(){
-      if(tRun){tRun=false;clearInterval(tTick);this.textContent='Iniciar';return;}
-      if(tRemain<=0){tRemain=+tSet.value;}
-      tRun=true;this.textContent='Pausar';const end=performance.now()+tRemain*1000;
-      tTick=setInterval(()=>{tRemain=Math.max(0,(end-performance.now())/1000);tShow();if(tRemain<=0){clearInterval(tTick);tRun=false;document.getElementById('timer-go').textContent='Iniciar';sfxWin();tDisp.textContent='¡Tiempo!';}},100);
-    };
-    document.getElementById('timer-reset').onclick=()=>{tRun=false;clearInterval(tTick);tRemain=+tSet.value;tShow();document.getElementById('timer-go').textContent='Iniciar';};
-    (win._cleanups).push(()=>clearInterval(tTick));
-    tShow();
+
+    // Refresco del temporizador mientras la ventana está abierta, y enganche para que
+    // el sistema (o la receta que lo puso) la repinte cuando cambie algo.
+    const tInt=setInterval(()=>{ if(!win.classList.contains('minimized'))pintaTimer(); },250);
+    _relojHook=()=>{ try{ pintaTimer(); pintaAlarmas(); }catch(e){} };
+    (win._cleanups).push(()=>{ clearInterval(tInt); _relojHook=null; _relojTab=null; });
+    pintaAlarmas(); pintaTimer(); chShow();
+    if(pestana)vePestana(pestana);
   }});
 }
 
@@ -19560,7 +21042,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,hoja:openSpreadsheet,calculo:openSpreadsheet,excel:openSpreadsheet,celdas:openSpreadsheet,grafica:openGrapher,graficadora:openGrapher,funciones:openGrapher,plot:openGrapher,luz:openLuz,pvpc:openLuz,electricidad:openLuz,precio:openLuz,tarifa:openLuz,gastos:openGastos,dinero:openGastos,cuentas:openGastos,presupuesto:openGastos,compra:openCompra,lista:openCompra,super:openCompra,supermercado:openCompra,recetas:openRecetas,cocina:openRecetas,menu:openRecetas,tiempo2:openTiempo,meteo:openTiempo,clima:openTiempo,prevision:openTiempo,tareas:openTareas,todo:openTareas,pendientes:openTareas,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),claves:openPasswords,contrasenas:openPasswords,passwords:openPasswords,caja:openPasswords,zip:openZipFolder,comprimir:openZipFolder,descomprimir:openZipFolder,archivo:openZipFolder,escaner:openScanner,escanear:openScanner,documento:openScanner,pdf2:openScanner,habitos:openHabitos,rachas:openHabitos,rutina:openHabitos,leer:openLectorQR,qr2:openLectorQR,codigos:openLectorQR,cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,calculadoras:openCalculadoras,hipoteca:openCalculadoras,iva:openCalculadoras,porcentaje:openCalculadoras,propina:openCalculadoras,hoja:openSpreadsheet,calculo:openSpreadsheet,excel:openSpreadsheet,celdas:openSpreadsheet,grafica:openGrapher,graficadora:openGrapher,funciones:openGrapher,plot:openGrapher,luz:openLuz,pvpc:openLuz,electricidad:openLuz,precio:openLuz,tarifa:openLuz,gastos:openGastos,dinero:openGastos,cuentas:openGastos,presupuesto:openGastos,compra:openCompra,lista:openCompra,super:openCompra,supermercado:openCompra,recetas:openRecetas,cocina:openRecetas,menu:openRecetas,tiempo2:openTiempo,meteo:openTiempo,clima:openTiempo,prevision:openTiempo,lluvia:openRadar,radar:openRadar,rain:openRadar,tareas:openTareas,todo:openTareas,pendientes:openTareas,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),claves:openPasswords,contrasenas:openPasswords,passwords:openPasswords,caja:openPasswords,zip:openZipFolder,comprimir:openZipFolder,descomprimir:openZipFolder,archivo:openZipFolder,escaner:openScanner,escanear:openScanner,documento:openScanner,pdf2:openScanner,habitos:openHabitos,rachas:openHabitos,rutina:openHabitos,leer:openLectorQR,qr2:openLectorQR,codigos:openLectorQR,sensores:openSensores,nivel:openSensores,brujula:openSensores,linterna:openSensores,sonometro:openSensores,cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
