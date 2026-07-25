@@ -525,6 +525,10 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
             <div class="si-icon">&#128295;</div>
             <div><div class="si-label" data-i18n="tb.title">Herramientas</div><div class="si-desc" data-i18n="tb.desc">QR, contrase&ntilde;as y texto</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openFichas()">
+            <div class="si-icon">&#128199;</div>
+            <div><div class="si-label" data-i18n="fi.title">Fichas</div><div class="si-desc" data-i18n="fi.desc">Estudiar con repetici&oacute;n espaciada</div></div>
+          </button>
           <button type="button" class="start-item" onclick="openCalculadoras()">
             <div class="si-icon">&#129518;</div>
             <div><div class="si-label" data-i18n="kk.title">Calculadoras</div><div class="si-desc" data-i18n="kk.desc">Hipoteca, IVA, porcentajes, fechas&hellip;</div></div>
@@ -572,6 +576,10 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <button type="button" class="start-item" onclick="openTiempo()">
             <div class="si-icon">&#9925;</div>
             <div><div class="si-label" data-i18n="tp.title">El tiempo</div><div class="si-desc" data-i18n="tp.desc">Por horas y 7 d&iacute;as</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openProductos()">
+            <div class="si-icon">&#129387;</div>
+            <div><div class="si-label" data-i18n="off.title">Etiquetas</div><div class="si-desc" data-i18n="off.desc">Escanea un producto y mira qu&eacute; lleva</div></div>
           </button>
           <button type="button" class="start-item" onclick="openRadar()">
             <div class="si-icon">&#127783;&#65039;</div>
@@ -3626,6 +3634,84 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .gs-presu-bar i{display:block;height:100%;background:linear-gradient(90deg,#4c8c4a,#c58a2b);border-radius:5px}
 .gs-presu.over .gs-presu-bar i{background:#c0533f}
 .gs-presu-s{font-size:10px;color:#6b7280}
+/* Fichas de estudio (repetición espaciada) */
+.fi-root{display:flex;flex-direction:column;height:100%;background:#f4f6fa;font-family:Tahoma,sans-serif}
+.fi-bar{display:flex;flex-wrap:wrap;gap:5px;padding:7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.fi-sel{flex:1;min-width:110px;font-family:Tahoma,sans-serif;font-size:12px;padding:3px 5px;border:1px solid #7f9db9;border-radius:3px}
+.fi-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:4px 10px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer;color:#222}
+.fi-btn:hover{background:linear-gradient(180deg,#fff,#eef3fb);border-color:#5a8fd6}
+.fi-btn.primary{background:linear-gradient(180deg,#5b9bea,#2f6fb0);border-color:#2f6fb0;color:#fff;font-weight:bold}
+.fi-stats{display:flex;gap:5px;padding:7px;background:#eef1f5;border-bottom:1px solid #dde3ea}
+.fi-kpi{flex:1;text-align:center;background:#fff;border:1px solid #e0e5ec;border-radius:6px;padding:4px 2px}
+.fi-kpi b{display:block;font-size:17px;color:#3a4150}
+.fi-kpi span{font-size:9.5px;color:#7b8494}
+.fi-kpi.on b{color:#2f6fb0}
+.fi-kpi.on{border-color:#a9caff;background:#f5f9ff}
+.fi-body{flex:1;overflow-y:auto;padding:9px;display:flex;flex-direction:column;gap:5px}
+.fi-item{position:relative;background:#fff;border:1px solid #e0e5ec;border-radius:6px;padding:6px 26px 6px 9px}
+.fi-item.due{border-left:3px solid #5b9bea}
+.fi-it{display:flex;flex-direction:column;gap:1px}
+.fi-it b{font-size:12.5px;color:#22303f;font-weight:normal}
+.fi-it span{font-size:11px;color:#7b8494;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi-meta{font-size:9.5px;color:#9aa2af;margin-top:2px}
+.fi-x{position:absolute;top:5px;right:6px;border:none;background:none;color:#c0c6d0;font-size:11px;cursor:pointer}
+.fi-x:hover{color:#c0533f}
+.fi-vacio{margin:auto;text-align:center;color:#7b8494;font-size:12px;line-height:1.6;padding:16px}
+.fi-vacio-ic{font-size:40px;margin-bottom:6px}
+.fi-carta{margin:auto;width:100%;max-width:340px;background:#fff;border:1px solid #cfd6e0;border-radius:10px;padding:16px 14px;display:flex;flex-direction:column;align-items:center;gap:11px;box-shadow:0 2px 10px rgba(30,50,90,.07)}
+.fi-frente{font-size:17px;color:#1a2432;text-align:center;line-height:1.4}
+.fi-detras{font-size:14px;color:#2f6fb0;text-align:center;line-height:1.45;border-top:1px dashed #dde3ea;padding-top:11px;width:100%}
+.fi-quedan{font-size:10px;color:#9aa2af}
+.fi-ver{align-self:stretch}
+.fi-botones{display:flex;gap:5px;width:100%}
+.fi-cal{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;font-family:Tahoma,sans-serif;font-size:11.5px;padding:6px 2px;border:1px solid #cfd6e0;border-radius:6px;background:#fff;cursor:pointer;color:#3a4150}
+.fi-cal i{font-style:normal;font-size:9px;color:#9aa2af}
+.fi-cal:hover{border-color:#5a8fd6;background:#f5f9ff}
+.fi-cal.otra{border-color:#e8b4ae;color:#a8342a}
+.fi-cal.facil{border-color:#a8d0a8;color:#2f7d4b}
+/* Escáner de productos (etiquetas) */
+.off-root{display:flex;flex-direction:column;height:100%;gap:8px;padding:9px;background:#f4f6fa;font-family:Tahoma,sans-serif;overflow-y:auto}
+.off-bar{display:flex;flex-wrap:wrap;gap:5px}
+.off-cod{flex:1;min-width:0;font-family:Tahoma,sans-serif;font-size:13px;padding:5px 8px;border:1px solid #7f9db9;border-radius:4px}
+.off-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:4px 10px;border:1px solid #aca899;border-radius:4px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer}
+.off-btn:hover{background:linear-gradient(180deg,#fff,#eef3fb);border-color:#5a8fd6}
+.off-btn.primary{background:linear-gradient(180deg,#5b9bea,#2f6fb0);border-color:#2f6fb0;color:#fff;font-weight:bold}
+.off-vacio{text-align:center;color:#7b8494;font-size:12px;padding:22px 10px;line-height:1.5}
+.off-vacio-ic{font-size:38px;margin-bottom:6px}
+.off-card{background:#fff;border:1px solid #cfd6e0;border-radius:8px;padding:10px 11px;display:flex;flex-direction:column;gap:9px}
+.off-tit{display:flex;flex-direction:column;gap:2px}
+.off-tit b{font-size:14px;color:#1a2432;line-height:1.3}
+.off-tit span{font-size:11px;color:#7b8494}
+.off-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.off-ns{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:bold;color:#fff;flex:0 0 auto}
+.ns-a{background:#038141}.ns-b{background:#85bb2f}.ns-c{background:#fecb02;color:#4a3b00}.ns-d{background:#ee8100}.ns-e{background:#e63e11}.ns-x{background:#b9c0cc}
+.off-nsl{display:flex;flex-direction:column;min-width:0}
+.off-nsl b{font-size:11px;color:#4a5262}
+.off-nsl i{font-style:normal;font-size:10.5px;color:#7b8494}
+.off-nova{margin-left:auto;text-align:right;display:flex;flex-direction:column}
+.off-nova b{font-size:11px;color:#4a5262}
+.off-nova i{font-style:normal;font-size:10px;color:#7b8494}
+.off-nova.nova-4 b{color:#c0533f}
+.off-nova.nova-1 b{color:#2f7d4b}
+.off-nuts{display:flex;flex-direction:column;gap:2px}
+.off-nut{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#3a4150;padding:3px 7px;border-radius:4px;background:#f4f6fa}
+.off-nut.bien{background:#eaf7ed;color:#1f6b3a}
+.off-nut.medio{background:#fdf6e3;color:#8a5a13}
+.off-nut.mal{background:#fdeceb;color:#a8342a}
+.off-por100{font-size:9.5px;color:#8a92a0;line-height:1.4}
+.off-aler{font-size:11px;color:#8a5a13;background:#fff6e5;border-radius:5px;padding:6px 8px;line-height:1.7}
+.off-chip{display:inline-block;background:#fff;border:1px solid #e5cfa0;border-radius:10px;padding:1px 7px;margin:0 3px 2px 0;font-size:10px}
+.off-ing{font-size:11px;color:#4a5262}
+.off-ing summary{cursor:pointer;color:#2f6fb0}
+.off-ing div{margin-top:4px;line-height:1.45;color:#5a6472}
+.off-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.off-cache{font-size:10px;color:#7b8494}
+.off-histt{font-size:10px;color:#7b8494;margin:2px 0 4px}
+.off-hitem{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:#fff;border:1px solid #e4e8ee;border-radius:6px;padding:4px 7px;margin-bottom:3px;cursor:pointer;font-family:Tahoma,sans-serif}
+.off-hitem:hover{border-color:#5a8fd6;background:#f7faff}
+.off-hns{width:20px;height:20px;border-radius:4px;color:#fff;font-size:11px;font-weight:bold;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.off-hn{font-size:11.5px;color:#3a4150;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.off-nota{font-size:9.5px;color:#7b8494;line-height:1.45;background:#eef1f5;border-radius:5px;padding:6px 8px}
 /* Aviso de lluvia (radar) */
 .rd-root{display:flex;flex-direction:column;height:100%;gap:7px;padding:8px;background:#0a1024;color:#e8f0ff;font-family:Tahoma,sans-serif;overflow-y:auto}
 .rd-bar{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
@@ -4187,7 +4273,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.53.2';
+const APP_VERSION = '0.54.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4950,6 +5036,85 @@ const I18N={
   'gs.budget':{es:'Presupuesto del mes', en:'Monthly budget', ca:'Pressupost del mes', ru:'Бюджет месяца'},
   'gs.setbudget':{es:'Poner un presupuesto', en:'Set a budget', ca:'Posa un pressupost', ru:'Задать бюджет'},
   'gs.budgetq':{es:'Presupuesto mensual en € (0 = sin presupuesto)', en:'Monthly budget in € (0 = none)', ca:'Pressupost mensual en € (0 = cap)', ru:'Месячный бюджет в € (0 — без бюджета)'},
+  'fi.title':{es:'Fichas', en:'Flashcards', ca:'Fitxes', ru:'Карточки'},
+  'fi.desc':{es:'Estudiar con repetición espaciada', en:'Study with spaced repetition', ca:'Estudia amb repetició espaiada', ru:'Учёба с интервальным повторением'},
+  'fi.deck':{es:'Mazo', en:'Deck', ca:'Bloc', ru:'Колода'},
+  'fi.deck.default':{es:'General', en:'General', ca:'General', ru:'Общая'},
+  'fi.alldecks':{es:'Todos los mazos', en:'All decks', ca:'Tots els blocs', ru:'Все колоды'},
+  'fi.study':{es:'Estudiar', en:'Study', ca:'Estudia', ru:'Учить'},
+  'fi.list':{es:'Ver la lista', en:'See the list', ca:'Mira la llista', ru:'К списку'},
+  'fi.add':{es:'Nueva ficha', en:'New card', ca:'Nova fitxa', ru:'Новая карточка'},
+  'fi.more':{es:'Más opciones', en:'More options', ca:'Més opcions', ru:'Ещё'},
+  'fi.today':{es:'para hoy', en:'due today', ca:'per avui', ru:'на сегодня'},
+  'fi.new':{es:'sin empezar', en:'new', ca:'sense començar', ru:'новых'},
+  'fi.learned':{es:'aprendidas', en:'learned', ca:'apreses', ru:'выучено'},
+  'fi.total':{es:'en total', en:'in total', ca:'en total', ru:'всего'},
+  'fi.empty':{es:'Todavía no hay fichas.', en:'No cards yet.', ca:'Encara no hi ha fitxes.', ru:'Карточек пока нет.'},
+  'fi.emptyhint':{es:'Añade una con ➕ o pega una lista entera desde el menú ⚙️.', en:'Add one with ➕ or paste a whole list from the ⚙️ menu.', ca:'Afegeix-ne una amb ➕ o enganxa una llista sencera des del menú ⚙️.', ru:'Добавьте кнопкой ➕ или вставьте список через меню ⚙️.'},
+  'fi.frontq':{es:'¿Qué se pregunta? (la cara de delante)', en:'What is asked? (the front)', ca:'Què es pregunta? (la cara del davant)', ru:'Вопрос (лицевая сторона)'},
+  'fi.backq':{es:'¿Cuál es la respuesta?', en:'What is the answer?', ca:'Quina és la resposta?', ru:'Ответ'},
+  'fi.flip':{es:'Ver la respuesta', en:'Show the answer', ca:'Mostra la resposta', ru:'Показать ответ'},
+  'fi.again':{es:'Otra vez', en:'Again', ca:'Un altre cop', ru:'Ещё раз'},
+  'fi.hard':{es:'Difícil', en:'Hard', ca:'Difícil', ru:'Трудно'},
+  'fi.good':{es:'Bien', en:'Good', ca:'Bé', ru:'Хорошо'},
+  'fi.easy':{es:'Fácil', en:'Easy', ca:'Fàcil', ru:'Легко'},
+  'fi.in1':{es:'mañana', en:'tomorrow', ca:'demà', ru:'завтра'},
+  'fi.ind':{es:'en {n} días', en:'in {n} days', ca:'d’aquí a {n} dies', ru:'через {n} дн.'},
+  'fi.everyn':{es:'cada {n} días', en:'every {n} days', ca:'cada {n} dies', ru:'каждые {n} дн.'},
+  'fi.newcard':{es:'sin empezar', en:'new', ca:'sense començar', ru:'новая'},
+  'fi.left':{es:'quedan {n}', en:'{n} left', ca:'en queden {n}', ru:'осталось {n}'},
+  'fi.donetoday':{es:'¡Por hoy has terminado!', en:'You are done for today!', ca:'Per avui has acabat!', ru:'На сегодня всё!'},
+  'fi.comeback':{es:'Las fichas vuelven solas el día que toque repasarlas.', en:'Cards come back on their own the day they are due.', ca:'Les fitxes tornen soles el dia que toca repassar-les.', ru:'Карточки вернутся сами в день повторения.'},
+  'fi.delq':{es:'¿Borrar esta ficha?', en:'Delete this card?', ca:'Esborrar aquesta fitxa?', ru:'Удалить карточку?'},
+  'fi.paste':{es:'Pegar una lista de fichas', en:'Paste a list of cards', ca:'Enganxa una llista de fitxes', ru:'Вставить список карточек'},
+  'fi.pasteq':{es:'Una por línea, con «pregunta | respuesta»', en:'One per line, as “question | answer”', ca:'Una per línia, amb «pregunta | resposta»', ru:'По одной в строке: «вопрос | ответ»'},
+  'fi.pastenone':{es:'No he sacado ninguna ficha de ese texto. Recuerda separar con «|».', en:'No cards came out of that text. Remember to separate with “|”.', ca:'No n’he tret cap fitxa. Recorda separar amb «|».', ru:'Из этого текста карточек не вышло. Разделяйте символом «|».'},
+  'fi.rename':{es:'Cambiar el nombre del mazo', en:'Rename the deck', ca:'Canvia el nom del bloc', ru:'Переименовать колоду'},
+  'fi.renameq':{es:'Nombre del mazo', en:'Deck name', ca:'Nom del bloc', ru:'Название колоды'},
+  'fi.reset':{es:'Empezar el mazo de cero', en:'Reset the deck', ca:'Comença el bloc de zero', ru:'Сбросить колоду'},
+  'fi.resetq':{es:'¿Olvidar lo aprendido y empezar de cero? Las fichas se quedan, pero vuelven todas para hoy.', en:'Forget the progress and start over? The cards stay, but they all come back for today.', ca:'Oblidar el que s’ha après i començar de zero? Les fitxes es queden, però tornen totes per avui.', ru:'Забыть прогресс и начать заново? Карточки останутся, но все вернутся на сегодня.'},
+  'fi.imported':{es:'{n} fichas añadidas.', en:'{n} cards added.', ca:'{n} fitxes afegides.', ru:'Добавлено карточек: {n}.'},
+  'fi.importq':{es:'¿Añadir {n} fichas a tus mazos?', en:'Add {n} cards to your decks?', ca:'Afegir {n} fitxes als teus blocs?', ru:'Добавить {n} карточек в ваши колоды?'},
+  'off.title':{es:'Etiquetas', en:'Food labels', ca:'Etiquetes', ru:'Этикетки'},
+  'off.desc':{es:'Escanea un producto y mira qué lleva', en:'Scan a product and see what is in it', ca:'Escaneja un producte i mira què porta', ru:'Сканируйте продукт и смотрите состав'},
+  'off.code':{es:'Código de barras', en:'Barcode', ca:'Codi de barres', ru:'Штрихкод'},
+  'off.see':{es:'Ver producto', en:'See product', ca:'Mira el producte', ru:'Открыть товар'},
+  'off.scan':{es:'Escanear con la cámara', en:'Scan with the camera', ca:'Escaneja amb la càmera', ru:'Сканировать камерой'},
+  'off.empty':{es:'Escanea un paquete o escribe su código de barras.', en:'Scan a pack or type its barcode.', ca:'Escaneja un paquet o escriu-ne el codi de barres.', ru:'Отсканируйте упаковку или введите штрихкод.'},
+  'off.looking':{es:'Buscando el producto…', en:'Looking up the product…', ca:'Buscant el producte…', ru:'Ищем товар…'},
+  'off.notfound':{es:'El código {c} no está en la base de datos. Es comunitaria: hay productos que faltan.', en:'Barcode {c} is not in the database. It is community-run, so products are missing.', ca:'El codi {c} no és a la base de dades. És comunitària: hi ha productes que hi falten.', ru:'Штрихкода {c} нет в базе. База общественная, часть товаров отсутствует.'},
+  'off.noname':{es:'Producto sin nombre', en:'Unnamed product', ca:'Producte sense nom', ru:'Товар без названия'},
+  'off.per100':{es:'Valores por 100 g o 100 ml · semáforo con los umbrales oficiales de la FSA', en:'Per 100 g or 100 ml · traffic light with the official FSA thresholds', ca:'Valors per 100 g o 100 ml · semàfor amb els llindars oficials de la FSA', ru:'На 100 г или 100 мл · светофор по официальным порогам FSA'},
+  'off.kcal':{es:'Calorías', en:'Calories', ca:'Calories', ru:'Калории'},
+  'off.fat':{es:'Grasas', en:'Fat', ca:'Greixos', ru:'Жиры'},
+  'off.sat':{es:'De ellas saturadas', en:'Saturated fat', ca:'De les quals saturades', ru:'Из них насыщенные'},
+  'off.sugar':{es:'Azúcares', en:'Sugars', ca:'Sucres', ru:'Сахара'},
+  'off.salt':{es:'Sal', en:'Salt', ca:'Sal', ru:'Соль'},
+  'off.allergens':{es:'Alérgenos', en:'Allergens', ca:'Al·lèrgens', ru:'Аллергены'},
+  'off.ingredients':{es:'Ingredientes', en:'Ingredients', ca:'Ingredients', ru:'Состав'},
+  'off.recent':{es:'Escaneados hace poco', en:'Recently scanned', ca:'Escanejats fa poc', ru:'Недавно отсканированные'},
+  'off.cached':{es:'guardado en el equipo', en:'saved on this device', ca:'desat a l’equip', ru:'сохранено на устройстве'},
+  'off.sindato':{es:'sin dato', en:'no data', ca:'sense dada', ru:'нет данных'},
+  'off.source':{es:'Datos de Open Food Facts, una base comunitaria y abierta: puede haber productos incompletos o con erratas. No es la nota de Yuka (esa es suya y cerrada), sino el Nutri-Score y el NOVA, que son públicos.', en:'Data from Open Food Facts, an open community database: products may be incomplete or wrong. This is not Yuka’s score (that one is theirs and closed) but Nutri-Score and NOVA, which are public.', ca:'Dades d’Open Food Facts, una base comunitària i oberta: pot haver-hi productes incomplets o amb errades. No és la nota de Yuka (aquella és seva i tancada), sinó el Nutri-Score i el NOVA, que són públics.', ru:'Данные Open Food Facts — открытой общественной базы: возможны неполные или ошибочные записи. Это не оценка Yuka (она закрытая), а Nutri-Score и NOVA — публичные показатели.'},
+  'off.ns.a':{es:'muy buena calidad nutricional', en:'very good nutritional quality', ca:'molt bona qualitat nutricional', ru:'очень хорошее качество'},
+  'off.ns.b':{es:'buena calidad nutricional', en:'good nutritional quality', ca:'bona qualitat nutricional', ru:'хорошее качество'},
+  'off.ns.c':{es:'calidad nutricional media', en:'average nutritional quality', ca:'qualitat nutricional mitjana', ru:'среднее качество'},
+  'off.ns.d':{es:'calidad nutricional baja', en:'poor nutritional quality', ca:'qualitat nutricional baixa', ru:'низкое качество'},
+  'off.ns.e':{es:'calidad nutricional muy baja', en:'very poor nutritional quality', ca:'qualitat nutricional molt baixa', ru:'очень низкое качество'},
+  'off.nova.1':{es:'sin procesar o poco procesado', en:'unprocessed or minimally processed', ca:'sense processar o poc processat', ru:'непереработанный'},
+  'off.nova.2':{es:'ingrediente culinario', en:'culinary ingredient', ca:'ingredient culinari', ru:'кулинарный ингредиент'},
+  'off.nova.3':{es:'procesado', en:'processed', ca:'processat', ru:'переработанный'},
+  'off.nova.4':{es:'ultraprocesado', en:'ultra-processed', ca:'ultraprocessat', ru:'ультрапереработанный'},
+  'off.al.milk':{es:'leche', en:'milk', ca:'llet', ru:'молоко'},
+  'off.al.gluten':{es:'gluten', en:'gluten', ca:'gluten', ru:'глютен'},
+  'off.al.nuts':{es:'frutos secos', en:'nuts', ca:'fruits secs', ru:'орехи'},
+  'off.al.peanuts':{es:'cacahuetes', en:'peanuts', ca:'cacauets', ru:'арахис'},
+  'off.al.soybeans':{es:'soja', en:'soy', ca:'soja', ru:'соя'},
+  'off.al.eggs':{es:'huevo', en:'eggs', ca:'ou', ru:'яйца'},
+  'off.al.fish':{es:'pescado', en:'fish', ca:'peix', ru:'рыба'},
+  'off.al.crustaceans':{es:'crustáceos', en:'crustaceans', ca:'crustacis', ru:'ракообразные'},
+  'off.al.sesame-seeds':{es:'sésamo', en:'sesame', ca:'sèsam', ru:'кунжут'},
+  'off.al.sulphur-dioxide-and-sulphites':{es:'sulfitos', en:'sulphites', ca:'sulfits', ru:'сульфиты'},
   'rd.title':{es:'Aviso de lluvia', en:'Rain alert', ca:'Avís de pluja', ru:'Дождь рядом'},
   'rd.desc':{es:'Radar: dónde está la lluvia y cuándo llega', en:'Radar: where the rain is and when it arrives', ca:'Radar: on és la pluja i quan arriba', ru:'Радар: где дождь и когда придёт'},
   'rd.place':{es:'Sitio que se vigila', en:'Place being watched', ca:'Lloc que es vigila', ru:'Наблюдаемое место'},
@@ -12239,7 +12404,7 @@ function osDialogoCompartir(kind,data,nombre,textoPlano){
   };
   return ov;
 }
-const PKG_KINDS={compra:'cp.title',tareas:'tk.title',gastos:'gs.title'};
+const PKG_KINDS={compra:'cp.title',tareas:'tk.title',gastos:'gs.title',fichas:'fi.title'};
 const PKG_MAX_URL=6000; // por encima de esto el enlace no es de fiar: mejor archivo
 function osPaquete(kind,data,extra){
   return JSON.stringify(Object.assign({app:'torrecillas-os',pkg:kind,v:1,fecha:new Date().toISOString(),data},extra||{}));
@@ -12322,6 +12487,7 @@ function osImportaPaquete(p,silencioso){
   if(!p)return false;
   if(p.pkg==='compra')return cpImporta(p.data,silencioso);
   if(p.pkg==='tareas')return tkImporta(p.data,silencioso);
+  if(p.pkg==='fichas')return fiImporta(p.data,silencioso);
   return false;
 }
 
@@ -12981,9 +13147,13 @@ function eanALaCompra(cod,nombre,alHecho){
     cpImporta([{name:n,qty:1}],true);
     if(alHecho)alHecho(n);
   };
-  const ya=eanNombre(cod);
+  const ya=eanNombre(cod)||nombre;
   if(ya){ mete(ya); return; }
-  xpPrompt(t('cp.title'),t('qrl.a.name',{c:cod}),'',(v)=>{ if(v&&v.trim())mete(v.trim()); });
+  // Antes se preguntaba siempre el nombre; ahora se mira primero Open Food Facts, que
+  // para la mayoría de productos de súper lo sabe. Solo se pregunta si no aparece.
+  const pregunta=()=>xpPrompt(t('cp.title'),t('qrl.a.name',{c:cod}),'',(v)=>{ if(v&&v.trim())mete(v.trim()); });
+  if(typeof offBusca!=='function')return pregunta();
+  offBusca(cod).then(p=>{ if(p&&p.nombre)mete(p.nombre); else pregunta(); }).catch(pregunta);
 }
 function qrlHistorial(){ try{ const a=JSON.parse(Store.get('tos-qr-hist')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 function qrlGuarda(txt){
@@ -13040,7 +13210,10 @@ function openLectorQR(){
       if(a.tipo==='tel'||a.tipo==='vcard'&&a.tel)acciones.push(['&#128222; '+t('qrl.a.call'),()=>{ try{ window.open('tel:'+(a.tel||''),'_self'); }catch(e){} }]);
       if(a.tipo==='mail'||a.tipo==='vcard'&&a.mail)acciones.push(['&#9993;&#65039; '+t('qrl.a.mail'),()=>{ try{ window.open('mailto:'+(a.mail||''),'_self'); }catch(e){} }]);
       if(a.tipo==='paquete')acciones.push(['&#128229; '+t('sh.import'),()=>{ const p=osLeePaquete(a.valor); if(p)osImportaPaquete(p); }]);
-      if(a.tipo==='barras')acciones.push(['&#128722; '+t('qrl.a.shop'),()=>eanALaCompra(a.valor,a.nombre,(n)=>{ announce(t('qrl.a.added',{n:n})); muestra(a.valor); })]);
+      if(a.tipo==='barras'){
+        acciones.push(['&#129387; '+t('off.see'),()=>openProductos(a.valor)]);
+        acciones.push(['&#128722; '+t('qrl.a.shop'),()=>eanALaCompra(a.valor,a.nombre,(n)=>{ announce(t('qrl.a.added',{n:n})); muestra(a.valor); })]);
+      }
       acciones.push(['&#128203; '+t('qrl.a.copy'),()=>{ osCopy(a.valor); announce(t('sh.copied')); }]);
       acciones.push(['&#128221; '+t('qrl.a.note'),()=>openNotepad({name:t('qrl.title'),text:a.valor})]);
       const detalle=a.tipo==='wifi'?('<div class="qrl-kv"><span>'+escHtml(t('qrl.wifi.net'))+'</span><b>'+escHtml(a.ssid||'—')+'</b></div>'
@@ -14413,6 +14586,395 @@ function _gadgetTiempo(body){
   body.style.cursor='pointer';
   body.onclick=()=>openTiempo();
   return setInterval(()=>{ if(document.hidden)return; pinta(); },900000);
+}
+
+// ========== FICHAS DE ESTUDIO (repetición espaciada, estilo Anki) ==========
+// El algoritmo es **SM-2**, el mismo que hay debajo de Anki: es un método publicado
+// (Piotr Woźniak, 1987), no una imitación de su código. Cada carta guarda su factor de
+// facilidad (EF), cuántas veces seguidas la has acertado y cuándo toca repasarla; si
+// aciertas se espacia y si fallas vuelve a empezar. Todo local, en `tos-fichas`.
+//
+// Los cuatro botones de la interfaz se traducen a la calidad 0-5 de SM-2:
+//   Otra vez = 2 (fallo) · Difícil = 3 · Bien = 4 · Fácil = 5
+const SRS_CAL={otra:2,dificil:3,bien:4,facil:5};
+const SRS_EF_MIN=1.3;
+function fichas(){ try{ const a=JSON.parse(Store.get('tos-fichas')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function fichasWrite(a){ return Store.set('tos-fichas',JSON.stringify(a.slice(0,2000))); }
+function fiMazos(cartas){
+  const m={};
+  (cartas||fichas()).forEach(c=>{ const k=c.mazo||t('fi.deck.default'); m[k]=(m[k]||0)+1; });
+  return Object.keys(m).sort().map(k=>({mazo:k,n:m[k]}));
+}
+function fiNueva(frente,detras,mazo){
+  return {id:'f'+Date.now()+Math.floor(Math.random()*9999),mazo:String(mazo||'').trim()||t('fi.deck.default'),
+    frente:String(frente||'').trim(),detras:String(detras||'').trim(),
+    ef:2.5,intervalo:0,reps:0,lapsos:0,due:tkHoyISO(),ts:Date.now()};
+}
+// SM-2 puro. Devuelve una carta NUEVA (no toca la que le pasas).
+function fiRepasa(carta,calidad,hoy){
+  const c=Object.assign({},carta);
+  const q=Math.max(0,Math.min(5,+calidad||0));
+  hoy=hoy||tkHoyISO();
+  // Factor de facilidad: se ajusta siempre, y nunca baja de 1,3
+  const ef=(+c.ef||2.5)+(0.1-(5-q)*(0.08+(5-q)*0.02));
+  c.ef=Math.round(Math.max(SRS_EF_MIN,ef)*100)/100;
+  if(q<3){
+    // Fallo: vuelve al principio y se repasa mañana
+    c.reps=0; c.lapsos=(+c.lapsos||0)+1; c.intervalo=1;
+  }else{
+    c.reps=(+c.reps||0)+1;
+    c.intervalo=c.reps===1?1:(c.reps===2?6:Math.round((+c.intervalo||1)*c.ef));
+    // Desvío consciente del SM-2 original: en una carta NUEVA, el algoritmo puro manda
+    // un día tanto si has dudado como si te la sabías de sobra, y los cuatro botones
+    // acababan diciendo «mañana» (o sea, no informaban de nada). Como en Anki, «fácil»
+    // en una carta nueva se va directo a cuatro días.
+    if(q===5&&c.reps===1)c.intervalo=4;
+  }
+  c.intervalo=Math.max(1,Math.min(365*5,c.intervalo));
+  c.due=tkSuma(hoy,c.intervalo);
+  c.ultima=hoy;
+  return c;
+}
+// Lo que toca hoy: primero lo más atrasado, y las nuevas al final
+function fiPendientes(cartas,hoy,mazo){
+  hoy=hoy||tkHoyISO();
+  return (cartas||[]).filter(c=>c&&(!mazo||c.mazo===mazo)&&String(c.due||'')<=hoy)
+    .sort((a,b)=>{
+      const na=(+a.reps||0)===0, nb=(+b.reps||0)===0;
+      if(na!==nb)return na?1:-1;              // las nuevas, al final
+      return String(a.due||'').localeCompare(String(b.due||''));
+    });
+}
+function fiEstadisticas(cartas,hoy,mazo){
+  hoy=hoy||tkHoyISO();
+  const cs=(cartas||[]).filter(c=>!mazo||c.mazo===mazo);
+  const pend=fiPendientes(cs,hoy);
+  return {total:cs.length,hoy:pend.length,nuevas:cs.filter(c=>(+c.reps||0)===0).length,
+    aprendidas:cs.filter(c=>(+c.reps||0)>=3).length,
+    manana:cs.filter(c=>String(c.due||'')===tkSuma(hoy,1)).length};
+}
+// Pegar un taco de texto y que salgan cartas: "pregunta | respuesta" por línea
+function fiDesdeTexto(texto,mazo){
+  const out=[];
+  String(texto||'').split('\n').forEach(l=>{
+    const t2=l.trim(); if(!t2)return;
+    const p=t2.split(/\s*[|;\t]\s*|\s+-\s+/);
+    if(p.length<2||!p[0]||!p[1])return;
+    out.push(fiNueva(p[0],p.slice(1).join(' '),mazo));
+  });
+  return out;
+}
+function fiImporta(data,silencioso){
+  const arr=Array.isArray(data)?data:[];
+  if(!arr.length)return false;
+  const hacer=()=>{
+    const todas=fichas();
+    let n=0;
+    arr.forEach(x=>{
+      const fr=String(x&&x.frente||'').trim(), de=String(x&&x.detras||'').trim();
+      if(!fr||!de)return;
+      if(todas.some(y=>y.frente===fr&&y.mazo===(x.mazo||'')))return; // ya la tienes
+      todas.push(Object.assign(fiNueva(fr,de,x.mazo),{ef:+x.ef||2.5}));
+      n++;
+    });
+    fichasWrite(todas);
+    if(_fichasHook)_fichasHook();
+    try{ notify({icon:'&#128199;',title:t('fi.title'),body:t('fi.imported',{n:n})}); }catch(e){}
+  };
+  if(silencioso){ hacer(); return true; }
+  xpConfirm(t('fi.title'),t('fi.importq',{n:arr.length}),hacer,t('sh.import'));
+  return true;
+}
+let _fichasHook=null;
+function openFichas(){
+  closeStartMenu();
+  if(focusExisting('fi-root'))return;
+  const content=`<div class="fi-root" id="fi-root">
+    <div class="fi-bar">
+      <select id="fi-mazo" class="fi-sel" aria-label="${escHtml(t('fi.deck'))}"></select>
+      <button type="button" class="fi-btn primary" id="fi-estudiar">${escHtml(t('fi.study'))}</button>
+      <button type="button" class="fi-btn" id="fi-nueva" title="${escHtml(t('fi.add'))}">&#10133;</button>
+      <button type="button" class="fi-btn" id="fi-menu" title="${escHtml(t('fi.more'))}">&#9881;&#65039;</button>
+    </div>
+    <div class="fi-stats" id="fi-stats"></div>
+    <div class="fi-body" id="fi-body"></div>
+  </div>`;
+  createWindow(t('fi.title'),'&#128199;',420,470,content,{session:'fichas',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    let cartas=fichas(), mazo='', vista='lista', cola=[], actual=null, vuelta=false;
+    const hoy=()=>tkHoyISO();
+    const guarda=()=>{ if(!fichasWrite(cartas))xpDialog(t('fi.title'),'<div class="dlg-icon">&#128190;</div><div>'+escHtml(t('docs.full'))+'</div>'); };
+    const pintaMazos=()=>{
+      const ms=fiMazos(cartas);
+      $('#fi-mazo').innerHTML='<option value="">'+escHtml(t('fi.alldecks'))+'</option>'
+        +ms.map(m=>'<option value="'+escHtml(m.mazo)+'"'+(mazo===m.mazo?' selected':'')+'>'+escHtml(m.mazo)+' ('+m.n+')</option>').join('');
+    };
+    const pintaStats=()=>{
+      const e=fiEstadisticas(cartas,hoy(),mazo);
+      $('#fi-stats').innerHTML='<div class="fi-kpi'+(e.hoy?' on':'')+'"><b>'+e.hoy+'</b><span>'+escHtml(t('fi.today'))+'</span></div>'
+        +'<div class="fi-kpi"><b>'+e.nuevas+'</b><span>'+escHtml(t('fi.new'))+'</span></div>'
+        +'<div class="fi-kpi"><b>'+e.aprendidas+'</b><span>'+escHtml(t('fi.learned'))+'</span></div>'
+        +'<div class="fi-kpi"><b>'+e.total+'</b><span>'+escHtml(t('fi.total'))+'</span></div>';
+    };
+    const pintaLista=()=>{
+      const cs=cartas.filter(c=>!mazo||c.mazo===mazo).slice().sort((a,b)=>String(a.due).localeCompare(String(b.due)));
+      $('#fi-body').innerHTML=cs.length?cs.map(c=>'<div class="fi-item'+(String(c.due)<=hoy()?' due':'')+'">'
+          +'<div class="fi-it"><b>'+escHtml(c.frente)+'</b><span>'+escHtml(c.detras)+'</span></div>'
+          +'<div class="fi-meta">'+escHtml(c.mazo)+' · '+(c.reps?t('fi.everyn',{n:c.intervalo}):t('fi.newcard'))+'</div>'
+          +'<button type="button" class="fi-x" data-del="'+c.id+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10005;</button></div>').join('')
+        :'<div class="fi-vacio"><div class="fi-vacio-ic">&#128199;</div><div>'+escHtml(t('fi.empty'))+'</div><div class="hint-muted">'+escHtml(t('fi.emptyhint'))+'</div></div>';
+      $('#fi-body').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+        xpConfirm(t('fi.title'),t('fi.delq'),()=>{ cartas=cartas.filter(c=>c.id!==b.dataset.del); guarda(); render(); },t('btn.delete'));
+      });
+    };
+    const pintaEstudio=()=>{
+      if(!actual){
+        $('#fi-body').innerHTML='<div class="fi-vacio"><div class="fi-vacio-ic">&#127881;</div><div>'+escHtml(t('fi.donetoday'))+'</div>'
+          +'<div class="hint-muted">'+escHtml(t('fi.comeback'))+'</div></div>';
+        return;
+      }
+      $('#fi-body').innerHTML='<div class="fi-carta">'
+        +'<div class="fi-frente">'+escHtml(actual.frente)+'</div>'
+        +(vuelta?'<div class="fi-detras">'+escHtml(actual.detras)+'</div>':'')
+        +'<div class="fi-quedan">'+escHtml(t('fi.left',{n:cola.length}))+'</div>'
+        +(vuelta?'<div class="fi-botones">'
+            +'<button type="button" class="fi-cal otra" data-q="otra">'+escHtml(t('fi.again'))+'<i>'+escHtml(t('fi.in1'))+'</i></button>'
+            +'<button type="button" class="fi-cal dificil" data-q="dificil">'+escHtml(t('fi.hard'))+'<i>'+fiPrevia(actual,'dificil')+'</i></button>'
+            +'<button type="button" class="fi-cal bien" data-q="bien">'+escHtml(t('fi.good'))+'<i>'+fiPrevia(actual,'bien')+'</i></button>'
+            +'<button type="button" class="fi-cal facil" data-q="facil">'+escHtml(t('fi.easy'))+'<i>'+fiPrevia(actual,'facil')+'</i></button>'
+          +'</div>'
+          :'<button type="button" class="fi-btn primary fi-ver" id="fi-voltear">'+escHtml(t('fi.flip'))+'</button>')
+        +'</div>';
+      const bv=$('#fi-voltear');
+      if(bv)bv.onclick=()=>{ vuelta=true; pintaEstudio(); };
+      $('#fi-body').querySelectorAll('.fi-cal').forEach(b=>b.onclick=()=>califica(b.dataset.q));
+    };
+    const califica=(clave)=>{
+      const nueva=fiRepasa(actual,SRS_CAL[clave]||4,hoy());
+      const i=cartas.findIndex(c=>c.id===actual.id);
+      if(i>=0)cartas[i]=Object.assign(cartas[i],nueva);
+      guarda();
+      // Si ha fallado, vuelve a salir al final de la ronda de hoy
+      if((SRS_CAL[clave]||4)<3)cola.push(cartas[i]);
+      siguiente();
+      pintaStats();
+    };
+    const siguiente=()=>{ actual=cola.shift()||null; vuelta=false; pintaEstudio(); };
+    const render=()=>{
+      pintaMazos(); pintaStats();
+      if(vista==='estudio')pintaEstudio(); else pintaLista();
+      $('#fi-estudiar').textContent=vista==='estudio'?t('fi.list'):t('fi.study');
+    };
+    $('#fi-estudiar').onclick=()=>{
+      if(vista==='estudio'){ vista='lista'; render(); return; }
+      cola=fiPendientes(cartas,hoy(),mazo||'');
+      vista='estudio'; siguiente(); render();
+    };
+    $('#fi-mazo').onchange=()=>{ mazo=$('#fi-mazo').value; vista='lista'; render(); };
+    $('#fi-nueva').onclick=()=>{
+      xpPrompt(t('fi.title'),t('fi.frontq'),'',(fr)=>{
+        if(!fr||!fr.trim())return;
+        xpPrompt(t('fi.title'),t('fi.backq'),'',(de)=>{
+          if(!de||!de.trim())return;
+          cartas.push(fiNueva(fr,de,mazo||''));
+          guarda(); render();
+        });
+      });
+    };
+    $('#fi-menu').onclick=()=>{
+      const r=$('#fi-menu').getBoundingClientRect();
+      showContextMenu(r.left-150,r.bottom+2,[
+        {label:t('fi.paste'),action:()=>{
+          xpPrompt(t('fi.title'),t('fi.pasteq'),'',(txt)=>{
+            const nuevas=fiDesdeTexto(txt,mazo||'');
+            if(!nuevas.length){ xpDialog(t('fi.title'),'<div class="dlg-icon">&#128199;</div><div>'+escHtml(t('fi.pastenone'))+'</div>'); return; }
+            cartas=cartas.concat(nuevas); guarda(); render();
+            announce(t('fi.imported',{n:nuevas.length}));
+          });
+        }},
+        {label:t('fi.rename'),action:()=>{
+          if(!mazo)return;
+          xpPrompt(t('fi.title'),t('fi.renameq'),mazo,(v)=>{
+            if(!v||!v.trim())return;
+            cartas.forEach(c=>{ if(c.mazo===mazo)c.mazo=v.trim(); });
+            mazo=v.trim(); guarda(); render();
+          });
+        }},
+        {sep:true},
+        {label:t('sh.title'),action:()=>{
+          const cs=cartas.filter(c=>!mazo||c.mazo===mazo);
+          if(!cs.length)return;
+          const plano=cs.map(c=>c.frente+' | '+c.detras).join('\n');
+          osDialogoCompartir('fichas',cs.map(c=>({frente:c.frente,detras:c.detras,mazo:c.mazo})),mazo||t('fi.title'),plano);
+        }},
+        {sep:true},
+        {label:t('fi.reset'),action:()=>{
+          xpConfirm(t('fi.title'),t('fi.resetq'),()=>{
+            cartas.forEach(c=>{ if(!mazo||c.mazo===mazo)Object.assign(c,{ef:2.5,intervalo:0,reps:0,lapsos:0,due:hoy()}); });
+            guarda(); render();
+          },t('fi.reset'));
+        }}
+      ]);
+    };
+    _fichasHook=()=>{ cartas=fichas(); render(); };
+    (win._cleanups=win._cleanups||[]).push(()=>{ _fichasHook=null; });
+    render();
+  }});
+}
+// Cuánto se espaciaría con cada botón (se enseña debajo, como en Anki)
+function fiPrevia(carta,clave){
+  const c=fiRepasa(carta,SRS_CAL[clave]||4,tkHoyISO());
+  return c.intervalo===1?t('fi.in1'):t('fi.ind',{n:c.intervalo});
+}
+
+// ========== ESCÁNER DE PRODUCTOS (etiquetas, estilo Yuka) ==========
+// Escaneas el código de barras y sale qué lleva dentro: Nutri-Score, nivel de
+// procesado (NOVA), alérgenos y el semáforo nutricional. Los datos son de **Open Food
+// Facts**, una base comunitaria y abierta (verificada: responde con CORS abierto).
+// Dos honestidades que la app dice en su sitio: (1) la base la rellena gente, así que
+// hay productos incompletos o con erratas; (2) NO se copia la nota de Yuka, que es
+// suya y cerrada — se enseña el Nutri-Score y el NOVA, que son públicos, y un semáforo
+// con los umbrales oficiales de la FSA británica.
+const OFF_URL='https://world.openfoodfacts.org/api/v2/product/';
+const OFF_CAMPOS='product_name,product_name_es,brands,quantity,nutriscore_grade,nova_group,allergens_tags,ingredients_text_es,ingredients_text,nutriments';
+// Umbrales por 100 g de la FSA (los del semáforo de los paquetes británicos)
+const OFF_SEMAFORO={grasa:[3,17.5],satur:[1.5,5],azucar:[5,22.5],sal:[0.3,1.5]};
+function offSemaforo(clave,valor){
+  const u=OFF_SEMAFORO[clave];
+  if(!u||valor==null||isNaN(valor))return '';
+  return valor<=u[0]?'bien':(valor<=u[1]?'medio':'mal');
+}
+function offCache(){ try{ const o=JSON.parse(Store.get('tos-productos')||'{}'); return (o&&typeof o==='object')?o:{}; }catch(e){ return {}; } }
+function offCachePut(prod){
+  if(!prod||!prod.cod)return false;
+  const o=offCache();
+  o[prod.cod]=Object.assign({},prod,{ts:Date.now()});
+  // Tope de 120 productos: se van los más viejos primero
+  const claves=Object.keys(o).sort((a,b)=>(o[b].ts||0)-(o[a].ts||0)).slice(0,120);
+  const rec={}; claves.forEach(k=>{ rec[k]=o[k]; });
+  return Store.set('tos-productos',JSON.stringify(rec));
+}
+function offHistorial(){
+  const o=offCache();
+  return Object.keys(o).map(k=>o[k]).sort((a,b)=>(b.ts||0)-(a.ts||0));
+}
+// De la respuesta cruda a lo que enseña la ficha
+function offParse(j,cod){
+  const p=(j&&j.product)||null;
+  if(!p)return null;
+  const n=p.nutriments||{};
+  const num=(v)=>{ const x=parseFloat(v); return isNaN(x)?null:Math.round(x*100)/100; };
+  return {
+    cod:String(cod||''),
+    nombre:(p.product_name_es||p.product_name||'').trim(),
+    marca:(p.brands||'').split(',')[0].trim(),
+    cantidad:(p.quantity||'').trim(),
+    nutri:(p.nutriscore_grade||'').toLowerCase(),
+    nova:+p.nova_group||0,
+    alergenos:(p.allergens_tags||[]).map(a=>String(a).replace(/^[a-z]{2}:/,'')),
+    ingredientes:(p.ingredients_text_es||p.ingredients_text||'').trim(),
+    por100:{kcal:num(n['energy-kcal_100g']),grasa:num(n.fat_100g),satur:num(n['saturated-fat_100g']),
+      azucar:num(n.sugars_100g),sal:num(n.salt_100g),fibra:num(n.fiber_100g),prot:num(n.proteins_100g)}
+  };
+}
+// Busca un producto: primero lo que ya se vio (y así funciona sin conexión), luego la red
+function offBusca(cod,forzar){
+  cod=String(cod||'').replace(/\D/g,'');
+  if(!cod)return Promise.resolve(null);
+  const guardado=offCache()[cod];
+  if(guardado&&!forzar)return Promise.resolve(Object.assign({},guardado,{deCache:true}));
+  return tpFetchJSON(OFF_URL+encodeURIComponent(cod)+'.json?fields='+OFF_CAMPOS)
+    .then(j=>{
+      const prod=offParse(j,cod);
+      if(!prod||!prod.nombre)return guardado?Object.assign({},guardado,{deCache:true}):null;
+      offCachePut(prod);
+      return prod;
+    })
+    .catch(()=>guardado?Object.assign({},guardado,{deCache:true}):null);
+}
+function offNutriTexto(g){ return g&&'abcde'.indexOf(g)>=0?t('off.ns.'+g):t('off.sindato'); }
+function offNovaTexto(n){ return n>=1&&n<=4?t('off.nova.'+n):t('off.sindato'); }
+let _offHook=null;
+function openProductos(codigo){
+  closeStartMenu();
+  if(focusExisting('off-root')){ if(codigo&&_offHook)_offHook(codigo); return; }
+  const content=`<div class="off-root" id="off-root">
+    <div class="off-bar">
+      <input type="text" id="off-cod" class="off-cod" inputmode="numeric" maxlength="14" placeholder="${escHtml(t('off.code'))}" aria-label="${escHtml(t('off.code'))}">
+      <button type="button" class="off-btn primary" id="off-ver">${escHtml(t('off.see'))}</button>
+      <button type="button" class="off-btn" id="off-scan" title="${escHtml(t('off.scan'))}">&#128247;</button>
+    </div>
+    <div class="off-ficha" id="off-ficha"></div>
+    <div class="off-hist" id="off-hist"></div>
+    <div class="off-nota">${escHtml(t('off.source'))}</div>
+  </div>`;
+  createWindow(t('off.title'),'&#129387;',360,520,content,{session:'productos',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    let actual=null;
+    const fila=(clave,etiqueta,valor,unidad)=>{
+      if(valor==null)return '';
+      const cl=offSemaforo(clave,valor);
+      return '<div class="off-nut'+(cl?' '+cl:'')+'"><span>'+escHtml(etiqueta)+'</span><b>'+String(valor).replace('.',',')+' '+unidad+'</b></div>';
+    };
+    const pintaFicha=()=>{
+      const box=$('#off-ficha');
+      if(!actual){ box.innerHTML='<div class="off-vacio"><div class="off-vacio-ic">&#129387;</div><div>'+escHtml(t('off.empty'))+'</div></div>'; return; }
+      const p=actual;
+      box.innerHTML='<div class="off-card">'
+        +'<div class="off-tit"><b>'+escHtml(p.nombre||t('off.noname'))+'</b>'
+          +(p.marca?'<span>'+escHtml(p.marca)+(p.cantidad?' · '+escHtml(p.cantidad):'')+'</span>':'')+'</div>'
+        +'<div class="off-badges">'
+          +'<div class="off-ns ns-'+(p.nutri||'x')+'" title="'+escHtml(offNutriTexto(p.nutri))+'">'+(p.nutri?p.nutri.toUpperCase():'?')+'</div>'
+          +'<div class="off-nsl"><b>Nutri-Score</b><i>'+escHtml(offNutriTexto(p.nutri))+'</i></div>'
+          +'<div class="off-nova nova-'+(p.nova||0)+'"><b>NOVA '+(p.nova||'?')+'</b><i>'+escHtml(offNovaTexto(p.nova))+'</i></div>'
+        +'</div>'
+        +'<div class="off-nuts">'
+          +fila('kcal',t('off.kcal'),p.por100.kcal,'kcal')
+          +fila('grasa',t('off.fat'),p.por100.grasa,'g')
+          +fila('satur',t('off.sat'),p.por100.satur,'g')
+          +fila('azucar',t('off.sugar'),p.por100.azucar,'g')
+          +fila('sal',t('off.salt'),p.por100.sal,'g')
+        +'</div><div class="off-por100">'+escHtml(t('off.per100'))+'</div>'
+        +(p.alergenos&&p.alergenos.length?'<div class="off-aler"><b>&#9888;&#65039; '+escHtml(t('off.allergens'))+'</b> '
+          +p.alergenos.map(a=>'<span class="off-chip">'+escHtml(t('off.al.'+a)||a)+'</span>').join('')+'</div>':'')
+        +(p.ingredientes?'<details class="off-ing"><summary>'+escHtml(t('off.ingredients'))+'</summary><div>'+escHtml(p.ingredientes)+'</div></details>':'')
+        +'<div class="off-acts">'
+          +'<button type="button" class="off-btn" id="off-compra">&#128722; '+escHtml(t('qrl.a.shop'))+'</button>'
+          +(p.deCache?'<span class="off-cache">'+escHtml(t('off.cached'))+'</span>':'')
+        +'</div></div>';
+      const bc=$('#off-compra');
+      if(bc)bc.onclick=()=>{
+        eanGuardaNombre(p.cod,p.nombre);
+        cpImporta([{name:p.nombre,qty:1}],true);
+        announce(t('qrl.a.added',{n:p.nombre}));
+      };
+    };
+    const pintaHist=()=>{
+      const h=offHistorial().slice(0,12);
+      $('#off-hist').innerHTML=h.length?'<div class="off-histt">'+escHtml(t('off.recent'))+'</div>'
+        +h.map(p=>'<button type="button" class="off-hitem" data-c="'+escHtml(p.cod)+'">'
+          +'<span class="off-hns ns-'+(p.nutri||'x')+'">'+(p.nutri?p.nutri.toUpperCase():'?')+'</span>'
+          +'<span class="off-hn">'+escHtml(p.nombre||p.cod)+'</span></button>').join(''):'';
+      $('#off-hist').querySelectorAll('.off-hitem').forEach(b=>b.onclick=()=>busca(b.dataset.c));
+    };
+    const busca=(cod)=>{
+      cod=String(cod||'').replace(/\D/g,'');
+      if(!cod)return;
+      $('#off-cod').value=cod;
+      $('#off-ficha').innerHTML='<div class="off-vacio">'+escHtml(t('off.looking'))+'</div>';
+      offBusca(cod).then(p=>{
+        if(!p){ $('#off-ficha').innerHTML='<div class="off-vacio"><div class="off-vacio-ic">&#128533;</div><div>'+escHtml(t('off.notfound',{c:cod}))+'</div></div>'; return; }
+        actual=p; pintaFicha(); pintaHist();
+      });
+    };
+    _offHook=busca;
+    (win._cleanups=win._cleanups||[]).push(()=>{ if(_offHook===busca)_offHook=null; });
+    $('#off-ver').onclick=()=>busca($('#off-cod').value);
+    $('#off-cod').addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); busca($('#off-cod').value); } });
+    $('#off-scan').onclick=()=>openLectorQR();
+    pintaFicha(); pintaHist();
+    if(codigo)busca(codigo);
+  }});
 }
 
 // ========== AVISO DE LLUVIA (radar de verdad, estilo Rain Alarm) ==========
@@ -18725,7 +19287,7 @@ const BACKUP_CATS=[
   {id:'juegos',ic:'&#127942;',keys:['tos-achievements','tos-played'],re:/-best/},
   {id:'docs',ic:'&#128450;&#65039;',keys:['tos-files','tos-files-trash','tos-folders','tos-sheet']},
   {id:'notas',ic:'&#128221;',keys:['tos-notes','tos-notepad','tos-stickies']},
-  {id:'dia',ic:'&#128197;',keys:['tos-events','tos-recetas','tos-menu','tos-habitos','tos-barcodes','tos-alarmas','tos-timer','tos-radar'],pref:['tos-gastos','tos-tareas','tos-compra','tos-tiempo','tos-luz']},
+  {id:'dia',ic:'&#128197;',keys:['tos-events','tos-recetas','tos-menu','tos-habitos','tos-barcodes','tos-alarmas','tos-timer','tos-radar','tos-productos','tos-fichas'],pref:['tos-gastos','tos-tareas','tos-compra','tos-tiempo','tos-luz']},
   {id:'claves',ic:'&#128273;',keys:['tos-keys'],warn:true},
   {id:'lector',ic:'&#128214;',pref:['tos-reader']},
   {id:'otros',ic:'&#128230;'} // cajón de sastre: MSN, Outlook, eMule, historial de QR, ritmos...
@@ -19092,7 +19654,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Calculadoras (hipoteca, IVA, %)','&#129518;',openCalculadoras],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Aviso de lluvia (radar)','&#127783;&#65039;',openRadar],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128224;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Herramientas del móvil (nivel, brújula)','&#129517;',openSensores],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Calculadoras (hipoteca, IVA, %)','&#129518;',openCalculadoras],['Fichas de estudio (Anki)','&#128199;',openFichas],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Aviso de lluvia (radar)','&#127783;&#65039;',openRadar],['Etiquetas (escáner de productos)','&#129387;',openProductos],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128224;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Herramientas del móvil (nivel, brújula)','&#129517;',openSensores],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -21097,7 +21659,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,calculadoras:openCalculadoras,hipoteca:openCalculadoras,iva:openCalculadoras,porcentaje:openCalculadoras,propina:openCalculadoras,hoja:openSpreadsheet,calculo:openSpreadsheet,excel:openSpreadsheet,celdas:openSpreadsheet,grafica:openGrapher,graficadora:openGrapher,funciones:openGrapher,plot:openGrapher,luz:openLuz,pvpc:openLuz,electricidad:openLuz,precio:openLuz,tarifa:openLuz,gastos:openGastos,dinero:openGastos,cuentas:openGastos,presupuesto:openGastos,compra:openCompra,lista:openCompra,super:openCompra,supermercado:openCompra,recetas:openRecetas,cocina:openRecetas,menu:openRecetas,tiempo2:openTiempo,meteo:openTiempo,clima:openTiempo,prevision:openTiempo,lluvia:openRadar,radar:openRadar,rain:openRadar,tareas:openTareas,todo:openTareas,pendientes:openTareas,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),claves:openPasswords,contrasenas:openPasswords,passwords:openPasswords,caja:openPasswords,zip:openZipFolder,comprimir:openZipFolder,descomprimir:openZipFolder,archivo:openZipFolder,escaner:openScanner,escanear:openScanner,documento:openScanner,pdf2:openScanner,habitos:openHabitos,rachas:openHabitos,rutina:openHabitos,leer:openLectorQR,qr2:openLectorQR,codigos:openLectorQR,sensores:openSensores,nivel:openSensores,brujula:openSensores,linterna:openSensores,sonometro:openSensores,cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,fichas:openFichas,anki:openFichas,estudiar:openFichas,repaso:openFichas,calculadoras:openCalculadoras,hipoteca:openCalculadoras,iva:openCalculadoras,porcentaje:openCalculadoras,propina:openCalculadoras,hoja:openSpreadsheet,calculo:openSpreadsheet,excel:openSpreadsheet,celdas:openSpreadsheet,grafica:openGrapher,graficadora:openGrapher,funciones:openGrapher,plot:openGrapher,luz:openLuz,pvpc:openLuz,electricidad:openLuz,precio:openLuz,tarifa:openLuz,gastos:openGastos,dinero:openGastos,cuentas:openGastos,presupuesto:openGastos,compra:openCompra,lista:openCompra,super:openCompra,supermercado:openCompra,recetas:openRecetas,cocina:openRecetas,menu:openRecetas,tiempo2:openTiempo,meteo:openTiempo,clima:openTiempo,prevision:openTiempo,lluvia:openRadar,radar:openRadar,rain:openRadar,etiquetas:openProductos,productos:openProductos,nutriscore:openProductos,yuka:openProductos,tareas:openTareas,todo:openTareas,pendientes:openTareas,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),claves:openPasswords,contrasenas:openPasswords,passwords:openPasswords,caja:openPasswords,zip:openZipFolder,comprimir:openZipFolder,descomprimir:openZipFolder,archivo:openZipFolder,escaner:openScanner,escanear:openScanner,documento:openScanner,pdf2:openScanner,habitos:openHabitos,rachas:openHabitos,rutina:openHabitos,leer:openLectorQR,qr2:openLectorQR,codigos:openLectorQR,sensores:openSensores,nivel:openSensores,brujula:openSensores,linterna:openSensores,sonometro:openSensores,cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
