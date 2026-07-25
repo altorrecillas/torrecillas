@@ -8,7 +8,7 @@
 // Estrategia de red: red primero para el documento (index.html siempre fresco si hay
 // conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
 // solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.49.1';
+const APP_VERSION = '0.51.0';
 const CACHE = 'tos-' + APP_VERSION;
 const NET_TIMEOUT = 3000; // ms que se espera a la red antes de tirar de caché (documento)
 const ASSETS = [
@@ -40,21 +40,34 @@ self.addEventListener('message', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  // Share target: el sistema comparte una imagen CON la app instalada (POST). Se
-  // guarda en la caché y se redirige a la app, que la abrirá al cargar (?shared=1).
+  // Share target: el sistema comparte algo CON la app instalada (POST). Puede venir
+  // un ARCHIVO (imagen, EPUB, PDF) o solo TEXTO/ENLACE, que es lo que más se comparte
+  // en el móvil. Se guarda en la caché y se redirige a la app, que lo recoge al
+  // cargar: ?shared=1 para el archivo, ?shared=text para el texto.
   if (e.request.method === 'POST' && url.pathname.endsWith('/share-target')) {
     e.respondWith((async () => {
+      let destino = './?shared=1';
       try {
         const form = await e.request.formData();
         const file = form.get('file') || form.get('image') || form.getAll('file')[0] || form.getAll('image')[0];
+        const c = await caches.open(CACHE);
         if (file && file.size) {
-          const c = await caches.open(CACHE);
           await c.put('shared-file', new Response(file, {
             headers: { 'Content-Type': file.type || 'image/png', 'X-Share-Name': encodeURIComponent(file.name || 'compartido') }
           }));
+        } else {
+          const texto = String(form.get('text') || '');
+          const enlace = String(form.get('url') || '');
+          const titulo = String(form.get('title') || '');
+          if (texto || enlace || titulo) {
+            await c.put('shared-text', new Response(JSON.stringify({ text: texto, url: enlace, title: titulo }), {
+              headers: { 'Content-Type': 'application/json' }
+            }));
+            destino = './?shared=text';
+          }
         }
       } catch (err) { /* si algo falla, se abre la app igualmente */ }
-      return Response.redirect('./?shared=1', 303);
+      return Response.redirect(destino, 303);
     })());
     return;
   }
@@ -65,8 +78,13 @@ self.addEventListener('fetch', (e) => {
   if (e.request.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
     e.respondWith((async () => {
       const net = fetch(e.request).then((r) => {
-        const copy = r.clone();
-        caches.open(CACHE).then((c) => c.put(e.request, copy));
+        // Solo se guarda la entrada limpia: los atajos del icono y el "compartir con"
+        // llegan como ./?app=tareas o ./?shared=text y llenarían la caché de copias
+        // del mismo documento (y de una URL que al reabrirla haría cosas raras).
+        if (!url.search) {
+          const copy = r.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, copy));
+        }
         return r;
       });
       const cached = (await caches.match(e.request))

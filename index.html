@@ -202,6 +202,18 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .login-guest:hover{background:rgba(255,255,255,.16);color:#fff}
 .login-link{background:none;border:none;color:#7fa8e0;font-size:11px;cursor:pointer;text-decoration:underline}
 .login-link:hover{color:#a9c8f0}
+/* Desbloqueo con PIN: teclado numérico grande, para el pulgar */
+.login-box[hidden]{display:none}
+.pin-dots{display:flex;gap:9px;min-height:14px;align-items:center}
+.pin-dot{width:11px;height:11px;border-radius:50%;border:1px solid #6b83ad;background:transparent}
+.pin-dot.on{background:#7fc4ff;border-color:#7fc4ff;box-shadow:0 0 8px rgba(127,196,255,.7)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.pin-key{padding:13px 0;border:1px solid #3a4a6a;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;font-size:19px;font-family:Tahoma,sans-serif;cursor:pointer}
+.pin-key:hover{background:rgba(255,255,255,.2)}
+.pin-key:active{background:rgba(127,196,255,.35)}
+.pin-key.pin-wide{grid-column:span 1;font-size:15px}
+.pin-bio{margin-top:2px}
+.pin-bio[hidden]{display:none}
 /* Formulario de crear/administrar cuenta */
 .acct-form{display:flex;flex-direction:column;gap:8px;width:100%;font-size:12px}
 .acct-form label{display:flex;flex-direction:column;gap:3px;color:#333}
@@ -225,6 +237,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .acct-av.sel{border-color:#0054e3;background:#cfe3ff;box-shadow:0 0 0 1px #0054e3}
 .acct-lock-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 16px 8px;font-size:12px;color:#333}
 .acct-lock-row select{border:1px solid #7f9db9;border-radius:2px;font-size:12px;padding:2px 4px}
+.acct-pinstate{font-size:11px;color:#4a6b4a;font-weight:bold}
 .start-avatar{position:relative}
 .start-av-emoji{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:24px}
 .acct-actions{display:flex;flex-direction:column;gap:6px;padding:2px 16px 14px}
@@ -291,6 +304,17 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
     <div class="login-err" id="login-err" role="alert"></div>
     <button type="button" id="login-guest" class="login-guest" data-i18n="login.guest">Entrar como invitado</button>
     <button type="button" id="login-forget" class="login-link" data-i18n="login.forgot">&iquest;Olvidaste la contrase&ntilde;a?</button>
+  </div>
+  <!-- Desbloqueo rapido: PIN de 4-8 digitos (cerrojo de este dispositivo) -->
+  <div class="login-box login-pinbox" id="login-pinbox" hidden>
+    <div class="login-avatar" id="login-pin-avatar">&#128100;</div>
+    <div class="login-user" id="login-pin-user"></div>
+    <div class="login-sub" data-i18n="pin.sub">Escribe tu PIN</div>
+    <div class="pin-dots" id="pin-dots" aria-hidden="true"></div>
+    <div class="pin-pad" id="pin-pad"></div>
+    <div class="login-err" id="pin-err" role="alert"></div>
+    <button type="button" id="pin-bio" class="login-btn pin-bio" hidden>&#9757;&#65039; <span data-i18n="pin.bio.use">Usar la huella</span></button>
+    <button type="button" id="pin-pass" class="login-link" data-i18n="pin.usepass">Usar la contrase&ntilde;a</button>
   </div>
 </div>
 
@@ -3655,6 +3679,40 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .bk-row b.ok{color:#2f7d4b}
 .bk-row b.warn{color:#9a5a20}
 .bk-note{font-size:10px;color:#79808f;line-height:1.4;margin-top:3px}
+.bkx-dlg{width:min(420px,94vw);max-height:88svh;display:flex;flex-direction:column;background:#ece9d8;border:2px solid #0054e3;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);overflow:hidden;font-family:Tahoma,sans-serif}
+.bkx-title{background:linear-gradient(180deg,#0054e3,#003bb3);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px;flex:0 0 auto}
+.bkx-body{padding:12px 14px 6px;font-size:12px;color:#222;overflow-y:auto;flex:1 1 auto}
+.bkx-desc{font-size:11px;color:#5a6472;line-height:1.45;margin:0 0 7px}
+.bkx-quick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:5px}
+.bkx-quick button{font-family:Tahoma,sans-serif;font-size:10px;padding:2px 8px;border:1px solid #aca899;border-radius:3px;background:#f4f2ec;cursor:pointer}
+.bkx-list{display:flex;flex-direction:column;gap:1px;background:#fff;border:1px solid #b6b3a5;border-radius:4px;padding:4px}
+.bkx-item{display:flex;align-items:flex-start;gap:7px;cursor:pointer;padding:3px 4px;border-radius:3px}
+.bkx-item:hover{background:#eef3fb}
+.bkx-item input{margin-top:2px;flex:0 0 auto}
+.bkx-item span{display:flex;flex-direction:column;min-width:0}
+.bkx-item b{font-size:11.5px;font-weight:normal;color:#22303f}
+.bkx-item i{font-style:normal;font-size:10px;color:#7b8494}
+.bkx-item i.warn{color:#9a5a20}
+.bkx-total{font-size:10.5px;color:#5a6472;margin:5px 0 7px;text-align:right}
+.bkx-enc{display:flex;align-items:flex-start;gap:7px;cursor:pointer;background:#f2f5f9;border-radius:4px;padding:6px 7px}
+.bkx-enc input{margin-top:2px;flex:0 0 auto}
+.bkx-enc span{display:flex;flex-direction:column}
+.bkx-enc b{font-size:12px}
+.bkx-enc i{font-style:normal;font-size:10px;color:#6b7280;line-height:1.4}
+.bkx-pw{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.bkx-pw[hidden]{display:none}
+.bkx-pw input{font-family:Tahoma,sans-serif;font-size:13px;padding:5px 7px;border:1px solid #7f9db9;border-radius:2px;box-sizing:border-box;width:100%}
+.bkx-note{font-size:10px;color:#8a5a13;background:#fff6e5;border-radius:4px;padding:5px 7px;line-height:1.4}
+.bkx-warn{display:none;font-size:10px;color:#8a5a13}
+.bkx-err{display:none;font-size:11px;color:#c0533f;margin-top:7px}
+.bkx-err.on{display:block}
+.bkx-sum{display:flex;flex-direction:column;gap:1px;margin-top:5px}
+.bkx-row{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#4a5262}
+.bkx-btns{padding:10px 14px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;flex:0 0 auto}
+.bkx-btns button{font-family:Tahoma,sans-serif;font-size:12px;padding:4px 16px;border:1px solid #aca899;border-radius:3px;background:#f4f2ec;cursor:pointer}
+.bkx-btns button.primary{border-color:#0054e3;background:linear-gradient(180deg,#fdfdfd,#e6e2d6)}
+.bkx-btns button.busy{color:transparent;position:relative}
+.bkx-btns button.busy::after{content:'';position:absolute;inset:0;margin:auto;width:12px;height:12px;border:2px solid #0054e3;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
 .sh-box{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
 .qrd-box{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0}
 #qrd-cv{width:100%;max-width:260px;height:auto;image-rendering:pixelated;border:1px solid #cfd6e0;border-radius:4px;background:#fff}
@@ -3665,6 +3723,11 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .sh-op.off{opacity:.5;cursor:default}
 .sh-op b{font-size:12px;color:#1a2432}
 .sh-op span{font-size:10px;color:#6b7280}
+.os-mic.rec{background:linear-gradient(180deg,#ff9a9a,#d84a4a);border-color:#b03636;color:#fff;animation:vozPulso 1.1s ease-in-out infinite}
+@keyframes vozPulso{0%,100%{box-shadow:0 0 0 0 rgba(216,74,74,.5)}50%{box-shadow:0 0 0 5px rgba(216,74,74,0)}}
+.os-wake.on{background:linear-gradient(180deg,#ffe9a8,#e8b73c);border-color:#b98d1c;color:#3a2c00}
+@media (prefers-reduced-motion:reduce){.os-mic.rec{animation:none}}
+.rx-prev{font-size:11px;color:#3a4150;background:#fff;border:1px solid #cfd6e0;border-radius:4px;padding:5px 7px;max-height:74px;overflow:auto;white-space:pre-wrap;word-break:break-word}
 .gs-status{padding:3px 8px;background:linear-gradient(180deg,#f2f0e8,#e0ddd0);border-top:1px solid #b3aea0;font-size:11px;color:#3a4150;min-height:20px}
 .gs-fijos{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
 .gs-fijos-t{font-size:11px;color:#5a6472}
@@ -4014,7 +4077,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.49.1';
+const APP_VERSION = '0.51.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4533,7 +4596,7 @@ const I18N={
   'ar.needacct':{es:'El login automático solo tiene sentido con una cuenta local creada.', en:'Automatic login only makes sense once you have a local account.', ca:'L’inici de sessió automàtic només té sentit amb un compte local creat.', ru:'Автовход имеет смысл только с локальной учётной записью.'},
   'ar.needopen':{es:'Abre la sesión de tu cuenta para poder activarlo.', en:'Unlock your account to enable it.', ca:'Obre la sessió del teu compte per poder activar-ho.', ru:'Разблокируйте учётную запись, чтобы включить.'},
   'bk.title':{es:'Copia de seguridad', en:'Backup', ca:'Còpia de seguretat', ru:'Резервная копия'},
-  'bk.what':{es:'Se lleva TODO: gastos, tareas, lista de la compra, claves, documentos, récords y ajustes', en:'Takes EVERYTHING: expenses, tasks, shopping list, passwords, documents, records and settings', ca:'S’ho emporta TOT: despeses, tasques, llista de la compra, claus, documents, rècords i ajustos', ru:'Сохраняет ВСЁ: расходы, задачи, список покупок, пароли, документы, рекорды и настройки'},
+  'bk.what':{es:'Eliges qué se lleva —gastos, tareas, compra, claves, documentos, récords, ajustes— y puedes cifrarla con contraseña', en:'You choose what goes in —expenses, tasks, shopping, passwords, documents, records, settings— and you can encrypt it with a password', ca:'Tries què s’emporta —despeses, tasques, compra, claus, documents, rècords, ajustos— i pots xifrar-la amb contrasenya', ru:'Вы выбираете, что войдёт —расходы, задачи, покупки, пароли, документы, рекорды, настройки— и можете зашифровать паролем'},
   'bk.export':{es:'Exportar copia', en:'Export backup', ca:'Exporta còpia', ru:'Экспорт копии'},
   'bk.import':{es:'Importar copia', en:'Import backup', ca:'Importa còpia', ru:'Импорт копии'},
   'bk.last':{es:'Última copia: {f}', en:'Last backup: {f}', ca:'Última còpia: {f}', ru:'Последняя копия: {f}'},
@@ -4553,6 +4616,105 @@ const I18N={
   'bk.protected':{es:'Hecho: el navegador ya no borrará estos datos para hacer sitio.', en:'Done: the browser will no longer evict this data to free space.', ca:'Fet: el navegador ja no esborrarà aquestes dades per fer lloc.', ru:'Готово: браузер не будет удалять эти данные ради места.'},
   'bk.notprotected':{es:'El navegador no lo ha concedido. Suele darlo si instalas la app en la pantalla de inicio y la usas a menudo.', en:'The browser refused. It usually grants it once you install the app to your home screen and use it often.', ca:'El navegador no ho ha concedit. Sol donar-ho si instal·les l’app a la pantalla d’inici.', ru:'Браузер отказал. Обычно разрешает после установки приложения.'},
   'bk.note':{es:'Ni el cifrado ni la persistencia salvan tus datos si borras a mano los datos del sitio o desinstalas la app: para eso está la copia de seguridad.', en:'Neither encryption nor persistence saves your data if you clear the site data or uninstall the app: that is what the backup is for.', ca:'Ni el xifratge ni la persistència salven les dades si esborres les dades del lloc o desinstal·les l’app: per això hi ha la còpia.', ru:'Ни шифрование, ни постоянное хранилище не спасут при очистке данных сайта: для этого есть резервная копия.'},
+  'bk.sel.title':{es:'Exportar copia de seguridad', en:'Export backup', ca:'Exporta còpia de seguretat', ru:'Экспорт резервной копии'},
+  'bk.sel.desc':{es:'Elige qué se lleva la copia. Lo que no marques no sale de este equipo.', en:'Choose what goes into the backup. Whatever you leave unchecked never leaves this device.', ca:'Tria què s’emporta la còpia. El que no marquis no surt d’aquest equip.', ru:'Выберите, что войдёт в копию. Неотмеченное не покинет это устройство.'},
+  'bk.all':{es:'Marcar todo', en:'Select all', ca:'Marca-ho tot', ru:'Выбрать всё'},
+  'bk.none':{es:'Desmarcar todo', en:'Clear all', ca:'Desmarca-ho tot', ru:'Снять всё'},
+  'bk.count':{es:'{n} datos · {kb}', en:'{n} items · {kb}', ca:'{n} dades · {kb}', ru:'{n} записей · {kb}'},
+  'bk.count.1':{es:'1 dato · {kb}', en:'1 item · {kb}', ca:'1 dada · {kb}', ru:'1 запись · {kb}'},
+  'bk.total':{es:'Se exportarán {n} datos ({kb})', en:'{n} items will be exported ({kb})', ca:'S’exportaran {n} dades ({kb})', ru:'Будет экспортировано {n} записей ({kb})'},
+  'bk.total.1':{es:'Se exportará 1 dato ({kb})', en:'1 item will be exported ({kb})', ca:'S’exportarà 1 dada ({kb})', ru:'Будет экспортирована 1 запись ({kb})'},
+  'bk.total.0':{es:'No has marcado nada', en:'Nothing selected', ca:'No has marcat res', ru:'Ничего не выбрано'},
+  'bk.cat.ajustes':{es:'Apariencia y ajustes', en:'Look and settings', ca:'Aparença i ajustos', ru:'Оформление и настройки'},
+  'bk.cat.juegos':{es:'Juegos: récords y logros', en:'Games: records and achievements', ca:'Jocs: rècords i assoliments', ru:'Игры: рекорды и достижения'},
+  'bk.cat.docs':{es:'Mis documentos y carpetas', en:'My documents and folders', ca:'Els meus documents i carpetes', ru:'Мои документы и папки'},
+  'bk.cat.notas':{es:'Notas y notas adhesivas', en:'Notes and sticky notes', ca:'Notes i notes adhesives', ru:'Заметки и стикеры'},
+  'bk.cat.dia':{es:'Día a día: gastos, tareas, compra…', en:'Everyday: expenses, tasks, shopping…', ca:'Dia a dia: despeses, tasques, compra…', ru:'Каждый день: расходы, задачи, покупки…'},
+  'bk.cat.claves':{es:'Claves guardadas', en:'Saved passwords', ca:'Claus desades', ru:'Сохранённые пароли'},
+  'bk.cat.lector':{es:'Lector: biblioteca y marcadores', en:'Reader: library and bookmarks', ca:'Lector: biblioteca i marcadors', ru:'Читалка: библиотека и закладки'},
+  'bk.cat.otros':{es:'Lo demás (MSN, correo, eMule…)', en:'Everything else (MSN, mail, eMule…)', ca:'La resta (MSN, correu, eMule…)', ru:'Остальное (MSN, почта, eMule…)'},
+  'bk.cat.claves.w':{es:'Contiene contraseñas: mejor cifra la copia', en:'Contains passwords: better encrypt the backup', ca:'Conté contrasenyes: millor xifra la còpia', ru:'Содержит пароли: лучше зашифруйте копию'},
+  'bk.enc':{es:'Proteger con contraseña', en:'Protect with a password', ca:'Protegeix amb contrasenya', ru:'Защитить паролем'},
+  'bk.enc.d':{es:'El archivo se cifra (AES-256). Sin la contraseña no hay forma de abrirlo.', en:'The file is encrypted (AES-256). Without the password there is no way in.', ca:'El fitxer es xifra (AES-256). Sense la contrasenya no hi ha manera d’obrir-lo.', ru:'Файл шифруется (AES-256). Без пароля его не открыть.'},
+  'bk.pw':{es:'Contraseña', en:'Password', ca:'Contrasenya', ru:'Пароль'},
+  'bk.pw2':{es:'Repite la contraseña', en:'Repeat the password', ca:'Repeteix la contrasenya', ru:'Повторите пароль'},
+  'bk.pw.note':{es:'Apúntala donde no se pierda: si la olvidas, esta copia no sirve para nada.', en:'Write it down somewhere safe: if you forget it, this backup is useless.', ca:'Apunta-la en un lloc segur: si l’oblides, aquesta còpia no serveix de res.', ru:'Запишите его в надёжном месте: без пароля копия бесполезна.'},
+  'bk.eye':{es:'Mostrar u ocultar la contraseña', en:'Show or hide the password', ca:'Mostra o oculta la contrasenya', ru:'Показать или скрыть пароль'},
+  'bk.caps':{es:'Bloq Mayús está activado', en:'Caps Lock is on', ca:'Bloq Maj està activat', ru:'Включён Caps Lock'},
+  'bk.err.none':{es:'Marca al menos un grupo.', en:'Check at least one group.', ca:'Marca almenys un grup.', ru:'Отметьте хотя бы одну группу.'},
+  'bk.err.short':{es:'La contraseña necesita 4 caracteres o más.', en:'The password needs 4 characters or more.', ca:'La contrasenya necessita 4 caràcters o més.', ru:'Пароль должен быть не короче 4 символов.'},
+  'bk.err.match':{es:'Las dos contraseñas no coinciden.', en:'The two passwords do not match.', ca:'Les dues contrasenyes no coincideixen.', ru:'Пароли не совпадают.'},
+  'bk.err.enc':{es:'No se ha podido cifrar la copia.', en:'The backup could not be encrypted.', ca:'No s’ha pogut xifrar la còpia.', ru:'Не удалось зашифровать копию.'},
+  'bk.nocrypto':{es:'Este navegador no puede cifrar aquí (hace falta una conexión segura).', en:'This browser cannot encrypt here (a secure connection is required).', ca:'Aquest navegador no pot xifrar aquí (cal una connexió segura).', ru:'Этот браузер не может шифровать здесь (нужно защищённое соединение).'},
+  'bk.go':{es:'Exportar', en:'Export', ca:'Exporta', ru:'Экспорт'},
+  'bk.done':{es:'Copia guardada con {n} datos.', en:'Backup saved with {n} items.', ca:'Còpia desada amb {n} dades.', ru:'Копия сохранена, {n} записей.'},
+  'bk.done.enc':{es:'Copia cifrada guardada con {n} datos.', en:'Encrypted backup saved with {n} items.', ca:'Còpia xifrada desada amb {n} dades.', ru:'Зашифрованная копия сохранена, {n} записей.'},
+  'bk.empty':{es:'Todavía no hay nada que guardar.', en:'There is nothing to back up yet.', ca:'Encara no hi ha res per desar.', ru:'Пока нечего сохранять.'},
+  'bk.imp.enc.t':{es:'Copia cifrada', en:'Encrypted backup', ca:'Còpia xifrada', ru:'Зашифрованная копия'},
+  'bk.imp.enc':{es:'Copia cifrada del {f}. Escribe la contraseña con la que la protegiste.', en:'Encrypted backup from {f}. Type the password you protected it with.', ca:'Còpia xifrada del {f}. Escriu la contrasenya amb què la vas protegir.', ru:'Зашифрованная копия от {f}. Введите пароль, которым вы её защитили.'},
+  'bk.imp.dec':{es:'Descifrar', en:'Decrypt', ca:'Desxifra', ru:'Расшифровать'},
+  'bk.imp.bad':{es:'Contraseña incorrecta.', en:'Wrong password.', ca:'Contrasenya incorrecta.', ru:'Неверный пароль.'},
+  'bk.imp.has':{es:'La copia trae:', en:'The backup contains:', ca:'La còpia porta:', ru:'В копии есть:'},
+  'bk.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
+  'bk.share.d':{es:'Manda el archivo por el menú del sistema (Drive, WhatsApp, Bluetooth) en vez de dejarlo en Descargas', en:'Send the file through the system menu (Drive, WhatsApp, Bluetooth) instead of leaving it in Downloads', ca:'Envia el fitxer pel menú del sistema (Drive, WhatsApp, Bluetooth) en lloc de deixar-lo a Baixades', ru:'Отправить файл через меню системы (Drive, WhatsApp, Bluetooth), а не в «Загрузки»'},
+  'bk.sent':{es:'Copia enviada.', en:'Backup sent.', ca:'Còpia enviada.', ru:'Копия отправлена.'},
+  'pin.title':{es:'Desbloqueo rápido', en:'Quick unlock', ca:'Desbloqueig ràpid', ru:'Быстрая разблокировка'},
+  'pin.sub':{es:'Escribe tu PIN', en:'Enter your PIN', ca:'Escriu el teu PIN', ru:'Введите PIN'},
+  'pin.set':{es:'Poner un PIN', en:'Set a PIN', ca:'Posa un PIN', ru:'Задать PIN'},
+  'pin.remove':{es:'Quitar el PIN', en:'Remove the PIN', ca:'Treu el PIN', ru:'Убрать PIN'},
+  'pin.on':{es:'PIN puesto', en:'PIN on', ca:'PIN posat', ru:'PIN включён'},
+  'pin.off':{es:'Solo contraseña', en:'Password only', ca:'Només contrasenya', ru:'Только пароль'},
+  'pin.intro':{es:'Un PIN de 4 a 8 cifras para entrar sin escribir la contraseña entera.', en:'A 4 to 8 digit PIN to get in without typing the whole password.', ca:'Un PIN de 4 a 8 xifres per entrar sense escriure tota la contrasenya.', ru:'PIN из 4–8 цифр, чтобы входить без полного пароля.'},
+  'pin.warn':{es:'Es un cerrojo de ESTE dispositivo: la llave se queda guardada aquí. Protege de quien coja el móvil, no de quien copie el almacenamiento del navegador. Para eso está la contraseña, que no se guarda en ningún sitio. A los 5 fallos el PIN se borra y vuelve a pedir la contraseña.', en:'It is a lock on THIS device: the key stays stored here. It protects against someone picking up your phone, not against someone copying the browser storage. That is what the password is for, and it is stored nowhere. After 5 wrong tries the PIN is wiped and the password is required again.', ca:'És un forrellat d’AQUEST dispositiu: la clau es queda desada aquí. Protegeix de qui agafi el mòbil, no de qui copiï l’emmagatzematge del navegador. Per això hi ha la contrasenya, que no es desa enlloc. Als 5 errors el PIN s’esborra i torna a demanar la contrasenya.', ru:'Это замок ЭТОГО устройства: ключ остаётся здесь. Защищает от того, кто взял ваш телефон, но не от того, кто скопировал хранилище браузера — для этого есть пароль, который нигде не хранится. После 5 ошибок PIN стирается и снова нужен пароль.'},
+  'pin.new':{es:'PIN nuevo', en:'New PIN', ca:'PIN nou', ru:'Новый PIN'},
+  'pin.again':{es:'Repite el PIN', en:'Repeat the PIN', ca:'Repeteix el PIN', ru:'Повторите PIN'},
+  'pin.bad':{es:'El PIN va de {min} a {max} cifras.', en:'The PIN must be {min} to {max} digits.', ca:'El PIN va de {min} a {max} xifres.', ru:'PIN должен быть от {min} до {max} цифр.'},
+  'pin.mismatch':{es:'Los dos PIN no coinciden.', en:'The two PINs do not match.', ca:'Els dos PIN no coincideixen.', ru:'PIN-коды не совпадают.'},
+  'pin.tooeasy':{es:'Ese PIN es demasiado obvio.', en:'That PIN is far too obvious.', ca:'Aquest PIN és massa obvi.', ru:'Такой PIN слишком очевиден.'},
+  'pin.done':{es:'PIN puesto. La próxima vez entras con él.', en:'PIN set. Next time you get in with it.', ca:'PIN posat. La pròxima vegada entres amb ell.', ru:'PIN задан. В следующий раз входите с ним.'},
+  'pin.removeq':{es:'¿Quitar el PIN? Volverás a entrar solo con la contraseña.', en:'Remove the PIN? You will go back to the password only.', ca:'Treure el PIN? Tornaràs a entrar només amb la contrasenya.', ru:'Убрать PIN? Вход снова только по паролю.'},
+  'pin.removed':{es:'PIN quitado.', en:'PIN removed.', ca:'PIN tret.', ru:'PIN убран.'},
+  'pin.wrong':{es:'PIN incorrecto. Te quedan {n} intentos.', en:'Wrong PIN. {n} tries left.', ca:'PIN incorrecte. Et queden {n} intents.', ru:'Неверный PIN. Осталось попыток: {n}.'},
+  'pin.left':{es:'Te quedan {n} intentos.', en:'{n} tries left.', ca:'Et queden {n} intents.', ru:'Осталось попыток: {n}.'},
+  'pin.blocked':{es:'Demasiados fallos: el PIN se ha borrado. Entra con la contraseña.', en:'Too many failures: the PIN was wiped. Use the password.', ca:'Massa errors: el PIN s’ha esborrat. Entra amb la contrasenya.', ru:'Слишком много ошибок: PIN стёрт. Войдите по паролю.'},
+  'pin.usepass':{es:'Usar la contraseña', en:'Use the password', ca:'Usa la contrasenya', ru:'Ввести пароль'},
+  'pin.del':{es:'Borrar una cifra', en:'Delete a digit', ca:'Esborra una xifra', ru:'Удалить цифру'},
+  'pin.bio.set':{es:'Usar la huella', en:'Use the fingerprint', ca:'Usa l’empremta', ru:'Использовать отпечаток'},
+  'pin.bio.use':{es:'Usar la huella', en:'Use the fingerprint', ca:'Usa l’empremta', ru:'Использовать отпечаток'},
+  'pin.bio.remove':{es:'Quitar la huella', en:'Remove the fingerprint', ca:'Treu l’empremta', ru:'Убрать отпечаток'},
+  'pin.bio.on':{es:'Huella puesta', en:'Fingerprint on', ca:'Empremta posada', ru:'Отпечаток включён'},
+  'pin.bio.q':{es:'El sistema te pedirá la huella (o lo que uses para desbloquear el móvil) y con eso se abre la caja. Mismo aviso que con el PIN: es un cerrojo de este dispositivo, no un cifrado aparte.', en:'The system will ask for your fingerprint (or whatever unlocks your phone) and that opens the vault. Same caveat as the PIN: it is a lock on this device, not separate encryption.', ca:'El sistema et demanarà l’empremta (o el que facis servir per desbloquejar el mòbil) i amb això s’obre la caixa. Mateix avís que amb el PIN: és un forrellat d’aquest dispositiu, no un xifratge a part.', ru:'Система запросит отпечаток (или то, чем вы разблокируете телефон), и этим откроется хранилище. То же предупреждение, что и с PIN: это замок устройства, а не отдельное шифрование.'},
+  'pin.bio.done':{es:'Huella activada.', en:'Fingerprint enabled.', ca:'Empremta activada.', ru:'Отпечаток включён.'},
+  'pin.bio.removed':{es:'Huella quitada.', en:'Fingerprint removed.', ca:'Empremta treta.', ru:'Отпечаток убран.'},
+  'pin.bio.fail':{es:'No se ha podido activar la huella en este dispositivo.', en:'The fingerprint could not be enabled on this device.', ca:'No s’ha pogut activar l’empremta en aquest dispositiu.', ru:'Не удалось включить отпечаток на этом устройстве.'},
+  'pin.biofail':{es:'No ha reconocido la huella.', en:'The fingerprint was not recognised.', ca:'No ha reconegut l’empremta.', ru:'Отпечаток не распознан.'},
+  'wake.off':{es:'Mantener la pantalla encendida', en:'Keep the screen awake', ca:'Mantén la pantalla encesa', ru:'Не гасить экран'},
+  'wake.on':{es:'La pantalla no se apagará', en:'The screen will stay on', ca:'La pantalla no s’apagarà', ru:'Экран не погаснет'},
+  'voz.dictar':{es:'Dictar por voz', en:'Dictate', ca:'Dicta per veu', ru:'Голосовой ввод'},
+  'voz.escuchando':{es:'Escuchando…', en:'Listening…', ca:'Escoltant…', ru:'Слушаю…'},
+  'pdf.title':{es:'PDF listo', en:'PDF ready', ca:'PDF a punt', ru:'PDF готов'},
+  'pdf.ready':{es:'Documento de {n} KB. ¿Qué hago con él?', en:'A {n} KB document. What should I do with it?', ca:'Document de {n} KB. Què en faig?', ru:'Документ на {n} КБ. Что с ним сделать?'},
+  'pdf.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
+  'pdf.save':{es:'Guardar', en:'Save', ca:'Desa', ru:'Сохранить'},
+  'pdf.download':{es:'Descargar', en:'Download', ca:'Baixa', ru:'Скачать'},
+  'pdf.make':{es:'Hacer un PDF', en:'Make a PDF', ca:'Fes un PDF', ru:'Сделать PDF'},
+  'pdf.movs':{es:'Movimientos', en:'Entries', ca:'Moviments', ru:'Операции'},
+  'pdf.total':{es:'Total', en:'Total', ca:'Total', ru:'Итого'},
+  'pdf.ingredients':{es:'Ingredientes', en:'Ingredients', ca:'Ingredients', ru:'Ингредиенты'},
+  'pdf.steps':{es:'Pasos', en:'Steps', ca:'Passos', ru:'Шаги'},
+  'rx.title':{es:'Te han compartido algo', en:'Something was shared with you', ca:'T’han compartit alguna cosa', ru:'С вами чем-то поделились'},
+  'rx.what':{es:'¿Qué hago con esto?', en:'What should I do with it?', ca:'Què en faig?', ru:'Что с этим сделать?'},
+  'rx.note':{es:'Guardar como nota', en:'Save as a note', ca:'Desa com a nota', ru:'Сохранить как заметку'},
+  'rx.note.d':{es:'Va al cuaderno de Notas, tal cual', en:'Goes to the Notes notebook as is', ca:'Va al quadern de Notes, tal qual', ru:'Попадёт в блокнот «Заметки»'},
+  'rx.task':{es:'Crear tarea', en:'Create a task', ca:'Crea tasca', ru:'Создать задачу'},
+  'rx.task.d':{es:'Una línea, una tarea: entiende «mañana» o «!alta»', en:'One line, one task: it understands “tomorrow” or “!high”', ca:'Una línia, una tasca: entén «demà» o «!alta»', ru:'Строка — задача: понимает «завтра» и «!alta»'},
+  'rx.shop':{es:'Añadir a la compra', en:'Add to the shopping list', ca:'Afegeix a la compra', ru:'Добавить в список покупок'},
+  'rx.shop.d':{es:'Entiende «2 leche 1,20» y adivina el pasillo', en:'It understands “2 milk 1.20” and guesses the aisle', ca:'Entén «2 llet 1,20» i endevina el passadís', ru:'Понимает «2 молоко 1,20» и угадывает отдел'},
+  'rx.open':{es:'Abrir el enlace', en:'Open the link', ca:'Obre l’enllaç', ru:'Открыть ссылку'},
+  'rx.copy':{es:'Copiar', en:'Copy', ca:'Copia', ru:'Копировать'},
+  'rx.copy.d':{es:'Al portapapeles y ya decides', en:'To the clipboard, decide later', ca:'Al porta-retalls i ja decidiràs', ru:'В буфер обмена, решите потом'},
+  'rx.saved':{es:'Guardado en Notas.', en:'Saved to Notes.', ca:'Desat a Notes.', ru:'Сохранено в «Заметках».'},
+  'rx.nothing':{es:'No he sacado ningún producto de ese texto.', en:'I could not get any product out of that text.', ca:'No he tret cap producte d’aquest text.', ru:'Не удалось выделить товары из этого текста.'},
   'tp.title':{es:'El tiempo', en:'Weather', ca:'El temps', ru:'Погода'},
   'tp.desc':{es:'Por horas y 7 días', en:'Hourly and 7 days', ca:'Per hores i 7 dies', ru:'По часам и на 7 дней'},
   'tp.gadget':{es:'Tiempo', en:'Weather', ca:'Temps', ru:'Погода'},
@@ -5081,7 +5243,7 @@ let gameInstances = {};
 // El truco para no tener que volver async todo el sistema: al iniciar sesión se
 // descifra la caja UNA vez a un objeto en memoria (_vault); Store lee/escribe ahí
 // de forma síncrona y un guardado diferido re-cifra la caja a localStorage.
-const VAULT_PLAINTEXT=new Set(['tos-account','tos-vault','tos-lang','tos-autologin','tos-fastboot']); // no se cifran (hacen falta antes de entrar)
+const VAULT_PLAINTEXT=new Set(['tos-account','tos-vault','tos-lang','tos-autologin','tos-fastboot','tos-pin','tos-bio']); // no se cifran (hacen falta antes de entrar)
 let _acctKey=null, _vault=null, _vaultTmr=null, _vaultFailNotified=false, _guestMode=false;
 function _b64enc(bytes){ let s=''; for(let i=0;i<bytes.length;i++)s+=String.fromCharCode(bytes[i]); return btoa(s); }
 function _b64dec(b64){ const s=atob(b64); const u=new Uint8Array(s.length); for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i); return u; }
@@ -5153,40 +5315,48 @@ function _autolDB(){
     }catch(e){ rej(e); }
   });
 }
-async function autoLoginGuardar(key){
+// Guardar/leer/borrar una CryptoKey por id. Lo comparten el login automático
+// (id 'vaultkey') y el desbloqueo con PIN o huella (id 'devkey').
+async function _llaveGuardar(id,key){
   if(!key)return false;
   try{
     const db=await _autolDB();
     return await new Promise((res)=>{
       const tx=db.transaction(AUTOL_STORE,'readwrite');
-      tx.objectStore(AUTOL_STORE).put(key,AUTOL_ID);
+      tx.objectStore(AUTOL_STORE).put(key,id);
       tx.oncomplete=()=>res(true);
       tx.onerror=()=>res(false);
     });
   }catch(e){ return false; }
 }
-async function autoLoginLeer(){
+async function _llaveLeer(id){
   try{
     const db=await _autolDB();
     return await new Promise((res)=>{
       const tx=db.transaction(AUTOL_STORE,'readonly');
-      const q=tx.objectStore(AUTOL_STORE).get(AUTOL_ID);
+      const q=tx.objectStore(AUTOL_STORE).get(id);
       q.onsuccess=()=>res(q.result||null);
       q.onerror=()=>res(null);
     });
   }catch(e){ return null; }
 }
-async function autoLoginBorrar(){
-  try{ localStorage.removeItem('tos-autologin'); }catch(e){}
+async function _llaveBorrar(id){
   try{
     const db=await _autolDB();
     await new Promise((res)=>{
       const tx=db.transaction(AUTOL_STORE,'readwrite');
-      tx.objectStore(AUTOL_STORE).delete(AUTOL_ID);
+      tx.objectStore(AUTOL_STORE).delete(id);
       tx.oncomplete=()=>res(true);
       tx.onerror=()=>res(false);
     });
   }catch(e){}
+  return true;
+}
+async function autoLoginGuardar(key){ return _llaveGuardar(AUTOL_ID,key); }
+async function autoLoginLeer(){ return _llaveLeer(AUTOL_ID); }
+async function autoLoginBorrar(){
+  try{ localStorage.removeItem('tos-autologin'); }catch(e){}
+  await _llaveBorrar(AUTOL_ID);
   return true;
 }
 function autoLoginActivo(){ try{ return localStorage.getItem('tos-autologin')==='1'; }catch(e){ return false; } }
@@ -5194,7 +5364,11 @@ function autoLoginActivo(){ try{ return localStorage.getItem('tos-autologin')===
 async function autoLoginActivar(){
   if(!_acctKey||!hasAccount())return false;
   const ok=await autoLoginGuardar(_acctKey);
-  if(ok){ try{ localStorage.setItem('tos-autologin','1'); }catch(e){} }
+  if(ok){
+    try{ localStorage.setItem('tos-autologin','1'); }catch(e){}
+    // Excluyente con los cerrojos rápidos: no tiene sentido un PIN que nunca se pide
+    try{ if(pinActivo())await pinQuitar(); if(bioActivo())await bioQuitar(); }catch(e){}
+  }
   return ok;
 }
 // Al arrancar: si está activo y hay clave guardada, se abre la caja sin preguntar
@@ -5213,11 +5387,140 @@ async function autoLoginIntenta(){
     return false;
   }
 }
+// ---------- DESBLOQUEO RÁPIDO: PIN Y HUELLA ----------
+// Escribir una contraseña larga cada vez que abres el móvil empuja a activar el login
+// automático, que es justo lo que anula la protección. El punto medio es un CERROJO
+// DEL DISPOSITIVO: la llave de la caja (CryptoKey no extraíble) se guarda en IndexedDB
+// como en el login automático, pero delante hay un PIN (o la huella) que hay que
+// pasar. Y el precio se dice claro en la propia app:
+//   · protege de quien coja el móvil desbloqueado → SÍ, y con intentos contados.
+//   · protege de quien copie el almacenamiento del navegador → NO. Para eso, la
+//     contraseña, que es lo único que no está en el dispositivo.
+// De ahí que el PIN NO cifre nada (cifrar la caja con 6 dígitos sería peor: un blob
+// que se rompe a fuerza bruta sin límite de intentos). El PIN es un cerrojo con
+// contador, y a los PIN_MAX_TRIES fallos se borra la llave y toca la contraseña.
+const PIN_ID='devkey', PIN_MAX_TRIES=5, PIN_ITER=120000, PIN_MIN=4, PIN_MAX=8;
+function pinInfo(){ try{ return JSON.parse(localStorage.getItem('tos-pin')||'null'); }catch(e){ return null; } }
+function pinActivo(){ const i=pinInfo(); return !!(i&&i.hash); }
+function pinLargo(){ const i=pinInfo(); return (i&&+i.len)||PIN_MIN; }
+function pinIntentosRestantes(){ const i=pinInfo(); return Math.max(0,PIN_MAX_TRIES-((i&&+i.tries)||0)); }
+function _pinNormal(pin){ return String(pin==null?'':pin).replace(/\D/g,''); }
+async function _pinHash(pin,salt,iter){
+  const base=await window.crypto.subtle.importKey('raw',new TextEncoder().encode('tos-pin:'+pin),'PBKDF2',false,['deriveBits']);
+  const bits=await window.crypto.subtle.deriveBits({name:'PBKDF2',salt:salt,iterations:iter,hash:'SHA-256'},base,256);
+  return _b64enc(new Uint8Array(bits));
+}
+// Comparación en tiempo constante: no da pistas por cuánto tarda en decir "no"
+function _igualSeguro(a,b){
+  a=String(a||''); b=String(b||'');
+  if(a.length!==b.length)return false;
+  let d=0; for(let i=0;i<a.length;i++)d|=a.charCodeAt(i)^b.charCodeAt(i);
+  return d===0;
+}
+// Abre la caja con la llave guardada en este dispositivo (la usan PIN y huella)
+async function _abreConLlaveLocal(){
+  const key=await _llaveLeer(PIN_ID);
+  if(!key)return false;
+  const blob=localStorage.getItem('tos-vault');
+  if(blob==null){ _acctKey=key; _vault={}; return true; }
+  try{
+    const v=await _decJSON(key,blob);
+    _acctKey=key; _vault=(v&&typeof v==='object')?v:{};
+    return true;
+  }catch(e){
+    await pinQuitar(); await bioQuitar(); // la llave ya no abre la caja: fuera los cerrojos
+    return false;
+  }
+}
+async function pinActivar(pin){
+  pin=_pinNormal(pin);
+  if(!_acctKey||!hasAccount()||!_cryptoOk())return false;
+  if(pin.length<PIN_MIN||pin.length>PIN_MAX)return false;
+  const salt=window.crypto.getRandomValues(new Uint8Array(16));
+  const hash=await _pinHash(pin,salt,PIN_ITER);
+  const ok=await _llaveGuardar(PIN_ID,_acctKey);
+  if(!ok)return false; // sin llave guardada el PIN no abriría nada: mejor no fingir
+  try{ localStorage.setItem('tos-pin',JSON.stringify({salt:_b64enc(salt),iter:PIN_ITER,hash:hash,tries:0,len:pin.length})); }
+  catch(e){ await _llaveBorrar(PIN_ID); return false; }
+  // PIN y login automático son excluyentes: uno pide algo, el otro no pide nada
+  try{ await autoLoginBorrar(); }catch(e){}
+  return true;
+}
+async function pinQuitar(){
+  try{ localStorage.removeItem('tos-pin'); }catch(e){}
+  if(!bioActivo())await _llaveBorrar(PIN_ID); // si la huella sigue puesta, la llave se queda
+  return true;
+}
+// Devuelve 'ok' | 'mal' | 'bloqueado' | 'no'
+async function pinIntenta(pin){
+  const info=pinInfo();
+  if(!info||!_cryptoOk())return 'no';
+  if(pinIntentosRestantes()<=0){ await pinQuitar(); return 'bloqueado'; }
+  let hash='';
+  try{ hash=await _pinHash(_pinNormal(pin),_b64dec(info.salt),info.iter||PIN_ITER); }catch(e){ return 'no'; }
+  if(!_igualSeguro(hash,info.hash)){
+    info.tries=((+info.tries)||0)+1;
+    try{ localStorage.setItem('tos-pin',JSON.stringify(info)); }catch(e){}
+    if(PIN_MAX_TRIES-info.tries<=0){ await pinQuitar(); return 'bloqueado'; }
+    return 'mal';
+  }
+  const abierta=await _abreConLlaveLocal();
+  if(!abierta)return 'no';
+  info.tries=0;
+  try{ localStorage.setItem('tos-pin',JSON.stringify(info)); }catch(e){}
+  return 'ok';
+}
+// ---- Huella / desbloqueo del dispositivo (WebAuthn como cerrojo) ----
+// No se usa el PRF de WebAuthn (aún no está en todas partes): la huella es la MISMA
+// idea que el PIN, un cerrojo delante de la llave guardada aquí. Lo que aporta es que
+// el gesto lo verifica el sistema operativo, no nosotros.
+function bioSoportado(){ try{ return !!(window.PublicKeyCredential&&navigator.credentials&&navigator.credentials.create); }catch(e){ return false; } }
+function bioActivo(){ try{ return !!localStorage.getItem('tos-bio'); }catch(e){ return false; } }
+async function bioActivar(){
+  if(!_acctKey||!hasAccount()||!bioSoportado())return false;
+  const info=accountInfo()||{};
+  try{
+    const cred=await navigator.credentials.create({publicKey:{
+      challenge:window.crypto.getRandomValues(new Uint8Array(32)),
+      rp:{name:'Torrecillas OS'},
+      user:{id:new TextEncoder().encode('tos:'+(info.user||'usuario')),name:info.user||'usuario',displayName:info.user||'usuario'},
+      pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+      authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'preferred'},
+      attestation:'none',timeout:60000
+    }});
+    if(!cred||!cred.rawId)return false;
+    const ok=await _llaveGuardar(PIN_ID,_acctKey);
+    if(!ok)return false;
+    localStorage.setItem('tos-bio',_b64enc(new Uint8Array(cred.rawId)));
+    try{ await autoLoginBorrar(); }catch(e){}
+    return true;
+  }catch(e){ return false; } // cancelado o sin sensor
+}
+async function bioQuitar(){
+  try{ localStorage.removeItem('tos-bio'); }catch(e){}
+  if(!pinActivo())await _llaveBorrar(PIN_ID);
+  return true;
+}
+async function bioIntenta(){
+  if(!bioActivo()||!bioSoportado())return false;
+  let id=''; try{ id=localStorage.getItem('tos-bio')||''; }catch(e){}
+  if(!id)return false;
+  try{
+    const cred=await navigator.credentials.get({publicKey:{
+      challenge:window.crypto.getRandomValues(new Uint8Array(32)),
+      allowCredentials:[{type:'public-key',id:_b64dec(id)}],
+      userVerification:'required',timeout:60000
+    }});
+    if(!cred)return false;
+  }catch(e){ return false; }
+  return await _abreConLlaveLocal();
+}
 // Arranque rápido: sin animación de inicio ni pantalla de bienvenida
 function arranqueRapido(){ try{ return localStorage.getItem('tos-fastboot')==='1'; }catch(e){ return false; } }
 function lockAccount(){ _acctKey=null; _vault=null; clearTimeout(_vaultTmr); }
 async function removeAccount(){ // descifra: vuelca la caja a localStorage en claro y borra la cuenta
   try{ await autoLoginBorrar(); }catch(e){}
+  try{ await pinQuitar(); await bioQuitar(); }catch(e){} // y los cerrojos de este dispositivo
   if(_vault){ Object.keys(_vault).forEach(k=>{ try{ localStorage.setItem(k,_vault[k]); }catch(e){} }); }
   try{ localStorage.removeItem('tos-vault'); localStorage.removeItem('tos-account'); }catch(e){}
   lockAccount();
@@ -5923,6 +6226,7 @@ function enterDesktop(){
   startIdleWatch(); // auto-bloqueo por inactividad (no-op si no hay cuenta/ajuste)
   try{ checkEventReminders(); }catch(e){} // avisos de la Agenda pendientes
   try{ tkRecordatorios(); }catch(e){} // y lo que vence hoy en Tareas
+  try{ osActualizaBadge(); }catch(e){}  // contador sobre el icono de la app instalada
   try{ enganchaMenuInicioLargo(); }catch(e){} // mantener pulsado = sacar al escritorio
   try{ osPidePersistencia(); }catch(e){}    // que el navegador no desaloje los datos
   try{ osAvisaCopia(); }catch(e){}          // y recordatorio de copia si toca
@@ -5942,6 +6246,9 @@ function enterDesktop(){
   try{restoreSession();}catch(e){}
   // Si la PWA se abrió con un archivo (.epub/.pdf) antes de estar lista, abrirlo ahora
   if(_pendingLaunchFiles){ const f=_pendingLaunchFiles; _pendingLaunchFiles=null; setTimeout(()=>{try{openEbookReader(f[0]);}catch(e){}},400); }
+  // Atajo del icono de la PWA (?app=tareas): tras restaurar la sesión, para que la app
+  // pedida quede delante y no debajo de las ventanas que se reabren solas.
+  setTimeout(()=>{ try{ osAbreAppDeURL(); }catch(e){} },300);
   setTimeout(maybeShowWelcomeTip,1200);
   // Alejandro_Virtual "escribe" al rato de arrancar si aún no has abierto el Messenger
   setTimeout(()=>{if(!_msnOpenedOnce&&!document.getElementById('msn-chat'))msnSetUnread(true);},20000);
@@ -5968,6 +6275,15 @@ function showLogin(){
   const av=document.getElementById('login-avatar'); if(av)av.textContent=info.avatar||'\u{1F464}';
   scr.hidden=false;
   try{ applyI18n(scr); }catch(e){}
+  // Con PIN o huella puestos se entra por el cerrojo rápido; la contraseña sigue a un
+  // clic de distancia (y es la única salida si el PIN se bloquea por fallos).
+  const caja=document.getElementById('login-box'), pinCaja=document.getElementById('login-pinbox');
+  const rapido=pinActivo()||bioActivo();
+  if(pinCaja){
+    pinCaja.hidden=!rapido;
+    if(caja)caja.hidden=rapido;
+    if(rapido)_pinMontaLogin(info);
+  }
   const pass=document.getElementById('login-pass'), go=document.getElementById('login-go'), err=document.getElementById('login-err'), box=document.getElementById('login-box');
   attachPwHelpers(pass,document.getElementById('login-eye'),document.getElementById('login-caps'));
   const attempt=async()=>{
@@ -5990,6 +6306,92 @@ function showLogin(){
     ]);
   };
   setTimeout(()=>{ try{ pass.focus(); }catch(e){} },50);
+}
+// Teclado del PIN en la pantalla de inicio. Se monta cada vez que se muestra (los
+// intentos restantes y el estado de la huella cambian entre visitas).
+function _pinMontaLogin(info){
+  const pinCaja=document.getElementById('login-pinbox'); if(!pinCaja)return;
+  const dots=document.getElementById('pin-dots'), pad=document.getElementById('pin-pad');
+  const err=document.getElementById('pin-err'), bBio=document.getElementById('pin-bio');
+  const u=document.getElementById('login-pin-user');
+  if(u)u.textContent=(info&&info.user)||'Usuario';
+  const av=document.getElementById('login-pin-avatar'); if(av)av.textContent=(info&&info.avatar)||'\u{1F464}';
+  let pin='', ocupado=false;
+  const largo=pinLargo();
+  const pinta=()=>{
+    dots.innerHTML='';
+    for(let i=0;i<largo;i++){ const d=document.createElement('i'); d.className='pin-dot'+(i<pin.length?' on':''); dots.appendChild(d); }
+  };
+  const falla=(msg)=>{
+    err.textContent=msg;
+    pin=''; pinta();
+    pinCaja.classList.remove('shake'); void pinCaja.offsetWidth; pinCaja.classList.add('shake');
+  };
+  const prueba=async()=>{
+    if(ocupado)return;
+    ocupado=true; err.textContent='';
+    const r=await pinIntenta(pin);
+    ocupado=false;
+    if(r==='ok'){ document.getElementById('login-screen').hidden=true; _showWelcomeThenDesktop(); return; }
+    if(r==='bloqueado'){ // se agotaron los intentos: solo queda la contraseña
+      falla(t('pin.blocked'));
+      _pinAContrasena();
+      return;
+    }
+    falla(t('pin.wrong',{n:pinIntentosRestantes()}));
+  };
+  const pulsa=(v)=>{
+    if(ocupado)return;
+    if(v==='del'){ pin=pin.slice(0,-1); pinta(); return; }
+    if(v==='ok'){ if(pin.length>=PIN_MIN)prueba(); return; }
+    if(pin.length>=PIN_MAX)return;
+    pin+=v; pinta();
+    if(pin.length===largo)prueba(); // con el largo justo, entra solo
+  };
+  pad.innerHTML=['1','2','3','4','5','6','7','8','9'].map(n=>'<button type="button" class="pin-key" data-k="'+n+'">'+n+'</button>').join('')
+    +'<button type="button" class="pin-key pin-wide" data-k="del" aria-label="'+escHtml(t('pin.del'))+'">&#9003;</button>'
+    +'<button type="button" class="pin-key" data-k="0">0</button>'
+    +'<button type="button" class="pin-key pin-wide" data-k="ok" aria-label="'+escHtml(t('login.enter'))+'">&#10004;</button>';
+  pad.querySelectorAll('.pin-key').forEach(b=>{ b.onclick=()=>pulsa(b.dataset.k); });
+  // Teclado físico (en el escritorio se agradece). Si ya había uno de una visita
+  // anterior a esta pantalla, fuera: se monta uno por montaje, no uno por visita.
+  if(pinCaja._teclas)document.removeEventListener('keydown',pinCaja._teclas);
+  pinCaja._teclas=(e)=>{
+    if(document.getElementById('login-pinbox').hidden)return;
+    if(/^[0-9]$/.test(e.key)){ e.preventDefault(); pulsa(e.key); }
+    else if(e.key==='Backspace'){ e.preventDefault(); pulsa('del'); }
+    else if(e.key==='Enter'){ e.preventDefault(); pulsa('ok'); }
+  };
+  document.addEventListener('keydown',pinCaja._teclas);
+  if(!pinActivo()){ pad.hidden=true; dots.hidden=true; } // solo huella
+  else { pad.hidden=false; dots.hidden=false; }
+  pinta();
+  err.textContent=pinIntentosRestantes()<PIN_MAX_TRIES?t('pin.left',{n:pinIntentosRestantes()}):'';
+  // Huella: si está puesta se ofrece y se intenta ya (el sistema pinta su propio diálogo)
+  if(bBio){
+    bBio.hidden=!(bioActivo()&&bioSoportado());
+    bBio.onclick=async()=>{
+      bBio.disabled=true;
+      const ok=await bioIntenta();
+      bBio.disabled=false;
+      if(ok){ document.getElementById('login-screen').hidden=true; _showWelcomeThenDesktop(); }
+      else err.textContent=t('pin.biofail');
+    };
+    if(!bBio.hidden&&!pinActivo())setTimeout(()=>bBio.click(),300);
+  }
+  const bPass=document.getElementById('pin-pass');
+  if(bPass)bPass.onclick=_pinAContrasena;
+}
+// Volver a la contraseña de siempre (y soltar el teclado físico del PIN)
+function _pinAContrasena(){
+  const pinCaja=document.getElementById('login-pinbox'), caja=document.getElementById('login-box');
+  if(pinCaja){
+    if(pinCaja._teclas){ document.removeEventListener('keydown',pinCaja._teclas); pinCaja._teclas=null; }
+    pinCaja.hidden=true;
+  }
+  if(caja)caja.hidden=false;
+  const p=document.getElementById('login-pass');
+  if(p)setTimeout(()=>{ try{ p.focus(); }catch(e){} },50);
 }
 // Sesión de invitado: caja EFÍMERA en memoria (sin clave), no se persiste nada y
 // NO se toca la caja cifrada del propietario. Al recargar, desaparece todo.
@@ -6083,19 +6485,79 @@ function openAccountManage(){
     <div style="padding:14px 16px 8px;font-size:12px;color:#222;line-height:1.5;display:flex;gap:10px;align-items:center"><span class="dlg-icon" style="flex-shrink:0">${(info&&info.avatar)||'&#128100;'}</span><span>${t('acct.loggedas',{user:escHtml(info&&info.user||'')})}</span></div>
     <div class="acct-lock-row"><label for="acct-autolock">&#128274; ${escHtml(t('acct.autolock'))}</label>
       <select id="acct-autolock"><option value="0">${escHtml(t('acct.never'))}</option><option value="1">1 min</option><option value="5">5 min</option><option value="15">15 min</option><option value="30">30 min</option></select></div>
+    <div class="acct-lock-row"><span>&#128273; ${escHtml(t('pin.title'))}</span><span class="acct-pinstate" id="acct-pinstate"></span></div>
     <div class="acct-actions"></div>
   </div>`;
   const sel=ov.querySelector('#acct-autolock');
   sel.value=String(autolockMinutes());
   sel.onchange=()=>{ Store.set('tos-autolock',sel.value); resetIdleTimer(); };
+  const est=ov.querySelector('#acct-pinstate');
+  if(est)est.textContent=pinActivo()?t('pin.on'):(bioActivo()?t('pin.bio.on'):t('pin.off'));
   const box=ov.querySelector('.acct-actions');
   const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; el.className='acct-act'+(cls?' '+cls:''); el.onclick=()=>{ ov.remove(); if(fn)fn(); }; box.appendChild(el); };
   mk(t('acct.logout'),'primary',logout);
+  mk(pinActivo()?t('pin.remove'):t('pin.set'),'',()=>{ if(pinActivo())pinConfirmaQuitar(); else openPinSet(); });
+  if(bioSoportado())mk(bioActivo()?t('pin.bio.remove'):t('pin.bio.set'),'',()=>{ if(bioActivo())bioQuitar().then(()=>notify({icon:'&#128302;',title:t('pin.title'),body:t('pin.bio.removed')})); else pinActivaHuella(); });
   mk(t('acct.changepw'),'',openChangePassword);
   mk(t('acct.remove'),'danger',confirmRemoveAccount);
   mk(t('btn.close'),'',null);
   document.body.appendChild(ov);
   const first=box.querySelector('button'); if(first)try{first.focus();}catch(e){}
+}
+// ---- Poner / quitar el PIN desde la cuenta ----
+// El aviso NO es decorativo: es la diferencia entre un cerrojo y el cifrado, y el
+// usuario tiene que poder decidir con eso delante.
+function openPinSet(){
+  if(!hasAccount()||!isVaultUnlocked()){ xpDialog(t('pin.title'),'<div class="dlg-icon">&#128274;</div><div>'+t('acct.mustlogin')+'</div>'); return null; }
+  if(!_cryptoOk()){ xpDialog(t('pin.title'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+escHtml(t('acct.nocrypto'))+'</div>'); return null; }
+  const ov=document.createElement('div'); ov.className='xp-dialog-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('pin.set'))}" class="bkx-dlg">
+    <div class="bkx-title">&#128273; ${escHtml(t('pin.set'))}</div>
+    <div class="bkx-body">
+      <p class="bkx-desc">${escHtml(t('pin.intro'))}</p>
+      <div class="bkx-pw">
+        <input type="password" class="pin-in1" inputmode="numeric" autocomplete="off" maxlength="${PIN_MAX}" placeholder="${escHtml(t('pin.new'))}" aria-label="${escHtml(t('pin.new'))}">
+        <input type="password" class="pin-in2" inputmode="numeric" autocomplete="off" maxlength="${PIN_MAX}" placeholder="${escHtml(t('pin.again'))}" aria-label="${escHtml(t('pin.again'))}">
+        <div class="bkx-note">${escHtml(t('pin.warn'))}</div>
+      </div>
+      <div class="bkx-err" role="alert"></div>
+    </div>
+    <div class="xp-dialog-btns bkx-btns"></div>
+  </div>`;
+  const q=(c)=>ov.querySelector('.'+c);
+  const p1=q('pin-in1'), p2=q('pin-in2'), err=q('bkx-err'), btns=q('bkx-btns');
+  const soloNumeros=(el)=>el.addEventListener('input',()=>{ el.value=el.value.replace(/\D/g,''); });
+  soloNumeros(p1); soloNumeros(p2);
+  const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
+  let go;
+  go=mk(t('btn.ok'),'primary bkx-go',async()=>{
+    const a=p1.value, b=p2.value;
+    const fallo=(m)=>{ err.textContent=m; err.classList.add('on'); };
+    if(a.length<PIN_MIN||a.length>PIN_MAX)return fallo(t('pin.bad',{min:PIN_MIN,max:PIN_MAX}));
+    if(a!==b)return fallo(t('pin.mismatch'));
+    if(/^(\d)\1+$/.test(a)||a==='1234'||a==='123456')return fallo(t('pin.tooeasy'));
+    err.classList.remove('on');
+    go.disabled=true; go.classList.add('busy');
+    const ok=await pinActivar(a);
+    if(ok){ ov.remove(); notify({icon:'&#128273;',title:t('pin.title'),body:t('pin.done')}); }
+    else { go.disabled=false; go.classList.remove('busy'); fallo(t('acct.fail')); }
+  });
+  mk(t('btn.cancel'),'',()=>ov.remove());
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ p1.focus(); }catch(e){} },30);
+  return ov;
+}
+function pinConfirmaQuitar(){
+  xpConfirm(t('pin.title'),t('pin.removeq'),()=>{ pinQuitar().then(()=>{ try{ notify({icon:'&#128273;',title:t('pin.title'),body:t('pin.removed')}); }catch(e){} }); },t('pin.remove'));
+}
+function pinActivaHuella(){
+  xpConfirm(t('pin.title'),t('pin.bio.q'),()=>{
+    bioActivar().then(ok=>{
+      if(ok)notify({icon:'&#128302;',title:t('pin.title'),body:t('pin.bio.done')});
+      else xpDialog(t('pin.title'),'<div class="dlg-icon">&#128302;</div><div>'+escHtml(t('pin.bio.fail'))+'</div>');
+    });
+  },t('pin.bio.set'));
 }
 async function logout(){
   if(!hasAccount())return;
@@ -6133,6 +6595,7 @@ function openChangePassword(){
     try{ _acctKey=await _deriveKey(np.value,salt,iter); const saved=await persistVault();
       if(saved){ localStorage.setItem('tos-account',JSON.stringify(Object.assign({},info,{salt:_b64enc(salt),ts:Date.now()})));
         if(autoLoginActivo()){ try{ await autoLoginGuardar(_acctKey); }catch(e){} } // la clave vieja ya no abre la caja
+        if(pinActivo()||bioActivo()){ try{ await _llaveGuardar(PIN_ID,_acctKey); }catch(e){} } // ídem para el PIN/huella
         ov.remove(); notify({icon:'&#128273;',title:t('acct.title'),body:t('acct.pwchanged')}); }
       else { _acctKey=oldKey; ok.disabled=false; er.textContent=t('acct.fail'); }
     }catch(e){ _acctKey=oldKey; ok.disabled=false; er.textContent=t('acct.fail'); }
@@ -6296,6 +6759,14 @@ function isStandalone(){
 // El manifest normal es manifest.webmanifest (archivo real, en el <head>). Esto es la red de
 // seguridad: si ese archivo no se ha desplegado, se inyecta uno equivalente en data URI para
 // que la instalación siga funcionando con index.html suelto.
+// Atajos del icono de la PWA. La lista es la MISMA que el manifest real: si añades
+// uno hay que tocar los dos sitios (un test lo comprueba) y `OS_APP_URLS`.
+const OS_ATAJOS_PWA=[
+  {id:'tareas',n:'Tareas',s:'Tareas'},
+  {id:'compra',n:'Lista de la compra',s:'Compra'},
+  {id:'gastos',n:'Apuntar un gasto',s:'Gastos'},
+  {id:'notas',n:'Notas',s:'Notas'}
+];
 (function setupManifest(){
   try{
     if(location.protocol!=='https:'&&location.protocol!=='http:')return;
@@ -6319,7 +6790,11 @@ function isStandalone(){
       icons:[
         {src:TOS_ICON_192,sizes:'192x192',type:'image/png',purpose:'any'},
         {src:TOS_ICON_512,sizes:'512x512',type:'image/png',purpose:'any maskable'}
-      ]
+      ],
+      // Mantener pulsado el icono en el escritorio del móvil: los mismos atajos que
+      // declara el manifest de verdad (ver manifest.webmanifest).
+      shortcuts:OS_ATAJOS_PWA.map(a=>({name:a.n,short_name:a.s,url:'./?app='+a.id,
+        icons:[{src:TOS_ICON_192,sizes:'192x192',type:'image/png'}]}))
     };
     const l=document.createElement('link');
     l.rel='manifest';l.id='pwa-manifest';
@@ -6439,6 +6914,221 @@ if('launchQueue' in window && window.launchQueue && 'setConsumer' in window.laun
     });
   }catch(e){}
 }
+// ========== ATAJOS DEL ICONO: ?app=<id> ==========
+// Mantener pulsado el icono de la PWA en Android da acceso directo a una app. Cada
+// atajo abre `./?app=tareas`; aquí se traduce el id a su función. Va por LISTA BLANCA
+// a propósito: un enlace de fuera con ?app=lo-que-sea no puede invocar nada más.
+const OS_APP_URLS={tareas:'openTareas',compra:'openCompra',gastos:'openGastos',notas:'openNotes',
+  agenda:'openAgenda',recetas:'openRecetas',habitos:'openHabitos',tiempo:'openTiempo',tour:'openTour'};
+function osAppDeURL(busqueda){
+  try{
+    const m=/[?&]app=([a-z]+)/.exec(busqueda==null?(location.search||''):busqueda);
+    return (m&&OS_APP_URLS[m[1]])||'';
+  }catch(e){ return ''; }
+}
+function osAbreAppDeURL(){
+  const fn=osAppDeURL();
+  // La URL se limpia siempre (aunque el id no valga): si no, recargar volvería a abrirla
+  try{ if(/[?&]app=/.test(location.search||'')&&history.replaceState)history.replaceState(null,'',location.pathname); }catch(e){}
+  if(!fn)return false;
+  try{ if(typeof window[fn]==='function'){ window[fn](); return true; } }catch(e){}
+  return false;
+}
+
+// ========== COMPARTIR TEXTO O UN ENLACE CON LA APP ==========
+// En el móvil lo que más se comparte no son archivos, es texto y enlaces. El service
+// worker los deja en la caché y aquí se pregunta qué hacer con ellos, reusando las
+// apps que ya entienden lenguaje normal (`tkParse` para tareas, `cpParse` para la
+// compra), que es justo lo que hace falta cuando el texto llega de otra app.
+function osTextoCompartido(d){
+  const ti=String((d&&d.title)||'').trim(), tx=String((d&&d.text)||'').trim(), u=String((d&&d.url)||'').trim();
+  const partes=[];
+  if(ti&&tx.indexOf(ti)<0)partes.push(ti); // muchas apps mandan el título repetido dentro del texto
+  if(tx)partes.push(tx);
+  if(u&&tx.indexOf(u)<0)partes.push(u); // Android suele meter el enlace DENTRO de text
+  return partes.join('\n').trim();
+}
+function osEnlaceCompartido(d){
+  const u=String((d&&d.url)||'').trim();
+  if(/^https?:\/\//i.test(u))return u;
+  const m=/(https?:\/\/[^\s]+)/i.exec(String((d&&d.text)||''));
+  return m?m[1]:'';
+}
+function osGuardaNotaCompartida(texto,titulo){
+  const arr=notesLoad();
+  const cuerpo=String(texto||'');
+  const tit=String(titulo||'').trim()||cuerpo.split('\n')[0].slice(0,60)||t('nt.untitled');
+  arr.unshift({id:'n'+Date.now()+Math.floor(Math.random()*999),title:tit,body:cuerpo,ts:Date.now()});
+  if(!notesSave(arr))return false;
+  return true;
+}
+function osDialogoTextoRecibido(d){
+  const texto=osTextoCompartido(d);
+  if(!texto)return null;
+  const enlace=osEnlaceCompartido(d);
+  const corto=texto.length>140?texto.slice(0,140)+'…':texto;
+  const ov=xpDialog(t('rx.title'),'<div class="dlg-icon">&#128228;</div><div class="sh-box">'
+    +'<div class="sh-t">'+escHtml(t('rx.what'))+'</div>'
+    +'<div class="rx-prev">'+escHtml(corto)+'</div>'
+    +'<button type="button" class="sh-op" id="rx-nota"><b>&#128221; '+escHtml(t('rx.note'))+'</b><span>'+escHtml(t('rx.note.d'))+'</span></button>'
+    +'<button type="button" class="sh-op" id="rx-tarea"><b>&#9989; '+escHtml(t('rx.task'))+'</b><span>'+escHtml(t('rx.task.d'))+'</span></button>'
+    +'<button type="button" class="sh-op" id="rx-compra"><b>&#128722; '+escHtml(t('rx.shop'))+'</b><span>'+escHtml(t('rx.shop.d'))+'</span></button>'
+    +(enlace?'<button type="button" class="sh-op" id="rx-web"><b>&#128279; '+escHtml(t('rx.open'))+'</b><span>'+escHtml(enlace.slice(0,60))+'</span></button>':'')
+    +'<button type="button" class="sh-op" id="rx-copia"><b>&#128203; '+escHtml(t('rx.copy'))+'</b><span>'+escHtml(t('rx.copy.d'))+'</span></button>'
+    +'</div>',[{label:t('btn.cancel')}]);
+  const cierra=()=>{ try{ ov.remove(); }catch(e){} };
+  ov.querySelector('#rx-nota').onclick=()=>{
+    cierra();
+    if(osGuardaNotaCompartida(texto,(d&&d.title)||''))
+      { notify({icon:'&#128221;',title:t('nt.title'),body:t('rx.saved')}); openNotes(); }
+    else xpDialog(t('nt.title'),'<div class="dlg-icon">&#128190;</div><div>'+escHtml(t('docs.full'))+'</div>');
+  };
+  ov.querySelector('#rx-tarea').onclick=()=>{
+    cierra();
+    // Una línea = una tarea, y cada una pasa por el parser de lenguaje normal
+    const lineas=texto.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,20);
+    tkImporta(lineas.map(l=>{ const p=tkParse(l); return {text:p.text,due:p.due,prio:p.prio,rep:p.rep}; }),true);
+  };
+  ov.querySelector('#rx-compra').onclick=()=>{
+    cierra();
+    // Los enlaces no son productos: en un texto compartido casi siempre sobra la URL
+    const items=texto.split('\n').map(s=>s.trim()).filter(l=>l&&!/^https?:\/\//i.test(l)).slice(0,40).map(l=>cpParse(l)).filter(x=>x.name);
+    if(items.length)cpImporta(items,true); else xpDialog(t('cp.title'),'<div class="dlg-icon">&#128722;</div><div>'+escHtml(t('rx.nothing'))+'</div>');
+  };
+  const web=ov.querySelector('#rx-web');
+  if(web)web.onclick=()=>{ cierra(); openNetscape(); setTimeout(()=>{ try{ netscapeGo(enlace); }catch(e){} },350); };
+  ov.querySelector('#rx-copia').onclick=()=>{ cierra(); osCopy(texto); announce(t('sh.copied')); };
+  return ov;
+}
+async function openSharedText(){
+  if(typeof caches==='undefined')return false;
+  let d=null;
+  try{
+    const c=await caches.open('tos-'+APP_VERSION);
+    const resp=await c.match('shared-text');
+    if(!resp)return false;
+    d=await resp.json();
+    await c.delete('shared-text'); // que no vuelva a salir en la siguiente carga
+  }catch(e){ return false; }
+  return !!osDialogoTextoRecibido(d);
+}
+if(/[?&]shared=text/.test(location.search)){
+  window.addEventListener('load',()=>{
+    // Con margen: el diálogo necesita el escritorio montado (y el i18n aplicado)
+    setTimeout(()=>{ openSharedText().then(()=>{ try{ if(history.replaceState)history.replaceState(null,'',location.pathname); }catch(e){} }); },1200);
+  });
+}
+
+// ========== PANTALLA ENCENDIDA (Screen Wake Lock) ==========
+// Cocinar con una receta abierta o leer un rato y que la pantalla se apague cada 30
+// segundos es insufrible. El bloqueo se PIERDE al minimizar o cambiar de pestaña, así
+// que hay que volver a pedirlo al regresar: por eso se recuerda la intención en
+// `_wakeQuiere` en vez de fiarse del objeto del navegador.
+let _wakeLock=null, _wakeQuiere=false;
+function osWakeSoportado(){ try{ return !!(navigator.wakeLock&&navigator.wakeLock.request); }catch(e){ return false; } }
+async function osWakeLock(on){
+  _wakeQuiere=!!on;
+  if(!osWakeSoportado())return false;
+  if(!on){
+    try{ if(_wakeLock)await _wakeLock.release(); }catch(e){}
+    _wakeLock=null;
+    return false;
+  }
+  if(_wakeLock)return true;
+  try{
+    _wakeLock=await navigator.wakeLock.request('screen');
+    _wakeLock.addEventListener('release',()=>{ _wakeLock=null; });
+    return true;
+  }catch(e){ _wakeLock=null; return false; } // sin permiso o sin batería: no pasa nada
+}
+function osWakeActivo(){ return !!_wakeLock; }
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden||!_wakeQuiere||_wakeLock)return;
+  osWakeLock(true); // al volver a la app se vuelve a pedir
+});
+// Botón reutilizable: se pinta solo si el navegador sabe hacerlo
+function osBotonWake(btn){
+  if(!btn)return null;
+  if(!osWakeSoportado()){ btn.hidden=true; return null; }
+  const pinta=()=>{ btn.classList.toggle('on',_wakeQuiere); btn.setAttribute('aria-pressed',_wakeQuiere?'true':'false'); btn.title=t(_wakeQuiere?'wake.on':'wake.off'); };
+  btn.onclick=async()=>{ const ok=await osWakeLock(!_wakeQuiere); if(_wakeQuiere&&!ok)_wakeQuiere=false; pinta(); if(_wakeQuiere)announce(t('wake.on')); };
+  pinta();
+  return pinta;
+}
+
+// ========== DICTADO POR VOZ (Web Speech) ==========
+// El móvil ya trae reconocimiento de voz; las apps que entienden lenguaje normal
+// (`tkParse`, `cpParse`) son justo las que se agradece dictar. Donde no exista, el
+// botón del micro no se pinta: mejor que un botón que no hace nada.
+function osDictadoSoportado(){ try{ return !!(window.SpeechRecognition||window.webkitSpeechRecognition); }catch(e){ return false; } }
+function osDictado(onTexto,onFin){
+  if(!osDictadoSoportado())return null;
+  let rec=null;
+  try{
+    const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+    rec=new R();
+    rec.lang=({es:'es-ES',en:'en-US',ca:'ca-ES',ru:'ru-RU'})[currentLang()]||'es-ES';
+    rec.interimResults=false;
+    rec.maxAlternatives=1;
+    rec.continuous=false;
+    rec.onresult=(ev)=>{
+      let txt='';
+      try{ for(let i=ev.resultIndex;i<ev.results.length;i++)txt+=ev.results[i][0].transcript; }catch(e){}
+      txt=txt.trim();
+      if(txt&&onTexto)onTexto(txt);
+    };
+    rec.onerror=()=>{ if(onFin)onFin(false); };
+    rec.onend=()=>{ if(onFin)onFin(true); };
+    rec.start();
+  }catch(e){ return null; }
+  return { parar(){ try{ rec.stop(); }catch(e){} } };
+}
+// Engancha un botón de micro a un campo de texto. El texto dictado se AÑADE a lo que
+// haya escrito (no lo pisa) y `alEnviar` permite dar de alta directamente.
+function osBotonDictado(btn,input,alEnviar){
+  if(!btn)return;
+  if(!osDictadoSoportado()){ btn.hidden=true; return; }
+  let ses=null;
+  btn.title=t('voz.dictar');
+  btn.setAttribute('aria-label',t('voz.dictar'));
+  const fin=()=>{ ses=null; btn.classList.remove('rec'); };
+  btn.onclick=()=>{
+    if(ses){ ses.parar(); fin(); return; }
+    btn.classList.add('rec');
+    announce(t('voz.escuchando'));
+    ses=osDictado((txt)=>{
+      if(!input)return;
+      const previo=(input.value||'').trim();
+      input.value=previo?previo+' '+txt:txt;
+      try{ input.focus(); }catch(e){}
+      if(alEnviar)alEnviar(input.value);
+    },fin);
+    if(!ses)fin();
+  };
+}
+
+// ========== CONTADOR EN EL ICONO DE LA APP (Badging API) ==========
+// El número que sale sobre el icono de la PWA instalada: lo que vence hoy en Tareas
+// más los eventos de hoy de la Agenda que aún no se han avisado. Se recalcula desde
+// el punto único de guardado de cada uno (`tkWrite`/`eventsSave`), así que no hay que
+// acordarse de llamarlo en cada pantalla.
+function osBadgeCuenta(){
+  let n=0;
+  let hoy=''; try{ hoy=tkHoyISO(); }catch(e){ return 0; }
+  try{ n+=tkAll().filter(x=>x&&!x.done&&x.due&&x.due<=hoy).length; }catch(e){}
+  try{ n+=eventsLoad().filter(e=>e&&e.date===hoy&&!e.notified).length; }catch(e){}
+  return n;
+}
+function osActualizaBadge(){
+  const n=osBadgeCuenta();
+  try{
+    if(!('setAppBadge' in navigator))return n;
+    if(n>0)Promise.resolve(navigator.setAppBadge(n)).catch(()=>{});
+    else Promise.resolve(navigator.clearAppBadge()).catch(()=>{});
+  }catch(e){}
+  return n;
+}
+
 // Chrome/Edge avisan cuando la app es instalable; guardamos el evento para dispararlo desde el diálogo
 let installPromptEvent=null;
 window.addEventListener('beforeinstallprompt',(e)=>{
@@ -9132,6 +9822,7 @@ function openEbookReader(preloadFile){
       <button type="button" class="reader-btn" id="rd-search" title="${t('reader.search')}" disabled>&#128269;</button>
       <button type="button" class="reader-btn" id="rd-bm" title="${t('reader.bookmarks')}" disabled>&#128278;</button>
       <button type="button" class="reader-btn reader-aa" id="rd-aa" title="${t('reader.type')}" disabled>A<small>A</small></button>
+      <button type="button" class="reader-btn os-wake" id="rd-wake" title="${t('wake.off')}" aria-pressed="false">&#9728;&#65039;</button>
       <button type="button" class="reader-btn" id="rd-full" title="${t('reader.fullscreen')}">${RD_FS_EXPAND}</button>
       <input type="file" id="rd-file" accept=".epub,.pdf,application/epub+zip,application/pdf" hidden>
     </div>
@@ -9385,6 +10076,8 @@ function openEbookReader(preloadFile){
     // se enganchará en el onload del iframe (ver showChapter)
     win._rdSelectHook=onFrameSelect; win._rdReapply=reapplyHighlights; win._rdHideFloat=hideFloat;
 
+    // -- Pantalla encendida mientras lees --
+    osBotonWake(win.querySelector('#rd-wake'));
     // -- Pantalla completa --
     const bFull=win.querySelector('#rd-full');
     bFull.onclick=()=>{
@@ -9640,9 +10333,11 @@ function notesMarkdown(src){
   if(inCode)out.push('<pre class="nt-pre">'+code.join('\n')+'</pre>');
   return out.join('\n');
 }
-function openNotes(){
+// preId = abrir directamente esa nota (lo usa el buscador de contenidos)
+let _notesSelHook=null;
+function openNotes(preId){
   closeStartMenu();
-  if(focusExisting('nt-list'))return;
+  if(focusExisting('nt-list')){ if(preId&&_notesSelHook)_notesSelHook(preId); return; }
   const content=`<div class="nt-root">
     <div class="nt-side">
       <div class="nt-side-top">
@@ -9657,6 +10352,8 @@ function openNotes(){
         <div class="nt-ebar">
           <input type="text" id="nt-title" class="nt-title" placeholder="${escHtml(t('nt.untitled'))}" aria-label="${escHtml(t('nt.untitled'))}">
           <button type="button" class="nt-mini" id="nt-preview" title="${t('nt.preview')}">&#128065;&#65039;</button>
+          <button type="button" class="nt-mini os-mic" id="nt-mic">&#127908;</button>
+          <button type="button" class="nt-mini" id="nt-pdf" title="${t('pdf.make')}">&#128196;</button>
           <button type="button" class="nt-mini nt-del" id="nt-del" title="${t('btn.delete')}">&#128465;&#65039;</button>
         </div>
         <textarea id="nt-body" class="nt-body" spellcheck="false" placeholder="${escHtml(t('nt.bodyhint'))}"></textarea>
@@ -9715,6 +10412,14 @@ function openNotes(){
     titleEl.oninput=()=>{ if(previewing)setPreview(false); touch(); };
     bodyEl.oninput=()=>{ updCount(); touch(); };
     win.querySelector('#nt-preview').onclick=()=>setPreview(!previewing);
+    // Dictar dentro de la nota: se añade al final de lo que haya y se guarda como si
+    // lo hubieras escrito (por eso pasa por `touch`).
+    osBotonDictado(win.querySelector('#nt-mic'),bodyEl,()=>{ if(previewing)setPreview(false); updCount(); touch(); });
+    win.querySelector('#nt-pdf').onclick=()=>{
+      flushSave(); // que el PDF lleve lo último escrito, no lo de hace 400 ms
+      const n=noteById(curId); if(!n)return;
+      try{ pdfEntrega(notaPDF(n),((n.title||'nota').replace(/[\\/:*?"<>|]/g,'_'))+'.pdf',n.title||t('nt.title')); }catch(e){}
+    };
     win.querySelector('#nt-del').onclick=async()=>{
       if(!curId)return;
       const ok=await xpConfirm(t('nt.title'),t('nt.delconfirm'));
@@ -9723,8 +10428,11 @@ function openNotes(){
     };
     renderEl.addEventListener('click',(e)=>{ const a=e.target.closest('a.nt-link'); if(a&&a.dataset.url){ e.preventDefault(); window.open(a.dataset.url,'_blank','noopener'); } });
     (win._cleanups=win._cleanups||[]).push(()=>flushSave()); // al cerrar, no perder lo último escrito
+    _notesSelHook=(nid)=>{ if(noteById(nid))selectNote(nid); };
+    (win._cleanups=win._cleanups||[]).push(()=>{ _notesSelHook=null; });
     renderList();
-    if(notes.length)selectNote(notes.slice().sort((a,b)=>b.ts-a.ts)[0].id); else showEditor(false);
+    const inicial=(preId&&noteById(preId))?preId:(notes.length?notes.slice().sort((a,b)=>b.ts-a.ts)[0].id:null);
+    if(inicial)selectNote(inicial); else showEditor(false);
   }});
 }
 
@@ -10249,7 +10957,8 @@ function openCommandPalette(){
   const draw=()=>{ list.querySelectorAll('.cmdk-item').forEach((b,i)=>b.classList.toggle('sel',i===sel)); const el=list.querySelector('.cmdk-item.sel'); if(el)el.scrollIntoView({block:'nearest'}); };
   const render=()=>{
     const q=_searchNorm(input.value.trim());
-    cur=(q?all.filter(it=>it.norm.includes(q)):all).slice(0,60); sel=0;
+    let cont=[]; if(q)try{ cont=osBuscaContenido(q,20); }catch(e){} // notas, tareas, gastos…
+    cur=(q?all.filter(it=>it.norm.includes(q)):all).slice(0,40).concat(cont); sel=0;
     list.innerHTML=cur.length?cur.map((m,i)=>`<button type="button" class="cmdk-item${i===0?' sel':''}" data-i="${i}"><span class="cmdk-ic">${m.icon}</span><span class="cmdk-l">${escHtml(m.label)}</span><span class="cmdk-h">${escHtml(m.hint)}</span></button>`).join(''):'<div class="cmdk-none">'+escHtml(t('cmdk.none'))+'</div>';
     list.querySelectorAll('.cmdk-item').forEach(b=>{ b.onmousemove=()=>{ sel=+b.dataset.i; draw(); }; b.onclick=()=>run(+b.dataset.i); });
   };
@@ -10299,7 +11008,7 @@ function openControlPanel(){
     {ic:'&#128272;',key:'cpl.account',run:()=>openAccountEntry()},
     {ic:'&#127760;',key:'cpl.language',run:()=>setTimeout(toggleLangMenu,0)},
     {ic:'&#128266;',key:'cpl.sound',run:()=>setTimeout(toggleVolumePopup,0)},
-    {ic:'&#128190;',key:'cpl.backup',run:()=>osExportBackup()},
+    {ic:'&#128190;',key:'cpl.backup',run:()=>osDialogoExportar()},
     {ic:'&#127899;&#65039;',key:'cpl.gadgets',run:()=>openGadgetGallery()},
     {ic:'&#128200;',key:'cpl.tasks',run:()=>openTaskManager()},
     {ic:'&#128269;',key:'cpl.magnifier',run:()=>toggleMagnifier()},
@@ -10481,7 +11190,7 @@ function openPiano(){
 
 // ========== AGENDA — calendario con eventos y recordatorios ==========
 function eventsLoad(){ try{ const a=JSON.parse(Store.get('tos-events')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
-function eventsSave(a){ return Store.set('tos-events',JSON.stringify(a)); }
+function eventsSave(a){ const ok=Store.set('tos-events',JSON.stringify(a)); try{ osActualizaBadge(); }catch(e){} return ok; }
 function _dayKey(y,m,d){ return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
 function eventsForDay(key){ return eventsLoad().filter(e=>e.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||'')); }
 // Avisos: notifica eventos vencidos en las últimas 24h que aún no se hayan avisado
@@ -10950,7 +11659,7 @@ const TK_PRIOS=[['baja','#7b8794'],['media','#c58a2b'],['alta','#c0533f']];
 const TK_LISTAS_DEF=['personal','casa','trabajo'];
 const TK_DIAS=['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];
 function tkAll(){ try{ const a=JSON.parse(Store.get('tos-tareas')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
-function tkWrite(a){ return Store.set('tos-tareas',JSON.stringify(a)); }
+function tkWrite(a){ const ok=Store.set('tos-tareas',JSON.stringify(a)); try{ osActualizaBadge(); }catch(e){} return ok; }
 function tkListas(){
   try{ const a=JSON.parse(Store.get('tos-tareas-listas')||'null'); if(Array.isArray(a)&&a.length)return a; }catch(e){}
   return TK_LISTAS_DEF.slice();
@@ -11108,6 +11817,7 @@ function openTareas(){
   const content=`<div class="tk-root" id="tk-root">
     <div class="tk-add">
       <input type="text" id="tk-in" class="tk-in" autocomplete="off" spellcheck="false" placeholder="llamar al fontanero mañana !alta" data-i18n-ph="tk.ph" data-i18n-aria="tk.add" aria-label="Nueva tarea">
+      <button type="button" class="tk-btn os-mic" id="tk-mic">&#127908;</button>
       <select id="tk-list" class="tk-list" data-i18n-aria="tk.list" aria-label="Lista"></select>
       <button type="button" class="tk-btn primary" id="tk-ok">&#10133;</button>
     </div>
@@ -11245,6 +11955,7 @@ function openTareas(){
     };
     inp.onkeydown=(e)=>{ e.stopPropagation(); if(e.key==='Enter'){ e.preventDefault(); if(anade(inp.value))inp.value=''; } };
     $('#tk-ok').onclick=()=>{ if(anade(inp.value))inp.value=''; };
+    osBotonDictado($('#tk-mic'),inp); // dictar la tarea: el parser ya entiende «mañana !alta»
     win.querySelectorAll('.tk-v').forEach(b=>b.onclick=()=>{ vista=b.dataset.v; win.querySelectorAll('.tk-v').forEach(x=>x.classList.toggle('on',x===b)); render(); });
     $('#tk-flist').onchange=()=>{ filtroLista=$('#tk-flist').value; render(); };
     $('#tk-menu').onclick=()=>{
@@ -11715,6 +12426,7 @@ function openRecetas(){
         <button type="button" class="rc-tab on" data-v="recetas" data-i18n="rc.recipes">Recetas</button>
         <button type="button" class="rc-tab" data-v="menu" data-i18n="rc.menu">Men&uacute; semanal</button>
       </span>
+      <button type="button" class="rc-btn os-wake" id="rc-wake" aria-pressed="false">&#9728;&#65039;</button>
       <input type="search" id="rc-buscar" class="rc-buscar" placeholder="Buscar…" data-i18n-ph="rc.search">
       <button type="button" class="rc-btn primary" id="rc-nueva">&#10133; <span data-i18n="rc.new">Nueva</span></button>
     </div>
@@ -11751,6 +12463,7 @@ function openRecetas(){
             +'<button type="button" class="rc-mini" data-add="'+escHtml(r.id)+'">&#128722; '+escHtml(t('rc.addshop'))+'</button>'
             +'<button type="button" class="rc-mini" data-edit="'+escHtml(r.id)+'">&#9998; '+escHtml(t('btn.edit'))+'</button>'
             +'<button type="button" class="rc-mini" data-share="'+escHtml(r.id)+'">&#128228; '+escHtml(t('rc.share'))+'</button>'
+            +'<button type="button" class="rc-mini" data-pdf="'+escHtml(r.id)+'">&#128196; PDF</button>'
             +'<button type="button" class="rc-mini danger" data-del="'+escHtml(r.id)+'">&#10006;</button>'
           +'</div></div>':'')
         +'</div>').join('')+'</div>';
@@ -11765,6 +12478,10 @@ function openRecetas(){
       });
       body.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editor(porId(b.dataset.edit)));
       body.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>mandaCompra([porId(b.dataset.add)]));
+      body.querySelectorAll('[data-pdf]').forEach(b=>b.onclick=()=>{
+        const r=porId(b.dataset.pdf);
+        if(r)try{ pdfEntrega(recetaPDF(r),(r.n||'receta').replace(/[\\/:*?"<>|]/g,'_')+'.pdf',r.n||t('rc.title')); }catch(e){}
+      });
       body.querySelectorAll('[data-share]').forEach(b=>b.onclick=()=>{
         const r=porId(b.dataset.share);
         if(!r)return;
@@ -11859,6 +12576,7 @@ function openRecetas(){
     $('#rc-buscar').oninput=(e)=>{ busca=e.target.value; renderRecetas(); };
     $('#rc-buscar').onkeydown=(e)=>e.stopPropagation();
     $('#rc-nueva').onclick=()=>editor(null);
+    osBotonWake($('#rc-wake')); // cocinar sin que se apague la pantalla cada 30 segundos
     $('#rc-tocompra').onclick=()=>mandaCompra(null);
 
     sync();
@@ -11929,6 +12647,244 @@ function pdfDesdeImagenes(paginas,opts){
     +' /Info << /Producer (Torrecillas OS) /Title ('+String(opts.titulo||'Documento').replace(/[()\\]/g,'')+') >> >>\n'
     +'startxref\n'+xref+'\n%%EOF\n');
   return new Blob(partes,{type:'application/pdf'});
+}
+// ---------- PDF DE TEXTO (informes, listas, recetas, notas) ----------
+// El otro generador mete imágenes; este escribe TEXTO de verdad, así que un informe de
+// gastos o una lista de la compra salen nítidos, se pueden buscar y pesan 3 KB.
+// Se usan las fuentes base-14 (van dentro de cualquier lector, no hay que incrustar
+// nada): **Courier** para el cuerpo y **Helvetica-Bold** para los títulos. Courier no
+// es capricho retro: al ser monoespaciada su anchura es exacta (0,6 em), así que el
+// ajuste de líneas y las columnas de importes salen cuadradas sin la tabla de anchuras
+// de una proporcional, que habría que incrustar y verificar.
+// Codificación WinAnsi: acentos y ñ van directos (Latin-1) y las comillas tipográficas
+// o el euro se traducen a su posición; lo que no exista sale como '?' antes que como
+// un glifo aleatorio.
+const _PDF_WIN={0x20AC:0x80,0x201A:0x82,0x0192:0x83,0x201E:0x84,0x2026:0x85,0x2020:0x86,0x2021:0x87,
+  0x02C6:0x88,0x2030:0x89,0x0160:0x8A,0x2039:0x8B,0x0152:0x8C,0x017D:0x8E,0x2018:0x91,0x2019:0x92,
+  0x201C:0x93,0x201D:0x94,0x2022:0x95,0x2013:0x96,0x2014:0x97,0x02DC:0x98,0x2122:0x99,0x0161:0x9A,
+  0x203A:0x9B,0x0153:0x9C,0x017E:0x9E,0x0178:0x9F};
+function _pdfWinAnsi(s){
+  let out='';
+  const str=String(s==null?'':s);
+  for(const ch of str){
+    const cp=ch.codePointAt(0);
+    if(cp===0x0A||cp===0x0D||cp===0x09)continue; // los saltos los pone el layout
+    let b;
+    if(cp<0x80)b=cp;
+    else if(_PDF_WIN[cp]!=null)b=_PDF_WIN[cp];
+    else if(cp>=0xA0&&cp<=0xFF)b=cp;
+    else b=0x3F;
+    if(b===0x28||b===0x29||b===0x5C)out+='\\'+String.fromCharCode(b); // ( ) \ escapados
+    else if(b<32||b>126)out+='\\'+('000'+b.toString(8)).slice(-3);    // el resto, en octal
+    else out+=String.fromCharCode(b);
+  }
+  return out;
+}
+const PDF_TXT={margen:48,arriba:58,abajo:56,cuerpo:10,inter:14.2,tit:16,sub:11.5,pie:8};
+const _PDF_COU=0.6;   // anchura exacta de Courier, en em
+const _PDF_HELV=0.62; // estimación PRUDENTE para Helvetica-Bold (solo decide dónde cortar)
+function _pdfEnvuelve(txt,max){
+  const out=[];
+  String(txt==null?'':txt).split('\n').forEach(parrafo=>{
+    const palabras=parrafo.split(/\s+/).filter(x=>x.length);
+    if(!palabras.length){ out.push(''); return; }
+    let linea='';
+    palabras.forEach(p=>{
+      while(p.length>max){ // una palabra más larga que la línea (una URL, p.ej.)
+        if(linea){ out.push(linea); linea=''; }
+        out.push(p.slice(0,max)); p=p.slice(max);
+      }
+      if(!linea)linea=p;
+      else if(linea.length+1+p.length<=max)linea+=' '+p;
+      else { out.push(linea); linea=p; }
+    });
+    if(linea)out.push(linea);
+  });
+  return out.length?out:[''];
+}
+// bloques: [{k:'titulo'|'sub'|'linea'|'fila'|'sep'|'blanco', txt, der}]
+function pdfDesdeTexto(bloques,opts){
+  opts=opts||{};
+  const W=PDF_A4[0], H=PDF_A4[1], m=PDF_TXT.margen, util=W-m*2;
+  const maxCuerpo=Math.max(8,Math.floor(util/(PDF_TXT.cuerpo*_PDF_COU)));
+  const maxTit=Math.max(6,Math.floor(util/(PDF_TXT.tit*_PDF_HELV)));
+  const maxSub=Math.max(6,Math.floor(util/(PDF_TXT.sub*_PDF_HELV)));
+  const paginas=[]; let ops=[], y=H-PDF_TXT.arriba;
+  const salta=()=>{ paginas.push(ops); ops=[]; y=H-PDF_TXT.arriba; };
+  const sitio=(alto)=>{ if(y-alto<PDF_TXT.abajo)salta(); };
+  const texto=(f,s,x,yy,tx,gris)=>ops.push({f:f,s:s,x:x,y:yy,t:tx,g:gris});
+  (bloques||[]).forEach(b=>{
+    const k=(b&&b.k)||'linea';
+    if(k==='blanco'){ sitio(PDF_TXT.inter*0.6); y-=PDF_TXT.inter*0.6; return; }
+    if(k==='sep'){ sitio(10); y-=4; ops.push({ln:[m,y,W-m,y]}); y-=8; return; }
+    if(k==='titulo'){
+      _pdfEnvuelve(b.txt,maxTit).forEach(l=>{ sitio(PDF_TXT.tit+8); texto('F2',PDF_TXT.tit,m,y,l); y-=PDF_TXT.tit+6; });
+      y-=4; return;
+    }
+    if(k==='sub'){
+      y-=4;
+      _pdfEnvuelve(b.txt,maxSub).forEach(l=>{ sitio(PDF_TXT.sub+8); texto('F2',PDF_TXT.sub,m,y,l); y-=PDF_TXT.sub+5; });
+      return;
+    }
+    if(k==='fila'){
+      const der=String(b.der==null?'':b.der);
+      const anchoDer=der.length*PDF_TXT.cuerpo*_PDF_COU;
+      const izqMax=Math.max(4,maxCuerpo-der.length-2);
+      let izq=String(b.txt==null?'':b.txt).replace(/\s+/g,' ').trim();
+      if(izq.length>izqMax)izq=izq.slice(0,izqMax-1)+'…';
+      sitio(PDF_TXT.inter);
+      texto('F1',PDF_TXT.cuerpo,m,y,izq);
+      if(der)texto('F1',PDF_TXT.cuerpo,W-m-anchoDer,y,der);
+      y-=PDF_TXT.inter;
+      return;
+    }
+    _pdfEnvuelve(b.txt,maxCuerpo).forEach(l=>{ sitio(PDF_TXT.inter); texto('F1',PDF_TXT.cuerpo,m,y,l); y-=PDF_TXT.inter; });
+  });
+  paginas.push(ops);
+  // Pie con la numeración: se pone al final, cuando ya se sabe cuántas páginas hay
+  const pie=String(opts.pie||'Torrecillas OS');
+  paginas.forEach((pg,i)=>{
+    const txt=pie+' · '+(i+1)+'/'+paginas.length;
+    pg.push({f:'F3',s:PDF_TXT.pie,x:m,y:PDF_TXT.abajo-24,t:txt,g:'0.45'});
+  });
+  // ---- Escritura del archivo ----
+  const partes=[], offsets=[]; let pos=0;
+  const push=(bytes)=>{ partes.push(bytes); pos+=bytes.length; };
+  const pushStr=(s)=>push(_pdfBytes(s));
+  const objIni=(n)=>{ offsets[n]=pos; pushStr(n+' 0 obj\n'); };
+  const nPag=paginas.length, totalObj=5+nPag*2;
+  pushStr('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  objIni(1); pushStr('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  const kids=[]; for(let i=0;i<nPag;i++)kids.push((6+i*2)+' 0 R');
+  objIni(2); pushStr('<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+nPag+' >>\nendobj\n');
+  [['Courier'],['Helvetica-Bold'],['Helvetica']].forEach((f,i)=>{
+    objIni(3+i);
+    pushStr('<< /Type /Font /Subtype /Type1 /BaseFont /'+f[0]+' /Encoding /WinAnsiEncoding >>\nendobj\n');
+  });
+  paginas.forEach((pg,i)=>{
+    const nPage=6+i*2, nCont=nPage+1;
+    objIni(nPage);
+    pushStr('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+W.toFixed(2)+' '+H.toFixed(2)+']'
+      +' /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents '+nCont+' 0 R >>\nendobj\n');
+    let cs='';
+    pg.forEach(o=>{
+      if(o.ln){ cs+='0.6 w 0.75 G '+o.ln[0].toFixed(2)+' '+o.ln[1].toFixed(2)+' m '+o.ln[2].toFixed(2)+' '+o.ln[3].toFixed(2)+' l S\n'; return; }
+      cs+='BT /'+o.f+' '+o.s+' Tf '+(o.g||'0')+' g '+o.x.toFixed(2)+' '+o.y.toFixed(2)+' Td ('+_pdfWinAnsi(o.t)+') Tj ET\n';
+    });
+    objIni(nCont);
+    pushStr('<< /Length '+cs.length+' >>\nstream\n'+cs+'endstream\nendobj\n');
+  });
+  const xref=pos;
+  let tabla='xref\n0 '+(totalObj+1)+'\n0000000000 65535 f \n';
+  for(let n=1;n<=totalObj;n++)tabla+=('0000000000'+(offsets[n]||0)).slice(-10)+' 00000 n \n';
+  pushStr(tabla);
+  pushStr('trailer\n<< /Size '+(totalObj+1)+' /Root 1 0 R'
+    +' /Info << /Producer (Torrecillas OS) /Title ('+_pdfWinAnsi(opts.titulo||'Documento')+') >> >>\n'
+    +'startxref\n'+xref+'\n%%EOF\n');
+  return new Blob(partes,{type:'application/pdf'});
+}
+// Salida común de cualquier PDF: compartir, guardar en Mis documentos o descargar
+function pdfEntrega(blob,nombre,titulo){
+  const kb=Math.max(1,Math.round(blob.size/1024));
+  const descarga=()=>{
+    try{
+      const a=document.createElement('a');
+      const url=URL.createObjectURL(blob);
+      a.href=url; a.download=nombre; a.click();
+      setTimeout(()=>{ try{ URL.revokeObjectURL(url); }catch(e){} },3000);
+    }catch(e){}
+  };
+  const botones=[{label:t('btn.cancel')}];
+  if(navigator.canShare&&navigator.share){
+    botones.push({label:t('pdf.share'),action:()=>{
+      try{
+        const f=new File([blob],nombre,{type:'application/pdf'});
+        if(navigator.canShare({files:[f]})){ navigator.share({files:[f],title:nombre}).catch(()=>{}); return; }
+      }catch(e){}
+      descarga();
+    }});
+  }
+  botones.push({label:t('pdf.save'),action:()=>{
+    const rd=new FileReader();
+    rd.onload=()=>fsSaveDialog('pdf',String(titulo||'Documento').slice(0,40),String(rd.result||''),null,()=>{});
+    rd.readAsDataURL(blob);
+  }});
+  botones.push({label:t('pdf.download'),primary:true,action:descarga});
+  return xpDialog(t('pdf.title'),'<div class="dlg-icon">&#128196;</div><div>'+escHtml(t('pdf.ready',{n:kb}))+'</div>',botones);
+}
+// ---------- LO QUE CADA APP MANDA AL PDF ----------
+// Solo montan los bloques; la maquetación, el corte de páginas y la salida son del
+// generador, así que añadir un informe nuevo son diez líneas.
+function _pdfCabecera(titulo,sub){
+  const b=[{k:'titulo',txt:titulo}];
+  if(sub)b.push({k:'linea',txt:sub});
+  b.push({k:'sep'});
+  return b;
+}
+function gastosPDF(ym){
+  ym=ym||gastosMesActual();
+  const its=gastosMes(ym), r=gastosResumen(its,ym);
+  const b=_pdfCabecera(t('gs.title')+' · '+gastosMesNombre(ym),new Date().toLocaleDateString());
+  b.push({k:'fila',txt:t('gs.spent'),der:gastoFmt(r.gasto)});
+  b.push({k:'fila',txt:t('gs.income'),der:gastoFmt(r.ingreso)});
+  b.push({k:'fila',txt:t('gs.balance'),der:gastoFmt(r.saldo)});
+  const tope=+(gastosPresu()[ym]||0);
+  if(tope)b.push({k:'fila',txt:t('gs.budget'),der:gastoFmt(tope)});
+  const cats=Object.keys(r.porCat).sort((a,c)=>r.porCat[c]-r.porCat[a]);
+  if(cats.length){
+    b.push({k:'sub',txt:t('gs.category')});
+    cats.forEach(c=>b.push({k:'fila',txt:t('gs.c.'+c),der:gastoFmt(r.porCat[c])}));
+  }
+  if(its.length){
+    b.push({k:'sub',txt:t('pdf.movs')});
+    its.slice().sort((a,c)=>String(a.d).localeCompare(String(c.d))).forEach(g=>{
+      b.push({k:'fila',txt:g.d+'  '+(g.n||t('gs.c.'+g.c)),der:(g.t==='i'?'+':'-')+gastoFmt(+g.a||0)});
+    });
+  }else b.push({k:'linea',txt:t('gs.empty')});
+  return pdfDesdeTexto(b,{titulo:t('gs.title')+' '+ym,pie:'Torrecillas OS · '+t('gs.title')});
+}
+function compraPDF(){
+  const items=cpLista();
+  const b=_pdfCabecera(t('cp.title'),new Date().toLocaleDateString());
+  const pend=items.filter(i=>!i.ok), hechos=items.filter(i=>i.ok);
+  const linea=(i)=>({k:'fila',txt:(i.ok?'[x] ':'[ ] ')+((+i.qty>1)?(i.qty+(i.unit?' '+i.unit:'')+' × '):'')+i.name,
+    der:(+i.price?gastoFmt((+i.price)*(+i.qty||1)):'')});
+  // Los iconos de los pasillos son entidades HTML (&#127822;): en un PDF saldrían tal
+  // cual, así que aquí solo va el nombre.
+  CP_PASILLOS.forEach(p=>{
+    const dentro=pend.filter(i=>(i.cat||'')===p[0]);
+    if(!dentro.length)return;
+    b.push({k:'sub',txt:t('cp.p.'+p[0])});
+    dentro.forEach(i=>b.push(linea(i)));
+  });
+  const sinPasillo=pend.filter(i=>!CP_PASILLOS.some(p=>p[0]===(i.cat||'')));
+  if(sinPasillo.length){ b.push({k:'sub',txt:t('cp.auto')}); sinPasillo.forEach(i=>b.push(linea(i))); }
+  if(hechos.length){ b.push({k:'sub',txt:t('cp.incart',{n:hechos.length})}); hechos.forEach(i=>b.push(linea(i))); }
+  if(!items.length)b.push({k:'linea',txt:t('cp.empty')});
+  else { b.push({k:'sep'}); b.push({k:'fila',txt:t('pdf.total'),der:gastoFmt(cpTotal(items))}); }
+  return pdfDesdeTexto(b,{titulo:t('cp.title'),pie:'Torrecillas OS · '+t('cp.title')});
+}
+function recetaPDF(rec){
+  if(!rec)return null;
+  const sub=[rec.t?rec.t+' min':'',rec.p?rec.p+' '+t('rc.people').toLowerCase():''].filter(Boolean).join(' · ');
+  const b=_pdfCabecera(rec.n||t('rc.title'),sub);
+  b.push({k:'sub',txt:t('pdf.ingredients')});
+  (rec.ing||[]).forEach(i=>b.push({k:'linea',txt:'· '+i}));
+  b.push({k:'sub',txt:t('pdf.steps')});
+  String(rec.pasos||'').split('\n').map(s=>s.trim()).filter(Boolean).forEach((p,i)=>b.push({k:'linea',txt:(i+1)+'. '+p}));
+  return pdfDesdeTexto(b,{titulo:rec.n||t('rc.title'),pie:'Torrecillas OS · '+t('rc.title')});
+}
+function notaPDF(nota){
+  if(!nota)return null;
+  const b=_pdfCabecera((nota.title||'').trim()||t('nt.untitled'),nota.ts?new Date(nota.ts).toLocaleDateString():'');
+  // El Markdown se lleva al PDF como texto: los encabezados en negrita y el resto tal cual
+  String(nota.body||'').split('\n').forEach(ln=>{
+    const h=/^(#{1,3})\s+(.*)$/.exec(ln);
+    if(h){ b.push({k:'sub',txt:h[2]}); return; }
+    if(!ln.trim()){ b.push({k:'blanco'}); return; }
+    b.push({k:'linea',txt:ln.replace(/^\s*[-*]\s+/,'· ')});
+  });
+  return pdfDesdeTexto(b,{titulo:(nota.title||t('nt.title')),pie:'Torrecillas OS · '+t('nt.title')});
 }
 // Canvas -> JPEG en bytes (con la calidad que se pida)
 function pdfJpegDeCanvas(cv,calidad){
@@ -12854,6 +13810,7 @@ function openCompra(){
   const content=`<div class="cp-root" id="cp-root">
     <div class="cp-add">
       <input type="text" id="cp-in" class="cp-in" autocomplete="off" spellcheck="false" placeholder="2 leche 1,20" data-i18n-ph="cp.ph" data-i18n-aria="cp.add" aria-label="Añadir">
+      <button type="button" class="cp-btn os-mic" id="cp-mic">&#127908;</button>
       <select id="cp-cat" class="cp-cat" data-i18n-aria="cp.aisle" aria-label="Pasillo"></select>
       <button type="button" class="cp-btn primary" id="cp-ok">&#10133;</button>
       <div class="cp-sug" id="cp-sug" hidden></div>
@@ -12957,6 +13914,7 @@ function openCompra(){
       if(anade(inp.value)){ inp.value=''; sug.hidden=true; inp.focus(); }
     };
     $('#cp-ok').onclick=()=>{ if(anade(inp.value)){ inp.value=''; sug.hidden=true; inp.focus(); } };
+    osBotonDictado($('#cp-mic'),inp); // «dos leches» en el súper, sin escribir
     // Repetir la última compra guardada
     $('#cp-repeat').onclick=()=>{
       const guardadas=cpGuardadas();
@@ -13033,6 +13991,7 @@ function openCompra(){
             '<div class="cp-pick-it"><span>'+new Date(l.ts).toLocaleDateString('es-ES')+' · '+l.items.length+' '+escHtml(t('cp.things'))+'</span></div>').join('')+'</div>');
         }},
         {label:t('sh.import'),action:()=>$('#cp-file').click()},
+        {label:t('pdf.make'),action:()=>{ try{ pdfEntrega(compraPDF(),'lista-compra.pdf',t('cp.title')); }catch(e){} }},
         {sep:true},
         {label:t('cp.clearall'),action:()=>{
           xpConfirm(t('cp.title'),t('cp.clearq'),()=>{ items=[]; guarda(); render(); },t('btn.delete'));
@@ -13441,6 +14400,7 @@ function openGastos(){
           csv.split('\r\n').forEach((linea,r)=>linea.split(';').forEach((v,c)=>{ if(v!=='')cells[ssRef(c,r)]={v:v.replace(/^"|"$/g,'')}; }));
           fsSaveDialog('sheet',t('gs.title')+' '+ym,JSON.stringify({cells}),null,()=>setStatus(t('gs.exported')));
         }},
+        {label:t('pdf.make'),action:()=>{ try{ pdfEntrega(gastosPDF(ym),'gastos-'+ym+'.pdf',t('gs.title')+' '+ym); setStatus(t('gs.exported')); }catch(e){} }},
         {label:t('gs.tocsv'),action:()=>{
           const csv=gastosCSV(its);
           const a=document.createElement('a');
@@ -16405,13 +17365,46 @@ function openNetscape(){
   }});
 }
 
-// ========== COPIA DE SEGURIDAD (todo el estado tos-* a un archivo) ==========
-function osExportBackup(){
+// ========== COPIA DE SEGURIDAD (eliges qué se lleva y, si quieres, cifrada) ==========
+// El archivo de copia es el único sitio donde los datos sobreviven a un "borrar datos
+// del sitio" o a desinstalar la PWA, así que importa. Dos cosas que le faltaban:
+// (1) elegir QUÉ se lleva —hay quien quiere pasar los récords a otro móvil pero no las
+// claves ni los documentos— y (2) poder CIFRARLA con contraseña, porque una copia en
+// claro en la carpeta de descargas la lee cualquiera que coja el móvil.
+// El cifrado es el mismo que el de la caja de la cuenta: PBKDF2 (200k, SHA-256) +
+// AES-GCM 256, y la contraseña del archivo NO tiene que ser la de la cuenta.
+// `osExportBackup()` sin argumentos sigue exportándolo TODO en claro (los que ya la
+// llamaban y las pruebas), y `osDialogoExportar()` es el camino de la interfaz.
+//
+// Cada clave `tos-*` cae en un grupo. El orden importa: primero las listas exactas,
+// luego los prefijos, luego los patrones, y lo que no encaje en ninguno va a 'otros',
+// así que una clave nueva NUNCA se queda fuera de la copia por despiste.
+const BACKUP_CATS=[
+  {id:'ajustes',ic:'&#9881;&#65039;',keys:['tos-theme','tos-wp','tos-wp-paint','tos-taskbar-color','tos-window-color','tos-brightness','tos-saturation','tos-darkmode','tos-dim','tos-era','tos-lang','tos-volume','tos-eq','tos-startup-sound','tos-ui-sounds','tos-scrsv','tos-scrsv-min','tos-icon-pos','tos-desk-shortcuts','tos-desk-deleted','tos-gadgets','tos-docs-view','tos-fastboot','tos-autolock','tos-dnd','tos-session','tos-calc-mode','tos-tour','tos-tour-guide','tos-persist','tos-trash','tos-graph','tos-backup-sel','tos-backup-last','tos-backup-aviso']},
+  {id:'juegos',ic:'&#127942;',keys:['tos-achievements','tos-played'],re:/-best/},
+  {id:'docs',ic:'&#128450;&#65039;',keys:['tos-files','tos-files-trash','tos-folders','tos-sheet']},
+  {id:'notas',ic:'&#128221;',keys:['tos-notes','tos-notepad','tos-stickies']},
+  {id:'dia',ic:'&#128197;',keys:['tos-events','tos-recetas','tos-menu','tos-habitos'],pref:['tos-gastos','tos-tareas','tos-compra','tos-tiempo','tos-luz']},
+  {id:'claves',ic:'&#128273;',keys:['tos-keys'],warn:true},
+  {id:'lector',ic:'&#128214;',pref:['tos-reader']},
+  {id:'otros',ic:'&#128230;'} // cajón de sastre: MSN, Outlook, eMule, historial de QR, ritmos...
+];
+// Fuera de la copia: la cuenta y su caja, y los cerrojos de ESTE dispositivo. El PIN,
+// la huella y el login automático no valen nada en otro móvil (allí no está la llave
+// guardada en IndexedDB): llevarlos solo daría una pantalla de PIN que no abre nada.
+const BACKUP_NO_EXPORTAR=['tos-account','tos-vault','tos-pin','tos-bio','tos-autologin'];
+function osBackupCat(k){
+  for(let i=0;i<BACKUP_CATS.length;i++){ const c=BACKUP_CATS[i]; if(c.keys&&c.keys.indexOf(k)>=0)return c.id; }
+  for(let i=0;i<BACKUP_CATS.length;i++){ const c=BACKUP_CATS[i]; if(c.pref&&c.pref.some(p=>k.indexOf(p)===0))return c.id; }
+  for(let i=0;i<BACKUP_CATS.length;i++){ const c=BACKUP_CATS[i]; if(c.re&&c.re.test(k))return c.id; }
+  return 'otros';
+}
+// Todo el estado exportable, ya DESCIFRADO si hay sesión abierta (copia portable)
+function osBackupDatos(){
   const data={};
-  const skip=(k)=>k==='tos-account'||k==='tos-vault'; // no exportar los metadatos/caja de la cuenta
+  const skip=(k)=>BACKUP_NO_EXPORTAR.indexOf(k)>=0;
   try{
     if(isVaultUnlocked()){
-      // Con sesión iniciada, exporta los ajustes DESCIFRADOS (copia portable y restaurable)
       Object.keys(_vault).forEach(k=>{ if(k.indexOf('tos-')===0&&!skip(k))data[k]=_vault[k]; });
       const lang=localStorage.getItem('tos-lang'); if(lang!=null)data['tos-lang']=lang;
     }else{
@@ -16421,37 +17414,243 @@ function osExportBackup(){
       }
     }
   }catch(e){}
-  const json=JSON.stringify({app:'torrecillas-os',version:APP_VERSION,fecha:new Date().toISOString(),data});
-  try{ Store.set('tos-backup-last',String(Date.now())); }catch(e){} // para el recordatorio de copia
+  return data;
+}
+// Resumen por grupos: lo usa el selector y también el aviso al importar
+function osBackupGrupos(datos){
+  const data=datos||osBackupDatos();
+  const por={};
+  Object.keys(data).forEach(k=>{
+    const c=osBackupCat(k);
+    if(!por[c])por[c]={n:0,bytes:0};
+    por[c].n++; por[c].bytes+=k.length+String(data[k]==null?'':data[k]).length;
+  });
+  return BACKUP_CATS.filter(c=>por[c.id]).map(c=>({id:c.id,ic:c.ic,warn:!!c.warn,n:por[c.id].n,bytes:por[c.id].bytes}));
+}
+function _bkTam(bytes){ return bytes<1024?'<1 KB':(bytes<1048576?Math.round(bytes/1024)+' KB':(bytes/1048576).toFixed(1)+' MB'); }
+// "1 datos" cantaba mucho: hay clave aparte para el singular (y para el cero del total)
+function _bkCuenta(clave,n,bytes){ return t(clave+(n===1?'.1':(n===0&&clave==='bk.total'?'.0':'')),{n:n,kb:_bkTam(bytes)}); }
+// cats = array de ids de grupo; sin cats (o null) se lleva TODO
+function osBackupJSON(cats){
+  const data=osBackupDatos();
+  const sel=cats?new Set(cats):null;
+  const out={};
+  Object.keys(data).forEach(k=>{ if(!sel||sel.has(osBackupCat(k)))out[k]=data[k]; });
+  const obj={app:'torrecillas-os',version:APP_VERSION,fecha:new Date().toISOString(),data:out};
+  if(sel)obj.grupos=cats.slice();
+  return JSON.stringify(obj);
+}
+function _bkNombre(cifrada){ return 'torrecillas-os-copia-'+new Date().toISOString().slice(0,10)+(cifrada?'-cifrada':'')+'.json'; }
+// Blob en vez de data: URL — con un fondo de Paint o varios archivos guardados la copia
+// pasa de sobra de los pocos MB que aguanta una URL de datos y la descarga fallaba en
+// silencio.
+function osDescargaTexto(nombre,texto,tipo){
   try{
     const a=document.createElement('a');
-    a.download='torrecillas-os-copia-'+new Date().toISOString().slice(0,10)+'.json';
-    // Blob en vez de data: URL — con un fondo de Paint o varios archivos guardados la
-    // copia pasa de sobra de los pocos MB que aguanta una URL de datos y la descarga
-    // fallaba en silencio.
+    a.download=nombre;
     let url='';
-    try{ url=URL.createObjectURL(new Blob([json],{type:'application/json'})); }catch(e){}
-    a.href=url||('data:application/json;charset=utf-8,'+encodeURIComponent(json));
+    try{ url=URL.createObjectURL(new Blob([texto],{type:tipo||'application/json'})); }catch(e){}
+    a.href=url||('data:'+(tipo||'application/json')+';charset=utf-8,'+encodeURIComponent(texto));
     a.click();
     if(url)setTimeout(()=>{try{URL.revokeObjectURL(url);}catch(e){}},2000);
-  }catch(e){}
+    return true;
+  }catch(e){ return false; }
+}
+// Entrega la copia por donde toque. Compartir es el camino bueno en el móvil: la
+// carpeta de Descargas es lo primero que se borra al hacer sitio, mientras que el menú
+// del sistema la manda a Drive, a WhatsApp o al PC por Bluetooth. Si el navegador no
+// sabe compartir archivos, cae en la descarga de siempre.
+function osEntregaCopia(nombre,texto,compartir){
+  if(compartir){
+    try{
+      if(navigator.canShare&&navigator.share){
+        const f=new File([texto],nombre,{type:'application/json'});
+        if(navigator.canShare({files:[f]})){
+          navigator.share({files:[f],title:nombre}).catch(()=>{});
+          return 'share';
+        }
+      }
+    }catch(e){}
+  }
+  return osDescargaTexto(nombre,texto)?'download':'';
+}
+function osExportBackup(cats,compartir){
+  const json=osBackupJSON(cats);
+  try{ Store.set('tos-backup-last',String(Date.now())); }catch(e){} // para el recordatorio de copia
+  osEntregaCopia(_bkNombre(false),json,compartir);
   return json;
 }
-function osImportBackup(json,sinConfirmar){
+// Copia cifrada: el sobre va en claro (app/fecha/versión + sal e iteraciones, que hacen
+// falta para derivar la clave) y la copia entera viaja dentro del AES-GCM.
+async function osExportBackupCifrado(cats,password,compartir){
+  if(!_cryptoOk())throw new Error('nocrypto');
+  const salt=window.crypto.getRandomValues(new Uint8Array(16)); const iter=200000;
+  const key=await _deriveKey(password,salt,iter);
+  const blob=await _encJSON(key,JSON.parse(osBackupJSON(cats)));
+  const sobre=JSON.stringify({app:'torrecillas-os',enc:'pbkdf2-aes-gcm',ver:1,version:APP_VERSION,fecha:new Date().toISOString(),salt:_b64enc(salt),iter:iter,blob:blob});
+  try{ Store.set('tos-backup-last',String(Date.now())); }catch(e){}
+  osEntregaCopia(_bkNombre(true),sobre,compartir);
+  return sobre;
+}
+function _bkAvisa(cats,grupos,cifrada,via){
+  let n=0; cats.forEach(id=>{ const g=grupos.filter(x=>x.id===id)[0]; if(g)n+=g.n; });
+  const cuerpo=t(cifrada?'bk.done.enc':'bk.done',{n:n})+(via==='share'?' '+t('bk.sent'):'');
+  try{ notify({icon:'&#128190;',title:t('bk.title'),body:cuerpo}); }catch(e){}
+}
+// Selector de exportación. OJO: las búsquedas internas van por CLASE, no por id —
+// con dos diálogos abiertos a la vez jsdom devuelve el elemento del OTRO diálogo.
+function osDialogoExportar(){
+  const grupos=osBackupGrupos();
+  if(!grupos.length){ xpDialog(t('bk.sel.title'),'<div class="dlg-icon">&#128190;</div><div>'+escHtml(t('bk.empty'))+'</div>'); return null; }
+  let previa=null; try{ previa=JSON.parse(Store.get('tos-backup-sel')||'null'); }catch(e){}
+  const marcado=(id)=>Array.isArray(previa)?previa.indexOf(id)>=0:true; // por defecto, todo
+  uiSfx('dialog');
+  const ov=document.createElement('div');
+  ov.className='xp-dialog-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('bk.sel.title'))}" class="bkx-dlg">
+    <div class="bkx-title">&#128190; ${escHtml(t('bk.sel.title'))}</div>
+    <div class="bkx-body">
+      <p class="bkx-desc">${escHtml(t('bk.sel.desc'))}</p>
+      <div class="bkx-quick"><button type="button" class="bkx-all">${escHtml(t('bk.all'))}</button><button type="button" class="bkx-none">${escHtml(t('bk.none'))}</button></div>
+      <div class="bkx-list">${grupos.map(g=>`<label class="bkx-item"><input type="checkbox" class="bkx-chk" value="${g.id}"${marcado(g.id)?' checked':''}><span><b>${g.ic} ${escHtml(t('bk.cat.'+g.id))}</b><i>${escHtml(_bkCuenta('bk.count',g.n,g.bytes))}</i>${g.warn?'<i class="warn">'+escHtml(t('bk.cat.claves.w'))+'</i>':''}</span></label>`).join('')}</div>
+      <div class="bkx-total"></div>
+      <label class="bkx-enc"><input type="checkbox" class="bkx-cif"><span><b>&#128274; ${escHtml(t('bk.enc'))}</b><i>${escHtml(t('bk.enc.d'))}</i></span></label>
+      <div class="bkx-pw" hidden>
+        <label class="pw-wrap"><input type="password" class="bkx-pw1 pw-input" placeholder="${escHtml(t('bk.pw'))}" aria-label="${escHtml(t('bk.pw'))}" autocomplete="new-password"><button type="button" class="pw-eye bkx-eye" aria-label="${escHtml(t('bk.eye'))}">&#128065;&#65039;</button></label>
+        <input type="password" class="bkx-pw2" placeholder="${escHtml(t('bk.pw2'))}" aria-label="${escHtml(t('bk.pw2'))}" autocomplete="new-password">
+        <div class="bkx-warn">&#9888;&#65039; ${escHtml(t('bk.caps'))}</div>
+        <div class="bkx-note">${escHtml(t('bk.pw.note'))}</div>
+      </div>
+      <div class="bkx-err" role="alert"></div>
+    </div>
+    <div class="xp-dialog-btns bkx-btns"></div>
+  </div>`;
+  const q=(c)=>ov.querySelector('.'+c);
+  const chks=[].slice.call(ov.querySelectorAll('.bkx-chk'));
+  const total=q('bkx-total'), cif=q('bkx-cif'), pwBox=q('bkx-pw'), pw1=q('bkx-pw1'), pw2=q('bkx-pw2'), err=q('bkx-err');
+  const pinta=()=>{
+    let n=0,b=0;
+    chks.forEach(c=>{ if(c.checked){ const g=grupos.filter(x=>x.id===c.value)[0]; if(g){ n+=g.n; b+=g.bytes; } } });
+    total.textContent=_bkCuenta('bk.total',n,b);
+  };
+  chks.forEach(c=>c.addEventListener('change',pinta));
+  pinta();
+  q('bkx-all').onclick=()=>{ chks.forEach(c=>{c.checked=true;}); pinta(); };
+  q('bkx-none').onclick=()=>{ chks.forEach(c=>{c.checked=false;}); pinta(); };
+  attachPwHelpers(pw1,q('bkx-eye'),q('bkx-warn'));
+  cif.addEventListener('change',()=>{ pwBox.hidden=!cif.checked; if(cif.checked)setTimeout(()=>{try{pw1.focus();}catch(e){}},20); });
+  const fallo=(msg)=>{ err.textContent=msg; err.classList.add('on'); };
+  const btns=q('bkx-btns');
+  const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
+  let go, comp;
+  const exportar=(compartir,boton)=>{
+    const cats=chks.filter(c=>c.checked).map(c=>c.value);
+    if(!cats.length){ fallo(t('bk.err.none')); return; }
+    err.classList.remove('on');
+    try{ Store.set('tos-backup-sel',JSON.stringify(cats)); }catch(e){} // la próxima vez, igual
+    if(!cif.checked){ const via=osExportBackup(cats,compartir); ov.remove(); _bkAvisa(cats,grupos,false,compartir?'share':''); return via; }
+    if(!_cryptoOk()){ fallo(t('bk.nocrypto')); return; }
+    if((pw1.value||'').length<4){ fallo(t('bk.err.short')); return; }
+    if(pw1.value!==pw2.value){ fallo(t('bk.err.match')); return; }
+    const b=boton||go;
+    b.disabled=true; b.classList.add('busy'); // el PBKDF2 tarda su rato
+    osExportBackupCifrado(cats,pw1.value,compartir)
+      .then(()=>{ ov.remove(); _bkAvisa(cats,grupos,true,compartir?'share':''); })
+      .catch(()=>{ b.disabled=false; b.classList.remove('busy'); fallo(t('bk.err.enc')); });
+  };
+  go=mk(t('bk.go'),'primary bkx-go',()=>exportar(false,go));
+  // Compartir solo si el navegador sabe mandar archivos: en el escritorio no suele
+  // haber menú del sistema y un botón que no hace nada es peor que no tenerlo.
+  if(navigator.canShare&&navigator.share){
+    comp=mk(t('bk.share'),'bkx-share',()=>exportar(true,comp));
+    comp.title=t('bk.share.d');
+  }
+  mk(t('btn.cancel'),'',()=>ov.remove());
+  ov.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ e.preventDefault(); ov.remove(); } });
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ go.focus(); }catch(e){} },30);
+  return ov;
+}
+// Pide la contraseña de una copia cifrada. El fallo de autenticación de AES-GCM ES la
+// comprobación de la contraseña: no hay verificador aparte que dé pistas.
+function osDialogoClaveCopia(obj,sinConfirmar){
+  uiSfx('dialog');
+  const ov=document.createElement('div');
+  ov.className='xp-dialog-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('bk.imp.enc.t'))}" class="bkx-dlg">
+    <div class="bkx-title">&#128274; ${escHtml(t('bk.imp.enc.t'))}</div>
+    <div class="bkx-body">
+      <p class="bkx-desc">${escHtml(t('bk.imp.enc',{f:String(obj.fecha||'').slice(0,10)}))}</p>
+      <div class="bkx-pw">
+        <label class="pw-wrap"><input type="password" class="bkx-pw1 pw-input" placeholder="${escHtml(t('bk.pw'))}" aria-label="${escHtml(t('bk.pw'))}" autocomplete="current-password"><button type="button" class="pw-eye bkx-eye" aria-label="${escHtml(t('bk.eye'))}">&#128065;&#65039;</button></label>
+        <div class="bkx-warn">&#9888;&#65039; ${escHtml(t('bk.caps'))}</div>
+      </div>
+      <div class="bkx-err" role="alert"></div>
+    </div>
+    <div class="xp-dialog-btns bkx-btns"></div>
+  </div>`;
+  const q=(c)=>ov.querySelector('.'+c);
+  const pw=q('bkx-pw1'), err=q('bkx-err'), btns=q('bkx-btns');
+  attachPwHelpers(pw,q('bkx-eye'),q('bkx-warn'));
+  const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
+  let go;
+  const descifrar=()=>{
+    if(!pw.value){ err.textContent=t('bk.imp.bad'); err.classList.add('on'); return; }
+    err.classList.remove('on');
+    go.disabled=true; go.classList.add('busy');
+    osImportaCopiaCifrada(obj,pw.value,sinConfirmar).then(ok=>{
+      if(ok){ ov.remove(); return; }
+      go.disabled=false; go.classList.remove('busy');
+      err.textContent=t('bk.imp.bad'); err.classList.add('on');
+      pw.value=''; try{ pw.focus(); }catch(e){}
+    });
+  };
+  go=mk(t('bk.imp.dec'),'primary bkx-go',descifrar);
+  mk(t('btn.cancel'),'',()=>ov.remove());
+  pw.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); descifrar(); } });
+  ov.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ e.preventDefault(); ov.remove(); } });
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ pw.focus(); }catch(e){} },30);
+  return ov;
+}
+// Descifra y restaura. Devuelve una promesa (hay que derivar la clave) que resuelve a
+// false si la contraseña no vale, sin tocar nada.
+async function osImportaCopiaCifrada(obj,password,sinConfirmar){
+  if(!_cryptoOk()||!obj||!obj.salt||!obj.blob)return false;
+  let plano=null;
+  try{
+    const key=await _deriveKey(password,_b64dec(obj.salt),obj.iter||200000);
+    plano=await _decJSON(key,obj.blob);
+  }catch(e){ return false; }
+  if(!plano||typeof plano!=='object')return false;
+  return osImportBackup(JSON.stringify(plano),sinConfirmar)===true;
+}
+// password solo para uso programático (pruebas): con él devuelve una PROMESA.
+function osImportBackup(json,sinConfirmar,password){
   let obj=null;
   try{obj=JSON.parse(json);}catch(e){}
+  if(obj&&obj.app==='torrecillas-os'&&obj.enc){
+    if(!_cryptoOk()){ xpDialog(t('bk.imp.enc.t'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+escHtml(t('bk.nocrypto'))+'</div>'); return false; }
+    if(password!=null)return osImportaCopiaCifrada(obj,password,sinConfirmar);
+    osDialogoClaveCopia(obj,sinConfirmar);
+    return true; // reconocida: la contraseña llega por el diálogo
+  }
   if(!obj||obj.app!=='torrecillas-os'||!obj.data){
     xpDialog('Importar copia','<div class="dlg-icon">&#10060;</div><div>Ese archivo no parece una copia de Torrecillas OS.</div>');
     return false;
   }
   const aplicar=()=>{
-    // No sobrescribir la cuenta/caja actual con datos del backup
-    Object.keys(obj.data).forEach(k=>{if(k.indexOf('tos-')===0&&k!=='tos-account'&&k!=='tos-vault')Store.set(k,obj.data[k]);});
+    // Ni la cuenta/caja ni los cerrojos del dispositivo se sobrescriben con el backup
+    Object.keys(obj.data).forEach(k=>{if(k.indexOf('tos-')===0&&BACKUP_NO_EXPORTAR.indexOf(k)<0)Store.set(k,obj.data[k]);});
     try{location.reload();}catch(e){}
   };
   if(sinConfirmar){aplicar();return true;}
   const n=Object.keys(obj.data).length;
-  xpDialog('Importar copia','<div class="dlg-icon">&#128190;</div><div>Copia del '+(obj.fecha||'').slice(0,10)+' con '+n+' ajustes (r&eacute;cords, fondos, notas...).<br>&iquest;Restaurarla? Sobrescribe lo actual y reinicia el equipo.</div>',[
+  const resumen=osBackupGrupos(obj.data).map(g=>'<div class="bkx-row"><span>'+g.ic+' '+escHtml(t('bk.cat.'+g.id))+'</span><b>'+g.n+'</b></div>').join('');
+  xpDialog('Importar copia','<div class="dlg-icon">&#128190;</div><div>Copia del '+(obj.fecha||'').slice(0,10)+' con '+n+' ajustes.<br>&iquest;Restaurarla? Sobrescribe lo actual y reinicia el equipo.'
+    +(resumen?'<div class="bkx-sum"><i style="font-style:normal;color:#79808f;font-size:11px">'+escHtml(t('bk.imp.has'))+'</i>'+resumen+'</div>':'')+'</div>',[
     {label:'Sí, restaurar',primary:true,action:aplicar},
     {label:'Cancelar'}
   ]);
@@ -16467,6 +17666,78 @@ let _searchIxCache=null;
 function _searchIndexCached(){
   if(!_searchIxCache){ _searchIxCache=_searchIndex(); _searchIxCache.forEach(it=>{ it.norm=_searchNorm(it.label); }); }
   return _searchIxCache;
+}
+// ========== BUSCAR DENTRO DE LOS DATOS (no solo apps) ==========
+// El buscador del menú y Ctrl+K encontraban apps; ahora encuentran TU contenido: una
+// nota, una tarea, un producto de la compra, un gasto, una receta, un documento, un
+// evento, un hábito o una clave. No hay índice persistido a propósito: los stores son
+// JSON pequeños en localStorage, se leen en el momento y así no hay nada que
+// invalidar cuando cambian (que es constantemente).
+// Cada resultado tiene la misma forma que los del índice de apps ({icon,label,hint,
+// run}) para que el menú Inicio y la paleta los pinten sin tocar nada, más un
+// `contenido:true` que permite distinguirlos.
+const BUSCA_TOPE_FUENTE=4; // por fuente, para que ninguna se coma la lista entera
+function _bcCorta(s,n){ s=String(s==null?'':s).replace(/\s+/g,' ').trim(); n=n||52; return s.length>n?s.slice(0,n)+'…':s; }
+function osBuscaContenido(q,tope){
+  const nq=_searchNorm(String(q||'').trim());
+  if(nq.length<2)return []; // con una sola letra saldría media casa
+  const out=[];
+  const casa=(...campos)=>campos.some(v=>v&&_searchNorm(String(v)).includes(nq));
+  // Una fuente que falle (JSON a mano, app a medio migrar) no puede tumbar el buscador
+  const fuente=(fn)=>{ try{ fn(); }catch(e){} };
+  const add=(icon,label,hint,run)=>{ out.push({icon:icon,label:label,hint:hint,run:run,contenido:true}); };
+  const trozo=(arr,fn)=>{ let n=0; for(let i=0;i<arr.length&&n<BUSCA_TOPE_FUENTE;i++){ if(fn(arr[i]))n++; } };
+
+  fuente(()=>trozo(notesLoad().slice().sort((a,b)=>(b.ts||0)-(a.ts||0)),(n)=>{
+    if(!casa(n.title,n.body))return false;
+    add('&#128221;',_bcCorta(n.title||n.body||t('nt.untitled')),t('nt.title'),()=>openNotes(n.id));
+    return true;
+  }));
+  fuente(()=>trozo(tkAll().slice().sort((a,b)=>(a.done?1:0)-(b.done?1:0)),(x)=>{
+    if(!casa(x.text,x.notes))return false;
+    add(x.done?'&#9989;':'&#9744;',_bcCorta(x.text),t('tk.title')+(x.due?' · '+x.due:''),()=>openTareas());
+    return true;
+  }));
+  fuente(()=>trozo(cpLista(),(i)=>{
+    if(!casa(i.name))return false;
+    add('&#128722;',_bcCorta(((+i.qty>1)?(i.qty+' × '):'')+i.name),t('cp.title'),()=>openCompra());
+    return true;
+  }));
+  fuente(()=>trozo(gastosAll().slice().sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))),(g)=>{
+    if(!casa(g.n,g.c))return false;
+    const eur=(+g.a||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
+    add(g.t==='i'?'&#128176;':'&#128181;',_bcCorta((g.n||t('gs.title'))+' · '+eur+' €',44),t('gs.title')+(g.d?' · '+g.d:''),()=>openGastos());
+    return true;
+  }));
+  fuente(()=>trozo(rcAll(),(r)=>{
+    if(!casa(r.n,(r.ing||[]).join(' '),r.pasos))return false;
+    add('&#127859;',_bcCorta(r.n),t('rc.title'),()=>openRecetas());
+    return true;
+  }));
+  fuente(()=>trozo(fsList().slice().sort((a,b)=>(b.date||0)-(a.date||0)),(f)=>{
+    if(!casa(f.name))return false;
+    const m=FS_META[f.type]||FS_META.txt;
+    add(m.icon,_bcCorta(f.name),t('app.docs'),()=>fsOpen(f.id)); // se abre en su app, no en la carpeta
+    return true;
+  }));
+  fuente(()=>trozo(eventsLoad().slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))),(e)=>{
+    if(!casa(e.text))return false;
+    add('&#128197;',_bcCorta((e.time?e.time+' ':'')+e.text),t('agenda.title')+(e.date?' · '+e.date:''),()=>openAgenda(e.date));
+    return true;
+  }));
+  fuente(()=>trozo(hbAll(),(h)=>{
+    if(!casa(h.n||h.name))return false;
+    add(h.ic||'&#127919;',_bcCorta(h.n||h.name),t('hb.title'),()=>openHabitos());
+    return true;
+  }));
+  // Claves: SOLO el sitio y el usuario, y solo con la caja abierta. La contraseña no
+  // entra en el buscador ni de refilón.
+  fuente(()=>{ if(!pwVaultOk())return; trozo(pwEntries(),(e)=>{
+    if(!casa(e.site,e.user,e.url))return false;
+    add('&#128273;',_bcCorta(e.site||e.url||''),t('pwm.title'),()=>openPasswords());
+    return true;
+  }); });
+  return out.slice(0,tope||12);
 }
 function _searchIndex(){
   const ix=[];
@@ -16491,7 +17762,10 @@ function startSearch(q){
   q=_searchNorm((q||'').trim());
   if(!q){left.classList.remove('searching');res.innerHTML='';res._matches=null;return;}
   left.classList.add('searching');
-  const matches=_searchIndexCached().filter(it=>it.norm.includes(q)).slice(0,9);
+  // Primero las apps (es lo que más se busca) y detrás tu contenido
+  const apps=_searchIndexCached().filter(it=>it.norm.includes(q)).slice(0,6);
+  let cont=[]; try{ cont=osBuscaContenido(q,6); }catch(e){}
+  const matches=apps.concat(cont).slice(0,10);
   res._matches=matches;
   res.innerHTML=matches.length
     ?matches.map((m,i)=>`<button type="button" class="start-item search-hit" data-i="${i}"><div class="si-icon">${m.icon}</div><div><div class="si-label">${m.label}</div><div class="si-desc">${m.hint}</div></div></button>`).join('')
@@ -17658,9 +18932,9 @@ function openSettings(){
       </div>
       <div class="settings-group">
         <h3>&#128190; <span data-i18n="bk.title">Copia de seguridad</span></h3>
-        <p data-i18n="bk.what">Se lleva TODO: gastos, tareas, lista de la compra, claves, documentos, r&eacute;cords y ajustes</p>
+        <p data-i18n="bk.what">Eliges qu&eacute; se lleva &mdash;gastos, tareas, compra, claves, documentos, r&eacute;cords, ajustes&mdash; y puedes cifrarla con contrase&ntilde;a</p>
         <div class="color-row" style="flex-wrap:wrap">
-          <button class="settings-btn" onclick="osExportBackup()">&#11015;&#65039; <span data-i18n="bk.export">Exportar copia</span></button>
+          <button class="settings-btn" onclick="osDialogoExportar()">&#11015;&#65039; <span data-i18n="bk.export">Exportar copia</span></button>
           <label class="settings-btn" for="backup-file" style="cursor:pointer">&#11014;&#65039; <span data-i18n="bk.import">Importar copia</span></label>
           <input type="file" id="backup-file" accept=".json,application/json" style="display:none" aria-label="Importar copia de seguridad">
         </div>
