@@ -4006,7 +4006,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.47.0';
+const APP_VERSION = '0.48.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4491,6 +4491,15 @@ const I18N={
   'tp.fav':{es:'Guardar como favorito', en:'Save as a favourite', ca:'Desa com a preferit', ru:'В избранное'},
   'tp.faved':{es:'{c} guardado en favoritos', en:'{c} saved to favourites', ca:'{c} desat a preferits', ru:'{c} добавлен в избранное'},
   'tp.unfaved':{es:'{c} ya no es favorito', en:'{c} is no longer a favourite', ca:'{c} ja no és preferit', ru:'{c} убран из избранного'},
+  'sc2.title':{es:'Accesos directos', en:'Shortcuts', ca:'Accessos directes', ru:'Ярлыки'},
+  'sc2.open':{es:'Abrir', en:'Open', ca:'Obre', ru:'Открыть'},
+  'sc2.add':{es:'Añadir al escritorio', en:'Add to the desktop', ca:'Afegeix a l’escriptori', ru:'Добавить на рабочий стол'},
+  'sc2.added':{es:'«{n}» ya está en el escritorio', en:'“{n}” is now on the desktop', ca:'«{n}» ja és a l’escriptori', ru:'«{n}» теперь на рабочем столе'},
+  'sc2.remove':{es:'Quitar del escritorio', en:'Remove from the desktop', ca:'Treu de l’escriptori', ru:'Убрать с рабочего стола'},
+  'sc2.removed':{es:'«{n}» quitado del escritorio', en:'“{n}” removed from the desktop', ca:'«{n}» tret de l’escriptori', ru:'«{n}» убран с рабочего стола'},
+  'sc2.totrash':{es:'«{n}» va a la papelera (se puede restaurar)', en:'“{n}” goes to the recycle bin (it can be restored)', ca:'«{n}» va a la paperera (es pot restaurar)', ru:'«{n}» отправлен в корзину (можно восстановить)'},
+  'sc2.help':{es:'¿Cómo añado iconos?', en:'How do I add icons?', ca:'Com afegeixo icones?', ru:'Как добавить значки?'},
+  'sc2.helpbody':{es:'Abre el menú <b>Inicio</b> y <b>mantén pulsado</b> (o haz clic derecho) sobre cualquier juego, app o carpeta: te ofrecerá <b>añadirlo al escritorio</b>.<br><br>Para quitarlo, mantén pulsado el icono del escritorio y elige <b>Quitar</b>. Los iconos de siempre van a la papelera y se pueden restaurar; los que has añadido tú se quitan sin más.<br><br>Los iconos se arrastran donde quieras, y «Organizar iconos» los recoloca.', en:'Open the <b>Start</b> menu and <b>press and hold</b> (or right-click) any game, app or folder: it will offer to <b>add it to the desktop</b>.<br><br>To remove it, press and hold the desktop icon and pick <b>Remove</b>. Built-in icons go to the recycle bin and can be restored; the ones you added are simply removed.<br><br>Icons can be dragged anywhere, and “Arrange icons” lines them up again.', ca:'Obre el menú <b>Inici</b> i <b>mantén premut</b> (o fes clic dret) sobre qualsevol joc, app o carpeta: t’oferirà <b>afegir-lo a l’escriptori</b>.<br><br>Per treure’l, mantén premuda la icona i tria <b>Treu</b>.', ru:'Откройте меню <b>Пуск</b> и <b>нажмите и удерживайте</b> (или щёлкните правой кнопкой) на любой игре или приложении: появится вариант <b>добавить на рабочий стол</b>.<br><br>Чтобы убрать, удерживайте значок на рабочем столе и выберите <b>Убрать</b>.'},
   'ar.title':{es:'Arranque', en:'Startup', ca:'Arrencada', ru:'Запуск'},
   'ar.desc':{es:'Cómo entra el sistema cuando abres la página', en:'How the system starts when you open the page', ca:'Com entra el sistema quan obres la pàgina', ru:'Как система запускается при открытии страницы'},
   'ar.fast':{es:'Entrar directo', en:'Go straight in', ca:'Entra directe', ru:'Входить сразу'},
@@ -5899,6 +5908,7 @@ function enterDesktop(){
   startIdleWatch(); // auto-bloqueo por inactividad (no-op si no hay cuenta/ajuste)
   try{ checkEventReminders(); }catch(e){} // avisos de la Agenda pendientes
   try{ tkRecordatorios(); }catch(e){} // y lo que vence hoy en Tareas
+  try{ enganchaMenuInicioLargo(); }catch(e){} // mantener pulsado = sacar al escritorio
   try{ osPidePersistencia(); }catch(e){}    // que el navegador no desaloje los datos
   try{ osAvisaCopia(); }catch(e){}          // y recordatorio de copia si toca
   try{
@@ -6716,6 +6726,145 @@ const TRASH_ITEMS=[
 function trashEmptied(){ return Store.get('tos-trash')==='empty'; }
 // ---- Iconos de escritorio "eliminados" (arrastrados a la papelera) ----
 let _trashRender=null; // re-render de la papelera si está abierta
+// ---------- ACCESOS DIRECTOS EN EL ESCRITORIO ----------
+// Cualquier cosa del menú Inicio se puede sacar al escritorio. Lo que se guarda es
+// el NOMBRE de la función y su argumento (p.ej. openGame + 'snake'), nunca código:
+// al ejecutarlo se comprueba contra la lista blanca de lo que hay en el menú, así
+// que un `tos-desk-shortcuts` manipulado a mano no puede llamar a nada raro.
+function deskAtajos(){ try{ const a=JSON.parse(Store.get('tos-desk-shortcuts')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function deskAtajosWrite(a){ return Store.set('tos-desk-shortcuts',JSON.stringify(a.slice(0,40))); }
+// Lista blanca: las funciones que el propio menú Inicio ofrece ahora mismo
+function _atajosPermitidos(){
+  const set=new Set();
+  document.querySelectorAll('#start-menu .start-item[onclick], #start-menu .start-item [onclick]').forEach(b=>{
+    const m=/^\s*([A-Za-z_$][\w$]*)\s*\(/.exec(b.getAttribute('onclick')||'');
+    if(m)set.add(m[1]);
+  });
+  return set;
+}
+// Lee un botón del menú Inicio y saca de él lo necesario para el acceso directo
+function atajoDesdeItem(btn){
+  if(!btn)return null;
+  const oc=btn.getAttribute('onclick')||'';
+  const m=/^\s*([A-Za-z_$][\w$]*)\s*\(\s*(?:'([^']*)'|"([^"]*)")?\s*\)/.exec(oc);
+  if(!m)return null;
+  const icono=btn.querySelector('.si-icon'), etiqueta=btn.querySelector('.si-label');
+  return {
+    fn:m[1], arg:(m[2]!==undefined?m[2]:(m[3]!==undefined?m[3]:'')),
+    label:(etiqueta?etiqueta.textContent:btn.textContent||'').trim().slice(0,40),
+    icon:icono?icono.innerHTML.trim():'&#128196;'
+  };
+}
+function deskTieneAtajo(fn,arg){ return deskAtajos().some(a=>a.fn===fn&&(a.arg||'')===(arg||'')); }
+function deskAtajoAdd(item){
+  if(!item||!item.fn)return false;
+  if(!_atajosPermitidos().has(item.fn))return false;
+  if(deskTieneAtajo(item.fn,item.arg))return false;
+  const arr=deskAtajos();
+  arr.push({id:'sc'+Date.now()+Math.floor(Math.random()*999),fn:item.fn,arg:item.arg||'',label:item.label||item.fn,icon:item.icon||'&#128196;'});
+  if(!deskAtajosWrite(arr))return false;
+  initDesktop();
+  return true;
+}
+function deskAtajoDel(id){
+  const arr=deskAtajos();
+  const fuera=arr.filter(a=>a.id!==id);
+  if(fuera.length===arr.length)return false;
+  deskAtajosWrite(fuera);
+  initDesktop();
+  return true;
+}
+// Ejecutar: solo por nombre y contra la lista blanca. Nada de eval.
+function ejecutaAtajo(fn,arg){
+  if(!_atajosPermitidos().has(fn))return false;
+  const f=window[fn];
+  if(typeof f!=='function')return false;
+  try{ if(arg)f(arg); else f(); }catch(e){ return false; }
+  return true;
+}
+// Pulsación larga (móvil) equivalente al clic derecho, sin comerse el toque normal
+function pulsacionLarga(el,accion,ms){
+  if(!el)return;
+  let temp=null, x0=0, y0=0, disparado=false;
+  const cancela=()=>{ if(temp){ clearTimeout(temp); temp=null; } };
+  el.addEventListener('touchstart',(e)=>{
+    if(!e.touches||e.touches.length!==1)return;
+    disparado=false;
+    x0=e.touches[0].clientX; y0=e.touches[0].clientY;
+    cancela();
+    temp=setTimeout(()=>{
+      temp=null; disparado=true;
+      el._menuLargo=Date.now();
+      try{ if(navigator.vibrate)navigator.vibrate(18); }catch(err){}
+      accion(x0,y0);
+    },ms||480);
+  },{passive:true});
+  el.addEventListener('touchmove',(e)=>{
+    if(!e.touches||!e.touches[0])return;
+    if(Math.abs(e.touches[0].clientX-x0)>10||Math.abs(e.touches[0].clientY-y0)>10)cancela();
+  },{passive:true});
+  el.addEventListener('touchend',(e)=>{
+    cancela();
+    if(disparado&&e.cancelable)e.preventDefault(); // el toque ya se ha usado para el menú
+  });
+  el.addEventListener('touchcancel',cancela);
+  el.addEventListener('contextmenu',(e)=>{ e.preventDefault(); e.stopPropagation(); accion(e.clientX,e.clientY); });
+}
+// El menú que sale al mantener pulsado algo del menú Inicio
+function menuItemInicio(btn,x,y){
+  const item=atajoDesdeItem(btn);
+  if(!item)return;
+  const ya=deskTieneAtajo(item.fn,item.arg);
+  showContextMenu(x,y,[
+    {icon:item.icon,label:escHtml(item.label)},
+    {sep:true},
+    {icon:'&#9654;&#65039;',label:t('sc2.open'),action:()=>{ closeStartMenu(); ejecutaAtajo(item.fn,item.arg); }},
+    ya?{icon:'&#10006;',label:t('sc2.remove'),action:()=>{
+          const a=deskAtajos().find(z=>z.fn===item.fn&&(z.arg||'')===(item.arg||''));
+          if(a&&deskAtajoDel(a.id))announce(t('sc2.removed',{n:item.label}));
+        }}
+      :{icon:'&#128204;',label:t('sc2.add'),action:()=>{
+          if(deskAtajoAdd(item))notify({icon:item.icon,title:t('sc2.title'),body:t('sc2.added',{n:item.label}),silent:true});
+        }}
+  ]);
+}
+// Se engancha a todo el menú Inicio de una vez (delegación: los submenús se repintan)
+function enganchaMenuInicioLargo(){
+  const sm=document.getElementById('start-menu');
+  if(!sm||sm._largoOk)return;
+  sm._largoOk=true;
+  let temp=null, x0=0, y0=0;
+  const itemDe=(t2)=>t2&&t2.closest?t2.closest('.start-item'):null;
+  const cancela=()=>{ if(temp){ clearTimeout(temp); temp=null; } };
+  sm.addEventListener('touchstart',(e)=>{
+    const btn=itemDe(e.target);
+    if(!btn||!e.touches||e.touches.length!==1)return;
+    x0=e.touches[0].clientX; y0=e.touches[0].clientY;
+    cancela();
+    temp=setTimeout(()=>{
+      temp=null;
+      sm._menuLargo=Date.now();
+      try{ if(navigator.vibrate)navigator.vibrate(18); }catch(err){}
+      menuItemInicio(btn,x0,y0);
+    },480);
+  },{passive:true});
+  sm.addEventListener('touchmove',(e)=>{
+    if(!e.touches||!e.touches[0])return;
+    if(Math.abs(e.touches[0].clientX-x0)>10||Math.abs(e.touches[0].clientY-y0)>10)cancela();
+  },{passive:true});
+  sm.addEventListener('touchend',cancela);
+  sm.addEventListener('touchcancel',cancela);
+  // Tras el menú largo, el clic que viene detrás no debe abrir la app
+  sm.addEventListener('click',(e)=>{
+    if(sm._menuLargo&&Date.now()-sm._menuLargo<700){ e.preventDefault(); e.stopPropagation(); sm._menuLargo=0; }
+  },true);
+  sm.addEventListener('contextmenu',(e)=>{
+    const btn=itemDe(e.target);
+    if(!btn)return;
+    e.preventDefault(); e.stopPropagation();
+    menuItemInicio(btn,e.clientX,e.clientY);
+  });
+}
 function _deskDeleted(){ try{return JSON.parse(Store.get('tos-desk-deleted')||'[]');}catch(e){return [];} }
 function deskSendToTrash(appId){
   unlock('basurero');
@@ -16542,7 +16691,8 @@ function initDesktop(){
   const savedPos=_iconPositions();
   const deleted=_deskDeleted();
   // Fuera: el icono Instalar dentro de la app instalada, y los iconos tirados a la papelera
-  desktopApps.filter(app=>(app.id!=='instalar'||!isStandalone())&&!deleted.includes(app.id)).forEach(app=>{
+  const atajos=deskAtajos().map(a=>({id:a.id,label:a.label,icon:a.icon,atajo:a,action:()=>ejecutaAtajo(a.fn,a.arg)}));
+  desktopApps.filter(app=>(app.id!=='instalar'||!isStandalone())&&!deleted.includes(app.id)).concat(atajos).forEach(app=>{
     const icon=document.createElement('div');
     icon.className='desktop-icon';
     icon.dataset.app=app.id;
@@ -16572,6 +16722,25 @@ function initDesktop(){
     icon.addEventListener('keydown',(e)=>{
       if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();open();}
     });
+    // Clic derecho o pulsación larga sobre el icono: abrir o quitarlo del escritorio
+    pulsacionLarga(icon,(x,y)=>{
+      document.querySelectorAll('.desktop-icon').forEach(i=>i.classList.remove('selected'));
+      icon.classList.add('selected');
+      showContextMenu(x,y,[
+        {icon:app.icon,label:escHtml(app.i18n?t(app.i18n):app.label)},
+        {sep:true},
+        {icon:'&#9654;&#65039;',label:t('sc2.open'),action:open},
+        {icon:'&#10006;',label:t('sc2.remove'),action:()=>{
+          if(app.atajo){ deskAtajoDel(app.atajo.id); announce(t('sc2.removed',{n:app.label})); }
+          else { deskSendToTrash(app.id); announce(t('sc2.totrash',{n:app.i18n?t(app.i18n):app.label})); }
+        }},
+        {sep:true},
+        {icon:'&#128203;',label:t('ctx.arrange'),action:()=>{ Store.del('tos-icon-pos'); initDesktop(); }}
+      ]);
+    });
+    icon.addEventListener('click',(e)=>{
+      if(icon._menuLargo&&Date.now()-icon._menuLargo<700){ e.preventDefault(); e.stopPropagation(); icon._menuLargo=0; }
+    },true);
     const p=savedPos[app.id];
     if(p){icon.style.position='absolute';icon.style.left=p.x+'px';icon.style.top=p.y+'px';}
     makeIconDraggable(icon,app.id);
@@ -16697,11 +16866,13 @@ function showContextMenu(x,y,items){
 function hideContextMenu(){const m=document.getElementById('context-menu');if(m)m.classList.remove('show');}
 document.addEventListener('contextmenu',(e)=>{
   // Solo en el fondo del escritorio: en ventanas/apps/barra se respeta el menú nativo
-  if((e.target.closest&&(e.target.closest('.window')||e.target.closest('#taskbar')))||document.getElementById('desktop').style.display==='none')return;
+  // Los iconos y el menú Inicio tienen el suyo propio; ventanas y barra, el nativo
+  if((e.target.closest&&(e.target.closest('.window')||e.target.closest('#taskbar')||e.target.closest('.desktop-icon')||e.target.closest('#start-menu')))||document.getElementById('desktop').style.display==='none')return;
   e.preventDefault();
   showContextMenu(e.clientX,e.clientY,[
     {icon:'&#128260;',label:t('ctx.refresh'),action:()=>initDesktop()},
     {icon:'&#128203;',label:t('ctx.arrange'),action:()=>{Store.del('tos-icon-pos');initDesktop();}},
+    {icon:'&#128204;',label:t('sc2.help'),action:()=>xpDialog(t('sc2.title'),'<div class="dlg-icon">&#128204;</div><div>'+t('sc2.helpbody')+'</div>')},
     {icon:'&#129513;',label:t('gad.title'),action:()=>openGadgetGallery()},
     {sep:true},
     {icon:'&#127912;',label:'Cambiar fondo',action:()=>openSettings()},
