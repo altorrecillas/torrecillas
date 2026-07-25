@@ -648,7 +648,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
             <div><div class="si-label" data-i18n="zip.title">Carpetas comprimidas</div><div class="si-desc" data-i18n="zip.desc">Abrir y crear archivos ZIP</div></div>
           </button>
           <button type="button" class="start-item" onclick="openScanner()">
-            <div class="si-icon">&#128441;&#65039;</div>
+            <div class="si-icon">&#128224;</div>
             <div><div class="si-label" data-i18n="sc.title">Esc&aacute;ner</div><div class="si-desc" data-i18n="sc.desc">De papel a PDF con la c&aacute;mara</div></div>
           </button>
           <button type="button" class="start-item" onclick="openLectorQR()">
@@ -3656,6 +3656,9 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .bk-row b.warn{color:#9a5a20}
 .bk-note{font-size:10px;color:#79808f;line-height:1.4;margin-top:3px}
 .sh-box{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.qrd-box{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0}
+#qrd-cv{width:100%;max-width:260px;height:auto;image-rendering:pixelated;border:1px solid #cfd6e0;border-radius:4px;background:#fff}
+.qrd-pie{font-size:11px;color:#5a6472;text-align:center;line-height:1.4}
 .sh-t{font-size:11px;color:#5a6472}
 .sh-op{display:flex;flex-direction:column;gap:1px;text-align:left;border:1px solid #cfd6e0;border-radius:5px;background:#fff;padding:6px 9px;cursor:pointer;font-family:Tahoma,sans-serif}
 .sh-op:hover{background:#eef3fb;border-color:#5a8fd6}
@@ -4006,7 +4009,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.48.0';
+const APP_VERSION = '0.49.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4470,6 +4473,13 @@ const I18N={
   'tk.l.personal':{es:'Personal', en:'Personal', ca:'Personal', ru:'Личное'},
   'tk.l.casa':{es:'Casa', en:'Home', ca:'Casa', ru:'Дом'},
   'tk.l.trabajo':{es:'Trabajo', en:'Work', ca:'Feina', ru:'Работа'},
+  'qr.title':{es:'Código QR', en:'QR code', ca:'Codi QR', ru:'QR-код'},
+  'qr.save':{es:'Guardar PNG', en:'Save PNG', ca:'Desa PNG', ru:'Сохранить PNG'},
+  'qr.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
+  'sh.qr':{es:'Como código QR', en:'As a QR code', ca:'Com a codi QR', ru:'QR-кодом'},
+  'sh.qr.d':{es:'Que lo escanee con la cámara del móvil: se le abrirá la lista para añadirla a la suya.', en:'They scan it with their phone camera and the list opens ready to add to theirs.', ca:'Que l’escanegi amb la càmera del mòbil: se li obrirà la llista per afegir-la a la seva.', ru:'Пусть отсканирует камерой — список откроется для добавления.'},
+  'sh.qr.pie':{es:'{n} productos. Escanéalo con cualquier cámara: se abre Torrecillas OS y pregunta si añadir la lista.', en:'{n} items. Scan it with any camera: Torrecillas OS opens and asks whether to add the list.', ca:'{n} productes. Escaneja’l amb qualsevol càmera: s’obre Torrecillas OS i pregunta si afegir la llista.', ru:'{n} товаров. Отсканируйте любой камерой: откроется Torrecillas OS и предложит добавить список.'},
+  'sh.qr.long':{es:'La lista no cabe en un código QR. Quita algún producto o mándala como archivo o enlace.', en:'The list does not fit in a QR code. Remove some items or send it as a file or link.', ca:'La llista no cap en un codi QR. Treu algun producte o envia-la com a fitxer o enllaç.', ru:'Список не помещается в QR-код. Уберите часть товаров или отправьте файлом.'},
   'sh.title':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
   'sh.how':{es:'¿Cómo se la mandas?', en:'How do you want to send it?', ca:'Com l’envies?', ru:'Как отправить?'},
   'sh.file':{es:'Como archivo', en:'As a file', ca:'Com a fitxer', ru:'Файлом'},
@@ -10725,6 +10735,43 @@ function openConverter(){
 // Nota: el navegador NO puede mandar archivos por Bluetooth por su cuenta (Web
 // Bluetooth es para cacharros con GATT, no para transferir ficheros); la vía real
 // es el menú del sistema, que sí lo ofrece.
+// Pinta un QR en un diálogo, con guardar y compartir. Devuelve el overlay, o null
+// si el texto no cabe en los códigos que sabemos generar (versiones 1 a 10).
+function osDialogoQR(texto,titulo,pie){
+  let res=null;
+  try{ res=qrGenerate(texto,'L'); }catch(e){ return null; }
+  const ov=xpDialog(titulo||t('qr.title'),'<div class="dlg-icon">&#128241;</div><div class="qrd-box">'
+    +'<canvas id="qrd-cv" role="img" aria-label="'+escHtml(titulo||t('qr.title'))+'"></canvas>'
+    +'<div class="qrd-pie">'+escHtml(pie||'')+'</div></div>',
+    [{label:t('btn.close')},{label:t('qr.save'),action:()=>{
+      try{ fsSaveDialog('png',titulo||t('qr.title'),ov.querySelector('#qrd-cv').toDataURL('image/png'),null,null); }catch(e){}
+    }},{label:t('qr.share'),primary:true,action:()=>{
+      const cv=ov.querySelector('#qrd-cv');
+      try{
+        cv.toBlob(b=>{
+          if(!b)return;
+          const f=new File([b],'qr.png',{type:'image/png'});
+          try{
+            if(navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){ navigator.share({files:[f],title:titulo||t('qr.title')}).catch(()=>{}); return; }
+          }catch(e){}
+          const a=document.createElement('a');
+          const url=URL.createObjectURL(b);
+          a.href=url; a.download='qr.png'; a.click();
+          setTimeout(()=>{ try{ URL.revokeObjectURL(url); }catch(e){} },2000);
+        },'image/png');
+      }catch(e){}
+    }}]);
+  const cv=ov.querySelector('#qrd-cv');
+  const q=6, quiet=4, dim=(res.size+quiet*2)*q;
+  cv.width=dim; cv.height=dim;
+  const g=cv.getContext('2d');
+  if(g){
+    g.fillStyle='#fff'; g.fillRect(0,0,dim,dim);
+    g.fillStyle='#000';
+    for(let r=0;r<res.size;r++)for(let c=0;c<res.size;c++)if(res.matrix[r][c])g.fillRect((c+quiet)*q,(r+quiet)*q,q,q);
+  }
+  return ov;
+}
 function osDialogoCompartir(kind,data,nombre,textoPlano){
   const enlace=osEnlacePaquete(kind,data);
   const largo=enlace.length>PKG_MAX_URL;
@@ -10732,8 +10779,16 @@ function osDialogoCompartir(kind,data,nombre,textoPlano){
     +'<div class="sh-t">'+escHtml(t('sh.how'))+'</div>'
     +'<button type="button" class="sh-op" id="sh-file"><b>&#128196; '+escHtml(t('sh.file'))+'</b><span>'+escHtml(t('sh.file.d'))+'</span></button>'
     +'<button type="button" class="sh-op'+(largo?' off':'')+'" id="sh-link"><b>&#128279; '+escHtml(t('sh.link'))+'</b><span>'+escHtml(largo?t('sh.toolong'):t('sh.link.d'))+'</span></button>'
+    +(kind==='compra'?'<button type="button" class="sh-op" id="sh-qr"><b>&#128241; '+escHtml(t('sh.qr'))+'</b><span>'+escHtml(t('sh.qr.d'))+'</span></button>':'')
     +'<button type="button" class="sh-op" id="sh-text"><b>&#128221; '+escHtml(t('sh.text'))+'</b><span>'+escHtml(t('sh.text.d'))+'</span></button>'
     +'</div>');
+  const bqr=ov.querySelector('#sh-qr');
+  if(bqr)bqr.onclick=()=>{
+    ov.remove();
+    const url=cpQRUrl(data);
+    const d=osDialogoQR(url,t('sh.qr'),t('sh.qr.pie',{n:data.length}));
+    if(!d)xpDialog(t('sh.title'),'<div class="dlg-icon">&#128241;</div><div>'+escHtml(t('sh.qr.long'))+'</div>');
+  };
   ov.querySelector('#sh-file').onclick=()=>{
     ov.remove();
     const via=osComparteArchivo(kind,data,nombre||kind);
@@ -10787,6 +10842,11 @@ function osEnlacePaquete(kind,data){
 function osLeePaquete(txt){
   let s=String(txt||'').trim();
   if(!s)return null;
+  // Formato corto del QR: "…#tos1=leche*3~pan"
+  if(/#?tos1=/.test(s)){
+    const lista=cpDesdeQR(s);
+    return lista?{app:'torrecillas-os',pkg:'compra',v:1,data:lista}:null;
+  }
   const m=/#?tos=([a-z]+):([A-Za-z0-9\-_]+)/.exec(s);
   if(m)s=osUnB64(m[2]);
   try{
@@ -10823,7 +10883,7 @@ function osComparteArchivo(kind,data,nombre){
 function osPaqueteDeURL(){
   try{
     const h=location.hash||'';
-    if(h.indexOf('#tos=')!==0)return null;
+    if(h.indexOf('#tos=')!==0&&h.indexOf('#tos1=')!==0)return null;
     const p=osLeePaquete(h);
     if(p){ try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} }
     return p;
@@ -11441,6 +11501,8 @@ function qrlSoportado(){ return typeof window!=='undefined'&&typeof window.Barco
 // Qué es lo que hemos leído: enlace, wifi, contacto, teléfono, correo o texto
 function qrlAnaliza(txt){
   const s=String(txt||'').trim();
+  // Lo nuestro primero: un QR de lista TAMBIÉN es un enlace, pero interesa como lista
+  if(/#tos1?=/.test(s))return {tipo:'paquete',valor:s};
   if(/^https?:\/\//i.test(s))return {tipo:'url',valor:s};
   if(/^WIFI:/i.test(s)){
     const g=(k)=>{ const m=new RegExp(k+':((?:[^;\\\\]|\\\\.)*);','i').exec(s); return m?m[1].replace(/\\(.)/g,'$1'):''; };
@@ -11455,7 +11517,7 @@ function qrlAnaliza(txt){
   if(/^tel:/i.test(s))return {tipo:'tel',valor:s,tel:s.slice(4)};
   if(/^mailto:/i.test(s))return {tipo:'mail',valor:s,mail:s.slice(7)};
   if(/^geo:/i.test(s))return {tipo:'geo',valor:s};
-  if(/^#?tos=[a-z]+:/.test(s))return {tipo:'paquete',valor:s};
+
   return {tipo:'texto',valor:s};
 }
 function qrlHistorial(){ try{ const a=JSON.parse(Store.get('tos-qr-hist')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
@@ -11472,7 +11534,7 @@ function openLectorQR(){
   const content=`<div class="qrl-root" id="qrl-root">
     <div class="qrl-bar">
       <button type="button" class="qrl-btn primary" id="qrl-cam">&#128247; <span data-i18n="qrl.scan">Escanear</span></button>
-      <button type="button" class="qrl-btn" id="qrl-open">&#128443;&#65039; <span data-i18n="qrl.image">Desde imagen</span></button>
+      <button type="button" class="qrl-btn" id="qrl-open">&#128444;&#65039; <span data-i18n="qrl.image">Desde imagen</span></button>
       <input type="file" id="qrl-file" accept="image/*" hidden>
       <button type="button" class="qrl-btn" id="qrl-gen" data-i18n="qrl.make">Crear uno</button>
     </div>
@@ -11965,7 +12027,7 @@ function openScanner(preload){
     </div>
     <div class="sc-stage" id="sc-stage">
       <div class="sc-vacio" id="sc-vacio">
-        <div class="sc-vacio-ic">&#128441;&#65039;</div>
+        <div class="sc-vacio-ic">&#128224;</div>
         <div data-i18n="sc.empty">Haz una foto a un documento o abre una imagen</div>
         <div class="hint-muted" data-i18n="sc.empty2">Se endereza el contraste, se pasa a blanco y negro y sale un PDF de varias p&aacute;ginas. Todo aqu&iacute;, sin subir nada.</div>
       </div>
@@ -11981,7 +12043,7 @@ function openScanner(preload){
       <button type="button" class="sc-btn ok" id="sc-pdf" data-i18n="sc.pdf">Hacer PDF</button>
     </div>
   </div>`;
-  createWindow(t('sc.title'),'&#128441;&#65039;',620,540,content,{session:'escaner',statusbar:false,onCreated:(id,win)=>{
+  createWindow(t('sc.title'),'&#128224;',620,540,content,{session:'escaner',statusbar:false,onCreated:(id,win)=>{
     const $=(s)=>win.querySelector(s);
     const stage=$('#sc-stage'), cv=$('#sc-canvas'), video=$('#sc-video'), croprect=$('#sc-croprect');
     let paginas=[], actual=-1, stream=null, recortando=false, cropDrag=null;
@@ -12717,6 +12779,36 @@ function cpGuardadas(){ try{ const a=JSON.parse(Store.get('tos-compra-listas')||
 function cpGuardadasWrite(a){ return Store.set('tos-compra-listas',JSON.stringify(a.slice(-12))); }
 function cpTotal(items,soloPendientes){
   return Math.round(items.filter(i=>!soloPendientes||!i.ok).reduce((a,i)=>a+(+i.price||0)*(+i.qty||1),0)*100)/100;
+}
+// La lista en un enlace CORTO, para que quepa en un QR de los que sabemos generar
+// (271 bytes en nivel L). "leche*3~pan~pan_de_molde": los espacios van como "_" y
+// lo demás url-codificado, así el enlace no lleva ni un carácter raro. Cualquier
+// cámara lo abre como una dirección normal y la app lo reconoce al cargar.
+function cpQRPayload(items){
+  return (items||[]).map(i=>{
+    const n=encodeURIComponent(String(i&&i.name||'').trim().replace(/[~*#]/g,' ').replace(/\s+/g,'_'));
+    const q=Math.max(1,Math.round(+((i||{}).qty)||1));
+    return q>1?n+'*'+q:n;
+  }).filter(x=>x&&x!=='').join('~');
+}
+function cpQRUrl(items){
+  let base='';
+  try{ base=location.origin+location.pathname; }catch(e){ base='https://torrecillas.cat/'; }
+  return base+'#tos1='+cpQRPayload(items);
+}
+function cpDesdeQR(txt){
+  const m=/#?tos1=([^\s#]*)/.exec(String(txt||''));
+  if(!m)return null;
+  const out=(m[1]||'').split('~').filter(Boolean).map(p=>{
+    let nombre=p, qty=1;
+    const i=p.lastIndexOf('*');
+    if(i>0&&/^\d+$/.test(p.slice(i+1))){ nombre=p.slice(0,i); qty=+p.slice(i+1); }
+    let n=nombre;
+    try{ n=decodeURIComponent(nombre); }catch(e){}
+    n=n.replace(/_/g,' ').trim();
+    return {name:n,qty,cat:cpAdivinaPasillo(n)};
+  }).filter(x=>x.name);
+  return out.length?out:null;
 }
 function cpTexto(items){
   const porPasillo={};
@@ -16383,7 +16475,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128441;&#65039;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128224;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
