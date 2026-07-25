@@ -63,6 +63,10 @@
     § LISTA DE LA COMPRA
     § EL TIEMPO
     § TAREAS
+    § ESCANER
+    § RECETAS
+    § HABITOS
+    § LECTOR DE CODIGOS
     § BARRA DE TAREAS
     § ADMIN. DE TAREAS
     § CALCULADORA
@@ -521,9 +525,17 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
             <div class="si-icon">&#9989;</div>
             <div><div class="si-label" data-i18n="tk.title">Tareas</div><div class="si-desc" data-i18n="tk.desc">Lo que hay que hacer</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openHabitos()">
+            <div class="si-icon">&#127919;</div>
+            <div><div class="si-label" data-i18n="hb.title">H&aacute;bitos</div><div class="si-desc" data-i18n="hb.desc">Rachas y no romper la cadena</div></div>
+          </button>
           <button type="button" class="start-item" onclick="openCompra()">
             <div class="si-icon">&#128722;</div>
             <div><div class="si-label" data-i18n="cp.title">Lista de la compra</div><div class="si-desc" data-i18n="cp.desc">Con pasillos y repetir compra</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openRecetas()">
+            <div class="si-icon">&#127859;</div>
+            <div><div class="si-label" data-i18n="rc.title">Recetas</div><div class="si-desc" data-i18n="rc.desc">Tus recetas y el men&uacute; de la semana</div></div>
           </button>
           <button type="button" class="start-item" onclick="openGastos()">
             <div class="si-icon">&#128176;</div>
@@ -634,6 +646,14 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <button type="button" class="start-item" onclick="openZipFolder()">
             <div class="si-icon">&#128476;&#65039;</div>
             <div><div class="si-label" data-i18n="zip.title">Carpetas comprimidas</div><div class="si-desc" data-i18n="zip.desc">Abrir y crear archivos ZIP</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openScanner()">
+            <div class="si-icon">&#128441;&#65039;</div>
+            <div><div class="si-label" data-i18n="sc.title">Esc&aacute;ner</div><div class="si-desc" data-i18n="sc.desc">De papel a PDF con la c&aacute;mara</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openLectorQR()">
+            <div class="si-icon">&#128307;</div>
+            <div><div class="si-label" data-i18n="qrl.title">Lector de c&oacute;digos</div><div class="si-desc" data-i18n="qrl.desc">Lee QR y c&oacute;digos de barras</div></div>
           </button>
         </div>
         <button type="button" class="start-item" id="start-nostalgia-toggle" onclick="toggleStartNostalgia(event)">
@@ -3620,6 +3640,15 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .gs-cmprow b{width:74px;text-align:right}
 .gs-cmprow b.neg{color:#c0533f}
 .gs-cmprow b.pos{color:#2f7d4b}
+.ar-box{display:flex;flex-direction:column;gap:5px;margin-top:4px}
+.ar-opt{display:flex;align-items:flex-start;gap:7px;cursor:pointer;font-size:12px;color:#2a3542}
+.ar-opt input{margin-top:2px}
+.ar-opt span{display:flex;flex-direction:column}
+.ar-opt b{font-size:12px}
+.ar-opt i{font-style:normal;font-size:10px;color:#6b7280}
+.ar-opt input:disabled+span{opacity:.5}
+.ar-aviso{font-size:10px;color:#6b7280;line-height:1.45;background:#f2f5f9;border-radius:4px;padding:5px 7px}
+.ar-aviso.warn{background:#fff6e5;color:#8a5a13}
 .bk-info{font-size:11px;color:#5a6472;margin-top:5px}
 .bk-store{display:flex;flex-direction:column;gap:3px;margin:4px 0 7px}
 .bk-row{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#3a4150}
@@ -3824,6 +3853,152 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
   .tk-lst{display:none}
   .tk-list,.tk-flist{max-width:84px}
 }
+
+/* ═══════════════════  § ESCÁNER  ═══════════════════ */
+.sc-root{display:flex;flex-direction:column;height:100%;background:#eceff3;font-family:Tahoma,sans-serif;font-size:12px;overflow:hidden}
+.sc-bar{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:5px 7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.sc-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:3px 8px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer;color:#222}
+.sc-btn:hover:not(:disabled){background:linear-gradient(180deg,#fff,#eef3fb);border-color:#5a8fd6}
+.sc-btn:disabled{opacity:.45;cursor:default}
+.sc-btn.primary{background:linear-gradient(180deg,#5b9bea,#2f6fb0);border-color:#2f6fb0;color:#fff;font-weight:bold}
+.sc-btn.ok{background:linear-gradient(180deg,#63b573,#3f8f5a);border-color:#3f8f5a;color:#fff;font-weight:bold}
+.sc-btn.on{background:linear-gradient(180deg,#ffe9b8,#f0cf7a);border-color:#c9a227}
+.sc-sel{padding:3px;border:1px solid #aca899;border-radius:3px;background:#fff;font-size:11px;max-width:140px}
+.sc-info{margin-left:auto;font-size:11px;color:#5a6472}
+.sc-stage{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#3a4048;overflow:hidden}
+#sc-canvas,#sc-video{max-width:100%;max-height:100%;object-fit:contain;background:#fff;box-shadow:0 2px 14px rgba(0,0,0,.45)}
+#sc-canvas.cropping{cursor:crosshair}
+.sc-croprect{position:absolute;border:2px dashed #ffd400;background:rgba(255,212,0,.14);pointer-events:none}
+.sc-shot{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;border:4px solid #fff;background:rgba(255,255,255,.28);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.sc-shot:hover{background:rgba(255,255,255,.45)}
+.sc-vacio{display:flex;flex-direction:column;align-items:center;gap:7px;padding:26px 18px;color:#d6dbe2;text-align:center;max-width:420px}
+.sc-vacio .hint-muted{color:#9aa4b0}
+.sc-vacio-ic{font-size:44px;opacity:.85}
+.sc-pages{display:flex;gap:4px;padding:5px 7px;background:#e3e7ec;border-top:1px solid #c8cdd5;overflow-x:auto;min-height:34px}
+.sc-thumb{width:26px;height:24px;flex:0 0 auto;border:1px solid #b6bec9;border-radius:3px;background:#fff;cursor:pointer;font-family:Tahoma,sans-serif;font-size:10px;color:#4a5262}
+.sc-thumb.on{border-color:#2f6fb0;box-shadow:0 0 0 2px rgba(47,111,176,.25);font-weight:bold;color:#1a2432}
+.sc-thumb.add{color:#2f7d4b}
+.sc-foot{display:flex;align-items:center;gap:6px;padding:5px 8px;background:linear-gradient(180deg,#f2f0e8,#e0ddd0);border-top:1px solid #b3aea0;font-size:11px;color:#3a4150}
+.sc-foot span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:600px){ .sc-info{display:none} .sc-sel{max-width:104px} }
+
+/* ═══════════════════  § RECETAS  ═══════════════════ */
+.rc-root{display:flex;flex-direction:column;height:100%;background:#f6f4f0;font-family:Tahoma,sans-serif;font-size:12px;overflow:hidden}
+.rc-bar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:5px 7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.rc-tabs{display:flex;gap:2px}
+.rc-tab{font-family:Tahoma,sans-serif;font-size:11px;padding:3px 9px;border:1px solid #cfc9bb;border-radius:12px;background:#fff;cursor:pointer;color:#5a5346}
+.rc-tab.on{background:#a8622f;border-color:#a8622f;color:#fff;font-weight:bold}
+.rc-buscar{flex:1;min-width:80px;padding:3px 6px;border:1px solid #aca899;border-radius:3px;font-family:Tahoma,sans-serif;font-size:12px}
+.rc-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer;color:#222}
+.rc-btn:hover{background:linear-gradient(180deg,#fff,#fdf3ea);border-color:#c98a55}
+.rc-btn.primary{background:linear-gradient(180deg,#d08b4f,#a8622f);border-color:#a8622f;color:#fff;font-weight:bold}
+.rc-btn.ok{background:linear-gradient(180deg,#63b573,#3f8f5a);border-color:#3f8f5a;color:#fff;font-weight:bold}
+.rc-body{flex:1;min-height:0;overflow:auto;padding:8px}
+.rc-grid{display:flex;flex-direction:column;gap:6px}
+.rc-card{background:#fff;border:1px solid #e0d8ca;border-radius:7px;overflow:hidden}
+.rc-card.open{border-color:#c98a55;box-shadow:0 1px 8px rgba(168,98,47,.15)}
+.rc-head{display:flex;flex-direction:column;gap:2px;width:100%;border:0;background:none;text-align:left;padding:8px 10px;cursor:pointer;font-family:Tahoma,sans-serif}
+.rc-n{font-size:14px;color:#3a2c1e;font-weight:bold}
+.rc-meta{font-size:10px;color:#8a7f6f}
+.rc-det{border-top:1px solid #f0e9dd;padding:8px 10px;background:#fffdf9}
+.rc-ings{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px}
+.rc-ing{font-size:11px;background:#f3ede2;border:1px solid #e4d9c6;border-radius:10px;padding:2px 8px;color:#5a4a36}
+.rc-ing.more{background:#e8e2d6;color:#8a7f6f}
+.rc-pasos{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.rc-paso{display:flex;gap:7px;font-size:12px;color:#3a3128;line-height:1.45}
+.rc-paso b{flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#a8622f;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center}
+.rc-acts{display:flex;gap:4px;flex-wrap:wrap}
+.rc-mini{font-family:Tahoma,sans-serif;font-size:11px;border:1px solid #ddd5c7;border-radius:3px;background:#faf7f2;cursor:pointer;padding:2px 7px;color:#5a4a36}
+.rc-mini:hover{background:#f5ece0;border-color:#c98a55}
+.rc-mini.danger:hover{background:#fdecea;border-color:#d99b96;color:#b5453a}
+.rc-vacio{display:flex;flex-direction:column;align-items:center;gap:8px;padding:30px;color:#8a7f6f;text-align:center}
+.rc-vacio-ic{font-size:40px;opacity:.65}
+.rc-menu{background:#fff;border:1px solid #e0d8ca;border-radius:7px;overflow:hidden}
+.rc-menuhead,.rc-menurow{display:grid;grid-template-columns:58px 1fr 1fr;gap:5px;align-items:center;padding:4px 8px}
+.rc-menuhead{background:#f3ede2;font-size:10px;color:#6b5f4f;text-transform:uppercase;letter-spacing:.3px}
+.rc-menurow{border-top:1px solid #f2ece2}
+.rc-dia{font-size:11px;color:#5a4a36;font-weight:bold;text-transform:capitalize}
+.rc-msel{width:100%;min-width:0;padding:3px;border:1px solid #ddd5c7;border-radius:3px;font-family:Tahoma,sans-serif;font-size:11px;background:#fff}
+.rc-menufoot{margin-top:8px}
+.rc-resumen{background:#fff;border:1px solid #e0d8ca;border-radius:7px;padding:8px 10px;font-size:11px;color:#5a4a36}
+.rc-inglist{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.rc-foot{display:flex;align-items:center;gap:8px;padding:5px 8px;background:linear-gradient(180deg,#f2f0e8,#e0ddd0);border-top:1px solid #b3aea0;font-size:11px;color:#3a4150}
+.rc-foot span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc-form{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.rc-form input,.rc-form textarea{width:100%;padding:4px 6px;border:1px solid #ddd5c7;border-radius:3px;font-family:Tahoma,sans-serif;font-size:12px;resize:vertical}
+.rc-frow{display:flex;gap:6px}
+.rc-frow label{flex:1;font-size:11px;color:#5a4a36;display:flex;align-items:center;gap:4px}
+.rc-frow input{width:60px}
+.rc-pick{display:flex;flex-direction:column;gap:3px;max-height:230px;overflow:auto;flex:1}
+.rc-pick-t{font-weight:bold;font-size:11px}
+.rc-pick-it{display:flex;align-items:center;gap:6px;padding:2px 4px;border-radius:3px;cursor:pointer;font-size:12px}
+.rc-pick-it:hover{background:#f5ece0}
+@media(max-width:600px){ .rc-menuhead,.rc-menurow{grid-template-columns:44px 1fr 1fr} .rc-buscar{order:3;width:100%;flex:none} }
+
+/* ═══════════════════  § HÁBITOS  ═══════════════════ */
+.hb-root{display:flex;flex-direction:column;height:100%;background:#f4f7f5;font-family:Tahoma,sans-serif;font-size:12px;overflow:hidden}
+.hb-add{display:flex;gap:5px;padding:7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.hb-in{flex:1;min-width:0;padding:6px 8px;border:1px solid #aca899;border-radius:3px;font-family:Tahoma,sans-serif;font-size:13px;background:#fff}
+.hb-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:4px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer}
+.hb-btn.primary{background:linear-gradient(180deg,#63b573,#3f8f5a);border-color:#3f8f5a;color:#fff;font-weight:bold;font-size:14px}
+.hb-body{flex:1;min-height:0;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:5px}
+.hb-resumen{display:flex;align-items:center;gap:8px;font-size:11px;color:#3a4a42;background:#fff;border:1px solid #d6e0da;border-radius:6px;padding:6px 10px}
+.hb-prog{flex:1;height:7px;background:#e8ede9;border-radius:4px;overflow:hidden}
+.hb-prog i{display:block;height:100%;background:linear-gradient(90deg,#63b573,#3f8f5a);border-radius:4px}
+.hb-item{background:#fff;border:1px solid #dde5e0;border-radius:7px;overflow:hidden}
+.hb-item.open{border-color:#8fc0a3;box-shadow:0 1px 8px rgba(63,143,90,.14)}
+.hb-row{display:flex;align-items:center;gap:8px;padding:7px 9px}
+.hb-check{width:26px;height:26px;flex:0 0 auto;border:2px solid #b6c0cd;border-radius:50%;background:#fff;cursor:pointer;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0}
+.hb-nm{flex:1;min-width:0;display:flex;align-items:center;gap:6px;border:0;background:none;cursor:pointer;font-family:Tahoma,sans-serif;text-align:left;padding:0}
+.hb-ic{font-size:16px}
+.hb-t{font-size:13px;color:#1f2b25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb-sub{font-size:10px;color:#7b8a82;margin-left:auto;white-space:nowrap}
+.hb-week{display:flex;gap:2px;flex:0 0 auto}
+.hb-week i{width:8px;height:14px;border-radius:2px;background:#e6e9ee;display:block}
+.hb-det{border-top:1px solid #eef2ef;padding:8px 10px;background:#fbfdfc}
+.hb-map{width:100%;display:block}
+.hb-stats{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}
+.hb-stats div{flex:1;min-width:64px;display:flex;flex-direction:column;align-items:center;background:#f3f7f4;border-radius:5px;padding:5px}
+.hb-stats b{font-size:15px;color:#1f2b25}
+.hb-stats span{font-size:10px;color:#7b8a82}
+.hb-acts{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.hb-colores,.hb-iconos{display:flex;gap:3px;flex-wrap:wrap}
+.hb-color{width:16px;height:16px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+.hb-color.on{border-color:#1f2b25}
+.hb-icb{border:1px solid transparent;border-radius:4px;background:none;cursor:pointer;font-size:14px;padding:0 2px}
+.hb-icb.on{border-color:#8fc0a3;background:#eaf4ee}
+.hb-mini{border:1px solid #d5ddd8;border-radius:3px;background:#f6f9f7;cursor:pointer;font-size:11px;padding:1px 6px;color:#5a6b62}
+.hb-mini.danger:hover{background:#fdecea;border-color:#d99b96;color:#b5453a}
+.hb-vacio{display:flex;flex-direction:column;align-items:center;gap:7px;padding:30px 18px;color:#7b8a82;text-align:center}
+.hb-vacio-ic{font-size:40px;opacity:.6}
+.hb-foot{padding:3px 8px;background:linear-gradient(180deg,#f2f0e8,#e0ddd0);border-top:1px solid #b3aea0;font-size:11px;color:#3a4150;min-height:20px}
+
+/* ═══════════════════  § LECTOR DE CÓDIGOS  ═══════════════════ */
+.qrl-root{display:flex;flex-direction:column;height:100%;background:#eef1f4;font-family:Tahoma,sans-serif;font-size:12px;overflow:hidden}
+.qrl-bar{display:flex;gap:5px;flex-wrap:wrap;padding:6px 7px;background:linear-gradient(180deg,#faf9f6,#e6e3d6);border-bottom:1px solid #b3aea0}
+.qrl-btn{font-family:Tahoma,sans-serif;font-size:12px;padding:4px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e4e1d5);cursor:pointer;color:#222}
+.qrl-btn:disabled{opacity:.45;cursor:default}
+.qrl-btn.primary{background:linear-gradient(180deg,#5b9bea,#2f6fb0);border-color:#2f6fb0;color:#fff;font-weight:bold}
+.qrl-stage{position:relative;flex:1;min-height:120px;display:flex;align-items:center;justify-content:center;background:#2c3138;overflow:hidden}
+#qrl-video{max-width:100%;max-height:100%;object-fit:contain}
+.qrl-mira{position:absolute;width:62%;max-width:230px;aspect-ratio:1;border:3px solid rgba(255,255,255,.85);border-radius:14px;box-shadow:0 0 0 2000px rgba(0,0,0,.32)}
+.qrl-vacio{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px 18px;color:#d6dbe2;text-align:center}
+.qrl-vacio .hint-muted{color:#9aa4b0}
+.qrl-vacio-ic{font-size:40px;opacity:.85}
+.qrl-res{padding:8px;min-height:0;overflow:auto}
+.qrl-card{background:#fff;border:1px solid #cfd6e0;border-radius:7px;padding:9px 11px}
+.qrl-tipo{font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.qrl-valor{font-size:12px;color:#1a2432;word-break:break-all;line-height:1.4}
+.qrl-kv{display:flex;justify-content:space-between;gap:8px;font-size:12px;padding:2px 0;border-bottom:1px solid #f0f2f5}
+.qrl-kv span{color:#6b7280}
+.qrl-kv b{color:#1a2432;word-break:break-all;text-align:right}
+.qrl-acts{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.qrl-act{font-family:Tahoma,sans-serif;font-size:11px;border:1px solid #cfd6e0;border-radius:3px;background:#f6f8fb;cursor:pointer;padding:3px 8px;color:#2a3542}
+.qrl-act:hover{background:#e8eefc;border-color:#5a8fd6}
+.qrl-hist{padding:0 8px 8px;display:flex;flex-direction:column;gap:2px}
+.qrl-histt{font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.qrl-hit{font-family:Tahoma,sans-serif;font-size:11px;text-align:left;border:1px solid #dfe4ea;border-radius:4px;background:#fff;cursor:pointer;padding:3px 7px;color:#3a4150;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qrl-hit:hover{background:#eef3fb;border-color:#5a8fd6}
 </style>
 
 <!-- Torrecillas OS — escritorio + juegos en un solo archivo. La logica esta en el bloque de JavaScript inferior. -->
@@ -3831,7 +4006,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.45.0';
+const APP_VERSION = '0.47.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -4128,6 +4303,123 @@ const I18N={
   'pt.mass':{es:'masa', en:'mass', ca:'massa', ru:'масса'},
   'menu.daily':{es:'Día a día', en:'Everyday', ca:'Dia a dia', ru:'Каждый день'},
   'menu.daily.desc':{es:'Tareas, compra, gastos…', en:'Tasks, shopping, money…', ca:'Tasques, compra, despeses…', ru:'Задачи, покупки, расходы…'},
+  'hb.title':{es:'Hábitos', en:'Habits', ca:'Hàbits', ru:'Привычки'},
+  'hb.desc':{es:'Rachas y no romper la cadena', en:'Streaks and don’t break the chain', ca:'Ratxes i no trencar la cadena', ru:'Серии и непрерывность'},
+  'hb.ph':{es:'Beber 2 litros de agua', en:'Drink 2 litres of water', ca:'Beure 2 litres d’aigua', ru:'Выпить 2 литра воды'},
+  'hb.add':{es:'Nuevo hábito', en:'New habit', ca:'Nou hàbit', ru:'Новая привычка'},
+  'hb.name':{es:'Nombre del hábito', en:'Habit name', ca:'Nom de l’hàbit', ru:'Название привычки'},
+  'hb.check':{es:'Marcar hoy', en:'Mark today', ca:'Marca avui', ru:'Отметить сегодня'},
+  'hb.today':{es:'Hoy llevas {n} de {t}', en:'{n} of {t} done today', ca:'Avui portes {n} de {t}', ru:'Сегодня {n} из {t}'},
+  'hb.streak':{es:'{n} días seguidos', en:'{n} days in a row', ca:'{n} dies seguits', ru:'{n} дней подряд'},
+  'hb.nostreak':{es:'sin racha', en:'no streak', ca:'sense ratxa', ru:'без серии'},
+  'hb.keep':{es:'¡{n} días seguidos! No rompas la cadena.', en:'{n} days in a row! Don’t break the chain.', ca:'{n} dies seguits! No trenquis la cadena.', ru:'{n} дней подряд! Не прерывайте серию.'},
+  'hb.first':{es:'Empieza la racha', en:'The streak begins', ca:'Comença la ratxa', ru:'Серия началась'},
+  'hb.map':{es:'últimas {n} semanas', en:'last {n} weeks', ca:'últimes {n} setmanes', ru:'последние {n} недель'},
+  'hb.s.streak':{es:'racha', en:'streak', ca:'ratxa', ru:'серия'},
+  'hb.s.best':{es:'mejor racha', en:'best streak', ca:'millor ratxa', ru:'рекорд'},
+  'hb.s.month':{es:'últimos 30 días', en:'last 30 days', ca:'últims 30 dies', ru:'за 30 дней'},
+  'hb.s.total':{es:'veces en total', en:'times in total', ca:'vegades en total', ru:'всего раз'},
+  'hb.delq':{es:'¿Borrar el hábito «{n}» y su historial?', en:'Delete the habit “{n}” and its history?', ca:'Esborrar l’hàbit «{n}» i el seu historial?', ru:'Удалить привычку «{n}» и её историю?'},
+  'hb.empty':{es:'Todavía no sigues ningún hábito.', en:'You are not tracking any habit yet.', ca:'Encara no segueixes cap hàbit.', ru:'Пока нет ни одной привычки.'},
+  'hb.empty2':{es:'Escribe uno arriba: leer 20 minutos, andar, estudiar… Se marca de un toque y la racha hace el resto.', en:'Type one above: read 20 minutes, walk, study… One tap to mark it and the streak does the rest.', ca:'Escriu-ne un a dalt: llegir 20 minuts, caminar, estudiar… Es marca d’un toc i la ratxa fa la resta.', ru:'Добавьте выше: читать 20 минут, гулять, учиться…'},
+  'qrl.title':{es:'Lector de códigos', en:'Code scanner', ca:'Lector de codis', ru:'Сканер кодов'},
+  'qrl.desc':{es:'Lee QR y códigos de barras', en:'Reads QR and barcodes', ca:'Llegeix QR i codis de barres', ru:'Читает QR и штрихкоды'},
+  'qrl.scan':{es:'Escanear', en:'Scan', ca:'Escaneja', ru:'Сканировать'},
+  'qrl.image':{es:'Desde imagen', en:'From an image', ca:'Des d’una imatge', ru:'Из изображения'},
+  'qrl.make':{es:'Crear uno', en:'Make one', ca:'Crea’n un', ru:'Создать код'},
+  'qrl.empty':{es:'Apunta con la cámara a un código', en:'Point the camera at a code', ca:'Apunta amb la càmera a un codi', ru:'Наведите камеру на код'},
+  'qrl.nosupport':{es:'Este navegador no sabe leer códigos (en Chrome para Android sí funciona).', en:'This browser cannot read codes (it does work in Chrome for Android).', ca:'Aquest navegador no sap llegir codis (a Chrome per a Android sí que funciona).', ru:'Этот браузер не умеет читать коды (работает в Chrome для Android).'},
+  'qrl.nocode':{es:'No he encontrado ningún código en esa imagen.', en:'No code found in that image.', ca:'No he trobat cap codi en aquesta imatge.', ru:'В этом изображении код не найден.'},
+  'qrl.history':{es:'Leídos hace poco', en:'Recently scanned', ca:'Llegits fa poc', ru:'Недавно отсканированные'},
+  'qrl.t.url':{es:'Enlace', en:'Link', ca:'Enllaç', ru:'Ссылка'},
+  'qrl.t.wifi':{es:'Red wifi', en:'Wi-Fi network', ca:'Xarxa wifi', ru:'Сеть Wi-Fi'},
+  'qrl.t.vcard':{es:'Contacto', en:'Contact', ca:'Contacte', ru:'Контакт'},
+  'qrl.t.tel':{es:'Teléfono', en:'Phone number', ca:'Telèfon', ru:'Телефон'},
+  'qrl.t.mail':{es:'Correo', en:'Email', ca:'Correu', ru:'Почта'},
+  'qrl.t.geo':{es:'Ubicación', en:'Location', ca:'Ubicació', ru:'Местоположение'},
+  'qrl.t.paquete':{es:'Lista compartida', en:'Shared list', ca:'Llista compartida', ru:'Общий список'},
+  'qrl.t.texto':{es:'Texto', en:'Text', ca:'Text', ru:'Текст'},
+  'qrl.wifi.net':{es:'Red', en:'Network', ca:'Xarxa', ru:'Сеть'},
+  'qrl.wifi.pw':{es:'Contraseña', en:'Password', ca:'Contrasenya', ru:'Пароль'},
+  'qrl.wifi.sec':{es:'Seguridad', en:'Security', ca:'Seguretat', ru:'Защита'},
+  'qrl.vc.name':{es:'Nombre', en:'Name', ca:'Nom', ru:'Имя'},
+  'qrl.vc.tel':{es:'Teléfono', en:'Phone', ca:'Telèfon', ru:'Телефон'},
+  'qrl.vc.mail':{es:'Correo', en:'Email', ca:'Correu', ru:'Почта'},
+  'qrl.a.open':{es:'Abrir', en:'Open', ca:'Obre', ru:'Открыть'},
+  'qrl.a.copy':{es:'Copiar', en:'Copy', ca:'Copia', ru:'Копировать'},
+  'qrl.a.copypw':{es:'Copiar la contraseña', en:'Copy the password', ca:'Copia la contrasenya', ru:'Копировать пароль'},
+  'qrl.a.call':{es:'Llamar', en:'Call', ca:'Truca', ru:'Позвонить'},
+  'qrl.a.mail':{es:'Escribir', en:'Write', ca:'Escriu', ru:'Написать'},
+  'qrl.a.note':{es:'Guardar en el Bloc', en:'Save to Notepad', ca:'Desa al Bloc', ru:'Сохранить в блокнот'},
+  'rc.title':{es:'Recetas', en:'Recipes', ca:'Receptes', ru:'Рецепты'},
+  'rc.desc':{es:'Tus recetas y el menú de la semana', en:'Your recipes and the week’s menu', ca:'Les teves receptes i el menú de la setmana', ru:'Ваши рецепты и меню недели'},
+  'rc.recipes':{es:'Recetas', en:'Recipes', ca:'Receptes', ru:'Рецепты'},
+  'rc.menu':{es:'Menú semanal', en:'Weekly menu', ca:'Menú setmanal', ru:'Меню недели'},
+  'rc.search':{es:'Buscar receta o ingrediente…', en:'Search recipe or ingredient…', ca:'Cerca recepta o ingredient…', ru:'Поиск рецепта или ингредиента…'},
+  'rc.new':{es:'Nueva', en:'New', ca:'Nova', ru:'Новый'},
+  'rc.newtitle':{es:'Nueva receta', en:'New recipe', ca:'Nova recepta', ru:'Новый рецепт'},
+  'rc.edittitle':{es:'Editar receta', en:'Edit recipe', ca:'Edita la recepta', ru:'Изменить рецепт'},
+  'rc.name':{es:'Nombre de la receta', en:'Recipe name', ca:'Nom de la recepta', ru:'Название рецепта'},
+  'rc.time':{es:'Minutos', en:'Minutes', ca:'Minuts', ru:'Минут'},
+  'rc.people':{es:'Personas', en:'Servings', ca:'Persones', ru:'Порций'},
+  'rc.ings':{es:'ingredientes', en:'ingredients', ca:'ingredients', ru:'ингредиентов'},
+  'rc.ingph':{es:'Un ingrediente por línea: 200 g harina, 2 huevos…', en:'One ingredient per line: 200 g flour, 2 eggs…', ca:'Un ingredient per línia: 200 g farina, 2 ous…', ru:'По одному ингредиенту в строке: 200 г муки…'},
+  'rc.stepsph':{es:'Los pasos, uno por línea', en:'The steps, one per line', ca:'Els passos, un per línia', ru:'Шаги, по одному в строке'},
+  'rc.created':{es:'Receta guardada', en:'Recipe saved', ca:'Recepta desada', ru:'Рецепт сохранён'},
+  'rc.empty':{es:'Todavía no hay recetas.', en:'No recipes yet.', ca:'Encara no hi ha receptes.', ru:'Рецептов пока нет.'},
+  'rc.nofind':{es:'Ninguna receta coincide.', en:'No recipe matches.', ca:'Cap recepta coincideix.', ru:'Ничего не найдено.'},
+  'rc.delq':{es:'¿Borrar «{n}»?', en:'Delete “{n}”?', ca:'Esborrar «{n}»?', ru:'Удалить «{n}»?'},
+  'rc.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
+  'rc.addshop':{es:'A la compra', en:'To the list', ca:'A la compra', ru:'В список покупок'},
+  'rc.toshopping':{es:'Mandar a la compra', en:'Send to shopping list', ca:'Envia a la compra', ru:'Отправить в список покупок'},
+  'rc.pick':{es:'Ingredientes de {n} recetas. Desmarca lo que ya tengas:', en:'Ingredients from {n} recipes. Untick what you already have:', ca:'Ingredients de {n} receptes. Desmarca el que ja tinguis:', ru:'Ингредиенты из {n} рецептов. Снимите то, что уже есть:'},
+  'rc.addall':{es:'Añadir a la lista', en:'Add to the list', ca:'Afegeix a la llista', ru:'Добавить в список'},
+  'rc.sent':{es:'{n} ingredientes en la lista de la compra', en:'{n} ingredients added to the shopping list', ca:'{n} ingredients a la llista de la compra', ru:'{n} ингредиентов добавлено в список'},
+  'rc.comida':{es:'Comida', en:'Lunch', ca:'Dinar', ru:'Обед'},
+  'rc.cena':{es:'Cena', en:'Dinner', ca:'Sopar', ru:'Ужин'},
+  'rc.menuempty':{es:'Elige recetas en el menú y podrás mandar la compra de golpe.', en:'Pick recipes in the menu and you can send the whole shop at once.', ca:'Tria receptes al menú i podràs enviar la compra de cop.', ru:'Выберите рецепты в меню, и список соберётся сам.'},
+  'rc.menusum':{es:'{n} comidas planificadas · {i} ingredientes distintos', en:'{n} meals planned · {i} different ingredients', ca:'{n} àpats planificats · {i} ingredients diferents', ru:'{n} блюд · {i} ингредиентов'},
+  'rc.d.lun':{es:'Lunes', en:'Mon', ca:'Dilluns', ru:'Пн'},
+  'rc.d.mar':{es:'Martes', en:'Tue', ca:'Dimarts', ru:'Вт'},
+  'rc.d.mie':{es:'Miércoles', en:'Wed', ca:'Dimecres', ru:'Ср'},
+  'rc.d.jue':{es:'Jueves', en:'Thu', ca:'Dijous', ru:'Чт'},
+  'rc.d.vie':{es:'Viernes', en:'Fri', ca:'Divendres', ru:'Пт'},
+  'rc.d.sab':{es:'Sábado', en:'Sat', ca:'Dissabte', ru:'Сб'},
+  'rc.d.dom':{es:'Domingo', en:'Sun', ca:'Diumenge', ru:'Вс'},
+  'sc.title':{es:'Escáner', en:'Scanner', ca:'Escàner', ru:'Сканер'},
+  'sc.desc':{es:'De papel a PDF con la cámara', en:'Paper to PDF with the camera', ca:'De paper a PDF amb la càmera', ru:'Из бумаги в PDF камерой'},
+  'sc.camera':{es:'Cámara', en:'Camera', ca:'Càmera', ru:'Камера'},
+  'sc.open':{es:'Abrir', en:'Open', ca:'Obre', ru:'Открыть'},
+  'sc.filter':{es:'Filtro', en:'Filter', ca:'Filtre', ru:'Фильтр'},
+  'sc.f.bn':{es:'Documento (B/N)', en:'Document (B/W)', ca:'Document (B/N)', ru:'Документ (Ч/Б)'},
+  'sc.f.gris':{es:'Grises', en:'Greyscale', ca:'Grisos', ru:'Оттенки серого'},
+  'sc.f.realce':{es:'Color realzado', en:'Enhanced colour', ca:'Color realçat', ru:'Усиленный цвет'},
+  'sc.f.color':{es:'Color original', en:'Original colour', ca:'Color original', ru:'Исходный цвет'},
+  'sc.rotate':{es:'Girar la página', en:'Rotate the page', ca:'Gira la pàgina', ru:'Повернуть страницу'},
+  'sc.crop':{es:'Recortar (arrastra sobre la página)', en:'Crop (drag across the page)', ca:'Retalla (arrossega sobre la pàgina)', ru:'Обрезать (проведите по странице)'},
+  'sc.crophint':{es:'Arrastra sobre la página para recortarla', en:'Drag across the page to crop it', ca:'Arrossega sobre la pàgina per retallar-la', ru:'Проведите по странице, чтобы обрезать'},
+  'sc.cropped':{es:'Página recortada', en:'Page cropped', ca:'Pàgina retallada', ru:'Страница обрезана'},
+  'sc.uncrop':{es:'Quitar el recorte', en:'Undo the crop', ca:'Treu el retall', ru:'Убрать обрезку'},
+  'sc.uncropq':{es:'¿Quitar el recorte de esta página?', en:'Undo the crop on this page?', ca:'Treure el retall d’aquesta pàgina?', ru:'Убрать обрезку этой страницы?'},
+  'sc.delete':{es:'Quitar esta página', en:'Remove this page', ca:'Treu aquesta pàgina', ru:'Удалить страницу'},
+  'sc.page':{es:'Página', en:'Page', ca:'Pàgina', ru:'Страница'},
+  'sc.pageof':{es:'Página {n} de {t}', en:'Page {n} of {t}', ca:'Pàgina {n} de {t}', ru:'Страница {n} из {t}'},
+  'sc.empty':{es:'Haz una foto a un documento o abre una imagen', en:'Photograph a document or open an image', ca:'Fes una foto a un document o obre una imatge', ru:'Сфотографируйте документ или откройте изображение'},
+  'sc.empty2':{es:'Se realza el contraste, se pasa a blanco y negro y sale un PDF de varias páginas. Todo aquí, sin subir nada.', en:'Contrast is enhanced, it goes black and white and out comes a multi-page PDF. All here, nothing uploaded.', ca:'Es realça el contrast, es passa a blanc i negre i en surt un PDF de diverses pàgines. Tot aquí, sense pujar res.', ru:'Контраст усиливается, страница становится Ч/Б и получается многостраничный PDF. Ничего не загружается.'},
+  'sc.opening':{es:'Abriendo la cámara…', en:'Opening the camera…', ca:'Obrint la càmera…', ru:'Открываю камеру…'},
+  'sc.ready':{es:'Enfoca el documento y pulsa el botón', en:'Frame the document and press the button', ca:'Enfoca el document i prem el botó', ru:'Наведите на документ и нажмите кнопку'},
+  'sc.nocam':{es:'Este navegador no da acceso a la cámara.', en:'This browser gives no camera access.', ca:'Aquest navegador no dona accés a la càmera.', ru:'Браузер не даёт доступ к камере.'},
+  'sc.nocamperm':{es:'No se ha podido usar la cámara (¿permiso denegado?)', en:'The camera could not be used (permission denied?)', ca:'No s’ha pogut fer servir la càmera (permís denegat?)', ru:'Камера недоступна (нет разрешения?)'},
+  'sc.captured':{es:'Página {n} capturada', en:'Page {n} captured', ca:'Pàgina {n} capturada', ru:'Страница {n} снята'},
+  'sc.added':{es:'{n} páginas', en:'{n} pages', ca:'{n} pàgines', ru:'{n} страниц'},
+  'sc.making':{es:'Montando el PDF…', en:'Building the PDF…', ca:'Muntant el PDF…', ru:'Собираю PDF…'},
+  'sc.made':{es:'PDF de {n} páginas ({s} KB)', en:'{n}-page PDF ({s} KB)', ca:'PDF de {n} pàgines ({s} KB)', ru:'PDF на {n} страниц ({s} КБ)'},
+  'sc.fail':{es:'No se ha podido montar el PDF', en:'The PDF could not be built', ca:'No s’ha pogut muntar el PDF', ru:'Не удалось собрать PDF'},
+  'sc.pdf':{es:'Hacer PDF', en:'Make PDF', ca:'Fes PDF', ru:'Создать PDF'},
+  'sc.png':{es:'Guardar imagen', en:'Save image', ca:'Desa imatge', ru:'Сохранить изображение'},
+  'sc.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
+  'sc.save':{es:'Guardar en Mis documentos', en:'Save to My Documents', ca:'Desa a Els meus documents', ru:'Сохранить в документы'},
+  'sc.saved':{es:'Guardado', en:'Saved', ca:'Desat', ru:'Сохранено'},
   'tk.title':{es:'Tareas', en:'Tasks', ca:'Tasques', ru:'Задачи'},
   'tk.desc':{es:'Lo que hay que hacer', en:'What needs doing', ca:'El que cal fer', ru:'Что нужно сделать'},
   'tk.ph':{es:'llamar al fontanero mañana !alta', en:'call the plumber tomorrow !high', ca:'trucar al lampista demà !alta', ru:'позвонить сантехнику завтра !высокий'},
@@ -4199,6 +4491,23 @@ const I18N={
   'tp.fav':{es:'Guardar como favorito', en:'Save as a favourite', ca:'Desa com a preferit', ru:'В избранное'},
   'tp.faved':{es:'{c} guardado en favoritos', en:'{c} saved to favourites', ca:'{c} desat a preferits', ru:'{c} добавлен в избранное'},
   'tp.unfaved':{es:'{c} ya no es favorito', en:'{c} is no longer a favourite', ca:'{c} ja no és preferit', ru:'{c} убран из избранного'},
+  'ar.title':{es:'Arranque', en:'Startup', ca:'Arrencada', ru:'Запуск'},
+  'ar.desc':{es:'Cómo entra el sistema cuando abres la página', en:'How the system starts when you open the page', ca:'Com entra el sistema quan obres la pàgina', ru:'Как система запускается при открытии страницы'},
+  'ar.fast':{es:'Entrar directo', en:'Go straight in', ca:'Entra directe', ru:'Входить сразу'},
+  'ar.fast.d':{es:'Sin la animación de inicio ni la pantalla de bienvenida', en:'No boot animation and no welcome screen', ca:'Sense l’animació d’inici ni la pantalla de benvinguda', ru:'Без анимации загрузки и приветствия'},
+  'ar.fast.on':{es:'A partir de ahora se entra directo', en:'From now on it goes straight in', ca:'A partir d’ara s’entra directe', ru:'Теперь вход будет сразу'},
+  'ar.fast.off':{es:'Vuelve la animación de inicio', en:'The boot animation is back', ca:'Torna l’animació d’inici', ru:'Анимация загрузки возвращается'},
+  'ar.auto':{es:'Iniciar sesión automáticamente', en:'Log in automatically', ca:'Inicia la sessió automàticament', ru:'Входить автоматически'},
+  'ar.auto.d':{es:'No te vuelve a pedir la contraseña en este dispositivo', en:'It will not ask for your password again on this device', ca:'No et tornarà a demanar la contrasenya en aquest dispositiu', ru:'Пароль на этом устройстве больше не спросят'},
+  'ar.auto.what':{es:'Sin esto, cada vez que abras la página tendrás que escribir la contraseña de tu cuenta.', en:'Without this, you will type your account password every time you open the page.', ca:'Sense això, cada cop que obris la pàgina hauràs d’escriure la contrasenya.', ru:'Без этого пароль придётся вводить при каждом открытии.'},
+  'ar.confirm':{es:'Se guardará la llave de tu caja en este navegador (sin la contraseña, y de forma que ni el propio programa puede leerla).<br><br><b>A partir de entonces, cualquiera que abra este navegador entra en tus datos sin contraseña.</b> El cifrado seguirá protegiendo el archivo si alguien copia el almacenamiento, pero no tu dispositivo.<br><br>¿Lo activo?', en:'Your vault key will be stored in this browser (without the password, and in a way not even this program can read).<br><br><b>From then on, anyone who opens this browser gets into your data with no password.</b> Encryption still protects the file if someone copies the storage, but not your device.<br><br>Enable it?', ca:'Es desarà la clau de la teva caixa en aquest navegador (sense la contrasenya, i de manera que ni el programa la pot llegir).<br><br><b>A partir d’aleshores, qualsevol que obri aquest navegador entra a les teves dades sense contrasenya.</b><br><br>L’activo?', ru:'Ключ хранилища будет сохранён в этом браузере (без пароля и так, что даже программа не может его прочитать).<br><br><b>После этого любой, кто откроет этот браузер, войдёт в ваши данные без пароля.</b><br><br>Включить?'},
+  'ar.activate':{es:'Activar', en:'Enable', ca:'Activa', ru:'Включить'},
+  'ar.warn':{es:'⚠ Activo: quien abra este navegador entra sin contraseña. Cierra sesión desde el menú Inicio si prestas el dispositivo.', en:'⚠ On: whoever opens this browser gets in without a password. Log out from the Start menu if you lend the device.', ca:'⚠ Actiu: qui obri aquest navegador entra sense contrasenya. Tanca la sessió si deixes el dispositiu.', ru:'⚠ Включено: любой, кто откроет браузер, войдёт без пароля.'},
+  'ar.on':{es:'Login automático activado', en:'Automatic login enabled', ca:'Inici de sessió automàtic activat', ru:'Автовход включён'},
+  'ar.off':{es:'Login automático desactivado', en:'Automatic login disabled', ca:'Inici de sessió automàtic desactivat', ru:'Автовход выключен'},
+  'ar.failed':{es:'No se ha podido guardar la llave en este navegador.', en:'The key could not be stored in this browser.', ca:'No s’ha pogut desar la clau en aquest navegador.', ru:'Не удалось сохранить ключ в этом браузере.'},
+  'ar.needacct':{es:'El login automático solo tiene sentido con una cuenta local creada.', en:'Automatic login only makes sense once you have a local account.', ca:'L’inici de sessió automàtic només té sentit amb un compte local creat.', ru:'Автовход имеет смысл только с локальной учётной записью.'},
+  'ar.needopen':{es:'Abre la sesión de tu cuenta para poder activarlo.', en:'Unlock your account to enable it.', ca:'Obre la sessió del teu compte per poder activar-ho.', ru:'Разблокируйте учётную запись, чтобы включить.'},
   'bk.title':{es:'Copia de seguridad', en:'Backup', ca:'Còpia de seguretat', ru:'Резервная копия'},
   'bk.what':{es:'Se lleva TODO: gastos, tareas, lista de la compra, claves, documentos, récords y ajustes', en:'Takes EVERYTHING: expenses, tasks, shopping list, passwords, documents, records and settings', ca:'S’ho emporta TOT: despeses, tasques, llista de la compra, claus, documents, rècords i ajustos', ru:'Сохраняет ВСЁ: расходы, задачи, список покупок, пароли, документы, рекорды и настройки'},
   'bk.export':{es:'Exportar copia', en:'Export backup', ca:'Exporta còpia', ru:'Экспорт копии'},
@@ -4748,7 +5057,7 @@ let gameInstances = {};
 // El truco para no tener que volver async todo el sistema: al iniciar sesión se
 // descifra la caja UNA vez a un objeto en memoria (_vault); Store lee/escribe ahí
 // de forma síncrona y un guardado diferido re-cifra la caja a localStorage.
-const VAULT_PLAINTEXT=new Set(['tos-account','tos-vault','tos-lang']); // no se cifran (hacen falta antes de entrar)
+const VAULT_PLAINTEXT=new Set(['tos-account','tos-vault','tos-lang','tos-autologin','tos-fastboot']); // no se cifran (hacen falta antes de entrar)
 let _acctKey=null, _vault=null, _vaultTmr=null, _vaultFailNotified=false, _guestMode=false;
 function _b64enc(bytes){ let s=''; for(let i=0;i<bytes.length;i++)s+=String.fromCharCode(bytes[i]); return btoa(s); }
 function _b64dec(b64){ const s=atob(b64); const u=new Uint8Array(s.length); for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i); return u; }
@@ -4801,8 +5110,90 @@ async function unlockAccount(password){
   try{ const v=await _decJSON(key,blob); _acctKey=key; _vault=(v&&typeof v==='object')?v:{}; return true; }
   catch(e){ return false; } // el fallo de autenticación de AES-GCM = contraseña incorrecta
 }
+// ---------- LOGIN AUTOMÁTICO ----------
+// La clave del vault se deriva con PBKDF2 y se crea **no extraíble**: ni este código
+// ni nadie puede leer sus bytes. Eso permite guardarla tal cual en IndexedDB (las
+// CryptoKey se clonan estructuradamente) y reusarla al arrancar sin pedir nada.
+// Guardar la CONTRASEÑA, o la clave en base64, sería tirar el cifrado a la basura;
+// así la caja sigue ilegible para quien copie el almacenamiento del navegador.
+// A cambio, y esto la app lo dice bien claro: quien abra ESTE navegador, entra.
+const AUTOL_DB='tos-auth', AUTOL_STORE='k', AUTOL_ID='vaultkey';
+function _autolDB(){
+  return new Promise((res,rej)=>{
+    try{
+      if(typeof indexedDB==='undefined')return rej(0);
+      const r=indexedDB.open(AUTOL_DB,1);
+      r.onupgradeneeded=()=>{ try{ r.result.createObjectStore(AUTOL_STORE); }catch(e){} };
+      r.onsuccess=()=>res(r.result);
+      r.onerror=()=>rej(r.error);
+    }catch(e){ rej(e); }
+  });
+}
+async function autoLoginGuardar(key){
+  if(!key)return false;
+  try{
+    const db=await _autolDB();
+    return await new Promise((res)=>{
+      const tx=db.transaction(AUTOL_STORE,'readwrite');
+      tx.objectStore(AUTOL_STORE).put(key,AUTOL_ID);
+      tx.oncomplete=()=>res(true);
+      tx.onerror=()=>res(false);
+    });
+  }catch(e){ return false; }
+}
+async function autoLoginLeer(){
+  try{
+    const db=await _autolDB();
+    return await new Promise((res)=>{
+      const tx=db.transaction(AUTOL_STORE,'readonly');
+      const q=tx.objectStore(AUTOL_STORE).get(AUTOL_ID);
+      q.onsuccess=()=>res(q.result||null);
+      q.onerror=()=>res(null);
+    });
+  }catch(e){ return null; }
+}
+async function autoLoginBorrar(){
+  try{ localStorage.removeItem('tos-autologin'); }catch(e){}
+  try{
+    const db=await _autolDB();
+    await new Promise((res)=>{
+      const tx=db.transaction(AUTOL_STORE,'readwrite');
+      tx.objectStore(AUTOL_STORE).delete(AUTOL_ID);
+      tx.oncomplete=()=>res(true);
+      tx.onerror=()=>res(false);
+    });
+  }catch(e){}
+  return true;
+}
+function autoLoginActivo(){ try{ return localStorage.getItem('tos-autologin')==='1'; }catch(e){ return false; } }
+// Activarlo exige tener la sesión abierta: es la única forma de tener la clave
+async function autoLoginActivar(){
+  if(!_acctKey||!hasAccount())return false;
+  const ok=await autoLoginGuardar(_acctKey);
+  if(ok){ try{ localStorage.setItem('tos-autologin','1'); }catch(e){} }
+  return ok;
+}
+// Al arrancar: si está activo y hay clave guardada, se abre la caja sin preguntar
+async function autoLoginIntenta(){
+  if(!hasAccount()||!autoLoginActivo()||!_cryptoOk())return false;
+  const key=await autoLoginLeer();
+  if(!key)return false;
+  const blob=localStorage.getItem('tos-vault');
+  if(blob==null){ _acctKey=key; _vault={}; return true; }
+  try{
+    const v=await _decJSON(key,blob);
+    _acctKey=key; _vault=(v&&typeof v==='object')?v:{};
+    return true;
+  }catch(e){
+    await autoLoginBorrar(); // la clave guardada ya no vale (contraseña cambiada fuera)
+    return false;
+  }
+}
+// Arranque rápido: sin animación de inicio ni pantalla de bienvenida
+function arranqueRapido(){ try{ return localStorage.getItem('tos-fastboot')==='1'; }catch(e){ return false; } }
 function lockAccount(){ _acctKey=null; _vault=null; clearTimeout(_vaultTmr); }
 async function removeAccount(){ // descifra: vuelca la caja a localStorage en claro y borra la cuenta
+  try{ await autoLoginBorrar(); }catch(e){}
   if(_vault){ Object.keys(_vault).forEach(k=>{ try{ localStorage.setItem(k,_vault[k]); }catch(e){} }); }
   try{ localStorage.removeItem('tos-vault'); localStorage.removeItem('tos-account'); }catch(e){}
   lockAccount();
@@ -5060,7 +5451,8 @@ const FS_META={
   txt:{icon:'&#128196;',label:'Texto',ext:'.txt'},
   png:{icon:'&#128444;&#65039;',label:'Imagen',ext:'.png'},
   audio:{icon:'&#127925;',label:'Audio',ext:'.webm'},
-  sheet:{icon:'&#128202;',label:'Hoja',ext:'.csv'}
+  sheet:{icon:'&#128202;',label:'Hoja',ext:'.csv'},
+  pdf:{icon:'&#128196;',label:'PDF',ext:'.pdf'}
 };
 // Abre un archivo del FS en la app que le corresponde
 function fsOpen(id){
@@ -5069,6 +5461,7 @@ function fsOpen(id){
   else if(f.type==='png'){ openImageViewer(); if(_viewerLoadDataURL)_viewerLoadDataURL(f.data,f.name); }
   else if(f.type==='audio'){ openPlayer(); if(_playerAddDataURL)_playerAddDataURL(f.data,f.name+FS_META.audio.ext,true); }
   else if(f.type==='sheet'){ openSpreadsheet({fileId:f.id,name:f.name,json:f.data}); }
+  else if(f.type==='pdf'){ try{ openEbookReader(_pdfFileDesdeDataURL(f.data,f.name)); }catch(e){} }
 }
 let _docsCurFolder='';
 function openMyDocuments(){
@@ -5682,6 +6075,8 @@ function openAccountManage(){
 async function logout(){
   if(!hasAccount())return;
   try{ await persistVault(); }catch(e){}
+  // Cerrar sesión a mano apaga el login automático: si no, la recarga volvería a entrar
+  try{ await autoLoginBorrar(); }catch(e){}
   lockAccount();
   try{ location.reload(); }catch(e){}
 }
@@ -5711,7 +6106,9 @@ function openChangePassword(){
     const info=accountInfo(); const salt=window.crypto.getRandomValues(new Uint8Array(16)); const iter=(info&&info.iter)||200000;
     const oldKey=_acctKey; // para revertir si falla el re-cifrado (si no, la clave en memoria y la sal guardada quedarían desincronizadas → bloqueo)
     try{ _acctKey=await _deriveKey(np.value,salt,iter); const saved=await persistVault();
-      if(saved){ localStorage.setItem('tos-account',JSON.stringify(Object.assign({},info,{salt:_b64enc(salt),ts:Date.now()}))); ov.remove(); notify({icon:'&#128273;',title:t('acct.title'),body:t('acct.pwchanged')}); }
+      if(saved){ localStorage.setItem('tos-account',JSON.stringify(Object.assign({},info,{salt:_b64enc(salt),ts:Date.now()})));
+        if(autoLoginActivo()){ try{ await autoLoginGuardar(_acctKey); }catch(e){} } // la clave vieja ya no abre la caja
+        ov.remove(); notify({icon:'&#128273;',title:t('acct.title'),body:t('acct.pwchanged')}); }
       else { _acctKey=oldKey; ok.disabled=false; er.textContent=t('acct.fail'); }
     }catch(e){ _acctKey=oldKey; ok.disabled=false; er.textContent=t('acct.fail'); }
   });
@@ -5734,6 +6131,7 @@ const bootMsgInt=setInterval(()=>{
 // Bienvenida XP → escritorio (tras arrancar o tras iniciar sesión correctamente)
 function _showWelcomeThenDesktop(){
   const wel=document.getElementById('welcome-screen');
+  if(arranqueRapido()){ if(wel)wel.style.display='none'; enterDesktop(); return; } // entrar directo
   wel.style.display='flex';
   requestAnimationFrame(()=>wel.classList.add('show'));
   setTimeout(()=>{
@@ -5744,18 +6142,25 @@ function _showWelcomeThenDesktop(){
 }
 // Tras un auto-bloqueo se recarga con esta marca: saltamos la animación y vamos al login
 let _relock=false; try{ if(sessionStorage.getItem('tos-relock')){ sessionStorage.removeItem('tos-relock'); _relock=true; } }catch(e){}
-setTimeout(()=>{
+setTimeout(async()=>{
   clearInterval(bootMsgInt);
   const bs=document.getElementById('boot-screen');
-  bs.classList.add('hidden');
+  if(arranqueRapido())bs.style.display='none'; else bs.classList.add('hidden');
   // Con solo opacity:0 el arranque seguía en el árbol de render con sus dos animaciones
   // infinitas (brillo del logo y barra de bloques) repintando toda la pantalla el resto
   // de la sesión. Al acabar el fundido lo sacamos del render.
   setTimeout(()=>{ bs.style.display='none'; },1000);
-  // Si hay una cuenta local, pedir la contraseña antes de entrar; si no, escritorio directo
-  if(hasAccount())showLogin();
+  // Si hay una cuenta local, pedir la contraseña antes de entrar; si no, escritorio
+  // directo. Con el login automático puesto (y si no venimos de un auto-bloqueo)
+  // se abre la caja sin preguntar nada.
+  if(hasAccount()){
+    let entrado=false;
+    if(!_relock){ try{ entrado=await autoLoginIntenta(); }catch(e){} }
+    if(entrado)_showWelcomeThenDesktop();
+    else showLogin();
+  }
   else _showWelcomeThenDesktop();
-},_relock?120:2500);
+},_relock?120:(arranqueRapido()?0:2500));
 
 function drawStartMenuIcons(){
   const sa=document.querySelector('.start-avatar canvas');
@@ -6292,10 +6697,10 @@ function xpPrompt(title,label,defaultValue,onOk){
 }
 
 // Confirmación estética XP (sustituye a confirm()). onYes se llama al aceptar.
-function xpConfirm(title,message,onYes,okLabel){
+function xpConfirm(title,message,onYes,okLabel,onNo){
   xpDialog(title,'<div class="dlg-icon">&#10067;</div><div>'+message+'</div>',[
     {label:okLabel||t('btn.yes'),primary:true,action:onYes},
-    {label:t('btn.cancel')}
+    {label:t('btn.cancel'),action:onNo}
   ]);
 }
 
@@ -10692,6 +11097,1009 @@ function tkNombreLista(l){
   return v===k?String(l||''):v;
 }
 
+// ========== HÁBITOS ==========
+// Tareas son cosas que se hacen una vez; esto es lo que quieres repetir cada día.
+// Lo único que hace falta para que funcione es que marcar cueste un toque y que la
+// racha se vea: por eso hay mapa del año y "no rompas la cadena".
+const HB_COLORES=['#3f8f5a','#2f6fb0','#a8622f','#7a5aa8','#c04b7a','#2f8c95'];
+const HB_ICONOS=['&#128170;','&#128218;','&#128167;','&#127807;','&#127939;','&#129691;','&#128164;','&#127925;','&#129504;','&#128172;'];
+function hbAll(){ try{ const a=JSON.parse(Store.get('tos-habitos')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function hbWrite(a){ return Store.set('tos-habitos',JSON.stringify(a)); }
+function hbHoy(d){ const x=d||new Date(),p=(n)=>(n<10?'0':'')+n; return x.getFullYear()+'-'+p(x.getMonth()+1)+'-'+p(x.getDate()); }
+function hbDia(iso,n){ const d=new Date(iso+'T12:00:00'); d.setDate(d.getDate()+n); return hbHoy(d); }
+function hbHecho(h,iso){ return (h.dias||[]).indexOf(iso)>=0; }
+function hbMarca(h,iso){
+  h.dias=h.dias||[];
+  const i=h.dias.indexOf(iso);
+  if(i>=0)h.dias.splice(i,1); else h.dias.push(iso);
+  if(h.dias.length>800)h.dias=h.dias.sort().slice(-800);
+  return hbHecho(h,iso);
+}
+// Racha actual: días seguidos hasta hoy (si hoy aún no está marcado, cuenta desde ayer)
+function hbRacha(h,hoy){
+  hoy=hoy||hbHoy();
+  const set={}; (h.dias||[]).forEach(d=>{ set[d]=1; });
+  let cursor=set[hoy]?hoy:hbDia(hoy,-1);
+  let n=0;
+  while(set[cursor]){ n++; cursor=hbDia(cursor,-1); }
+  return n;
+}
+function hbMejorRacha(h){
+  const dias=(h.dias||[]).slice().sort();
+  let mejor=0, actual=0, prev=null;
+  dias.forEach(d=>{
+    if(prev&&hbDia(prev,1)===d)actual++; else actual=1;
+    if(actual>mejor)mejor=actual;
+    prev=d;
+  });
+  return mejor;
+}
+function hbUltimos(h,n,hoy){
+  hoy=hoy||hbHoy();
+  const out=[];
+  for(let k=n-1;k>=0;k--){ const d=hbDia(hoy,-k); out.push({d,ok:hbHecho(h,d)}); }
+  return out;
+}
+function hbPorcentaje(h,n,hoy){
+  const u=hbUltimos(h,n,hoy);
+  return Math.round(u.filter(x=>x.ok).length/(n||1)*100);
+}
+let _habitosHook=null;
+
+function openHabitos(){
+  closeStartMenu();
+  if(focusExisting('hb-root'))return;
+  const content=`<div class="hb-root" id="hb-root">
+    <div class="hb-add">
+      <input type="text" id="hb-in" class="hb-in" maxlength="40" placeholder="Beber 2 litros de agua" data-i18n-ph="hb.ph" data-i18n-aria="hb.add" aria-label="Nuevo hábito">
+      <button type="button" class="hb-btn primary" id="hb-ok">&#10133;</button>
+    </div>
+    <div class="hb-body" id="hb-body"></div>
+    <div class="hb-foot"><span id="hb-status"></span></div>
+  </div>`;
+  createWindow(t('hb.title'),'&#127919;',560,520,content,{session:'habitos',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    const body=$('#hb-body');
+    let habitos=hbAll(), abierto=null;
+    const setStatus=(m)=>{ $('#hb-status').textContent=m||''; };
+    const guarda=()=>{ if(!hbWrite(habitos))xpDialog(t('hb.title'),'<div class="dlg-icon">&#128190;</div><div>'+escHtml(t('docs.full'))+'</div>'); };
+
+    // Mapa del año: una casilla por día, como el de las contribuciones
+    const pintaMapa=(cv,h)=>{
+      const g=cv.getContext('2d');
+      if(!g)return;
+      const dpr=Math.min(2,window.devicePixelRatio||1);
+      const semanas=26, cel=Math.max(6,Math.floor(((cv.clientWidth||420)-14)/semanas)-2);
+      const W=cv.clientWidth||420, H=(cel+2)*7+14;
+      cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+      cv.style.height=H+'px';
+      g.setTransform(dpr,0,0,dpr,0,0);
+      g.clearRect(0,0,W,H);
+      const hoy=hbHoy();
+      const total=semanas*7;
+      const set={}; (h.dias||[]).forEach(d=>{ set[d]=1; });
+      // Se empieza el lunes de hace `semanas` semanas
+      const hoyD=new Date(hoy+'T12:00:00');
+      const offset=(hoyD.getDay()+6)%7; // 0 = lunes
+      const inicio=hbDia(hoy,-(total-1-(6-offset)));
+      for(let i=0;i<total;i++){
+        const d=hbDia(inicio,i);
+        if(d>hoy)break;
+        const col=Math.floor(i/7), fila=i%7;
+        const x=col*(cel+2)+1, y=fila*(cel+2)+1;
+        g.fillStyle=set[d]?(h.color||HB_COLORES[0]):'#e6e9ee';
+        g.fillRect(x,y,cel,cel);
+        if(d===hoy){ g.strokeStyle='#1a2432'; g.lineWidth=1.5; g.strokeRect(x-0.5,y-0.5,cel+1,cel+1); }
+      }
+      g.fillStyle='#8a919c'; g.font='9px Tahoma,sans-serif'; g.textAlign='left'; g.textBaseline='top';
+      g.fillText(t('hb.map',{n:semanas}),1,(cel+2)*7+2);
+    };
+    const render=()=>{
+      const hoy=hbHoy();
+      if(!habitos.length){
+        body.innerHTML='<div class="hb-vacio"><div class="hb-vacio-ic">&#127919;</div><div>'+escHtml(t('hb.empty'))+'</div>'
+          +'<div class="hint-muted">'+escHtml(t('hb.empty2'))+'</div></div>';
+        return;
+      }
+      const hechosHoy=habitos.filter(h=>hbHecho(h,hoy)).length;
+      body.innerHTML='<div class="hb-resumen">'+escHtml(t('hb.today',{n:hechosHoy,t:habitos.length}))
+        +'<span class="hb-prog"><i style="width:'+Math.round(hechosHoy/habitos.length*100)+'%"></i></span></div>'
+        +habitos.map((h,i)=>{
+          const racha=hbRacha(h,hoy), hecho=hbHecho(h,hoy), sem=hbUltimos(h,7,hoy);
+          return '<div class="hb-item'+(hecho?' done':'')+(abierto===h.id?' open':'')+'">'
+            +'<div class="hb-row">'
+            +'<button type="button" class="hb-check" data-tog="'+escHtml(h.id)+'" style="border-color:'+(h.color||HB_COLORES[0])+';'+(hecho?'background:'+(h.color||HB_COLORES[0]):'')+'" aria-label="'+escHtml(t('hb.check'))+'">'+(hecho?'&#10004;':'')+'</button>'
+            +'<button type="button" class="hb-nm" data-open="'+escHtml(h.id)+'"><span class="hb-ic">'+(h.icono||HB_ICONOS[0])+'</span>'
+              +'<span class="hb-t">'+escHtml(h.n)+'</span>'
+              +'<span class="hb-sub">'+(racha?'&#128293; '+escHtml(t('hb.streak',{n:racha})):escHtml(t('hb.nostreak')))+'</span></button>'
+            +'<span class="hb-week">'+sem.map(d=>'<i class="'+(d.ok?'on':'')+'" style="'+(d.ok?'background:'+(h.color||HB_COLORES[0]):'')+'"></i>').join('')+'</span>'
+            +'</div>'
+            +(abierto===h.id?'<div class="hb-det">'
+              +'<canvas class="hb-map" data-i="'+i+'" role="img" aria-label="'+escHtml(t('hb.map',{n:26}))+'"></canvas>'
+              +'<div class="hb-stats">'
+                +'<div><b>'+racha+'</b><span>'+escHtml(t('hb.s.streak'))+'</span></div>'
+                +'<div><b>'+hbMejorRacha(h)+'</b><span>'+escHtml(t('hb.s.best'))+'</span></div>'
+                +'<div><b>'+hbPorcentaje(h,30,hoy)+'%</b><span>'+escHtml(t('hb.s.month'))+'</span></div>'
+                +'<div><b>'+(h.dias||[]).length+'</b><span>'+escHtml(t('hb.s.total'))+'</span></div>'
+              +'</div>'
+              +'<div class="hb-acts">'
+                +'<span class="hb-colores">'+HB_COLORES.map(c=>'<button type="button" class="hb-color'+((h.color||HB_COLORES[0])===c?' on':'')+'" data-col="'+escHtml(h.id)+'|'+c+'" style="background:'+c+'" aria-label="color"></button>').join('')+'</span>'
+                +'<span class="hb-iconos">'+HB_ICONOS.map(ic=>'<button type="button" class="hb-icb'+((h.icono||HB_ICONOS[0])===ic?' on':'')+'" data-ic="'+escHtml(h.id)+'|'+ic+'">'+ic+'</button>').join('')+'</span>'
+                +'<button type="button" class="hb-mini" data-ren="'+escHtml(h.id)+'">&#9998;</button>'
+                +'<button type="button" class="hb-mini danger" data-del="'+escHtml(h.id)+'">&#10006;</button>'
+              +'</div></div>':'')
+            +'</div>';
+        }).join('');
+      body.querySelectorAll('[data-tog]').forEach(b=>b.onclick=()=>{
+        const h=habitos.find(x=>x.id===b.dataset.tog);
+        if(!h)return;
+        const ahora=hbMarca(h,hoy);
+        guarda(); render();
+        if(ahora){
+          const r=hbRacha(h,hoy);
+          setStatus(r>1?t('hb.keep',{n:r}):t('hb.first'));
+          try{ uiSfx('click'); }catch(e){}
+        }else setStatus('');
+      });
+      body.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{ abierto=abierto===b.dataset.open?null:b.dataset.open; render(); });
+      body.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+        const h=habitos.find(x=>x.id===b.dataset.del);
+        xpConfirm(t('hb.title'),t('hb.delq',{n:h?h.n:''}),()=>{ habitos=habitos.filter(x=>x.id!==b.dataset.del); guarda(); render(); },t('btn.delete'));
+      });
+      body.querySelectorAll('[data-ren]').forEach(b=>b.onclick=()=>{
+        const h=habitos.find(x=>x.id===b.dataset.ren);
+        if(!h)return;
+        xpPrompt(t('hb.title'),t('hb.name'),h.n,(v)=>{ if(v&&v.trim()){ h.n=v.trim(); guarda(); render(); } });
+      });
+      body.querySelectorAll('[data-col]').forEach(b=>b.onclick=()=>{
+        const [hid,c]=b.dataset.col.split('|');
+        const h=habitos.find(x=>x.id===hid);
+        if(h){ h.color=c; guarda(); render(); }
+      });
+      body.querySelectorAll('[data-ic]').forEach(b=>b.onclick=()=>{
+        const i2=b.dataset.ic.indexOf('|');
+        const hid=b.dataset.ic.slice(0,i2), ic=b.dataset.ic.slice(i2+1);
+        const h=habitos.find(x=>x.id===hid);
+        if(h){ h.icono=ic; guarda(); render(); }
+      });
+      body.querySelectorAll('.hb-map').forEach(cv2=>pintaMapa(cv2,habitos[+cv2.dataset.i]));
+      applyI18n(win);
+    };
+    const anade=(txt)=>{
+      const n=String(txt||'').trim();
+      if(!n)return false;
+      habitos.push({id:'h'+Date.now()+Math.floor(Math.random()*999),n,dias:[],color:HB_COLORES[habitos.length%HB_COLORES.length],icono:HB_ICONOS[habitos.length%HB_ICONOS.length],ts:Date.now()});
+      guarda(); render();
+      return true;
+    };
+    $('#hb-ok').onclick=()=>{ if(anade($('#hb-in').value))$('#hb-in').value=''; };
+    $('#hb-in').onkeydown=(e)=>{ e.stopPropagation(); if(e.key==='Enter'){ e.preventDefault(); if(anade($('#hb-in').value))$('#hb-in').value=''; } };
+
+    render();
+    _habitosHook={all:()=>habitos,add:anade,toggle:(hid)=>{ const b=body.querySelector('[data-tog="'+hid+'"]'); if(b)b.click(); },open:(hid)=>{ abierto=hid; render(); },render};
+    const mio=_habitosHook;
+    (win._cleanups=win._cleanups||[]).push(()=>{ if(_habitosHook===mio)_habitosHook=null; });
+  }});
+}
+
+// ========== LECTOR DE CÓDIGOS QR ==========
+// La página ya sabía GENERAR códigos; faltaba leerlos. Se usa `BarcodeDetector`,
+// que Chrome en Android trae de serie: escribir un decodificador de QR a mano
+// (localizar patrones, corregir perspectiva y deshacer Reed-Solomon) es un
+// proyecto entero, y donde no está la API se avisa en vez de fingir.
+const QRL_FORMATOS=['qr_code','ean_13','ean_8','code_128','code_39','upc_a','data_matrix'];
+function qrlSoportado(){ return typeof window!=='undefined'&&typeof window.BarcodeDetector==='function'; }
+// Qué es lo que hemos leído: enlace, wifi, contacto, teléfono, correo o texto
+function qrlAnaliza(txt){
+  const s=String(txt||'').trim();
+  if(/^https?:\/\//i.test(s))return {tipo:'url',valor:s};
+  if(/^WIFI:/i.test(s)){
+    const g=(k)=>{ const m=new RegExp(k+':((?:[^;\\\\]|\\\\.)*);','i').exec(s); return m?m[1].replace(/\\(.)/g,'$1'):''; };
+    return {tipo:'wifi',valor:s,ssid:g('S'),clave:g('P'),cifrado:(g('T')||'nopass').toUpperCase()};
+  }
+  if(/^BEGIN:VCARD/i.test(s)){
+    const nombre=(/(?:^|\n)FN:(.+)/i.exec(s)||[])[1]||'';
+    const tel=(/(?:^|\n)TEL[^:]*:(.+)/i.exec(s)||[])[1]||'';
+    const mail=(/(?:^|\n)EMAIL[^:]*:(.+)/i.exec(s)||[])[1]||'';
+    return {tipo:'vcard',valor:s,nombre:nombre.trim(),tel:tel.trim(),mail:mail.trim()};
+  }
+  if(/^tel:/i.test(s))return {tipo:'tel',valor:s,tel:s.slice(4)};
+  if(/^mailto:/i.test(s))return {tipo:'mail',valor:s,mail:s.slice(7)};
+  if(/^geo:/i.test(s))return {tipo:'geo',valor:s};
+  if(/^#?tos=[a-z]+:/.test(s))return {tipo:'paquete',valor:s};
+  return {tipo:'texto',valor:s};
+}
+function qrlHistorial(){ try{ const a=JSON.parse(Store.get('tos-qr-hist')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function qrlGuarda(txt){
+  const a=qrlHistorial().filter(x=>x.v!==txt);
+  a.unshift({v:txt,ts:Date.now()});
+  Store.set('tos-qr-hist',JSON.stringify(a.slice(0,25)));
+}
+let _qrlHook=null;
+
+function openLectorQR(){
+  closeStartMenu();
+  if(focusExisting('qrl-root'))return;
+  const content=`<div class="qrl-root" id="qrl-root">
+    <div class="qrl-bar">
+      <button type="button" class="qrl-btn primary" id="qrl-cam">&#128247; <span data-i18n="qrl.scan">Escanear</span></button>
+      <button type="button" class="qrl-btn" id="qrl-open">&#128443;&#65039; <span data-i18n="qrl.image">Desde imagen</span></button>
+      <input type="file" id="qrl-file" accept="image/*" hidden>
+      <button type="button" class="qrl-btn" id="qrl-gen" data-i18n="qrl.make">Crear uno</button>
+    </div>
+    <div class="qrl-stage" id="qrl-stage">
+      <video id="qrl-video" playsinline muted hidden></video>
+      <div class="qrl-mira" id="qrl-mira" hidden></div>
+      <div class="qrl-vacio" id="qrl-vacio">
+        <div class="qrl-vacio-ic">&#128247;</div>
+        <div data-i18n="qrl.empty">Apunta con la c&aacute;mara a un c&oacute;digo</div>
+        <div class="hint-muted" id="qrl-aviso"></div>
+      </div>
+    </div>
+    <div class="qrl-res" id="qrl-res"></div>
+    <div class="qrl-hist" id="qrl-hist"></div>
+  </div>`;
+  createWindow(t('qrl.title'),'&#128307;',540,500,content,{session:'lectorqr',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    const video=$('#qrl-video');
+    let stream=null, detector=null, bucle=0, ultimo='';
+
+    if(!qrlSoportado()){
+      $('#qrl-aviso').textContent=t('qrl.nosupport');
+      $('#qrl-cam').disabled=true;
+      $('#qrl-open').disabled=true;
+    }
+    const pintaHistorial=()=>{
+      const h=qrlHistorial();
+      $('#qrl-hist').innerHTML=h.length?'<div class="qrl-histt">'+escHtml(t('qrl.history'))+'</div>'
+        +h.slice(0,8).map(x=>'<button type="button" class="qrl-hit" data-v="'+escHtml(x.v)+'">'+escHtml(x.v.slice(0,60))+'</button>').join(''):'';
+      $('#qrl-hist').querySelectorAll('.qrl-hit').forEach(b=>b.onclick=()=>muestra(b.dataset.v,true));
+    };
+    const muestra=(txt,deHistorial)=>{
+      const a=qrlAnaliza(txt);
+      if(!deHistorial)qrlGuarda(txt);
+      const acciones=[];
+      if(a.tipo==='url')acciones.push(['&#127760; '+t('qrl.a.open'),()=>{ try{ window.open(a.valor,'_blank','noopener'); }catch(e){} }]);
+      if(a.tipo==='wifi')acciones.push(['&#128273; '+t('qrl.a.copypw'),()=>{ osCopy(a.clave||''); announce(t('sh.copied')); }]);
+      if(a.tipo==='tel'||a.tipo==='vcard'&&a.tel)acciones.push(['&#128222; '+t('qrl.a.call'),()=>{ try{ window.open('tel:'+(a.tel||''),'_self'); }catch(e){} }]);
+      if(a.tipo==='mail'||a.tipo==='vcard'&&a.mail)acciones.push(['&#9993;&#65039; '+t('qrl.a.mail'),()=>{ try{ window.open('mailto:'+(a.mail||''),'_self'); }catch(e){} }]);
+      if(a.tipo==='paquete')acciones.push(['&#128229; '+t('sh.import'),()=>{ const p=osLeePaquete(a.valor); if(p)osImportaPaquete(p); }]);
+      acciones.push(['&#128203; '+t('qrl.a.copy'),()=>{ osCopy(a.valor); announce(t('sh.copied')); }]);
+      acciones.push(['&#128221; '+t('qrl.a.note'),()=>openNotepad({name:t('qrl.title'),text:a.valor})]);
+      const detalle=a.tipo==='wifi'?('<div class="qrl-kv"><span>'+escHtml(t('qrl.wifi.net'))+'</span><b>'+escHtml(a.ssid||'—')+'</b></div>'
+          +'<div class="qrl-kv"><span>'+escHtml(t('qrl.wifi.pw'))+'</span><b>'+escHtml(a.clave||'—')+'</b></div>'
+          +'<div class="qrl-kv"><span>'+escHtml(t('qrl.wifi.sec'))+'</span><b>'+escHtml(a.cifrado||'—')+'</b></div>')
+        :a.tipo==='vcard'?('<div class="qrl-kv"><span>'+escHtml(t('qrl.vc.name'))+'</span><b>'+escHtml(a.nombre||'—')+'</b></div>'
+          +(a.tel?'<div class="qrl-kv"><span>'+escHtml(t('qrl.vc.tel'))+'</span><b>'+escHtml(a.tel)+'</b></div>':'')
+          +(a.mail?'<div class="qrl-kv"><span>'+escHtml(t('qrl.vc.mail'))+'</span><b>'+escHtml(a.mail)+'</b></div>':''))
+        :'<div class="qrl-valor">'+escHtml(a.valor)+'</div>';
+      $('#qrl-res').innerHTML='<div class="qrl-card"><div class="qrl-tipo">'+escHtml(t('qrl.t.'+a.tipo))+'</div>'+detalle
+        +'<div class="qrl-acts">'+acciones.map((_,i)=>'<button type="button" class="qrl-act" data-a="'+i+'">'+acciones[i][0]+'</button>').join('')+'</div></div>';
+      $('#qrl-res').querySelectorAll('.qrl-act').forEach(b=>b.onclick=()=>acciones[+b.dataset.a][1]());
+      pintaHistorial();
+    };
+    const para=()=>{
+      if(bucle){ cancelAnimationFrame(bucle); bucle=0; }
+      if(stream){ try{ stream.getTracks().forEach(tr=>tr.stop()); }catch(e){} stream=null; }
+      video.hidden=true; $('#qrl-mira').hidden=true; $('#qrl-vacio').hidden=false;
+    };
+    const busca=()=>{
+      if(!detector||!stream)return;
+      detector.detect(video).then(cods=>{
+        if(cods&&cods.length){
+          const v=cods[0].rawValue||'';
+          if(v&&v!==ultimo){
+            ultimo=v;
+            try{ if(navigator.vibrate)navigator.vibrate(60); }catch(e){}
+            try{ uiSfx('click'); }catch(e){}
+            muestra(v);
+            para();
+            return;
+          }
+        }
+        bucle=requestAnimationFrame(busca);
+      }).catch(()=>{ bucle=requestAnimationFrame(busca); });
+    };
+    const arranca=()=>{
+      if(!qrlSoportado()){ xpDialog(t('qrl.title'),'<div class="dlg-icon">&#128247;</div><div>'+escHtml(t('qrl.nosupport'))+'</div>'); return; }
+      if(stream){ para(); return; }
+      try{ detector=new window.BarcodeDetector({formats:QRL_FORMATOS}); }catch(e){ detector=new window.BarcodeDetector(); }
+      navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}}).then(st=>{
+        stream=st; ultimo='';
+        video.srcObject=st; video.hidden=false; $('#qrl-mira').hidden=false; $('#qrl-vacio').hidden=true;
+        try{ video.play(); }catch(e){}
+        bucle=requestAnimationFrame(busca);
+      }).catch(()=>{ xpDialog(t('qrl.title'),'<div class="dlg-icon">&#128247;</div><div>'+escHtml(t('sc.nocamperm'))+'</div>'); });
+    };
+    const desdeImagen=(f)=>{
+      if(!f||!qrlSoportado())return;
+      const im=new Image();
+      const rd=new FileReader();
+      rd.onload=()=>{
+        im.onload=()=>{
+          let det;
+          try{ det=new window.BarcodeDetector({formats:QRL_FORMATOS}); }catch(e){ det=new window.BarcodeDetector(); }
+          det.detect(im).then(cods=>{
+            if(cods&&cods.length)muestra(cods[0].rawValue||'');
+            else xpDialog(t('qrl.title'),'<div class="dlg-icon">&#128247;</div><div>'+escHtml(t('qrl.nocode'))+'</div>');
+          }).catch(()=>xpDialog(t('qrl.title'),'<div class="dlg-icon">&#128247;</div><div>'+escHtml(t('qrl.nocode'))+'</div>'));
+        };
+        im.src=String(rd.result||'');
+      };
+      rd.readAsDataURL(f);
+    };
+    $('#qrl-cam').onclick=arranca;
+    $('#qrl-open').onclick=()=>$('#qrl-file').click();
+    $('#qrl-file').onchange=(e)=>{ desdeImagen(e.target.files&&e.target.files[0]); e.target.value=''; };
+    $('#qrl-gen').onclick=()=>openToolbox('qr');
+    pintaHistorial();
+    _qrlHook={show:muestra,analiza:qrlAnaliza,stop:para};
+    const mio=_qrlHook;
+    (win._cleanups=win._cleanups||[]).push(()=>{ para(); if(_qrlHook===mio)_qrlHook=null; });
+  }});
+}
+
+// ========== RECETAS Y MENÚ SEMANAL ==========
+// Tus recetas, y un menú de la semana que sabe mandar la compra a la lista: eso es
+// lo que la hace útil de verdad. Los ingredientes se escriben en plano ("2 huevos",
+// "200 g harina") y al mandarlos a la compra se agrupan y se suman.
+const RC_DIAS=['lun','mar','mie','jue','vie','sab','dom'];
+const RC_COMIDAS=['comida','cena'];
+const RC_EJEMPLO=[
+  {id:'r-tortilla',n:'Tortilla de patatas',t:35,p:4,cat:'principal',
+   ing:['6 huevos','800 g patatas','1 cebolla','aceite de oliva','sal'],
+   pasos:'Pela y corta las patatas en láminas.\nFríelas a fuego suave con la cebolla hasta que estén blandas.\nBate los huevos, mézclalo todo y cuaja la tortilla por los dos lados.'},
+  {id:'r-lentejas',n:'Lentejas de la abuela',t:60,p:4,cat:'principal',
+   ing:['400 g lentejas','1 zanahoria','1 cebolla','2 dientes de ajo','1 chorizo','pimentón','laurel'],
+   pasos:'Sofríe la cebolla, el ajo y la zanahoria.\nAñade el pimentón fuera del fuego y las lentejas.\nCubre de agua con el laurel y el chorizo y cuece 45 minutos a fuego lento.'}
+];
+function rcAll(){
+  try{
+    const a=JSON.parse(Store.get('tos-recetas')||'null');
+    if(Array.isArray(a))return a;
+  }catch(e){}
+  return RC_EJEMPLO.slice();
+}
+function rcWrite(a){ return Store.set('tos-recetas',JSON.stringify(a)); }
+function rcMenu(){ try{ const o=JSON.parse(Store.get('tos-menu')||'{}'); return (o&&typeof o==='object')?o:{}; }catch(e){ return {}; } }
+function rcMenuWrite(o){ return Store.set('tos-menu',JSON.stringify(o)); }
+function rcMenuKey(dia,comida){ return dia+'-'+comida; }
+// "200 g harina" -> {cant:200, uni:'g', nombre:'harina'}
+function rcParseIng(txt){
+  const s=String(txt||'').trim();
+  const m=/^(\d+(?:[.,]\d+)?)\s*(kg|g|l|ml|cl|ud|uds|dientes?|latas?|cucharadas?|vasos?)?\s+(?:de\s+)?(.+)$/i.exec(s);
+  if(!m)return {cant:0,uni:'',nombre:s};
+  return {cant:parseFloat(m[1].replace(',','.'))||0,uni:(m[2]||'').toLowerCase(),nombre:m[3].trim()};
+}
+// Junta los ingredientes de varias recetas sumando lo que se repite
+function rcSumaIngredientes(recetas){
+  const mapa={};
+  recetas.forEach(r=>(r.ing||[]).forEach(linea=>{
+    const p=rcParseIng(linea);
+    const clave=_searchNorm(p.nombre)+'|'+p.uni;
+    if(!mapa[clave])mapa[clave]={nombre:p.nombre,uni:p.uni,cant:0,veces:0};
+    mapa[clave].cant+=p.cant;
+    mapa[clave].veces++;
+  }));
+  return Object.keys(mapa).map(k=>mapa[k]);
+}
+function rcTextoIng(x){
+  if(!x.cant)return x.nombre;
+  const c=Math.round(x.cant*100)/100;
+  return c+(x.uni?' '+x.uni:'')+' '+x.nombre;
+}
+let _recetasHook=null;
+
+function openRecetas(){
+  closeStartMenu();
+  if(focusExisting('rc-root'))return;
+  const content=`<div class="rc-root" id="rc-root">
+    <div class="rc-bar">
+      <span class="rc-tabs">
+        <button type="button" class="rc-tab on" data-v="recetas" data-i18n="rc.recipes">Recetas</button>
+        <button type="button" class="rc-tab" data-v="menu" data-i18n="rc.menu">Men&uacute; semanal</button>
+      </span>
+      <input type="search" id="rc-buscar" class="rc-buscar" placeholder="Buscar…" data-i18n-ph="rc.search">
+      <button type="button" class="rc-btn primary" id="rc-nueva">&#10133; <span data-i18n="rc.new">Nueva</span></button>
+    </div>
+    <div class="rc-body" id="rc-body"></div>
+    <div class="rc-foot"><span id="rc-status"></span>
+      <button type="button" class="rc-btn ok" id="rc-tocompra" data-i18n="rc.toshopping">Mandar a la compra</button>
+    </div>
+  </div>`;
+  createWindow(t('rc.title'),'&#127859;',620,540,content,{session:'recetas',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    const body=$('#rc-body');
+    let recetas=rcAll(), menu=rcMenu(), vista='recetas', abierta=null, busca='';
+    const setStatus=(m)=>{ $('#rc-status').textContent=m||''; };
+    const guarda=()=>{ if(!rcWrite(recetas))xpDialog(t('rc.title'),'<div class="dlg-icon">&#128190;</div><div>'+escHtml(t('docs.full'))+'</div>'); };
+    const porId=(rid)=>recetas.find(r=>r.id===rid);
+
+    const renderRecetas=()=>{
+      const q=_searchNorm(busca);
+      const lista=recetas.filter(r=>!q||_searchNorm(r.n+' '+(r.ing||[]).join(' ')).includes(q));
+      if(!lista.length){
+        body.innerHTML='<div class="rc-vacio"><div class="rc-vacio-ic">&#127859;</div><div>'+escHtml(busca?t('rc.nofind'):t('rc.empty'))+'</div></div>';
+        return;
+      }
+      body.innerHTML='<div class="rc-grid">'+lista.map(r=>
+        '<div class="rc-card'+(abierta===r.id?' open':'')+'" data-id="'+escHtml(r.id)+'">'
+        +'<button type="button" class="rc-head" data-open="'+escHtml(r.id)+'">'
+          +'<span class="rc-n">'+escHtml(r.n)+'</span>'
+          +'<span class="rc-meta">'+(r.t?'&#9201;&#65039; '+r.t+' min':'')+(r.p?' · &#127860; '+r.p:'')+' · '+(r.ing||[]).length+' '+escHtml(t('rc.ings'))+'</span>'
+        +'</button>'
+        +(abierta===r.id?'<div class="rc-det">'
+          +'<div class="rc-ings">'+(r.ing||[]).map(i=>'<span class="rc-ing">'+escHtml(i)+'</span>').join('')+'</div>'
+          +(r.pasos?'<div class="rc-pasos">'+r.pasos.split('\n').filter(x=>x.trim()).map((x,i)=>'<div class="rc-paso"><b>'+(i+1)+'</b><span>'+escHtml(x)+'</span></div>').join('')+'</div>':'')
+          +'<div class="rc-acts">'
+            +'<button type="button" class="rc-mini" data-add="'+escHtml(r.id)+'">&#128722; '+escHtml(t('rc.addshop'))+'</button>'
+            +'<button type="button" class="rc-mini" data-edit="'+escHtml(r.id)+'">&#9998; '+escHtml(t('btn.edit'))+'</button>'
+            +'<button type="button" class="rc-mini" data-share="'+escHtml(r.id)+'">&#128228; '+escHtml(t('rc.share'))+'</button>'
+            +'<button type="button" class="rc-mini danger" data-del="'+escHtml(r.id)+'">&#10006;</button>'
+          +'</div></div>':'')
+        +'</div>').join('')+'</div>';
+      body.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{ abierta=abierta===b.dataset.open?null:b.dataset.open; renderRecetas(); });
+      body.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+        const r=porId(b.dataset.del);
+        xpConfirm(t('rc.title'),t('rc.delq',{n:r?r.n:''}),()=>{
+          recetas=recetas.filter(x=>x.id!==b.dataset.del);
+          Object.keys(menu).forEach(k=>{ if(menu[k]===b.dataset.del)delete menu[k]; });
+          rcMenuWrite(menu); guarda(); renderRecetas();
+        },t('btn.delete'));
+      });
+      body.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editor(porId(b.dataset.edit)));
+      body.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>mandaCompra([porId(b.dataset.add)]));
+      body.querySelectorAll('[data-share]').forEach(b=>b.onclick=()=>{
+        const r=porId(b.dataset.share);
+        if(!r)return;
+        const txt=r.n+'\n\n'+(r.ing||[]).map(i=>'· '+i).join('\n')+'\n\n'+(r.pasos||'');
+        if(navigator.share){ try{ navigator.share({title:r.n,text:txt}); return; }catch(e){} }
+        osCopy(txt); announce(t('sh.copied'));
+      });
+      applyI18n(win);
+    };
+    // Menú semanal: 7 días × comida y cena
+    const renderMenu=()=>{
+      const opciones=recetas.map(r=>'<option value="'+escHtml(r.id)+'">'+escHtml(r.n)+'</option>').join('');
+      body.innerHTML='<div class="rc-menu"><div class="rc-menuhead"><span></span>'
+        +RC_COMIDAS.map(c=>'<span>'+escHtml(t('rc.'+c))+'</span>').join('')+'</div>'
+        +RC_DIAS.map(d=>'<div class="rc-menurow"><span class="rc-dia">'+escHtml(t('rc.d.'+d))+'</span>'
+          +RC_COMIDAS.map(c=>{
+            const sel=menu[rcMenuKey(d,c)]||'';
+            return '<select class="rc-msel" data-k="'+rcMenuKey(d,c)+'"><option value="">—</option>'
+              +opciones.replace('value="'+sel+'"','value="'+sel+'" selected')+'</select>';
+          }).join('')+'</div>').join('')
+        +'</div><div class="rc-menufoot" id="rc-menufoot"></div>';
+      body.querySelectorAll('.rc-msel').forEach(s2=>s2.onchange=()=>{
+        if(s2.value)menu[s2.dataset.k]=s2.value; else delete menu[s2.dataset.k];
+        rcMenuWrite(menu);
+        pintaResumenMenu();
+      });
+      pintaResumenMenu();
+      applyI18n(win);
+    };
+    const recetasDelMenu=()=>Object.keys(menu).map(k=>porId(menu[k])).filter(Boolean);
+    const pintaResumenMenu=()=>{
+      const box=$('#rc-menufoot');
+      if(!box)return;
+      const rs=recetasDelMenu();
+      if(!rs.length){ box.innerHTML='<span class="hint-muted">'+escHtml(t('rc.menuempty'))+'</span>'; return; }
+      const ing=rcSumaIngredientes(rs);
+      box.innerHTML='<div class="rc-resumen"><b>'+escHtml(t('rc.menusum',{n:rs.length,i:ing.length}))+'</b>'
+        +'<div class="rc-inglist">'+ing.slice(0,14).map(x=>'<span class="rc-ing">'+escHtml(rcTextoIng(x))+'</span>').join('')
+        +(ing.length>14?'<span class="rc-ing more">+'+(ing.length-14)+'</span>':'')+'</div></div>';
+    };
+    // Manda ingredientes a la lista de la compra (usa el importador que ya existe)
+    const mandaCompra=(rs)=>{
+      const lista=(rs&&rs.length?rs:recetasDelMenu()).filter(Boolean);
+      if(!lista.length){ xpDialog(t('rc.title'),'<div class="dlg-icon">&#128722;</div><div>'+escHtml(t('rc.menuempty'))+'</div>'); return; }
+      const ing=rcSumaIngredientes(lista);
+      const items=ing.map(x=>({name:x.nombre,qty:1,unit:'',price:0,cat:cpAdivinaPasillo(x.nombre),nota:rcTextoIng(x)}));
+      const ov=xpDialog(t('rc.toshopping'),'<div class="dlg-icon">&#128722;</div><div class="rc-pick"><div class="rc-pick-t">'+escHtml(t('rc.pick',{n:lista.length}))+'</div>'
+        +ing.map((x,i)=>'<label class="rc-pick-it"><input type="checkbox" checked data-i="'+i+'"> <span>'+escHtml(rcTextoIng(x))+'</span></label>').join('')+'</div>',
+        [{label:t('btn.cancel')},{label:t('rc.addall'),primary:true,action:()=>{
+          const elegidos=[...ov.querySelectorAll('.rc-pick input:checked')].map(c=>items[+c.dataset.i]);
+          if(!elegidos.length)return;
+          cpImporta(elegidos.map(x=>({name:x.name,qty:1,cat:x.cat})),true);
+          setStatus(t('rc.sent',{n:elegidos.length}));
+        }}]);
+    };
+    // Alta / edición de una receta
+    const editor=(r)=>{
+      const nueva=!r;
+      const rec=r||{id:'r'+Date.now(),n:'',t:30,p:2,cat:'principal',ing:[],pasos:''};
+      const ov=xpDialog(nueva?t('rc.newtitle'):t('rc.edittitle'),
+        '<div class="dlg-icon">&#127859;</div><div class="rc-form">'
+        +'<input type="text" id="rc-f-n" placeholder="'+escHtml(t('rc.name'))+'" maxlength="60" value="'+escHtml(rec.n)+'">'
+        +'<div class="rc-frow"><label>'+escHtml(t('rc.time'))+' <input type="number" id="rc-f-t" min="0" max="600" value="'+(rec.t||0)+'"></label>'
+        +'<label>'+escHtml(t('rc.people'))+' <input type="number" id="rc-f-p" min="1" max="20" value="'+(rec.p||2)+'"></label></div>'
+        +'<textarea id="rc-f-ing" rows="5" placeholder="'+escHtml(t('rc.ingph'))+'">'+escHtml((rec.ing||[]).join('\n'))+'</textarea>'
+        +'<textarea id="rc-f-pasos" rows="5" placeholder="'+escHtml(t('rc.stepsph'))+'">'+escHtml(rec.pasos||'')+'</textarea>'
+        +'</div>',
+        [{label:t('btn.cancel')},{label:t('btn.save'),primary:true,action:()=>{
+          const n=ov.querySelector('#rc-f-n').value.trim();
+          if(!n)return;
+          rec.n=n;
+          rec.t=+ov.querySelector('#rc-f-t').value||0;
+          rec.p=+ov.querySelector('#rc-f-p').value||2;
+          rec.ing=ov.querySelector('#rc-f-ing').value.split('\n').map(x=>x.trim()).filter(Boolean);
+          rec.pasos=ov.querySelector('#rc-f-pasos').value.trim();
+          if(nueva)recetas.push(rec);
+          guarda();
+          abierta=rec.id;
+          renderRecetas();
+          setStatus(nueva?t('rc.created'):t('gs.saved'));
+        }}]);
+      setTimeout(()=>{ try{ ov.querySelector('#rc-f-n').focus(); }catch(e){} },40);
+    };
+
+    const sync=()=>{
+      win.querySelectorAll('.rc-tab').forEach(b=>b.classList.toggle('on',b.dataset.v===vista));
+      $('#rc-buscar').style.display=vista==='recetas'?'':'none';
+      $('#rc-nueva').style.display=vista==='recetas'?'':'none';
+      if(vista==='recetas')renderRecetas(); else renderMenu();
+    };
+    win.querySelectorAll('.rc-tab').forEach(b=>b.onclick=()=>{ vista=b.dataset.v; sync(); });
+    $('#rc-buscar').oninput=(e)=>{ busca=e.target.value; renderRecetas(); };
+    $('#rc-buscar').onkeydown=(e)=>e.stopPropagation();
+    $('#rc-nueva').onclick=()=>editor(null);
+    $('#rc-tocompra').onclick=()=>mandaCompra(null);
+
+    sync();
+    _recetasHook={all:()=>recetas,menu:()=>menu,view:(v)=>{ vista=v; sync(); },set:(a)=>{ recetas=a; guarda(); sync(); },
+      plan:(d,c,rid)=>{ menu[rcMenuKey(d,c)]=rid; rcMenuWrite(menu); sync(); }, shop:()=>mandaCompra(null), edit:editor};
+    const mio=_recetasHook;
+    (win._cleanups=win._cleanups||[]).push(()=>{ if(_recetasHook===mio)_recetasHook=null; });
+  }});
+}
+
+// ========== ESCÁNER DE DOCUMENTOS (con generador de PDF propio) ==========
+// Un PDF es más simple de lo que parece: objetos numerados, una tabla de posiciones
+// (xref) y un tráiler. Como cada página es un JPEG, se mete tal cual con el filtro
+// DCTDecode y no hay que comprimir nada por nuestra cuenta. Cero dependencias.
+const PDF_A4=[595.28,841.89]; // puntos (72 por pulgada)
+function _pdfBytes(str){ const out=new Uint8Array(str.length); for(let i=0;i<str.length;i++)out[i]=str.charCodeAt(i)&0xFF; return out; }
+// paginas: [{jpeg:Uint8Array,w,h}] -> Blob de PDF
+function pdfDesdeImagenes(paginas,opts){
+  opts=opts||{};
+  const partes=[], offsets=[];
+  let pos=0;
+  const push=(bytes)=>{ partes.push(bytes); pos+=bytes.length; };
+  const pushStr=(s)=>push(_pdfBytes(s));
+  const nPag=paginas.length;
+  // 1 catálogo + 1 páginas + por cada página: página, contenido e imagen
+  const totalObj=2+nPag*3;
+  const objIni=(n)=>{ offsets[n]=pos; pushStr(n+' 0 obj\n'); };
+  pushStr('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  objIni(1);
+  const kids=[]; for(let i=0;i<nPag;i++)kids.push((3+i*3)+' 0 R');
+  pushStr('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  objIni(2);
+  pushStr('<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+nPag+' >>\nendobj\n');
+  paginas.forEach((p,i)=>{
+    const nPage=3+i*3, nCont=nPage+1, nImg=nPage+2;
+    // Tamaño: A4 con la imagen encajada dentro, o del tamaño de la propia imagen
+    let W,H,dx,dy,dw,dh;
+    if(opts.tamano==='original'){
+      W=p.w*0.75; H=p.h*0.75; dx=0; dy=0; dw=W; dh=H;
+    }else{
+      const vertical=p.h>=p.w;
+      W=vertical?PDF_A4[0]:PDF_A4[1];
+      H=vertical?PDF_A4[1]:PDF_A4[0];
+      const margen=opts.margen===false?0:18;
+      const esc=Math.min((W-margen*2)/p.w,(H-margen*2)/p.h);
+      dw=p.w*esc; dh=p.h*esc; dx=(W-dw)/2; dy=(H-dh)/2;
+    }
+    objIni(nPage);
+    pushStr('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+W.toFixed(2)+' '+H.toFixed(2)+']'
+      +' /Resources << /XObject << /Im0 '+nImg+' 0 R >> >> /Contents '+nCont+' 0 R >>\nendobj\n');
+    const contenido='q\n'+dw.toFixed(2)+' 0 0 '+dh.toFixed(2)+' '+dx.toFixed(2)+' '+dy.toFixed(2)+' cm\n/Im0 Do\nQ\n';
+    objIni(nCont);
+    pushStr('<< /Length '+contenido.length+' >>\nstream\n'+contenido+'endstream\nendobj\n');
+    objIni(nImg);
+    pushStr('<< /Type /XObject /Subtype /Image /Width '+p.w+' /Height '+p.h
+      +' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+p.jpeg.length+' >>\nstream\n');
+    push(p.jpeg);
+    pushStr('\nendstream\nendobj\n');
+  });
+  const xref=pos;
+  let tabla='xref\n0 '+(totalObj+1)+'\n0000000000 65535 f \n';
+  for(let n=1;n<=totalObj;n++){
+    const o=offsets[n]||0;
+    tabla+=('0000000000'+o).slice(-10)+' 00000 n \n';
+  }
+  pushStr(tabla);
+  pushStr('trailer\n<< /Size '+(totalObj+1)+' /Root 1 0 R'
+    +' /Info << /Producer (Torrecillas OS) /Title ('+String(opts.titulo||'Documento').replace(/[()\\]/g,'')+') >> >>\n'
+    +'startxref\n'+xref+'\n%%EOF\n');
+  return new Blob(partes,{type:'application/pdf'});
+}
+// Canvas -> JPEG en bytes (con la calidad que se pida)
+function pdfJpegDeCanvas(cv,calidad){
+  return new Promise((res,rej)=>{
+    try{
+      if(cv.toBlob){
+        cv.toBlob(b=>{
+          if(!b)return rej(new Error('sin blob'));
+          if(b.arrayBuffer)b.arrayBuffer().then(ab=>res(new Uint8Array(ab)),rej);
+          else{ const fr=new FileReader(); fr.onload=()=>res(new Uint8Array(fr.result)); fr.onerror=rej; fr.readAsArrayBuffer(b); }
+        },'image/jpeg',calidad||0.82);
+        return;
+      }
+      const url=cv.toDataURL('image/jpeg',calidad||0.82);
+      const bin=atob(url.slice(url.indexOf(',')+1));
+      const out=new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);
+      res(out);
+    }catch(e){ rej(e); }
+  });
+}
+// Umbral adaptativo (media local con imagen integral): el look de escáner de verdad,
+// que aguanta sombras y papel arrugado mucho mejor que un umbral fijo.
+function scanUmbralAdaptativo(img,radio,ajuste){
+  const {data,width:w,height:h}=img;
+  const gris=new Float64Array(w*h);
+  for(let i=0,p=0;i<data.length;i+=4,p++)gris[p]=data[i]*0.299+data[i+1]*0.587+data[i+2]*0.114;
+  // imagen integral
+  const S=new Float64Array((w+1)*(h+1));
+  for(let y=0;y<h;y++){
+    let fila=0;
+    for(let x=0;x<w;x++){
+      fila+=gris[y*w+x];
+      S[(y+1)*(w+1)+(x+1)]=S[y*(w+1)+(x+1)]+fila;
+    }
+  }
+  const r=Math.max(2,radio|0), k=(ajuste===undefined?8:ajuste);
+  for(let y=0;y<h;y++){
+    const y0=Math.max(0,y-r), y1=Math.min(h-1,y+r);
+    for(let x=0;x<w;x++){
+      const x0=Math.max(0,x-r), x1=Math.min(w-1,x+r);
+      const area=(x1-x0+1)*(y1-y0+1);
+      const suma=S[(y1+1)*(w+1)+(x1+1)]-S[y0*(w+1)+(x1+1)]-S[(y1+1)*(w+1)+x0]+S[y0*(w+1)+x0];
+      const media=suma/area;
+      const p=y*w+x;
+      const v=(gris[p]<media-k)?0:255;
+      const i=p*4;
+      data[i]=data[i+1]=data[i+2]=v;
+    }
+  }
+  return img;
+}
+function scanGris(img){
+  const d=img.data;
+  for(let i=0;i<d.length;i+=4){
+    const v=d[i]*0.299+d[i+1]*0.587+d[i+2]*0.114;
+    d[i]=d[i+1]=d[i+2]=v;
+  }
+  return img;
+}
+// Realce de documento en color: sube contraste y blanquea el papel
+function scanRealce(img){
+  const d=img.data;
+  for(let i=0;i<d.length;i+=4){
+    for(let k=0;k<3;k++){
+      let v=(d[i+k]-118)*1.45+128+18;
+      d[i+k]=v<0?0:v>255?255:v;
+    }
+  }
+  return img;
+}
+const SCAN_FILTROS=['color','realce','gris','bn'];
+
+function _pdfFileDesdeDataURL(url,nombre){
+  const i=String(url).indexOf(',');
+  const bin=atob(String(url).slice(i+1));
+  const bytes=new Uint8Array(bin.length);
+  for(let k=0;k<bin.length;k++)bytes[k]=bin.charCodeAt(k);
+  return new File([bytes],(nombre||'documento')+'.pdf',{type:'application/pdf'});
+}
+const SCAN_MAXLADO=2200; // más resolución que esto no aporta y engorda el PDF
+let _scanLoadFile=null;
+function openScanner(preload){
+  closeStartMenu();
+  if(focusExisting('sc-root')){ if(preload&&_scanLoadFile)_scanLoadFile(preload); return; }
+  const content=`<div class="sc-root" id="sc-root">
+    <div class="sc-bar">
+      <button type="button" class="sc-btn primary" id="sc-cam">&#128247; <span data-i18n="sc.camera">C&aacute;mara</span></button>
+      <button type="button" class="sc-btn" id="sc-open">&#128193; <span data-i18n="sc.open">Abrir</span></button>
+      <input type="file" id="sc-file" accept="image/*" multiple hidden>
+      <select id="sc-filtro" class="sc-sel" data-i18n-aria="sc.filter" aria-label="Filtro">
+        <option value="bn" data-i18n="sc.f.bn">Documento (B/N)</option>
+        <option value="gris" data-i18n="sc.f.gris">Grises</option>
+        <option value="realce" data-i18n="sc.f.realce">Color realzado</option>
+        <option value="color" data-i18n="sc.f.color">Color original</option>
+      </select>
+      <button type="button" class="sc-btn" id="sc-rot" data-i18n-title="sc.rotate">&#8635;</button>
+      <button type="button" class="sc-btn" id="sc-crop" data-i18n-title="sc.crop">&#9986;</button>
+      <button type="button" class="sc-btn" id="sc-del" data-i18n-title="sc.delete">&#128465;&#65039;</button>
+      <span class="sc-info" id="sc-info"></span>
+    </div>
+    <div class="sc-stage" id="sc-stage">
+      <div class="sc-vacio" id="sc-vacio">
+        <div class="sc-vacio-ic">&#128441;&#65039;</div>
+        <div data-i18n="sc.empty">Haz una foto a un documento o abre una imagen</div>
+        <div class="hint-muted" data-i18n="sc.empty2">Se endereza el contraste, se pasa a blanco y negro y sale un PDF de varias p&aacute;ginas. Todo aqu&iacute;, sin subir nada.</div>
+      </div>
+      <video id="sc-video" playsinline muted hidden></video>
+      <canvas id="sc-canvas" hidden role="img" data-i18n-aria="sc.page" aria-label="P&aacute;gina"></canvas>
+      <div class="sc-croprect" id="sc-croprect" hidden></div>
+      <button type="button" class="sc-shot" id="sc-shot" hidden aria-label="Capturar"></button>
+    </div>
+    <div class="sc-pages" id="sc-pages"></div>
+    <div class="sc-foot">
+      <span id="sc-status"></span>
+      <button type="button" class="sc-btn" id="sc-png" data-i18n="sc.png">Guardar imagen</button>
+      <button type="button" class="sc-btn ok" id="sc-pdf" data-i18n="sc.pdf">Hacer PDF</button>
+    </div>
+  </div>`;
+  createWindow(t('sc.title'),'&#128441;&#65039;',620,540,content,{session:'escaner',statusbar:false,onCreated:(id,win)=>{
+    const $=(s)=>win.querySelector(s);
+    const stage=$('#sc-stage'), cv=$('#sc-canvas'), video=$('#sc-video'), croprect=$('#sc-croprect');
+    let paginas=[], actual=-1, stream=null, recortando=false, cropDrag=null;
+
+    const setStatus=(m)=>{ $('#sc-status').textContent=m||''; };
+    // Cada página guarda el original intacto: los filtros no destruyen nada
+    const nuevaPagina=(canvasOriginal)=>{
+      paginas.push({id:'p'+Date.now()+Math.floor(Math.random()*999),orig:canvasOriginal,filtro:$('#sc-filtro').value,rot:0,crop:null});
+      actual=paginas.length-1;
+      pinta();
+    };
+    const dibujaOriginalEn=(p,destino)=>{
+      const o=p.orig;
+      const rot=((p.rot%360)+360)%360;
+      let sw=o.width, sh=o.height;
+      let cx=0, cy=0, cw=sw, ch=sh;
+      if(p.crop){ cx=Math.round(p.crop.x*sw); cy=Math.round(p.crop.y*sh); cw=Math.round(p.crop.w*sw); ch=Math.round(p.crop.h*sh); }
+      const girado=(rot===90||rot===270);
+      destino.width=girado?ch:cw;
+      destino.height=girado?cw:ch;
+      const g=destino.getContext('2d');
+      if(!g)return destino;
+      g.save();
+      if(rot===90){ g.translate(destino.width,0); g.rotate(Math.PI/2); }
+      else if(rot===180){ g.translate(destino.width,destino.height); g.rotate(Math.PI); }
+      else if(rot===270){ g.translate(0,destino.height); g.rotate(-Math.PI/2); }
+      g.drawImage(o,cx,cy,cw,ch,0,0,cw,ch);
+      g.restore();
+      return destino;
+    };
+    // Devuelve un canvas con el filtro ya aplicado (el que va al PDF y a la vista)
+    const procesa=(p)=>{
+      const tmp=document.createElement('canvas');
+      dibujaOriginalEn(p,tmp);
+      const g=tmp.getContext('2d');
+      if(!g||p.filtro==='color')return tmp;
+      try{
+        const img=g.getImageData(0,0,tmp.width,tmp.height);
+        if(p.filtro==='gris')scanGris(img);
+        else if(p.filtro==='realce')scanRealce(img);
+        else if(p.filtro==='bn')scanUmbralAdaptativo(img,Math.max(8,Math.round(Math.min(tmp.width,tmp.height)/40)),9);
+        g.putImageData(img,0,0);
+      }catch(e){}
+      return tmp;
+    };
+    const pinta=()=>{
+      const hay=paginas.length>0;
+      $('#sc-vacio').hidden=hay||!!stream;
+      cv.hidden=!hay||!!stream;
+      $('#sc-info').textContent=hay?t('sc.pageof',{n:actual+1,t:paginas.length}):'';
+      $('#sc-pdf').disabled=!hay;
+      $('#sc-png').disabled=!hay;
+      $('#sc-del').disabled=!hay;
+      $('#sc-rot').disabled=!hay;
+      $('#sc-crop').disabled=!hay;
+      if(hay&&!stream){
+        const p=paginas[actual];
+        $('#sc-filtro').value=p.filtro;
+        const out=procesa(p);
+        cv.width=out.width; cv.height=out.height;
+        const g=cv.getContext('2d');
+        if(g)g.drawImage(out,0,0);
+      }
+      // Tira de miniaturas
+      $('#sc-pages').innerHTML=paginas.map((p,i)=>'<button type="button" class="sc-thumb'+(i===actual?' on':'')+'" data-i="'+i+'"><span>'+(i+1)+'</span></button>').join('')
+        +(paginas.length?'<button type="button" class="sc-thumb add" id="sc-more">&#10133;</button>':'');
+      $('#sc-pages').querySelectorAll('.sc-thumb[data-i]').forEach(b=>b.onclick=()=>{ actual=+b.dataset.i; recortando=false; croprect.hidden=true; pinta(); });
+      const more=$('#sc-more');
+      if(more)more.onclick=()=>abreCamara();
+      applyI18n(win);
+    };
+    // ---- Cámara ----
+    const abreCamara=()=>{
+      if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+        xpDialog(t('sc.title'),'<div class="dlg-icon">&#128247;</div><div>'+escHtml(t('sc.nocam'))+'</div>');
+        return;
+      }
+      setStatus(t('sc.opening'));
+      navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1920}}})
+        .then(st=>{
+          stream=st;
+          video.srcObject=st;
+          video.hidden=false; cv.hidden=true; $('#sc-vacio').hidden=true; $('#sc-shot').hidden=false;
+          try{ video.play(); }catch(e){}
+          setStatus(t('sc.ready'));
+        })
+        .catch(()=>{ setStatus(t('sc.nocamperm')); xpDialog(t('sc.title'),'<div class="dlg-icon">&#128247;</div><div>'+escHtml(t('sc.nocamperm'))+'</div>'); });
+    };
+    const cierraCamara=()=>{
+      if(stream){ try{ stream.getTracks().forEach(tr=>tr.stop()); }catch(e){} stream=null; }
+      video.hidden=true; $('#sc-shot').hidden=true;
+      pinta();
+    };
+    const captura=()=>{
+      if(!stream)return;
+      const w=video.videoWidth||1280, h=video.videoHeight||960;
+      const esc=Math.min(1,SCAN_MAXLADO/Math.max(w,h));
+      const c=document.createElement('canvas');
+      c.width=Math.round(w*esc); c.height=Math.round(h*esc);
+      const g=c.getContext('2d');
+      if(g)g.drawImage(video,0,0,c.width,c.height);
+      nuevaPagina(c);
+      setStatus(t('sc.captured',{n:paginas.length}));
+      uiSfx('click');
+    };
+    // ---- Abrir imágenes del equipo ----
+    const cargaArchivo=(f)=>{
+      if(!f)return;
+      const rd=new FileReader();
+      rd.onload=()=>{
+        const im=new Image();
+        im.onload=()=>{
+          const esc=Math.min(1,SCAN_MAXLADO/Math.max(im.width||1,im.height||1));
+          const c=document.createElement('canvas');
+          c.width=Math.max(1,Math.round((im.width||1)*esc));
+          c.height=Math.max(1,Math.round((im.height||1)*esc));
+          const g=c.getContext('2d');
+          if(g)g.drawImage(im,0,0,c.width,c.height);
+          cierraCamara();
+          nuevaPagina(c);
+          setStatus(t('sc.added',{n:paginas.length}));
+        };
+        im.src=String(rd.result||'');
+      };
+      rd.readAsDataURL(f);
+    };
+    // ---- Recorte por arrastre ----
+    const posEnCanvas=(ev)=>{
+      const r=cv.getBoundingClientRect();
+      const x=((ev.clientX!==undefined?ev.clientX:(ev.touches&&ev.touches[0].clientX))-r.left)/(r.width||1);
+      const y=((ev.clientY!==undefined?ev.clientY:(ev.touches&&ev.touches[0].clientY))-r.top)/(r.height||1);
+      return {x:Math.max(0,Math.min(1,x)),y:Math.max(0,Math.min(1,y))};
+    };
+    const pintaCrop=(a,b)=>{
+      const r=cv.getBoundingClientRect(), s=stage.getBoundingClientRect();
+      const x0=Math.min(a.x,b.x), y0=Math.min(a.y,b.y), x1=Math.max(a.x,b.x), y1=Math.max(a.y,b.y);
+      croprect.hidden=false;
+      croprect.style.left=(r.left-s.left+x0*r.width)+'px';
+      croprect.style.top=(r.top-s.top+y0*r.height)+'px';
+      croprect.style.width=((x1-x0)*r.width)+'px';
+      croprect.style.height=((y1-y0)*r.height)+'px';
+    };
+    const empiezaCrop=(ev)=>{
+      if(!recortando||!paginas.length)return;
+      cropDrag={a:posEnCanvas(ev),b:posEnCanvas(ev)};
+      pintaCrop(cropDrag.a,cropDrag.b);
+      ev.preventDefault();
+    };
+    const mueveCrop=(ev)=>{
+      if(!cropDrag)return;
+      cropDrag.b=posEnCanvas(ev);
+      pintaCrop(cropDrag.a,cropDrag.b);
+      ev.preventDefault();
+    };
+    const acabaCrop=()=>{
+      if(!cropDrag)return;
+      const {a,b}=cropDrag;
+      cropDrag=null;
+      const x=Math.min(a.x,b.x), y=Math.min(a.y,b.y), w2=Math.abs(b.x-a.x), h2=Math.abs(b.y-a.y);
+      croprect.hidden=true;
+      recortando=false;
+      $('#sc-crop').classList.remove('on');
+      cv.classList.remove('cropping');
+      if(w2<0.04||h2<0.04){ setStatus(''); return; }
+      const p=paginas[actual];
+      // El recorte se compone sobre el que ya hubiera
+      if(p.crop){
+        p.crop={x:p.crop.x+x*p.crop.w,y:p.crop.y+y*p.crop.h,w:p.crop.w*w2,h:p.crop.h*h2};
+      }else p.crop={x,y,w:w2,h:h2};
+      pinta();
+      setStatus(t('sc.cropped'));
+    };
+    cv.addEventListener('mousedown',empiezaCrop);
+    cv.addEventListener('touchstart',empiezaCrop,{passive:false});
+    const mm=(e)=>mueveCrop(e), mu=()=>acabaCrop();
+    document.addEventListener('mousemove',mm);
+    document.addEventListener('mouseup',mu);
+    document.addEventListener('touchmove',mm,{passive:false});
+    document.addEventListener('touchend',mu);
+
+    // ---- Salidas ----
+    const haciaPDF=async()=>{
+      if(!paginas.length)return;
+      setStatus(t('sc.making'));
+      const imgs=[];
+      for(const p of paginas){
+        const c=procesa(p);
+        try{
+          const jpeg=await pdfJpegDeCanvas(c,p.filtro==='bn'?0.9:0.82);
+          imgs.push({jpeg,w:c.width,h:c.height});
+        }catch(e){}
+      }
+      if(!imgs.length){ setStatus(t('sc.fail')); return; }
+      const blob=pdfDesdeImagenes(imgs,{titulo:t('sc.title')});
+      const nombre='documento-'+new Date().toISOString().slice(0,10)+'.pdf';
+      const kb=Math.round(blob.size/1024);
+      setStatus(t('sc.made',{n:imgs.length,s:kb}));
+      const ov=xpDialog(t('sc.title'),'<div class="dlg-icon">&#128196;</div><div>'+escHtml(t('sc.made',{n:imgs.length,s:kb}))+'</div>',
+        [{label:t('btn.cancel')},{label:t('sc.share'),action:()=>{
+          try{
+            const f=new File([blob],nombre,{type:'application/pdf'});
+            if(navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){ navigator.share({files:[f],title:nombre}).catch(()=>{}); return; }
+          }catch(e){}
+          descarga(blob,nombre);
+        }},{label:t('sc.save'),primary:true,action:()=>{
+          // Se guarda en Mis documentos como PDF: desde ahí lo abre el Lector
+          const rd=new FileReader();
+          rd.onload=()=>fsSaveDialog('pdf',t('sc.title')+' '+new Date().toLocaleDateString('es-ES'),String(rd.result||''),null,()=>setStatus(t('sc.saved')));
+          rd.readAsDataURL(blob);
+        }}]);
+      return ov;
+    };
+    const descarga=(blob,nombre)=>{
+      try{
+        const a=document.createElement('a');
+        const url=URL.createObjectURL(blob);
+        a.href=url; a.download=nombre; a.click();
+        setTimeout(()=>{ try{ URL.revokeObjectURL(url); }catch(e){} },3000);
+      }catch(e){}
+    };
+
+    $('#sc-cam').onclick=()=>{ if(stream)cierraCamara(); else abreCamara(); };
+    $('#sc-shot').onclick=captura;
+    $('#sc-open').onclick=()=>$('#sc-file').click();
+    $('#sc-file').onchange=(e)=>{ [...(e.target.files||[])].forEach(cargaArchivo); e.target.value=''; };
+    $('#sc-filtro').onchange=()=>{ if(paginas[actual]){ paginas[actual].filtro=$('#sc-filtro').value; pinta(); } };
+    $('#sc-rot').onclick=()=>{ if(paginas[actual]){ paginas[actual].rot=(paginas[actual].rot+90)%360; pinta(); } };
+    $('#sc-crop').onclick=()=>{
+      if(!paginas.length)return;
+      const p=paginas[actual];
+      if(p.crop&&!recortando){
+        xpConfirm(t('sc.title'),t('sc.uncropq'),()=>{ p.crop=null; pinta(); },t('sc.uncrop'));
+        return;
+      }
+      recortando=!recortando;
+      $('#sc-crop').classList.toggle('on',recortando);
+      cv.classList.toggle('cropping',recortando);
+      setStatus(recortando?t('sc.crophint'):'');
+    };
+    $('#sc-del').onclick=()=>{
+      if(!paginas.length)return;
+      paginas.splice(actual,1);
+      actual=Math.min(actual,paginas.length-1);
+      pinta();
+    };
+    $('#sc-png').onclick=()=>{
+      if(!paginas.length)return;
+      try{ fsSaveDialog('png',t('sc.title')+' '+(actual+1),procesa(paginas[actual]).toDataURL('image/png'),null,()=>setStatus(t('sc.saved'))); }catch(e){}
+    };
+    $('#sc-pdf').onclick=haciaPDF;
+
+    pinta();
+    _scanLoadFile=cargaArchivo;
+    const mio=cargaArchivo;
+    (win._cleanups=win._cleanups||[]).push(()=>{
+      cierraCamara();
+      document.removeEventListener('mousemove',mm);
+      document.removeEventListener('mouseup',mu);
+      document.removeEventListener('touchmove',mm);
+      document.removeEventListener('touchend',mu);
+      if(_scanLoadFile===mio)_scanLoadFile=null;
+    });
+    if(preload)cargaArchivo(preload);
+    _scanHook={pages:()=>paginas,add:(c)=>nuevaPagina(c),pdf:haciaPDF,proc:()=>procesa(paginas[actual]),set:(f)=>{ if(paginas[actual]){ paginas[actual].filtro=f; pinta(); } }};
+  }});
+}
+
 // ========== EL TIEMPO ==========
 // Datos de open-meteo.com: sin clave, con CORS abierto y sin registro. Mismo patrón
 // que el precio de la luz: se descarga, se guarda en local y si no hay red se
@@ -14826,7 +16234,7 @@ function _searchIndex(){
    ['Nota adhesiva','&#128204;',openStickyNote],['Récords','&#127942;',openRecords],['Papelera de reciclaje','&#128465;&#65039;',openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes','&#9881;&#65039;',openSettings],['Acerca de','&#9432;',openAbout],
    ['Administrador de tareas','&#128200;',openTaskManager],['Logros','&#127941;',openAchievements],['Ayuda','&#10067;',openHelp],['Tour de bienvenida','&#127881;',openTour],['Mis documentos','&#128450;&#65039;',openMyDocuments],
-   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['El tiempo (previsión)','&#9925;',openTiempo],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
+   ['Instalar app','&#128190;',openInstallApp],['Regedit (editor del registro)','&#128295;',openRegedit],['Encarta 99','&#127757;',openEncarta],['Loquendo','&#128483;&#65039;',openLoquendo],['Grabadora de sonidos','&#127908;',openRecorder],['Photo Booth','&#128247;',openPhotoBooth],['Lector (EPUB/PDF)','&#128214;',openEbookReader],['Retoques (editor de imágenes)','&#128396;&#65039;',openImageTools],['Pixel Art (sprites)','&#128375;&#65039;',openPixelArt],['Generador de memes','&#128514;',openMemeGen],['Caja de ritmos','&#129345;',openDrumMachine],['Caleidoscopio','&#128302;',openKaleidoscope],['Piano','&#127929;',openPiano],['Agenda (calendario)','&#128197;',openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control','&#127898;&#65039;',openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica','&#129514;',openPeriodicTable],['Conversor de unidades','&#128207;',openConverter],['Hoja de cálculo','&#128202;',openSpreadsheet],['Graficadora de funciones','&#128208;',openGrapher],['Precio de la luz (PVPC)','&#128161;',openLuz],['Gastos (control de gastos)','&#128176;',openGastos],['Lista de la compra','&#128722;',openCompra],['Recetas y menú semanal','&#127859;',openRecetas],['El tiempo (previsión)','&#9925;',openTiempo],['Tareas (lo que hay que hacer)','&#9989;',openTareas],['Notas (Markdown)','&#128210;',openNotes],['Herramientas (QR, contraseñas, texto)','&#128736;&#65039;',openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)','&#128477;&#65039;',openPasswords],['Carpetas comprimidas (ZIP)','&#128476;&#65039;',openZipFolder],['Escáner (documentos a PDF)','&#128441;&#65039;',openScanner],['Hábitos (rachas)','&#127919;',openHabitos],['Lector de códigos QR','&#128307;',openLectorQR],['Generador de QR','&#128241;',()=>openToolbox('qr')],['Generador de contraseñas','&#128273;',()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo','&#9203;',openTimeMachine]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }
@@ -15968,6 +17376,19 @@ function openSettings(){
         </div>
       </div>
       <div class="settings-group">
+        <h3>&#128640; <span data-i18n="ar.title">Arranque</span></h3>
+        <p data-i18n="ar.desc">C&oacute;mo entra el sistema cuando abres la p&aacute;gina</p>
+        <div class="ar-box">
+          <label class="ar-opt"><input type="checkbox" id="ar-fast"> <span>
+            <b data-i18n="ar.fast">Entrar directo</b>
+            <i data-i18n="ar.fast.d">Sin la animaci&oacute;n de inicio ni la pantalla de bienvenida</i></span></label>
+          <label class="ar-opt" id="ar-auto-wrap"><input type="checkbox" id="ar-auto"> <span>
+            <b data-i18n="ar.auto">Iniciar sesi&oacute;n autom&aacute;ticamente</b>
+            <i data-i18n="ar.auto.d">No te vuelve a pedir la contrase&ntilde;a en este dispositivo</i></span></label>
+          <div class="ar-aviso" id="ar-aviso"></div>
+        </div>
+      </div>
+      <div class="settings-group">
         <h3>&#128190; <span data-i18n="bk.title">Copia de seguridad</span></h3>
         <p data-i18n="bk.what">Se lleva TODO: gastos, tareas, lista de la compra, claves, documentos, r&eacute;cords y ajustes</p>
         <div class="color-row" style="flex-wrap:wrap">
@@ -15991,6 +17412,42 @@ function openSettings(){
     </div>
   </div>`;
   const winId=createWindow(t('app.settings'),'&#9881;',420,400,content,{session:'ajustes',onCreated:(id)=>{
+    // Arranque: entrar directo y login automático
+    const arFast=document.getElementById('ar-fast'), arAuto=document.getElementById('ar-auto'), arAviso=document.getElementById('ar-aviso');
+    if(arFast){
+      arFast.checked=arranqueRapido();
+      arFast.onchange=()=>{
+        try{ localStorage.setItem('tos-fastboot',arFast.checked?'1':'0'); }catch(e){}
+        announce(arFast.checked?t('ar.fast.on'):t('ar.fast.off'));
+      };
+    }
+    const pintaAviso=()=>{
+      if(!arAviso)return;
+      if(!hasAccount()){ arAviso.textContent=t('ar.needacct'); arAviso.className='ar-aviso'; return; }
+      if(!isVaultUnlocked()){ arAviso.textContent=t('ar.needopen'); arAviso.className='ar-aviso'; return; }
+      arAviso.textContent=arAuto&&arAuto.checked?t('ar.warn'):t('ar.auto.what');
+      arAviso.className='ar-aviso'+(arAuto&&arAuto.checked?' warn':'');
+    };
+    if(arAuto){
+      const puede=hasAccount()&&isVaultUnlocked();
+      arAuto.disabled=!puede;
+      arAuto.checked=autoLoginActivo();
+      arAuto.onchange=()=>{
+        if(arAuto.checked){
+          // Se avisa ANTES de guardar la clave: el usuario tiene que saber qué cede
+          xpConfirm(t('ar.auto'),t('ar.confirm'),async()=>{
+            const ok=await autoLoginActivar();
+            arAuto.checked=ok;
+            if(!ok)xpDialog(t('ar.auto'),'<div class="dlg-icon">&#9888;&#65039;</div><div>'+escHtml(t('ar.failed'))+'</div>');
+            else notify({icon:'&#128273;',title:t('acct.title'),body:t('ar.on'),silent:true});
+            pintaAviso();
+          },t('ar.activate'),()=>{ arAuto.checked=false; pintaAviso(); });
+        }else{
+          autoLoginBorrar().then(()=>{ announce(t('ar.off')); pintaAviso(); });
+        }
+      };
+    }
+    pintaAviso();
     // Copia: cuándo fue la última y qué se lleva
     try{
       const info=document.getElementById('bk-info');
@@ -16561,7 +18018,7 @@ function openTerminal(){
     const print=(t='')=>{out.insertAdjacentHTML('beforeend',escHtml(t)+'\n');out.scrollTop=out.scrollHeight;};
     print('Torrecillas OS [Versión '+APP_VERSION+']');
     print('(c) Torrecillas Corporation. Escribe "help" para empezar.');print('');
-    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,hoja:openSpreadsheet,calculo:openSpreadsheet,excel:openSpreadsheet,celdas:openSpreadsheet,grafica:openGrapher,graficadora:openGrapher,funciones:openGrapher,plot:openGrapher,luz:openLuz,pvpc:openLuz,electricidad:openLuz,precio:openLuz,tarifa:openLuz,gastos:openGastos,dinero:openGastos,cuentas:openGastos,presupuesto:openGastos,compra:openCompra,lista:openCompra,super:openCompra,supermercado:openCompra,tiempo2:openTiempo,meteo:openTiempo,clima:openTiempo,prevision:openTiempo,tareas:openTareas,todo:openTareas,pendientes:openTareas,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),claves:openPasswords,contrasenas:openPasswords,passwords:openPasswords,caja:openPasswords,zip:openZipFolder,comprimir:openZipFolder,descomprimir:openZipFolder,archivo:openZipFolder,cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
+    const apps={calc:openCalculator,calculadora:openCalculator,paint:openPaint,notas:openNotepad,bloc:openNotepad,ajustes:openSettings,reloj:openClock,visor:openImageViewer,papelera:openPapelera,instalar:openInstallApp,records:openRecords,msn:openMSN,netscape:openNetscape,navegador:openNetscape,defrag:openDefrag,player:openPlayer,musica:openPlayer,winamp:openPlayer,mipc:openMiPC,wordart:openWordArt,video:openVideo,emule:openEmule,outlook:openOutlook,correo:openOutlook,regedit:openRegedit,tareas:openTaskManager,taskmgr:openTaskManager,logros:openAchievements,ayuda:openHelp,help:openHelp,documentos:openMyDocuments,docs:openMyDocuments,encarta:openEncarta,loquendo:openLoquendo,grabadora:openRecorder,booth:openPhotoBooth,camara:openPhotoBooth,fotos:openPhotoBooth,tiempo:openTimeMachine,era:openTimeMachine,lector:openEbookReader,epub:openEbookReader,pdf:openEbookReader,libro:openEbookReader,retoques:openImageTools,imagen:openImageTools,editor:openImageTools,pixelart:openPixelArt,pixel:openPixelArt,sprites:openPixelArt,meme:openMemeGen,memes:openMemeGen,ritmos:openDrumMachine,bateria:openDrumMachine,drum:openDrumMachine,caleidoscopio:openKaleidoscope,mandala:openKaleidoscope,piano:openPiano,teclado:openPiano,agenda:openAgenda,calendario:openAgenda,eventos:openAgenda,gadgets:openGadgetGallery,gadget:openGadgetGallery,panel:openControlPanel,control:openControlPanel,lupa:toggleMagnifier,zoom:toggleMagnifier,tabla:openPeriodicTable,elementos:openPeriodicTable,quimica:openPeriodicTable,conversor:openConverter,convertir:openConverter,unidades:openConverter,hoja:openSpreadsheet,calculo:openSpreadsheet,excel:openSpreadsheet,celdas:openSpreadsheet,grafica:openGrapher,graficadora:openGrapher,funciones:openGrapher,plot:openGrapher,luz:openLuz,pvpc:openLuz,electricidad:openLuz,precio:openLuz,tarifa:openLuz,gastos:openGastos,dinero:openGastos,cuentas:openGastos,presupuesto:openGastos,compra:openCompra,lista:openCompra,super:openCompra,supermercado:openCompra,recetas:openRecetas,cocina:openRecetas,menu:openRecetas,tiempo2:openTiempo,meteo:openTiempo,clima:openTiempo,prevision:openTiempo,tareas:openTareas,todo:openTareas,pendientes:openTareas,paleta:openCommandPalette,comandos:openCommandPalette,portapapeles:()=>toggleClipHistory(),tour:openTour,bienvenida:openTour,notas2:openNotes,cuaderno:openNotes,markdown:openNotes,herramientas:openToolbox,tools:openToolbox,qr:()=>openToolbox('qr'),password:()=>openToolbox('pw'),contrasena:()=>openToolbox('pw'),texto:()=>openToolbox('txt'),base64:()=>openToolbox('txt'),claves:openPasswords,contrasenas:openPasswords,passwords:openPasswords,caja:openPasswords,zip:openZipFolder,comprimir:openZipFolder,descomprimir:openZipFolder,archivo:openZipFolder,escaner:openScanner,escanear:openScanner,documento:openScanner,pdf2:openScanner,habitos:openHabitos,rachas:openHabitos,rutina:openHabitos,leer:openLectorQR,qr2:openLectorQR,codigos:openLectorQR,cuenta:openAccountEntry,login:openAccountEntry,logout:logout,sesion:openAccountEntry};
     function run(raw){
       const line=raw.trim();print('C:\\> '+line);
       const [cmd,...args]=line.split(/\s+/);const a=args.join(' ');
