@@ -4285,7 +4285,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.54.2';
+const APP_VERSION = '0.55.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -5086,6 +5086,10 @@ const I18N={
   'fi.reset':{es:'Empezar el mazo de cero', en:'Reset the deck', ca:'Comença el bloc de zero', ru:'Сбросить колоду'},
   'fi.resetq':{es:'¿Olvidar lo aprendido y empezar de cero? Las fichas se quedan, pero vuelven todas para hoy.', en:'Forget the progress and start over? The cards stay, but they all come back for today.', ca:'Oblidar el que s’ha après i començar de zero? Les fitxes es queden, però tornen totes per avui.', ru:'Забыть прогресс и начать заново? Карточки останутся, но все вернутся на сегодня.'},
   'fi.imported':{es:'{n} fichas añadidas.', en:'{n} cards added.', ca:'{n} fitxes afegides.', ru:'Добавлено карточек: {n}.'},
+  'fi.import':{es:'Importar un mazo de Anki (.apkg o .txt)', en:'Import an Anki deck (.apkg or .txt)', ca:'Importa un bloc d’Anki (.apkg o .txt)', ru:'Импорт колоды Anki (.apkg или .txt)'},
+  'fi.apkg.ok':{es:'He leído {n} fichas del mazo «{m}». ¿Las añado?', en:'I read {n} cards from the deck “{m}”. Add them?', ca:'He llegit {n} fitxes del bloc «{m}». Les afegeixo?', ru:'Прочитано {n} карточек из колоды «{m}». Добавить?'},
+  'fi.apkg.bad':{es:'No he sabido leer ese archivo de Anki. Si es un .txt, exporta desde Anki como «Notas en texto plano».', en:'I could not read that Anki file. If it is a .txt, export from Anki as “Notes in Plain Text”.', ca:'No he sabut llegir aquest fitxer d’Anki. Si és un .txt, exporta des d’Anki com a «Notes en text pla».', ru:'Не удалось прочитать этот файл Anki. Для .txt экспортируйте из Anki как «Notes in Plain Text».'},
+  'fi.apkg.zstd':{es:'Ese .apkg es del formato nuevo (comprimido con zstd) y el navegador no sabe descomprimirlo. Vuelve a exportarlo desde Anki marcando «Admitir versiones antiguas de Anki» y funcionará.', en:'That .apkg uses the new format (zstd-compressed) and the browser cannot decompress it. Export it again from Anki ticking “Support older Anki versions” and it will work.', ca:'Aquest .apkg és del format nou (comprimit amb zstd) i el navegador no el sap descomprimir. Torna a exportar-lo des d’Anki marcant «Admet versions antigues d’Anki» i funcionarà.', ru:'Этот .apkg в новом формате (сжат zstd), браузер его не распакует. Экспортируйте из Anki с галочкой «Support older Anki versions».'},
   'fi.importq':{es:'¿Añadir {n} fichas a tus mazos?', en:'Add {n} cards to your decks?', ca:'Afegir {n} fitxes als teus blocs?', ru:'Добавить {n} карточек в ваши колоды?'},
   'off.title':{es:'Etiquetas', en:'Food labels', ca:'Etiquetes', ru:'Этикетки'},
   'off.desc':{es:'Escanea un producto y mira qué lleva', en:'Scan a product and see what is in it', ca:'Escaneja un producte i mira què porta', ru:'Сканируйте продукт и смотрите состав'},
@@ -9732,6 +9736,8 @@ function osOpenDroppedFile(f){
   }else if(type.indexOf('video/')===0){
     openVideo();
     videoAddFiles([f]);
+  }else if(name.slice(-5)==='.apkg'){
+    fiImportaArchivo(f); // un mazo de Anki soltado en el escritorio
   }else if(name.slice(-4)==='.zip'||type==='application/zip'||type==='application/x-zip-compressed'){
     openZipFolder(f);
   }else if(name.slice(-5)==='.json'||type==='application/json'){
@@ -14697,6 +14703,225 @@ function fiImporta(data,silencioso){
   xpConfirm(t('fi.title'),t('fi.importq',{n:arr.length}),hacer,t('sh.import'));
   return true;
 }
+// ---------- IMPORTAR MAZOS DE ANKI ----------
+// Un .apkg es un ZIP con una base de datos SQLite dentro (`collection.anki2`). Como el
+// lector de EPUB ya sabe abrir ZIPs, lo que faltaba era leer SQLite, así que hay aquí
+// un lector MÍNIMO: solo recorre el árbol B de una tabla y devuelve sus filas. No
+// entiende SQL ni índices ni escritura — con eso basta para sacar las notas.
+// Formato documentado en sqlite.org/fileformat2.html.
+function sqlAbre(bytes){
+  if(!bytes||bytes.length<100)throw new Error('sqlite:corto');
+  const dv=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+  if(new TextDecoder().decode(bytes.slice(0,15))!=='SQLite format 3')throw new Error('sqlite:cabecera');
+  let ps=dv.getUint16(16); if(ps===1)ps=65536;
+  const db={bytes:bytes,dv:dv,ps:ps,usable:ps-bytes[20]};
+  db.tablas={}; db.alias={};
+  // La página 1 es sqlite_master: (type, name, tbl_name, rootpage, sql)
+  sqlRecorre(db,1,(fila)=>{
+    if(fila[0]==='table'&&typeof fila[3]==='number'){
+      db.tablas[String(fila[1])]=fila[3];
+      db.alias[String(fila[1])]=_sqlAliasRowid(String(fila[4]||''));
+    }
+  });
+  return db;
+}
+// Una columna declarada "INTEGER PRIMARY KEY" es un alias del rowid: SQLite NO guarda
+// su valor en el registro (lo deja nulo) porque ya está en la clave de la celda. Sin
+// esto, el id de cada nota de Anki se perdía. Se saca del CREATE TABLE del catálogo.
+function _sqlAliasRowid(sql){
+  const i=sql.indexOf('('), j=sql.lastIndexOf(')');
+  if(i<0||j<i)return -1;
+  const cols=sql.slice(i+1,j).split(',');
+  for(let k=0;k<cols.length;k++){
+    if(/\binteger\s+primary\s+key\b/i.test(cols[k]))return k;
+  }
+  return -1;
+}
+function _sqlVarint(b,i){
+  let v=0;
+  for(let n=0;n<8;n++){
+    const c=b[i+n];
+    v=v*128+(c&0x7f);
+    if(!(c&0x80))return [v,n+1];
+  }
+  return [v*256+b[i+8],9];
+}
+// Junta el contenido de una celda, siguiendo las páginas de desbordamiento si las hay
+function _sqlPayload(db,pagina,off,tam){
+  const u=db.usable, maxLocal=u-35, minLocal=Math.floor((u-12)*32/255)-23;
+  let local=tam;
+  if(tam>maxLocal){
+    const k=minLocal+((tam-minLocal)%(u-4));
+    local=k<=maxLocal?k:minLocal;
+  }
+  const out=new Uint8Array(tam);
+  out.set(db.bytes.slice(off,off+local),0);
+  let escrito=local;
+  if(escrito<tam){
+    let sig=db.dv.getUint32(off+local);
+    while(sig>0&&escrito<tam){
+      const base=(sig-1)*db.ps;
+      const trozo=Math.min(u-4,tam-escrito);
+      out.set(db.bytes.slice(base+4,base+4+trozo),escrito);
+      escrito+=trozo;
+      sig=db.dv.getUint32(base);
+    }
+  }
+  return out;
+}
+// Decodifica un registro (la fila) a valores JS
+function _sqlRegistro(p){
+  const [cab,n]=_sqlVarint(p,0);
+  const tipos=[]; let i=n;
+  while(i<cab){ const [t,l]=_sqlVarint(p,i); tipos.push(t); i+=l; }
+  const dv=new DataView(p.buffer,p.byteOffset,p.byteLength);
+  let o=cab; const fila=[];
+  const TAM={0:0,1:1,2:2,3:3,4:4,5:6,6:8,7:8,8:0,9:0};
+  tipos.forEach(t=>{
+    if(t===0){ fila.push(null); return; }
+    if(t===8){ fila.push(0); return; }
+    if(t===9){ fila.push(1); return; }
+    if(t<=6){
+      const tam=TAM[t]; let v=0;
+      for(let k=0;k<tam;k++)v=v*256+p[o+k];
+      // Signo (complemento a dos) para los enteros de 1, 2, 4 y 8 bytes
+      const bits=tam*8;
+      if(tam<=6&&v>=Math.pow(2,bits-1))v-=Math.pow(2,bits);
+      fila.push(v); o+=tam; return;
+    }
+    if(t===7){ fila.push(dv.getFloat64(o)); o+=8; return; }
+    const tam=Math.floor((t-12)/2);
+    const trozo=p.slice(o,o+tam);
+    fila.push((t%2===1)?new TextDecoder('utf-8').decode(trozo):trozo);
+    o+=tam;
+  });
+  return fila;
+}
+// Recorre el árbol B de una tabla y llama a `cb` con cada fila
+function sqlRecorre(db,pagina,cb,visitadas){
+  visitadas=visitadas||{};
+  if(!pagina||visitadas[pagina])return; // por si un archivo corrupto hace un bucle
+  visitadas[pagina]=1;
+  const base=(pagina-1)*db.ps;
+  const cab=pagina===1?base+100:base;
+  const tipo=db.bytes[cab];
+  const ncel=db.dv.getUint16(cab+3);
+  const inicio=cab+(tipo===5||tipo===2?12:8);
+  for(let i=0;i<ncel;i++){
+    const off=base+db.dv.getUint16(inicio+i*2);
+    if(tipo===13){
+      const [tam,n1]=_sqlVarint(db.bytes,off);
+      const [rowid,n2]=_sqlVarint(db.bytes,off+n1);
+      cb(_sqlRegistro(_sqlPayload(db,pagina,off+n1+n2,tam)),rowid);
+    }else if(tipo===5){
+      sqlRecorre(db,db.dv.getUint32(off),cb,visitadas);
+    }
+  }
+  if(tipo===5)sqlRecorre(db,db.dv.getUint32(cab+8),cb,visitadas);
+}
+function sqlFilas(db,tabla){
+  const raiz=db.tablas[tabla];
+  if(!raiz)return [];
+  const alias=(db.alias&&db.alias[tabla]!=null)?db.alias[tabla]:-1;
+  const out=[];
+  sqlRecorre(db,raiz,(f,rowid)=>{
+    f.rowid=rowid;
+    if(alias>=0&&f[alias]==null)f[alias]=rowid; // el id que SQLite no guarda en la fila
+    out.push(f);
+  });
+  return out;
+}
+// Los campos de Anki llevan HTML: aquí se deja texto plano legible
+function fiLimpiaHTML(s){
+  return String(s==null?'':s)
+    .replace(/<br\s*\/?>/gi,'\n').replace(/<\/(div|p|li)>/gi,'\n')
+    .replace(/<[^>]*>/g,'')
+    .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    .replace(/&quot;/g,'"').replace(/&#0?39;|&apos;/g,"'")
+    .replace(/\[sound:[^\]]*\]/g,'') // el audio del mazo no se puede traer
+    .replace(/[ \t]+/g,' ').replace(/\n{2,}/g,'\n').trim();
+}
+// .apkg -> {mazo, cartas}. Lanza un error con motivo si no se puede.
+async function fiDesdeApkg(buffer,nombreArchivo){
+  const files=_zipRead(buffer);
+  if(files['collection.anki21b'])throw new Error('zstd'); // formato nuevo, comprimido con zstd
+  const nombreDB=files['collection.anki2']?'collection.anki2':(files['collection.anki21']?'collection.anki21':'');
+  if(!nombreDB)throw new Error('nodb');
+  const bytes=await _zipInflate(files[nombreDB]);
+  const db=sqlAbre(bytes);
+  const notas=sqlFilas(db,'notes');
+  if(!notas.length)throw new Error('vacio');
+  // Nombre del mazo: el más usado en la tabla de cartas, buscado en el JSON de mazos
+  let mazo='';
+  try{
+    const col=sqlFilas(db,'col')[0];
+    const decks=JSON.parse(col[10]||'{}');
+    const cuenta={};
+    sqlFilas(db,'cards').forEach(c=>{ const d=String(c[2]); cuenta[d]=(cuenta[d]||0)+1; });
+    const mejor=Object.keys(cuenta).sort((a,b)=>cuenta[b]-cuenta[a])[0];
+    if(mejor&&decks[mejor]&&decks[mejor].name)mazo=String(decks[mejor].name);
+    if(!mazo){ const otros=Object.keys(decks).map(k=>decks[k].name).filter(n=>n&&n!=='Default'); mazo=otros[0]||''; }
+  }catch(e){}
+  if(!mazo)mazo=String(nombreArchivo||'Anki').replace(/\.apkg$/i,'');
+  mazo=mazo.replace(/\x1f/g,' ').slice(0,40);
+  const cartas=[];
+  notas.forEach(n=>{
+    const campos=String(n[6]||'').split('\x1f');
+    const frente=fiLimpiaHTML(campos[0]||''), detras=fiLimpiaHTML(campos.slice(1).join(' · '));
+    if(frente&&detras)cartas.push({frente:frente.slice(0,300),detras:detras.slice(0,600),mazo:mazo});
+  });
+  if(!cartas.length)throw new Error('vacio');
+  return {mazo:mazo,cartas:cartas};
+}
+// Exportación de Anki en texto plano (.txt/.csv): cabeceras con # y campos separados
+function fiDesdeAnkiTexto(txt,mazoPorDefecto){
+  const lineas=String(txt||'').split(/\r?\n/);
+  let sep='\t', mazo=mazoPorDefecto||'';
+  const SEPS={tab:'\t',comma:',',semicolon:';',pipe:'|',space:' '};
+  const cartas=[];
+  lineas.forEach(l=>{
+    if(/^#/.test(l)){
+      const ms=/^#separator:(\w+)/i.exec(l); if(ms)sep=SEPS[ms[1].toLowerCase()]||'\t';
+      const md=/^#deck(?:\s*column)?:(.+)/i.exec(l); if(md&&isNaN(+md[1].trim()))mazo=md[1].trim();
+      return;
+    }
+    if(!l.trim())return;
+    // Campos entre comillas al estilo CSV, o partidos por el separador a secas
+    const campos=/"/.test(l)?(l.match(/("([^"]|"")*"|[^\t,;|]+)/g)||[]).map(x=>x.replace(/^"|"$/g,'').replace(/""/g,'"'))
+      :l.split(sep);
+    const frente=fiLimpiaHTML(campos[0]||''), detras=fiLimpiaHTML(campos[1]||'');
+    if(frente&&detras)cartas.push({frente:frente.slice(0,300),detras:detras.slice(0,600),mazo:mazo||''});
+  });
+  return cartas;
+}
+// Punto único: recibe el archivo que sea y lo mete en las fichas
+function fiImportaArchivo(file,alTerminar){
+  if(!file)return;
+  const nombre=String(file.name||'');
+  const fin=(cartas,mazo)=>{
+    if(!cartas||!cartas.length){ xpDialog(t('fi.title'),'<div class="dlg-icon">&#128199;</div><div>'+escHtml(t('fi.apkg.bad'))+'</div>'); return; }
+    xpConfirm(t('fi.title'),t('fi.apkg.ok',{n:cartas.length,m:mazo||t('fi.deck.default')}),()=>{
+      fiImporta(cartas,true);
+      if(alTerminar)alTerminar();
+    },t('sh.import'));
+  };
+  const rd=new FileReader();
+  if(/\.apkg$/i.test(nombre)){
+    rd.onload=()=>{
+      fiDesdeApkg(rd.result,nombre).then(r=>fin(r.cartas,r.mazo)).catch(err=>{
+        const msg=String(err&&err.message)==='zstd'?t('fi.apkg.zstd'):t('fi.apkg.bad');
+        xpDialog(t('fi.title'),'<div class="dlg-icon">&#128199;</div><div>'+escHtml(msg)+'</div>');
+      });
+    };
+    rd.readAsArrayBuffer(file);
+  }else{
+    rd.onload=()=>{
+      const cartas=fiDesdeAnkiTexto(String(rd.result||''),nombre.replace(/\.(txt|csv|tsv)$/i,''));
+      fin(cartas,cartas.length?cartas[0].mazo:'');
+    };
+    rd.readAsText(file);
+  }
+}
 let _fichasHook=null;
 function openFichas(){
   closeStartMenu();
@@ -14707,6 +14932,7 @@ function openFichas(){
       <button type="button" class="fi-btn primary" id="fi-estudiar">${escHtml(t('fi.study'))}</button>
       <button type="button" class="fi-btn" id="fi-nueva" title="${escHtml(t('fi.add'))}">&#10133;</button>
       <button type="button" class="fi-btn" id="fi-menu" title="${escHtml(t('fi.more'))}">&#9881;&#65039;</button>
+      <input type="file" id="fi-file" accept=".apkg,.txt,.csv,.tsv" hidden>
     </div>
     <div class="fi-stats" id="fi-stats"></div>
     <div class="fi-body" id="fi-body"></div>
@@ -14804,6 +15030,7 @@ function openFichas(){
             announce(t('fi.imported',{n:nuevas.length}));
           });
         }},
+        {label:t('fi.import'),action:()=>$('#fi-file').click()},
         {label:t('fi.rename'),action:()=>{
           if(!mazo)return;
           xpPrompt(t('fi.title'),t('fi.renameq'),mazo,(v)=>{
@@ -14828,6 +15055,11 @@ function openFichas(){
         }}
       ]);
     };
+    $('#fi-file').addEventListener('change',(e)=>{
+      const f=e.target.files&&e.target.files[0];
+      e.target.value='';
+      if(f)fiImportaArchivo(f,()=>{ cartas=fichas(); render(); });
+    });
     _fichasHook=()=>{ cartas=fichas(); render(); };
     (win._cleanups=win._cleanups||[]).push(()=>{ _fichasHook=null; });
     render();
@@ -20165,7 +20397,12 @@ document.addEventListener('contextmenu',(e)=>{
     {icon:'&#9432;',label:'Propiedades',action:()=>openAbout()}
   ]);
 });
-document.addEventListener('click',(e)=>{const m=document.getElementById('context-menu');if(m&&m.classList.contains('show')&&!m.contains(e.target))hideContextMenu();});
+// OJO: va en fase de CAPTURA a propósito. En burbujeo, el mismo clic que abría un menú
+// (los botones ⚙️ de Fichas, Compra, Tareas y Gastos llaman a showContextMenu desde su
+// onclick) seguía subiendo hasta aquí y lo cerraba al instante: el menú no llegaba a
+// verse y parecía que el botón no hacía nada. En captura, este manejador corre ANTES
+// que el onclick del botón, así que cierra el menú anterior y deja que el nuevo se abra.
+document.addEventListener('click',(e)=>{const m=document.getElementById('context-menu');if(m&&m.classList.contains('show')&&!m.contains(e.target))hideContextMenu();},true);
 document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!e.ctrlKey){hideContextMenu();closeStartMenu();hideCalendar();}});
 
 document.addEventListener('click',(e)=>{
