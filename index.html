@@ -4286,7 +4286,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.56.0';
+const APP_VERSION = '0.57.0';
 
 // ========== IDIOMAS (i18n) ==========
 // Traduce la interfaz visible (menú, escritorio, ajustes, ayuda, botones). El
@@ -8168,7 +8168,7 @@ function showBSOD(){
 // ========== SESIÓN: REABRIR LAS VENTANAS AL VOLVER ==========
 // Guarda qué ventanas hay abiertas (y dónde) y las restaura tras el arranque.
 const SESSION_OPENERS={
-  proyectos:()=>openProyectos(),juegazos:()=>openJuegazos(),juegos:()=>openGamesFolder(),
+  proyectos:()=>openProyectos(),juegazos:()=>openJuegazos(),garmin:()=>openGarmin(),juegos:()=>openGamesFolder(),
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
   papelera:()=>openPapelera(),records:()=>openRecords(),msn:()=>openMSN(),netscape:()=>openNetscape(),
@@ -19986,6 +19986,7 @@ function _searchIndex(){
   const ix=[];
   gamesApps.forEach(g=>ix.push({label:g.label,icon:g.icon,hint:'Juego',run:()=>openGame(g.key)}));
   proyectosApps.forEach(p=>ix.push({label:p.label,icon:p.icon,hint:'Proyecto',run:()=>window.open(p.link,'_blank','noopener,noreferrer')}));
+  garminApps.forEach(g=>ix.push({label:g.label,icon:g.icon,hint:'App Garmin',run:()=>window.open(g.link,'_blank','noopener,noreferrer')}));
   [['Calculadora','&#128290;',openCalculator],['Paint','&#127912;',openPaint],['Bloc de notas','&#128221;',openNotepad],
    ['Reloj','&#128340;',openClock],['Visor de imágenes','&#128444;&#65039;',openImageViewer],['MSN Messenger','&#128172;',openMSN],
    ['Winamp','&#9889;',openPlayer],['Reproductor de vídeo','&#127916;',openVideo],['WordArt','&#127344;&#65039;',openWordArt],
@@ -20240,10 +20241,53 @@ function openJuegazos(){
   placeFolderWindow(winId,sz);
 }
 
+// Mis apps publicadas en la tienda Connect IQ de Garmin (relojes)
+const garminApps=[
+  {id:'buscaminas',label:'Buscaminas',icon:'&#128163;',link:'https://apps.garmin.com/es-ES/apps/8f3b2efb-da22-4f1c-8d11-d8f1df22bbe4',
+   desc:'Despeja el campo de minas sin adivinar: el reloj comprueba que el tablero se pueda resolver razonando. Tres tamaños y reto diario.'},
+  {id:'sunsetdrive',label:'Sunset Drive',icon:'&#127749;',link:'https://apps.garmin.com/es-ES/apps/dd3f811c-7495-4fe6-8591-abe7addc33ce',
+   desc:'Arcade de conducción al estilo de los ochenta: descapotable rojo, sol en el horizonte y el tiempo agotándose.'},
+  {id:'blockdrop',label:'Block Drop',icon:'&#129521;',link:'https://apps.garmin.com/es-ES/apps/96c3fafb-94b2-428e-9dcf-ba085d5207c8',
+   desc:'El clásico de encajar piezas, con tablero 10x20, bolsa de siete y giros con empujón de pared.'},
+  {id:'flappywings',label:'Flappy Wings',icon:'&#128038;',link:'https://apps.garmin.com/es-ES/apps/e9a3cbac-132b-40ee-881d-b29c4faeee83',
+   desc:'Un pájaro, dos tubos y un hueco. Reto del día con los mismos tubos para todo el mundo.'},
+  {id:'espanacampeona',label:'España Campeona!',icon:'&#127466;&#127480;',link:'https://apps.garmin.com/es-ES/apps/e8d50c35-edc3-426f-9adb-20d6eefff19e',
+   desc:'Esfera con la bandera de España y las dos estrellas: colores oficiales, dos medidores y cuatro campos configurables.'},
+  {id:'cortafruta',label:'Corta fruta a lo loco',icon:'&#127817;',link:'https://apps.garmin.com/es-ES/apps/db343517-8427-4eff-8845-c645698ad321',
+   desc:'Desliza el dedo y parte la fruta en dos. Modo clásico con tres vidas y bombas que acaban la partida.'}
+];
+
+function openGarmin(){
+  if(focusExisting('garmin-folder-content'))return;
+  let items='';
+  garminApps.forEach(app=>{
+    items+=`<button type="button" class="drive-item" data-app="${app.id}" data-link="${app.link}" aria-label="${app.label}">
+      <div class="drive-icon">${app.icon}</div>
+      <div class="drive-label">${app.label}</div>
+    </button>`;
+  });
+  const content=`<div class="computer-content" id="garmin-folder-content">${items}</div>`;
+  const sz=folderWindowSize(garminApps.length,560,420);
+  const winId=createWindow('Aplicaciones Garmin','&#8986;&#65039;',sz.w,sz.h,content,{session:'garmin',onCreated:(id,win)=>{
+    const status=win.querySelector('.window-statusbar');
+    const idle=garminApps.length+' apps en Connect IQ';
+    if(status)status.textContent=idle;
+    win.querySelectorAll('.drive-item[data-link]').forEach(el=>{
+      const app=garminApps.find(a=>a.id===el.dataset.app);
+      el.onclick=()=>{window.open(el.dataset.link,'_blank','noopener,noreferrer');};
+      // Igual que en Proyectos: la barra de estado hace de panel de detalles
+      el.addEventListener('mouseenter',()=>{ if(status)status.textContent=app.label+' — '+app.desc; });
+      el.addEventListener('mouseleave',()=>{ if(status)status.textContent=idle; });
+    });
+  }});
+  placeFolderWindow(winId,sz);
+}
+
 // Subcarpetas dentro de Proyectos (antes eran iconos sueltos del escritorio)
 const PROY_SUBFOLDERS=[
   {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 16 juegos clásicos del sistema'},
-  {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',open:()=>openJuegazos(),desc:'Mis juegos web publicados'}
+  {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',open:()=>openJuegazos(),desc:'Mis juegos web publicados'},
+  {id:'garmin',label:'Aplicaciones Garmin',icon:'&#8986;&#65039;',open:()=>openGarmin(),desc:'Mis apps y esferas publicadas en Connect IQ'}
 ];
 function openProyectos(){
   if(focusExisting('proyectos-folder-content'))return;
