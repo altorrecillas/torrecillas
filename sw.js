@@ -5,22 +5,37 @@
 // ofrece "Actualizar". No se activa solo (nada de skipWaiting automático) para no
 // mezclar el JS viejo de una ventana abierta con los assets nuevos.
 //
-// Estrategia de red: red primero para el documento (index.html siempre fresco si hay
-// conexión), y stale-while-revalidate para el resto (og.png, iconos... se refrescan
-// solos al vuelo). Debe coincidir con APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.57.0';
+// Estrategia de red: stale-while-revalidate para TODO, documento incluido. La copia
+// guardada se sirve al instante y la descarga sigue por detrás; cuando hay versión
+// nueva es este worker quien lo anuncia (la página enseña el banner "Actualizar"), así
+// que la app no tiene por qué esperar a la red para pintar. Debe coincidir con
+// APP_VERSION de index.html (un test lo verifica).
+const APP_VERSION = '0.58.0';
 const CACHE = 'tos-' + APP_VERSION;
-const NET_TIMEOUT = 3000; // ms que se espera a la red antes de tirar de caché (documento)
+const DOC = './index.html';          // el documento, con su alias './'
 const ASSETS = [
-  './', './index.html', './og.png', './apple-touch-icon.png',
-  './manifest.webmanifest', './icon-192.png', './icon-512.png'
+  './og.png', './apple-touch-icon.png',
+  './manifest.webmanifest', './icon-192.png', './icon-512.png',
+  './fonts/orbitron-700-900.woff2', './fonts/rajdhani-400.woff2',
+  './fonts/rajdhani-600.woff2', './fonts/rajdhani-700.woff2'
 ];
+
+// El documento se guarda bajo sus dos claves ('./' e './index.html') a partir de UNA
+// sola descarga: con c.add() de las dos entradas se bajaba 1,7 MB por duplicado en
+// cada instalación.
+async function cacheDoc(c) {
+  const r = await fetch(DOC, { cache: 'reload' });
+  if (!r.ok) throw new Error('doc ' + r.status);
+  await Promise.all([c.put(DOC, r.clone()), c.put('./', r)]);
+}
 
 self.addEventListener('install', (e) => {
   // Precachear lo que exista. NO se llama a skipWaiting: el nuevo worker espera a
   // que la página confirme la actualización (mensaje SKIP_WAITING).
   e.waitUntil(
-    caches.open(CACHE).then((c) => Promise.allSettled(ASSETS.map((a) => c.add(a))))
+    caches.open(CACHE).then((c) => Promise.allSettled(
+      [cacheDoc(c)].concat(ASSETS.map((a) => c.add(a)))
+    ))
   );
 });
 
@@ -77,29 +92,26 @@ self.addEventListener('fetch', (e) => {
 
   if (e.request.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
     e.respondWith((async () => {
+      // El documento pesa ~1,7 MB: esperar a la red para pintarlo dejaba la pantalla
+      // en blanco en cada arranque de la app instalada, teniendo una copia buena
+      // guardada. Ahora se sirve la caché y el refresco va por detrás; de avisar de la
+      // versión nueva ya se encarga el banner "Actualizar" (lo dispara el worker nuevo,
+      // que al activarse vuelve a precachear el documento).
+      const cached = (await caches.match(DOC)) || (await caches.match('./'));
       const net = fetch(e.request).then((r) => {
         // Solo se guarda la entrada limpia: los atajos del icono y el "compartir con"
         // llegan como ./?app=tareas o ./?shared=text y llenarían la caché de copias
         // del mismo documento (y de una URL que al reabrirla haría cosas raras).
         if (!url.search) {
-          const copy = r.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, copy));
+          // ...y solo si la respuesta es buena: ahora que manda la caché, un 500 o una
+          // página de error del hosting guardada ahí se serviría para siempre.
+          if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(DOC, copy)); }
         }
         return r;
       });
-      const cached = (await caches.match(e.request))
-        || (await caches.match('./index.html'))
-        || (await caches.match('./'));
       if (!cached) return net; // primera visita: no hay más remedio que esperar a la red
-      // Red primero, pero con paciencia limitada: en una conexión móvil mala esperar
-      // indefinidamente por 1 MB de HTML dejaba la pantalla en blanco teniendo una
-      // copia usable guardada. A los NET_TIMEOUT ms se sirve la caché y la descarga
-      // sigue por detrás, así que la próxima carga ya trae la versión nueva.
       e.waitUntil(net.catch(() => {}));
-      return Promise.race([
-        net.catch(() => cached),
-        new Promise((res) => setTimeout(() => res(cached), NET_TIMEOUT))
-      ]);
+      return cached;
     })());
     return;
   }
