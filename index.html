@@ -24,16 +24,36 @@
 <meta name="twitter:title" content="Torrecillas OS — un escritorio XP en tu navegador">
 <meta name="twitter:description" content="16 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
 <meta name="twitter:image" content="https://torrecillas.cat/og.png">
-<!-- Datos estructurados para buscadores (schema.org) -->
+<!-- Datos estructurados para buscadores (schema.org).
+     Va escrito a mano y NO se genera al vuelo: los rastreadores que no ejecutan JS
+     tienen que verlo en el HTML. Para que no se desfase (que es lo que pasó al añadir
+     las apps de Garmin), un test comprueba que las tres listas cuadran una a una con
+     proyectosApps, garminApps y juegazosApps. Si tocas esos arrays, toca esto. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
   {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 16 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
-  {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/"},
+  {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/","sameAs":["https://apps.garmin.com/es-ES/developer/cbfbf385-0c43-49ab-9644-4861d4b9f47b/apps"]},
   {"@type":"ItemList","@id":"https://torrecillas.cat/#proyectos","name":"Proyectos","itemListElement":[
     {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Woodpecker's","url":"https://woodpeckers.es","description":"Web oficial de la hamburguesería Woodpecker's de Gavà"}},
     {"@type":"ListItem","position":2,"item":{"@type":"WebSite","name":"Restaurante Tottori","url":"https://tottorigava.es","description":"Web del restaurante japonés Tottori de Gavà"}},
     {"@type":"ListItem","position":3,"item":{"@type":"WebSite","name":"Miami Lounge","url":"https://miamilounge.es","description":"Web del Miami Lounge Bar de Miami Platja"}},
     {"@type":"ListItem","position":4,"item":{"@type":"WebApplication","name":"SolutionCar","url":"https://solutioncar.torrecillas.cat","description":"Aplicación de gestión de vehículos","applicationCategory":"BusinessApplication"}}
+  ]},
+  {"@type":"ItemList","@id":"https://torrecillas.cat/#garmin","name":"Aplicaciones Garmin","description":"Apps y esferas publicadas en la tienda Connect IQ de Garmin","itemListElement":[
+    {"@type":"ListItem","position":1,"item":{"@type":"MobileApplication","name":"Buscaminas","url":"https://apps.garmin.com/es-ES/apps/8f3b2efb-da22-4f1c-8d11-d8f1df22bbe4","description":"Buscaminas para reloj Garmin: tableros que siempre se pueden resolver razonando, tres tamaños y reto diario.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":2,"item":{"@type":"MobileApplication","name":"Sunset Drive","url":"https://apps.garmin.com/es-ES/apps/dd3f811c-7495-4fe6-8591-abe7addc33ce","description":"Arcade de conducción para reloj Garmin con el aire de los recreativos de los ochenta.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":3,"item":{"@type":"MobileApplication","name":"Block Drop","url":"https://apps.garmin.com/es-ES/apps/96c3fafb-94b2-428e-9dcf-ba085d5207c8","description":"Juego de encajar piezas para reloj Garmin: tablero 10x20, bolsa de siete y giros con empujón de pared.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":4,"item":{"@type":"MobileApplication","name":"Flappy Wings","url":"https://apps.garmin.com/es-ES/apps/e9a3cbac-132b-40ee-881d-b29c4faeee83","description":"Un pájaro, dos tubos y un hueco, en el reloj. Con reto del día igual para todo el mundo.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":5,"item":{"@type":"MobileApplication","name":"España Campeona!","url":"https://apps.garmin.com/es-ES/apps/e8d50c35-edc3-426f-9adb-20d6eefff19e","description":"Esfera de reloj con la bandera de España y las dos estrellas: colores oficiales, dos medidores y cuatro campos configurables.","applicationCategory":"UtilitiesApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":6,"item":{"@type":"MobileApplication","name":"Corta fruta a lo loco","url":"https://apps.garmin.com/es-ES/apps/db343517-8427-4eff-8845-c645698ad321","description":"Corta la fruta deslizando el dedo por la pantalla del reloj, con modo clásico y bombas.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}}
+  ]},
+  {"@type":"ItemList","@id":"https://torrecillas.cat/#juegos-aaa","name":"Juegos AAA","description":"Juegos web publicados aparte del escritorio","itemListElement":[
+    {"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Karts Racing","url":"https://karts.torrecillas.cat","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":2,"item":{"@type":"VideoGame","name":"Cursa Mossos 5k","url":"https://cursa.torrecillas.cat","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":3,"item":{"@type":"VideoGame","name":"Copa del mundo","url":"https://copadelmundo.torrecillas.cat/","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":4,"item":{"@type":"VideoGame","name":"SuperOffRoad","url":"https://superoffroad.torrecillas.cat","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":5,"item":{"@type":"VideoGame","name":"Army Moves","url":"https://army.torrecillas.cat","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":6,"item":{"@type":"VideoGame","name":"Ivan de vacaciones","url":"https://ivandevacaciones.torrecillas.cat","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}}
   ]}
 ]}
 </script>
@@ -463,7 +483,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
     <button id="taskview-btn" onclick="openTaskView()" title="Vista de tareas" aria-label="Vista de tareas"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
     <div id="taskbar-items"></div>
     <div id="system-tray">
-      <div id="tray-icons"><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-quick" onclick="toggleActionCenter(event)" role="button" tabindex="0" aria-label="Ajustes rápidos" title="Ajustes rápidos" style="cursor:pointer">&#9889;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
+      <div id="tray-icons"><span id="tray-net" role="img"><svg width="15" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect class="tn-scr" x="1" y="3.5" width="9.5" height="6.5" rx="1" fill="#c9d3e0" stroke="#5a6b80" stroke-width="1"/><rect x="2" y="4.5" width="7.5" height="4.5" fill="#2f6fd0"/><path d="M4 11.5h4.5v1.2H4z" fill="#8494a8"/><rect class="tn-scr" x="5.5" y="6" width="9.5" height="6.5" rx="1" fill="#e2e8f0" stroke="#5a6b80" stroke-width="1"/><rect x="6.5" y="7" width="7.5" height="4.5" fill="#4b8de8"/><g class="tn-x" stroke="#d40000" stroke-width="2.2" stroke-linecap="round"><path d="M10.4 9.4l4.4 4.4"/><path d="M14.8 9.4l-4.4 4.4"/></g></svg></span><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-quick" onclick="toggleActionCenter(event)" role="button" tabindex="0" aria-label="Ajustes rápidos" title="Ajustes rápidos" style="cursor:pointer">&#9889;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
       <div id="clock" style="cursor:pointer" onclick="toggleCalendar()" role="button" tabindex="0" aria-label="Fecha y hora"></div>
     </div>
     <div id="volume-popup" style="display:none;position:fixed;bottom:calc(var(--tb-h) + 4px);right:60px;width:50px;background:linear-gradient(180deg,#f0f0e0,#e0d8c8);border:2px solid #0054e3;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.4);padding:8px 6px;z-index:6000;flex-direction:column;align-items:center;gap:4px">
@@ -1760,6 +1780,13 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
 #tray-lang:hover svg{outline:1px solid rgba(255,255,255,.6)}
 .ctx-item .lang-flag{display:inline-flex}
 .ctx-item .lang-flag svg{width:20px;height:14px;display:block;border:1px solid rgba(0,0,0,.3);border-radius:2px}
+/* Icono de red: las dos pantallitas de XP, con la X roja cuando no hay conexión.
+   La X sale del DOM (no solo oculta) para que no pese en el árbol de accesibilidad. */
+#tray-net{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px}
+#tray-net svg{display:block}
+#tray-net .tn-x{display:none}
+#tray-net.offline .tn-x{display:inline}
+#tray-net.offline .tn-scr{opacity:.55}
 #tray-msn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px}
 #tray-msn svg{display:block}
 #tray-msn .tm-balloon{display:none}
@@ -4373,6 +4400,12 @@ const I18N={
   'update.available':{es:'Hay una nueva versión de Torrecillas OS.', en:'A new version of Torrecillas OS is available.', ca:'Hi ha una nova versió de Torrecillas OS.', ru:'Доступна новая версия Torrecillas OS.'},
   'update.now':{es:'Actualizar', en:'Update', ca:'Actualitza', ru:'Обновить'},
   'update.updating':{es:'Actualizando…', en:'Updating…', ca:'Actualitzant…', ru:'Обновление…'},
+  // Icono de red de la bandeja
+  'net.online':{es:'Conexión de red — conectado', en:'Network connection — online', ca:'Connexió de xarxa — connectat', ru:'Сетевое подключение — в сети'},
+  'net.offline':{es:'Conexión de red — desconectado', en:'Network connection — offline', ca:'Connexió de xarxa — desconnectat', ru:'Сетевое подключение — нет сети'},
+  'net.lost.title':{es:'Se ha desconectado un cable de red', en:'A network cable is unplugged', ca:'S\'ha desconnectat un cable de xarxa', ru:'Сетевой кабель не подключен'},
+  'net.lost.body':{es:'Sin conexión. El escritorio sigue funcionando; lo que necesita internet (el tiempo, la luz) esperará.', en:'You are offline. The desktop keeps working; anything needing the internet (weather, prices) will wait.', ca:'Sense connexió. L\'escriptori continua funcionant; el que necessita internet (el temps, la llum) esperarà.', ru:'Нет подключения. Рабочий стол продолжает работать; то, что требует интернета, подождёт.'},
+  'net.back.title':{es:'Conexión restablecida', en:'Back online', ca:'Connexió restablerta', ru:'Соединение восстановлено'},
   // Mis documentos
   'docs.empty':{es:'Aún no hay documentos.', en:'No documents yet.', ca:'Encara no hi ha documents.', ru:'Пока нет документов.'},
   'docs.empty2':{es:'Guarda algo desde el Bloc de notas o Paint.', en:'Save something from Notepad or Paint.', ca:'Desa alguna cosa des del Bloc de notes o Paint.', ru:'Сохраните что-нибудь из Блокнота или Paint.'},
@@ -7267,9 +7300,17 @@ const OS_ATAJOS_PWA=[
     const m={
       name:'Torrecillas OS',short_name:'Torrecillas OS',lang:'es',
       description:'Un escritorio estilo Windows XP en tu navegador: 16 juegos clasicos, Paint, terminal y portfolio.',
+      // id fija la identidad de la app instalada: sin él se deriva de start_url y el día
+      // que esa URL cambie el navegador creería que es otra app distinta (instalación
+      // duplicada). Tiene que ser el mismo valor que el manifest de verdad.
+      id:'/',
       start_url:location.origin+location.pathname,
       scope:location.origin+location.pathname.replace(/[^/]*$/,''),
       display:'standalone',background_color:'#08286c',theme_color:'#1941a5',
+      categories:['games','productivity','utilities'],
+      // Al tocar un atajo del icono con la app ya abierta, enfocar esa ventana en vez
+      // de abrir otra encima.
+      launch_handler:{client_mode:'focus-existing'},
       icons:[
         {src:TOS_ICON_192,sizes:'192x192',type:'image/png',purpose:'any'},
         {src:TOS_ICON_512,sizes:'512x512',type:'image/png',purpose:'any maskable'}
@@ -7321,7 +7362,11 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
   });
   window.addEventListener('load',async ()=>{
     try{
-      const reg=await navigator.serviceWorker.register('sw.js');
+      // updateViaCache:'none' = al buscar versión nueva, sw.js se pide SIEMPRE al
+      // servidor sin pasar por la caché HTTP. GitHub Pages sirve todo con max-age=600
+      // y no deja cambiarlo; sin esto, durante 10 minutos el navegador podría contestar
+      // con el sw.js viejo de su caché y el aviso de actualización llegaría tarde.
+      const reg=await navigator.serviceWorker.register('sw.js',{updateViaCache:'none'});
       // Ya había un worker en espera al arrancar (versión pendiente de la visita anterior)
       if(reg.waiting&&navigator.serviceWorker.controller)_swShowUpdate(reg.waiting);
       reg.addEventListener('updatefound',()=>{
@@ -7339,6 +7384,34 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
     }catch(e){}
   });
 }
+// ========== ESTADO DE LA RED EN LA BANDEJA ==========
+// El icono de las dos pantallitas de XP con su X roja. Ahora que el escritorio arranca
+// sin conexión (el service worker sirve de la caché), esto es la única pista de por qué
+// El Tiempo o el precio de la luz se quedan como estaban.
+// navigator.onLine solo es de fiar en un sentido: si dice false, seguro que no hay red;
+// si dice true, puede haber wifi sin salida a internet. Para avisar sirve.
+let _netOnline=null;
+function _netPinta(){
+  const on=navigator.onLine!==false;
+  const el=document.getElementById('tray-net');
+  if(el){
+    el.classList.toggle('offline',!on);
+    const txt=t(on?'net.online':'net.offline');
+    el.setAttribute('title',txt);
+    el.setAttribute('aria-label',txt);
+  }
+  if(_netOnline===null){_netOnline=on;return;} // primer pintado: sin globo ni anuncio
+  if(on===_netOnline)return;
+  _netOnline=on;
+  announce(t(on?'net.back.title':'net.lost.title'));
+  // El globo de "cable de red desconectado" era marca de la casa en XP
+  notify(on?{icon:'&#127760;',title:t('net.back.title'),timeout:4000}
+           :{icon:'&#128268;',title:t('net.lost.title'),body:t('net.lost.body'),timeout:7000});
+}
+window.addEventListener('online',_netPinta);
+window.addEventListener('offline',_netPinta);
+_netPinta();
+
 // ========== SHARE TARGET: abrir imágenes compartidas con la app ==========
 function _blobToDataURL(blob){
   return new Promise((res,rej)=>{ try{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(blob); }catch(e){rej(e);} });
@@ -20039,23 +20112,43 @@ function clearStartSearch(){
 })();
 
 // ========== PROPIEDADES DE PROYECTO (portfolio) ==========
+// Las filas del centro de la ficha cambian según de dónde salga: una web de cliente se
+// describe por dónde está y a qué se dedica; una app de la tienda de Garmin, por su
+// versión y en cuántos relojes entra. Lo que NO se guarda aquí son descargas ni
+// valoración: se quedarían congeladas en el HTML, que es justo lo que se acaba de
+// arreglar en el JSON-LD.
+function _propsFilas(app,host){
+  const enlace=`<a href="${app.link}" target="_blank" rel="noopener noreferrer">${host}</a>`;
+  if(app.tienda)return [
+    ['Tipo',`<b>${app.type}</b>`],
+    ['Tienda',`<b>${app.tienda}</b>`],
+    ['Versión',`<b>${app.ver}</b>`],
+    ['Compatible con',`<b>${app.devs} modelos de reloj</b>`],
+    ['Ficha',enlace]
+  ];
+  return [
+    ['Tipo',`<b>${app.type||'Sitio web'}</b>`],
+    ['Ubicación',enlace],
+    ['Zona',`<b>${app.loc||''}</b>`],
+    ['Estado','<b style="color:#2d7d2d">&#9679; En producción</b>']
+  ];
+}
 function openProjectProps(pid){
-  const app=proyectosApps.find(p=>p.id===pid);
+  const app=proyectosApps.find(p=>p.id===pid)||garminApps.find(p=>p.id===pid);
   if(!app)return;
   if(focusExisting('props-'+pid))return;
   const chips=(app.tech||[]).map(t=>`<span class="props-chip">${t}</span>`).join('');
   const host=app.link.replace(/^https?:\/\//,'').replace(/\/$/,'');
+  const filas=_propsFilas(app,host)
+    .map(([k,v])=>`<div class="props-row"><span>${k}:</span>${v}</div>`).join('');
   const content=`<div class="props-panel" id="props-${pid}">
     <div class="props-head"><div class="props-ic">${app.icon}</div><div class="props-name">${app.label}</div></div>
     <div class="props-sep"></div>
-    <div class="props-row"><span>Tipo:</span><b>${app.type||'Sitio web'}</b></div>
-    <div class="props-row"><span>Ubicación:</span><a href="${app.link}" target="_blank" rel="noopener noreferrer">${host}</a></div>
-    <div class="props-row"><span>Zona:</span><b>${app.loc||''}</b></div>
-    <div class="props-row"><span>Estado:</span><b style="color:#2d7d2d">&#9679; En producción</b></div>
+    ${filas}
     <div class="props-sep"></div>
     <p class="props-desc">${app.desc||''}</p>
     <div class="props-chips">${chips}</div>
-    <div class="props-foot"><button class="props-visit">&#127760; Visitar sitio</button></div>
+    <div class="props-foot"><button class="props-visit">&#127760; ${app.tienda?'Ver en la tienda':'Visitar sitio'}</button></div>
   </div>`;
   createWindow('Propiedades de '+app.label,'&#8505;&#65039;',380,430,content,{statusbar:false,onCreated:(id,win)=>{
     const b=win.querySelector('.props-visit');
@@ -20225,16 +20318,22 @@ const juegazosApps=[
 // Mis apps publicadas en la tienda Connect IQ de Garmin (relojes)
 const garminApps=[
   {id:'buscaminas',label:'Buscaminas',icon:'&#128163;',link:'https://apps.garmin.com/es-ES/apps/8f3b2efb-da22-4f1c-8d11-d8f1df22bbe4',
+   type:'Aplicación de reloj',ver:'0.8',devs:165,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Lógica'],
    desc:'Despeja el campo de minas sin adivinar: el reloj comprueba que el tablero se pueda resolver razonando. Tres tamaños y reto diario.'},
   {id:'sunsetdrive',label:'Sunset Drive',icon:'&#127749;',link:'https://apps.garmin.com/es-ES/apps/dd3f811c-7495-4fe6-8591-abe7addc33ce',
+   type:'Aplicación de reloj',ver:'0.9.5',devs:165,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
    desc:'Arcade de conducción al estilo de los ochenta: descapotable rojo, sol en el horizonte y el tiempo agotándose.'},
   {id:'blockdrop',label:'Block Drop',icon:'&#129521;',link:'https://apps.garmin.com/es-ES/apps/96c3fafb-94b2-428e-9dcf-ba085d5207c8',
+   type:'Aplicación de reloj',ver:'1.1',devs:165,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Puzle'],
    desc:'El clásico de encajar piezas, con tablero 10x20, bolsa de siete y giros con empujón de pared.'},
   {id:'flappywings',label:'Flappy Wings',icon:'&#128038;',link:'https://apps.garmin.com/es-ES/apps/e9a3cbac-132b-40ee-881d-b29c4faeee83',
+   type:'Aplicación de reloj',ver:'1.2',devs:166,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
    desc:'Un pájaro, dos tubos y un hueco. Reto del día con los mismos tubos para todo el mundo.'},
   {id:'espanacampeona',label:'España Campeona!',icon:'&#127466;&#127480;',link:'https://apps.garmin.com/es-ES/apps/e8d50c35-edc3-426f-9adb-20d6eefff19e',
+   type:'Esfera de reloj',ver:'2.1',devs:111,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Watch face'],
    desc:'Esfera con la bandera de España y las dos estrellas: colores oficiales, dos medidores y cuatro campos configurables.'},
   {id:'cortafruta',label:'Corta fruta a lo loco',icon:'&#127817;',link:'https://apps.garmin.com/es-ES/apps/db343517-8427-4eff-8845-c645698ad321',
+   type:'Aplicación de reloj',ver:'1.6',devs:80,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Táctil'],
    desc:'Desliza el dedo y parte la fruta en dos. Modo clásico con tres vidas y bombas que acaban la partida.'}
 ];
 
@@ -20323,7 +20422,7 @@ function openJuegazos(){
   openLinkFolder({id:'juegazos',title:'Juegos AAA',icon:'&#127918;',apps:juegazosApps});
 }
 function openGarmin(){
-  openLinkFolder({id:'garmin',title:'Aplicaciones Garmin',icon:'&#8986;&#65039;',apps:garminApps,
+  openLinkFolder({id:'garmin',title:'Aplicaciones Garmin',icon:'&#8986;&#65039;',apps:garminApps,props:true,
     idle:garminApps.length+' apps en Connect IQ'});
 }
 

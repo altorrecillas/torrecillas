@@ -19,6 +19,9 @@ const ASSETS = [
   './fonts/orbitron-700-900.woff2', './fonts/rajdhani-400.woff2',
   './fonts/rajdhani-600.woff2', './fonts/rajdhani-700.woff2'
 ];
+// Los que no cambian nunca dentro de una versión (ver el fetch de más abajo). El
+// manifest queda fuera a propósito: se retoca más a menudo que las fuentes.
+const INMUTABLE = /\/(fonts\/[\w.-]+\.woff2|icon-\d+\.png|apple-touch-icon\.png|og\.png)$/;
 
 // El documento se guarda bajo sus dos claves ('./' e './index.html') a partir de UNA
 // sola descarga: con c.add() de las dos entradas se bajaba 1,7 MB por duplicado en
@@ -113,6 +116,21 @@ self.addEventListener('fetch', (e) => {
       e.waitUntil(net.catch(() => {}));
       return cached;
     })());
+    return;
+  }
+
+  // Assets inmutables (fuentes e iconos): de la caché y punto, sin revalidar. Su
+  // contenido no cambia nunca dentro de una versión, así que preguntar por ellos en cada
+  // carga era gastar peticiones (y datos del móvil) para que el servidor conteste 304.
+  // Lo suyo sería un Cache-Control: immutable, pero esto se sirve desde GitHub Pages,
+  // que manda max-age=600 a todo y no deja tocar cabeceras: la política se aplica aquí.
+  // Al subir APP_VERSION cambia el nombre de la caché y se vuelven a bajar, que es
+  // exactamente lo que hace immutable.
+  if (INMUTABLE.test(url.pathname)) {
+    e.respondWith(caches.match(e.request).then((cached) => cached || fetch(e.request).then((r) => {
+      if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); }
+      return r;
+    })));
     return;
   }
 
