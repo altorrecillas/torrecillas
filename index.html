@@ -1783,12 +1783,11 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
    así que ningún juego necesita marcado propio. OJO: el velo NO puede ir sobre el
    <canvas> (los elementos reemplazados no pintan ::after), por eso existe cfg.pausaId. */
 /* 2048: paso atrás en la cabecera, del tamaño de un dedo */
-.g2048-undo{margin-left:auto;width:44px;height:44px;flex:0 0 auto;border:1px solid #b9915a;border-radius:8px;background:linear-gradient(180deg,#f0c76a,#c99a2e);color:#4a3608;font-size:20px;line-height:1;cursor:pointer}
-.g2048-undo:hover{background:linear-gradient(180deg,#f7d685,#d9a938)}
+.g2048-undo{width:40px;height:40px;flex:0 0 auto;align-self:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#ffcc44;font-size:19px;line-height:1;cursor:pointer;font-family:inherit}
+.g2048-undo:hover{background:rgba(255,255,255,0.12)}
 .g2048-undo:disabled{opacity:.35;cursor:default}
-.btn-pause{background:linear-gradient(180deg,#e8a33a 0%,#bf7a10 100%);font-size:9px;letter-spacing:-1px}
-.btn-pause:hover{background:linear-gradient(180deg,#f5bb55 0%,#d08c18 100%)}
-.btn-pause.on{background:linear-gradient(180deg,#40c040 0%,#208020 100%);font-size:11px;letter-spacing:0}
+.btn-pause{background:linear-gradient(180deg,#3c8cf0 0%,#2070d8 100%)}
+.btn-pause:hover{background:linear-gradient(180deg,#4c9cff 0%,#3080e8 100%)}
 .game-paused{position:relative}
 .game-paused::after{content:attr(data-pausa);position:absolute;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(4,10,24,.72);color:#fff;font-family:Rajdhani,sans-serif;font-size:clamp(20px,6vw,30px);font-weight:700;letter-spacing:5px;text-transform:uppercase;z-index:60;pointer-events:none}
 /* Solitario: la fila de botones (el resto del juego va con estilos en línea) */
@@ -3377,11 +3376,6 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
   .window-titlebar{height:26px}
   .window-title{font-size:11px}
   .window-controls button{width:20px;height:20px;font-size:11px}
-  /* En un juego los botones de la barra SON el mando (pausa y reinicio): con el pulgar
-     20 px no se aciertan, así que en móvil los de las ventanas de juego crecen. */
-  .window.game-window .window-controls{gap:4px}
-  .window.game-window .window-controls button{width:28px;height:28px;font-size:13px}
-  .window.game-window .btn-pause{font-size:11px}
   /* Carpetas (Juegos, Juegos AAA, Proyectos): cuadricula real con columnas fijas
      — las filas incompletas quedan alineadas en orden, no centradas */
   .computer-content{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));justify-items:center;padding:10px;gap:8px;align-content:flex-start}
