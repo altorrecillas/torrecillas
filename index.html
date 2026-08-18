@@ -19846,7 +19846,7 @@ function initMahjong(){
 
     // ---- puntero: tocar, arrastrar y pellizcar para el zoom ----
     const punteros=new Map();
-    let arrastrando=false,pinza=0,pinzaZoom=1,bajoX=0,bajoY=0,bajoT=0,ultTap=0;
+    let arrastrando=false,pinza=0,pinzaZoom=1,bajoX=0,bajoY=0,bajoT=0;
     const local=(e)=>{ const r=cv.getBoundingClientRect();
       return {x:((e.clientX||0)-r.left)*(r.width?W/r.width:1),y:((e.clientY||0)-r.top)*(r.height?H/r.height:1)}; };
     const aTablero=(p)=>({x:(p.x-panX)/zoom,y:(p.y-panY)/zoom});
@@ -19893,14 +19893,10 @@ function initMahjong(){
       const p=punteros.get(id);punteros.delete(id);
       if(punteros.size<2)pinza=0;
       if(!p)return;
+      // NADA de zoom por doble toque: este juego consiste en tocar DOS fichas seguidas,
+      // así que el doble toque es la jugada normal y ampliaba en vez de emparejar.
+      // Para el zoom están el pellizco y los botones + / − de la barra.
       if(!arrastrando&&Date.now()-bajoT<600){
-        const ahora=Date.now();
-        if(ahora-ultTap<300){ // doble toque: acercar / restablecer
-          if(zoom>1){ zoom=1;panX=0;panY=0; }
-          else { zoom=2;panX=p.x-(p.x)*2;panY=p.y-(p.y)*2; }
-          limitaPan();sucio=true;ultTap=0;return;
-        }
-        ultTap=ahora;
         const b=aTablero(p);
         toca(fichaEn(b.x,b.y));
       }
