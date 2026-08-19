@@ -10,7 +10,7 @@
 // nueva es este worker quien lo anuncia (la página enseña el banner "Actualizar"), así
 // que la app no tiene por qué esperar a la red para pintar. Debe coincidir con
 // APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.65.0';
+const APP_VERSION = '0.65.1';
 const CACHE = 'tos-' + APP_VERSION;
 const DOC = './index.html';          // el documento, con su alias './'
 const ASSETS = [
