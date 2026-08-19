@@ -1017,6 +1017,15 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
       <rect x="12.8" y="12.8" width="8.6" height="4" rx="1.9" fill="#ffd24a"/>
     </g>
   </symbol>
+
+  <symbol id="i-intercambio" viewBox="0 0 24 24">
+    <path d="M7.4 3.6v13.2" fill="none" stroke="url(#gv)" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M7.4 3.6v13.2" fill="none" stroke="#3d6f00" stroke-width=".7" stroke-linecap="round" opacity=".45"/>
+    <path d="m3.4 7.4 4-4 4 4" fill="none" stroke="#63a80c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16.6 20.4V7.2" fill="none" stroke="url(#ga)" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M16.6 20.4V7.2" fill="none" stroke="#0a3a86" stroke-width=".7" stroke-linecap="round" opacity=".45"/>
+    <path d="m12.6 16.6 4 4 4-4" fill="none" stroke="#1e70cc" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>
 
 <!-- INICIO DE SESION (solo si existe una cuenta local cifrada) -->
@@ -2454,6 +2463,8 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 /* ═══════════════════  § AGENDA  ═══════════════════ */
 .agenda-root{display:flex;flex-direction:column;height:100%;background:#f4f7fc;font-family:Tahoma,sans-serif}
 .agenda-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:7px 10px;background:linear-gradient(180deg,#f6f9ff,#e4ecf8);border-bottom:1px solid #cdd7e6}
+.ag-icon{width:30px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:17px;background:linear-gradient(180deg,#fff,#e6eef8);border:1px solid #9db4d0;border-radius:4px;cursor:pointer;padding:0}
+.ag-icon:hover{background:linear-gradient(180deg,#fff,#d8e6f8);border-color:#5a8fd6}
 .ag-month{flex:1;text-align:center;font-weight:bold;color:#1a4fa0;font-size:14px}
 .ag-nav{background:linear-gradient(180deg,#fff,#e6eef8);border:1px solid #9db4d0;border-radius:4px;padding:3px 9px;font-size:12px;cursor:pointer;color:#123}
 .ag-nav:hover{background:#eef4ff}
@@ -5240,7 +5251,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.65.1';
+const APP_VERSION = '0.65.2';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -6524,6 +6535,8 @@ const I18N={
   'agenda.res.new':{es:'eventos nuevos en tu agenda', en:'new events in your calendar', ca:'esdeveniments nous a la teva agenda', ru:'новых событий в календаре'},
   'agenda.res.dup':{es:'ya los tenías: no se han duplicado', en:'already there: not duplicated', ca:'ja els tenies: no s\'han duplicat', ru:'уже были: не продублированы'},
   'agenda.res.norep':{es:'traían una repetición que aquí no cabe (cada dos semanas, «el primer lunes»…): están, pero sueltos', en:'had a recurrence this app cannot represent: they are here, as single events', ca:'portaven una repetició que aquí no hi cap: hi són, però soltes', ru:'с повторением, которое здесь не выразить: добавлены как одиночные'},
+  'agenda.movetitle':{es:'Llevarte el calendario o traer otro', en:'Take your calendar or bring one in', ca:'Emporta\'t el calendari o porta\'n un altre', ru:'Перенести календарь или загрузить'},
+  'agenda.i.ics':{es:'Traer un .ics (Google, Apple, Outlook)', en:'Bring in an .ics (Google, Apple, Outlook)', ca:'Porta un .ics (Google, Apple, Outlook)', ru:'Загрузить .ics (Google, Apple, Outlook)'},
   'agenda.import':{es:'Importar', en:'Import', ca:'Importa', ru:'Импорт'},
   'agenda.i.ics.d':{es:'Archivo .ics de Google Calendar, Apple u Outlook', en:'.ics file from Google Calendar, Apple or Outlook', ca:'Fitxer .ics de Google Calendar, Apple o Outlook', ru:'Файл .ics из Google Календаря, Apple или Outlook'},
   'agenda.icsbad':{es:'Ese archivo no tiene eventos que se puedan leer. ¿Seguro que es un .ics?', en:'That file has no readable events. Is it really an .ics?', ca:'Aquest fitxer no té esdeveniments llegibles. Segur que és un .ics?', ru:'В этом файле нет читаемых событий. Это точно .ics?'},
@@ -13352,6 +13365,22 @@ function agLeeICS(txt){
 }
 // Importar un .ics: mismo dedo de dedupe que el paquete, y se DICE lo que no se ha podido
 // conservar en vez de dejarlo pasar como si nada.
+// Llevarte el calendario o traer otro, en un solo menú: dos palabras largas apretadas en la
+// barra de la agenda quedaban fatal y encima se partían en dos líneas en el móvil.
+function agMenuCalendario(){
+  const evs=eventsLoad();
+  const ov=xpDialog(t('agenda.movetitle'),'<div class="dlg-icon">'+ico('calendario')+'</div><div class="sh-box">'
+    +'<div class="sh-t">'+escHtml(evs.length?t('agenda.exporthow',{n:evs.length}):t('agenda.nothingtoexport'))+'</div>'
+    +osOpcion('ag-x-tos','globo',t('agenda.x.tos'),t('agenda.x.tos.d'),'',!evs.length)
+    +osOpcion('ag-x-ics','calendario',t('agenda.x.ics'),t('agenda.x.ics.d'),'verde',!evs.length)
+    +osOpcion('ag-i-ics','descarga',t('agenda.i.ics'),t('agenda.i.ics.d'),'naranja')
+    +'</div>');
+  ov.querySelector('#ag-i-ics').onclick=()=>{ ov.remove(); agPideICS(); };
+  if(!evs.length)return ov;
+  ov.querySelector('#ag-x-tos').onclick=()=>{ ov.remove(); osDialogoCompartir('agenda',evs,'agenda',evs.map(e=>e.date+(e.time?' '+e.time:'')+' · '+e.text).join('\n')); };
+  ov.querySelector('#ag-x-ics').onclick=()=>{ ov.remove(); osDescargaTexto('agenda-torrecillas.ics',agICS(evs),'text/calendar;charset=utf-8'); announce(t('sh.downloaded')); };
+  return ov;
+}
 // El mismo menú de exportar, disponible desde la Agenda y desde Ajustes
 function agExportaDesdeAjustes(){
   const evs=eventsLoad();
@@ -13417,8 +13446,7 @@ function openAgenda(targetKey){
   const content=`<div class="agenda-root">
     <div class="agenda-bar"><button type="button" class="ag-nav" id="ag-prev">&#9664;</button><span class="ag-month" id="ag-month"></span><button type="button" class="ag-nav" id="ag-next">&#9654;</button>
       <button type="button" class="ag-hoy" id="ag-today" data-i18n="agenda.today">Hoy</button>
-      <button type="button" class="ag-hoy" id="ag-ics" data-i18n="agenda.export">Exportar</button>
-      <button type="button" class="ag-hoy" id="ag-imp" data-i18n="agenda.import" data-i18n-title="agenda.i.ics.d" title="Archivo .ics de Google Calendar, Apple u Outlook">Importar</button></div>
+      <button type="button" class="ag-icon" id="ag-ics" data-i18n-title="agenda.movetitle" data-i18n-aria="agenda.movetitle" title="Llevarte el calendario o traer otro" aria-label="Llevarte el calendario o traer otro"></button></div>
     <div class="agenda-grid" id="agenda-grid"></div>
     <div class="agenda-day" id="agenda-day"></div>
   </div>`;
@@ -13497,8 +13525,8 @@ function openAgenda(targetKey){
     win.querySelector('#ag-prev').onclick=()=>{ vm--; if(vm<0){vm=11;vy--;} renderGrid(); };
     win.querySelector('#ag-next').onclick=()=>{ vm++; if(vm>11){vm=0;vy++;} renderGrid(); };
     win.querySelector('#ag-today').onclick=()=>{ vy=now.getFullYear(); vm=now.getMonth(); selKey=_dayKey(vy,vm,now.getDate()); renderGrid(); renderDay(); };
-    win.querySelector('#ag-ics').onclick=()=>agExportaDesdeAjustes();
-    win.querySelector('#ag-imp').onclick=()=>agPideICS();
+    win.querySelector('#ag-ics').innerHTML=ico('intercambio');
+    win.querySelector('#ag-ics').onclick=()=>agMenuCalendario();
     const goto=(key)=>{ if(!/^\d{4}-\d{2}-\d{2}$/.test(key))return; const p=key.split('-'); vy=+p[0]; vm=+p[1]-1; selKey=key; renderGrid(); renderDay(); };
     _agendaGoto=goto;
     (win._cleanups=win._cleanups||[]).push(()=>{ if(_agendaGoto===goto)_agendaGoto=null; });
