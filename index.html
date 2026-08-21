@@ -1655,7 +1655,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .ach-date{font-size:9px;color:#999;flex-shrink:0}
 .ach-foot{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:10px;color:#555}
 .ach-foot span{flex:1}
-#ach-toast{position:fixed;right:14px;bottom:calc(var(--tb-h) + 10px);z-index:9500;display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(180deg,#fffbe8,#f3e6bd);border:1px solid #b8a04a;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.35);font-family:Tahoma,sans-serif;animation:achIn .35s ease-out}
+#ach-toast{position:fixed;right:14px;bottom:calc(var(--tb-h) + 10px);z-index:9500;max-height:calc(100svh - var(--tb-h) - 18px);overflow-y:auto;display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(180deg,#fffbe8,#f3e6bd);border:1px solid #b8a04a;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.35);font-family:Tahoma,sans-serif;animation:achIn .35s ease-out}
 .ach-t-ic{font-size:26px}
 .ach-t-h{font-size:10px;color:#7a6320;font-weight:bold}
 .ach-t-l{font-size:13px;font-weight:bold;color:#3d3000}
@@ -2171,7 +2171,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 @keyframes notifIn{0%{opacity:0;transform:translateX(20px)}100%{opacity:1;transform:none}}
 @keyframes notifOut{0%{opacity:1}100%{opacity:0;transform:translateX(20px)}}
 /* Panel/historial */
-#notif-center{position:fixed;z-index:9401;width:290px;max-width:calc(100vw - 12px);max-height:60vh;background:#ece9d8;border:1px solid #0054e3;border-radius:8px 8px 4px 4px;box-shadow:0 10px 40px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;font-family:Tahoma,sans-serif;animation:notifIn .2s ease-out}
+#notif-center{position:fixed;z-index:9401;width:290px;max-width:calc(100vw - 12px);max-height:60svh;background:#ece9d8;border:1px solid #0054e3;border-radius:8px 8px 4px 4px;box-shadow:0 10px 40px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;font-family:Tahoma,sans-serif;animation:notifIn .2s ease-out}
 .nc-head{background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-size:12px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
 .nc-clear{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:10px;border-radius:3px;padding:1px 7px;cursor:pointer}
 .nc-list{flex:1;overflow:auto;background:#fff}
@@ -2181,7 +2181,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .nc-b{font-size:10px;color:#555;line-height:1.35}
 .nc-time{font-size:9px;color:#999;margin-top:1px}
 .nc-empty{padding:24px 10px;text-align:center;color:#6b6b6b;font-size:12px}
-@media(max-width:600px){#notif-center{width:auto!important;left:6px!important;right:6px!important;max-height:55vh}}
+@media(max-width:600px){#notif-center{width:auto!important;left:6px!important;right:6px!important;max-height:55svh}}
 /* ═══════════════════  § LECTOR DE EBOOKS  ═══════════════════ */
 .reader-root{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;position:relative}
 .reader-toolbar{flex-shrink:0;display:flex;gap:4px;align-items:center;padding:5px 7px;background:linear-gradient(180deg,#f4f2ec,#e2ded2);border-bottom:1px solid #aca899;flex-wrap:wrap}
@@ -2429,7 +2429,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .cmdk-foot{padding:6px 12px;border-top:1px solid #e0e6ef;font-size:10px;color:#889;background:#f2f5fa}
 #tray-clip{position:relative}
 #tray-clip.has::after{content:'';position:absolute;top:-1px;right:-2px;width:6px;height:6px;border-radius:50%;background:#e63946;box-shadow:0 0 3px rgba(230,57,70,.8)}
-.clip-center{position:fixed;bottom:calc(var(--tb-h) + 6px);right:6px;width:260px;max-height:55vh;overflow-y:auto;background:#fbfcfe;border:1px solid #9db4d0;border-radius:8px;box-shadow:0 10px 34px rgba(0,0,0,.45);z-index:9200;font-family:Tahoma,sans-serif}
+.clip-center{position:fixed;bottom:calc(var(--tb-h) + 6px);right:6px;width:260px;max-height:55svh;overflow-y:auto;background:#fbfcfe;border:1px solid #9db4d0;border-radius:8px;box-shadow:0 10px 34px rgba(0,0,0,.45);z-index:9200;font-family:Tahoma,sans-serif}
 .clip-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;font-weight:bold;font-size:12px;color:#1a4fa0;border-bottom:1px solid #e0e6ef;background:#eef4fc}
 .clip-clear{background:none;border:1px solid #c9b; color:#a24;border-radius:3px;font-size:10px;padding:1px 6px;cursor:pointer}
 .clip-list{padding:4px}
@@ -2447,7 +2447,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .cpl-card:hover{background:#eaf2ff;border-color:#5a86c0;box-shadow:0 2px 8px rgba(50,100,180,.18)}
 .cpl-ic{font-size:30px;line-height:1}
 .cpl-l{line-height:1.2}
-.mag-ctrl{position:fixed;bottom:calc(var(--tb-h) + 8px);left:50%;transform:translateX(-50%);z-index:99999;display:none;align-items:center;gap:6px;background:rgba(20,30,50,.92);color:#fff;border:1px solid #4a6b9c;border-radius:22px;padding:5px 8px;box-shadow:0 6px 20px rgba(0,0,0,.5);font-family:Tahoma,sans-serif;font-size:12px}
+.mag-ctrl{position:fixed;bottom:calc(var(--tb-h) + 8px);left:50%;transform:translateX(-50%);z-index:99999;max-height:calc(100svh - var(--tb-h) - 16px);display:none;align-items:center;gap:6px;background:rgba(20,30,50,.92);color:#fff;border:1px solid #4a6b9c;border-radius:22px;padding:5px 8px;box-shadow:0 6px 20px rgba(0,0,0,.5);font-family:Tahoma,sans-serif;font-size:12px}
 .mag-t{padding:0 4px}
 .mag-b{width:26px;height:26px;border-radius:50%;border:1px solid #5a7bb0;background:#2c3e5e;color:#fff;font-size:14px;cursor:pointer;line-height:1}
 .mag-b:hover{background:#3a5b8e}
@@ -2559,7 +2559,11 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .tv-mv{background:#eef4ff;border:1px solid #b9cde8;border-radius:3px;font-size:10px;padding:1px 6px;cursor:pointer;color:#1a4fa0}
 .tv-empty{grid-column:1/-1;text-align:center;color:#cdd7e6;padding:40px;font-size:14px}
 .tv-hint{text-align:center;color:#b9c6dc;font-size:11px}
-.ac-center{position:fixed;bottom:calc(var(--tb-h) + 6px);right:6px;width:280px;background:linear-gradient(180deg,#fbfdff,#eef2f8);border:1px solid #9db4d0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.45);z-index:9300;font-family:Tahoma,sans-serif;overflow:hidden}
+/* TODO LO QUE CUELGA DE LA BARRA DE TAREAS crece hacia ARRIBA, y sin tope se sale por el
+   borde de la pantalla: no hay donde desplazarse y lo que se pierde es la cabecera. Le paso
+   a este, al calendario y al menu Inicio. El tope es siempre el mismo hueco —
+   100svh menos la barra— y en svh, nunca en vh: en un movil vh es el viewport grande. */
+.ac-center{position:fixed;bottom:calc(var(--tb-h) + 6px);right:6px;width:280px;max-height:calc(100svh - var(--tb-h) - 14px);overflow-y:auto;background:linear-gradient(180deg,#fbfdff,#eef2f8);border:1px solid #9db4d0;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.45);z-index:9300;font-family:Tahoma,sans-serif;overflow:hidden}
 .ac-head{padding:8px 12px;font-weight:bold;font-size:12px;color:#1a4fa0;border-bottom:1px solid #dde6f2;background:#eaf1fb}
 .ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
 .ac-tile{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;border:1px solid #cdd7e6;border-radius:8px;background:#fff;cursor:pointer;font-size:11px;color:#234}
@@ -2912,7 +2916,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 @media (max-width:600px){.enc-side{width:130px}}
 
 /* Globo de bienvenida (primera visita) */
-#welcome-tip{position:fixed;left:10px;bottom:calc(var(--tb-h) + 10px);z-index:9600;width:min(280px,80vw);background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
+#welcome-tip{position:fixed;left:10px;bottom:calc(var(--tb-h) + 10px);z-index:9600;width:min(280px,80vw);max-height:calc(100svh - var(--tb-h) - 18px);overflow-y:auto;background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
 #welcome-tip::after{content:'';position:absolute;bottom:-9px;left:26px;border:9px solid transparent;border-top-color:#ffffe1;border-bottom:none}
 #welcome-tip b{display:block;margin-bottom:3px}
 #welcome-tip .tip-close{position:absolute;top:4px;right:7px;cursor:pointer;font-weight:bold;color:#666}
@@ -4249,15 +4253,26 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 
 /* Ajustes responsive para móvil: menús y popups que quepan en pantalla */
 @media (max-width:600px){
-  .start-left{flex:1;overflow-y:auto}
-  .start-right{width:40%}
-  .start-body{max-height:calc(100svh - 130px)}
+  /* EL MENU CABE ENTRE EL BORDE Y LA BARRA, Y LO MIDE EL NAVEGADOR. El alto salia de restar
+     130 px a mano, y la cuenta real es cabecera(60) + pie(33) + la barra de tareas, que con
+     el dedo son 44 MAS la zona segura del sistema (los gestos de Android, el indicador del
+     iPhone): entre 137 y 165. Se pasaba siempre, y lo que se salia por arriba era la
+     cabecera — el recuadro del avatar cortado por la mitad. Ahora el tope va sobre el menu
+     entero y en la unica medida que no hay que adivinar (--tb-h ya incluye la zona segura);
+     cabecera y pie ocupan lo suyo y el cuerpo se queda con lo que sobre.
+     La ventana de la lista tuvo esta misma cuenta a mano y el mismo final. */
+  #start-menu{max-height:calc(100svh - var(--tb-h) - 8px)}
+  #start-menu.show{display:flex;flex-direction:column}
+  .start-header,.start-footer{flex:0 0 auto}
+  .start-body{flex:1;min-height:0;max-height:none}
+  .start-left{flex:1;min-height:0;overflow-y:auto}
+  .start-right{width:40%;overflow-y:auto}
   #calendar-popup{left:2vw;right:2vw;width:auto;bottom:calc(var(--tb-h) + 6px)}
   #context-menu{min-width:62vw}
 }
 
 /* Reloj con calendario emergente (estilo XP) */
-#calendar-popup{display:none;position:fixed;bottom:calc(var(--tb-h) + 4px);right:6px;width:248px;background:linear-gradient(180deg,#fbfbfb,#eef1f6);border:2px solid #0054e3;border-radius:8px;box-shadow:3px 3px 14px rgba(0,0,0,.45);z-index:6000;font-family:Tahoma,sans-serif;overflow:hidden}
+#calendar-popup{display:none;position:fixed;bottom:calc(var(--tb-h) + 4px);right:6px;width:248px;max-height:calc(100svh - var(--tb-h) - 12px);overflow-y:auto;background:linear-gradient(180deg,#fbfbfb,#eef1f6);border:2px solid #0054e3;border-radius:8px;box-shadow:3px 3px 14px rgba(0,0,0,.45);z-index:6000;font-family:Tahoma,sans-serif;overflow:hidden}
 #calendar-popup.show{display:block}
 .cal-head{background:linear-gradient(180deg,#2e6fd6,#1a45b0);color:#fff;padding:9px 12px;text-align:center}
 .cal-time{font-size:24px;font-weight:bold;letter-spacing:1px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
