@@ -69,53 +69,8 @@
      el navegador descubra la @font-face. Las otras tres las descubre el CSS de más abajo. -->
 <link rel="preload" href="fonts/rajdhani-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/*
-  ╔══════════════════════════════════════════════════════════╗
-  ║  TORRECILLAS OS · INDICE DE SECCIONES CSS                 ║
-  ║  Busca "§ NOMBRE" para saltar a cada bloque.             ║
-  ╚══════════════════════════════════════════════════════════╝
-    § ARRANQUE        ┐ estas dos (mas los globales de arriba) son lo unico
-    § BIENVENIDA      ┘ que va en el <head>: lo justo para pintar el arranque
-    ─── de aqui en adelante, el <style> del final del <body> ───
-    § ESCRITORIO
-    § HOJA DE CALCULO
-    § CARPETAS COMPRIMIDAS
-    § GRAFICADORA
-    § PRECIO DE LA LUZ
-    § GASTOS
-    § LISTA DE LA COMPRA
-    § EL TIEMPO
-    § TAREAS
-    § ESCANER
-    § RECETAS
-    § HABITOS
-    § LECTOR DE CODIGOS
-    § BARRA DE TAREAS
-    § ADMIN. DE TAREAS
-    § CALCULADORA
-    § LOGROS
-    § JUEGO: SIMON
-    § JUEGO: SUDOKU
-    § JUEGO: MAHJONG
-    § MENU INICIO
-    § VENTANAS
-    § ACERCA DE
-    § AJUSTES
-    § PAPELERA
-    § ALT+TAB
-    § SALON DE LA FAMA
-    § MSN MESSENGER
-    § NETSCAPE
-    § REGEDIT
-    § WINAMP
-    § WORDART
-    § REPRODUCTOR DE VIDEO
-    § OUTLOOK EXPRESS
-    § ENCARTA 99
-    § TEMAS
-    § JUEGOS CANVAS (Snake, Tetris, Flappy...)
-  (Los bloques de cada juego canvas van juntos bajo § JUEGOS CANVAS.)
-*/
+/* El indice de secciones CSS esta al principio del <style> del final del <body>, con el
+   grueso de la hoja. Aqui solo va lo que pinta el arranque, y el head tiene presupuesto. */
 /* FUENTES: subset latino en archivos .woff2 aparte (nada de data URI: el woff2 ya viene
    comprimido, no cachea por separado y viajaba en CADA descarga del documento). Van AQUI, en el
    head, y no al final del body: son 500 bytes, pero declararlas al final significaba que el
@@ -135,7 +90,11 @@
 :root{--sab:0px;--tb-h:calc(36px + var(--sab))}
 @supports(padding:env(safe-area-inset-bottom)){:root{--sab:env(safe-area-inset-bottom,0px)}}
 *{margin:0;padding:0;box-sizing:border-box}
-body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif;height:100vh;width:100vw;-webkit-user-select:none;user-select:none}
+/* EL ESCRITORIO MIDE LO QUE SE VE. En un movil 100vh es el viewport GRANDE (barra de
+   direcciones retraida) y aqui nada la retrae: body lleva overflow:hidden. El escritorio
+   salia mas alto que la pantalla, la barra de tareas caia bajo el borde y el resto de la
+   casa, que mide en svh, iba descompasado. 100vh queda debajo como red. */
+body{overflow:hidden;font-family:'Trebuchet MS',Tahoma,Geneva,Verdana,sans-serif;height:100vh;height:100dvh;width:100%;-webkit-user-select:none;user-select:none}
 /* Permitir seleccionar texto en ventanas con contenido informativo */
 .about-content,.about-content *,.settings-panel,.settings-panel *{-webkit-user-select:text;user-select:text}
 /* Botones nativos con pinta de lo que había antes: se declara ANTES que las clases
@@ -1542,6 +1501,53 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
      pintado; el escritorio está en display:none hasta enterDesktop, así que no
      hay parpadeo. Sigue al bloque del <head> en la cascada, como antes. -->
 <style>
+/*
+  ╔══════════════════════════════════════════════════════════╗
+  ║  TORRECILLAS OS · INDICE DE SECCIONES CSS                 ║
+  ║  Busca "§ NOMBRE" para saltar a cada bloque.             ║
+  ╚══════════════════════════════════════════════════════════╝
+    § ARRANQUE        ┐ estas dos (mas los globales de arriba) son lo unico
+    § BIENVENIDA      ┘ que va en el <head>: lo justo para pintar el arranque
+    ─── de aqui en adelante, el <style> del final del <body> ───
+    § ESCRITORIO
+    § HOJA DE CALCULO
+    § CARPETAS COMPRIMIDAS
+    § GRAFICADORA
+    § PRECIO DE LA LUZ
+    § GASTOS
+    § LISTA DE LA COMPRA
+    § EL TIEMPO
+    § TAREAS
+    § ESCANER
+    § RECETAS
+    § HABITOS
+    § LECTOR DE CODIGOS
+    § BARRA DE TAREAS
+    § ADMIN. DE TAREAS
+    § CALCULADORA
+    § LOGROS
+    § JUEGO: SIMON
+    § JUEGO: SUDOKU
+    § JUEGO: MAHJONG
+    § MENU INICIO
+    § VENTANAS
+    § ACERCA DE
+    § AJUSTES
+    § PAPELERA
+    § ALT+TAB
+    § SALON DE LA FAMA
+    § MSN MESSENGER
+    § NETSCAPE
+    § REGEDIT
+    § WINAMP
+    § WORDART
+    § REPRODUCTOR DE VIDEO
+    § OUTLOOK EXPRESS
+    § ENCARTA 99
+    § TEMAS
+    § JUEGOS CANVAS (Snake, Tetris, Flappy...)
+  (Los bloques de cada juego canvas van juntos bajo § JUEGOS CANVAS.)
+*/
 /* ═══════════════════  § ESCRITORIO  ═══════════════════ */
 /* RECETA ÚNICA DEL CHROME. Ventana, menú Inicio, diálogo y menú contextual llevaban cada
    uno su borde, su sombra y su degradado de barra: dos azules distintos, dos escuelas de
@@ -1704,7 +1710,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .docs-trash-hd{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 8px;font-weight:bold;color:#1a4fa0;font-size:13px}
 .docs-empty-btn{background:#ffe8e8;border:1px solid #d0a0a0;color:#a23;border-radius:4px;font-size:11px;padding:2px 8px;cursor:pointer;font-weight:normal}
 .docs-trash-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-bottom:1px solid #f0f0f0;font-size:12px}
-.docs-tr-name{flex:1;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.docs-tr-name{flex:1;min-width:0;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .docs-tr-restore{background:#eef4ff;border:1px solid #b9cde8;color:#1a4fa0;border-radius:3px;font-size:11px;padding:2px 8px;cursor:pointer}
 .docs-tr-del{background:none;border:none;color:#b55;cursor:pointer;font-size:12px;padding:0 4px}
 .docs-empty{grid-column:1/-1;text-align:center;color:#888;padding:30px 10px;font-size:13px}
@@ -1941,6 +1947,26 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .btn-close:hover{background:linear-gradient(180deg,#f09060 0%,#d06040 100%)}
 .window-body{flex:1;overflow:auto;position:relative;background:#fff}
 .window-statusbar{background:#ece9d8;border-top:1px solid #aca899;padding:2px 8px;font-size:11px;color:#444}
+
+/* ═══  NO ENCOGER, DESPLAZAR  ═══
+   Casi todos los paneles de este escritorio son la misma figura: una raiz en columna que
+   ocupa la ventana y, dentro, una caja con barra de desplazamiento que ademas es contenedor
+   flex en columna. Eso ultimo es la trampa. Un contenedor flex encoge a sus hijos antes de
+   desbordar, y un hijo con overflow:hidden (una tarjeta con esquinas redondeadas, un grupo
+   de pasillo, una tarea con detalle plegado) tiene tamano minimo automatico CERO: se deja
+   aplastar hasta nada. Resultado: en vez de aparecer la barra, las fichas se comprimen y
+   recortan su contenido, y no hay forma de bajar a lo que falta. Se veia en la lista de la
+   compra en un movil (seis productos visibles de treinta) y estaba latente en tareas,
+   gastos, habitos y los dialogos de elegir.
+   La caja se desplaza; dentro de ella nada se encoge.
+   La misma trampa al reves: un flex:1 con text-overflow:ellipsis NO encoge sin min-width:0
+   (su minimo automatico es el texto entero, que con white-space:nowrap no tiene por donde
+   partirse), asi que en vez de salir los puntos suspensivos empuja a sus hermanos fuera de
+   la caja — el nombre largo se comia el boton de al lado. Va regla a regla, junto al flex:1
+   de cada una. */
+.cp-body>*,.tk-body>*,.gs-body>*,.hb-body>*,.tp-body>*,.fi-body>*,.luz-body>*,.luz-hist>*,
+.off-root>*,.rd-root>*,.clk-pane>*,.gr-side>*,.drum-grid>*,
+.cp-pick>*,.tp-pick>*,.rc-pick>*,.zip-pick>*,.ss-openlist>*,.gs-catlist>*{flex-shrink:0}
 
 /* GAME CANVAS STYLES */
 .game-btn{padding:6px 20px;background:linear-gradient(180deg,#3c8cf0,#2070d8);color:#fff;border:1px solid #1050a0;border-radius:3px;font-size:12px;cursor:pointer;margin:4px;font-weight:bold}
@@ -2222,7 +2248,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .rd-none{padding:12px 10px;color:#888;font-size:11px;text-align:center}
 .rd-mark{display:flex;align-items:center;gap:6px;padding:6px 9px;border-bottom:1px solid #eee;cursor:pointer}
 .rd-mark:hover{background:#eef4ff}
-.rd-mark-t{flex:1;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rd-mark-t{flex:1;min-width:0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rd-mark-x{background:none;border:none;color:#a55;cursor:pointer;font-size:12px;padding:0 4px}
 .rd-sresult{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid #eee;padding:6px 9px;cursor:pointer;font-size:11px}
 .rd-sresult:hover{background:#eef4ff}
@@ -2396,7 +2422,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .cmdk-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:13px;color:#223}
 .cmdk-item.sel{background:linear-gradient(180deg,#4a90e8,#2c72d0);color:#fff}
 .cmdk-ic{width:22px;text-align:center;font-size:16px;flex-shrink:0}
-.cmdk-l{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-l{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cmdk-h{font-size:10px;opacity:.6}
 .cmdk-item.sel .cmdk-h{opacity:.85}
 .cmdk-none{padding:20px;text-align:center;color:#888;font-size:13px}
@@ -2525,7 +2551,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .tv-card{background:#f4f7fc;border:1px solid #cdd7e6;border-radius:8px;overflow:hidden;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);transition:transform .12s}
 .tv-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.45)}
 .tv-card-h{display:flex;align-items:center;gap:6px;padding:5px 7px;background:linear-gradient(180deg,#4a90e8,#1c6ad0);color:#fff;font-size:12px}
-.tv-ic{font-size:14px}.tv-t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:Tahoma,sans-serif}
+.tv-ic{font-size:14px}.tv-t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:Tahoma,sans-serif}
 .tv-close{background:rgba(255,255,255,.2);border:none;color:#fff;cursor:pointer;border-radius:3px;font-size:11px;padding:0 5px}
 .tv-close:hover{background:#e05050}
 .tv-thumb{height:74px;display:flex;align-items:center;justify-content:center;font-size:40px;background:repeating-linear-gradient(135deg,#eef2f8 0 10px,#e6ebf3 10px 20px)}
@@ -4711,7 +4737,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .clk-al{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid #2a3a6a;border-radius:6px;padding:5px 8px}
 .clk-al.off{opacity:.45}
 .clk-al-h{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
-.clk-al-n{flex:1;font-size:11px;opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.clk-al-n{flex:1;min-width:0;font-size:11px;opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .clk-al-on,.clk-al-x{background:none;border:none;color:#cfe4ff;font-size:15px;cursor:pointer;padding:0 3px}
 .clk-al-x{font-size:12px;opacity:.6}
 .clk-al-x:hover{opacity:1;color:#ff8080}
@@ -4860,7 +4886,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .gs-fijos{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
 .gs-fijos-t{font-size:11px;color:#5a6472}
 .gs-fijo{display:flex;align-items:center;gap:6px;font-size:11px;background:#f5f7fa;border:1px solid #e0e4ea;border-radius:4px;padding:3px 6px}
-.gs-fijo span:first-child{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gs-fijo span:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .gs-fd{color:#8a919c}
 .gs-fijoadd{display:flex;gap:3px;flex-wrap:wrap}
 .gs-fijoadd input,.gs-fijoadd select{padding:3px;border:1px solid #aca899;border-radius:3px;font-family:Tahoma,sans-serif;font-size:11px;min-width:0}
@@ -4924,13 +4950,27 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .cp-body{flex:1;min-height:0;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
 .cp-body[hidden]{display:none}
 .cp-grupo{background:#fff;border:1px solid #cfd6e0;border-radius:6px;overflow:hidden}
-.cp-gh{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 9px;background:#f4f7fb;border-bottom:1px solid #e4e8ee;border-left:3px solid #cfd6e0;font-size:11px;color:#3a4150;font-weight:bold}
+.cp-gh{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 9px;background:#f4f7fb;border-bottom:1px solid #e4e8ee;border-left:3px solid #cfd6e0;font-size:11px;color:#3a4150;font-weight:bold;cursor:pointer;user-select:none;-webkit-user-select:none}
+.cp-gh:hover{background:#e9f0fa}
+.cp-gh-t{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* La flecha gira en vez de cambiar de caracter: el ancho no baila al plegar */
+.cp-gh-ar{flex:0 0 auto;font-style:normal;font-size:9px;color:#6b7686;transition:transform .12s}
+.cp-grupo.cerrado .cp-gh-ar{transform:rotate(-90deg)}
+.cp-grupo.cerrado .cp-gh{border-bottom:0}
+.cp-grupo.cerrado .cp-item{display:none}
+.cp-gh-n{flex:0 0 auto}
 /* MODO TIENDA: letra grande, sin teclado ni filtros, y la fila entera como blanco. Todo lo
    que no sirve empujando un carro se quita de en medio. */
 .cp-root.tienda .cp-add,.cp-root.tienda .cp-sug,.cp-root.tienda #cp-cat{display:none}
 .cp-root.tienda .cp-item{padding:14px 12px;font-size:17px;gap:14px;cursor:pointer}
 .cp-root.tienda .cp-check{width:34px;height:34px;font-size:19px;flex-shrink:0}
-.cp-root.tienda .cp-grupo{font-size:13px;padding:8px 12px;position:sticky;top:0;background:#ece9d8;z-index:1}
+/* La cabecera del pasillo se queda pegada arriba mientras recorres ese pasillo: empujando el
+   carro, saber si lo que lees es lacteos o congelados importa mas que el hueco que ocupa.
+   Iba sobre .cp-grupo, que es el contenedor entero y ademas lleva overflow:hidden — y un
+   sticky dentro de una caja con overflow oculto se queda clavado ahi, sin pegarse a nada.
+   En modo tienda el grupo abre su recorte y el redondeo pasa a la propia cabecera. */
+.cp-root.tienda .cp-grupo{overflow:visible}
+.cp-root.tienda .cp-gh{font-size:13px;padding:8px 12px;position:sticky;top:0;background:#ece9d8;z-index:1;border-radius:5px 5px 0 0}
 .cp-root.tienda .cp-mini,.cp-root.tienda [data-del]{display:none}
 .cp-root.tienda .cp-item.done{opacity:.45}
 .cp-root.tienda .cp-nm{line-height:1.25}
@@ -4957,6 +4997,8 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .cp-pick-it:hover{background:#eef3fb}
 @media(max-width:600px){
   .cp-cat{max-width:80px}
+  /* Plegar un pasillo se hace con el dedo: 22 px de cabecera se fallan */
+  .cp-gh{padding:10px 9px}
   /* La info se lleva su propia línea y los botones bajan enteros a la siguiente:
      antes se salían por la derecha y no se veía ni compartir ni el menú. */
   .cp-info{width:100%;flex:none;order:-1}
@@ -5115,7 +5157,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .sc-thumb.on{border-color:#2f6fb0;box-shadow:0 0 0 2px rgba(47,111,176,.25);font-weight:bold;color:#1a2432}
 .sc-thumb.add{color:#2f7d4b}
 .sc-foot{display:flex;align-items:center;gap:6px;padding:5px 8px;background:linear-gradient(180deg,#f2f0e8,#e0ddd0);border-top:1px solid #b3aea0;font-size:11px;color:#3a4150}
-.sc-foot span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-foot span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:600px){ .sc-info{display:none} .sc-sel{max-width:104px} }
 
 /* ═══════════════════  § RECETAS  ═══════════════════ */
@@ -5164,7 +5206,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .rc-resumen{background:#fff;border:1px solid #e0d8ca;border-radius:7px;padding:8px 10px;font-size:11px;color:#5a4a36}
 .rc-inglist{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
 .rc-foot{display:flex;align-items:center;gap:8px;padding:5px 8px;background:linear-gradient(180deg,#f2f0e8,#e0ddd0);border-top:1px solid #b3aea0;font-size:11px;color:#3a4150}
-.rc-foot span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc-foot span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rc-form{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
 .rc-form input,.rc-form textarea{width:100%;padding:4px 6px;border:1px solid #ddd5c7;border-radius:3px;font-family:Tahoma,sans-serif;font-size:12px;resize:vertical}
 .rc-frow{display:flex;gap:6px}
@@ -5251,7 +5293,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.65.2';
+const APP_VERSION = '0.65.3';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -5327,6 +5369,9 @@ const I18N={
   'btn.rename':{es:'Renombrar', en:'Rename', ca:'Reanomena', ru:'Переименовать'},
   'btn.delete':{es:'Eliminar', en:'Delete', ca:'Elimina', ru:'Удалить'},
   'btn.new':{es:'Nuevo', en:'New', ca:'Nou', ru:'Создать'},
+  'btn.add':{es:'Añadir', en:'Add', ca:'Afegeix', ru:'Добавить'},
+  'btn.zoomin':{es:'Acercar', en:'Zoom in', ca:'Apropa', ru:'Приблизить'},
+  'btn.zoomout':{es:'Alejar', en:'Zoom out', ca:'Allunya', ru:'Отдалить'},
   'btn.clear':{es:'Limpiar', en:'Clear', ca:'Neteja', ru:'Очистить'},
   'btn.undo':{es:'Deshacer', en:'Undo', ca:'Desfés', ru:'Отменить'},
   'btn.share':{es:'Compartir', en:'Share', ca:'Comparteix', ru:'Поделиться'},
@@ -5550,6 +5595,8 @@ const I18N={
   'piano.hint':{es:'Toca con el ratón o con las teclas A W S E D F T G Y H U J…', en:'Play with the mouse or the keys A W S E D F T G Y H U J…', ca:'Toca amb el ratolí o amb les tecles A W S E D F T G Y H U J…', ru:'Играйте мышью или клавишами A W S E D F T G Y H U J…'},
   'agenda.title':{es:'Agenda', en:'Calendar', ca:'Agenda', ru:'Ежедневник'},
   'agenda.desc':{es:'Calendario y recordatorios', en:'Calendar & reminders', ca:'Calendari i recordatoris', ru:'Календарь и напоминания'},
+  'agenda.prev':{es:'Mes anterior', en:'Previous month', ca:'Mes anterior', ru:'Предыдущий месяц'},
+  'agenda.next':{es:'Mes siguiente', en:'Next month', ca:'Mes següent', ru:'Следующий месяц'},
   'agenda.today':{es:'Hoy', en:'Today', ca:'Avui', ru:'Сегодня'},
   'agenda.new':{es:'Nuevo evento', en:'New event', ca:'Nou esdeveniment', ru:'Новое событие'},
   'agenda.noev':{es:'Sin eventos este día.', en:'No events this day.', ca:'Sense esdeveniments aquest dia.', ru:'Событий на этот день нет.'},
@@ -5682,6 +5729,7 @@ const I18N={
   'sc.uncrop':{es:'Quitar el recorte', en:'Undo the crop', ca:'Treu el retall', ru:'Убрать обрезку'},
   'sc.uncropq':{es:'¿Quitar el recorte de esta página?', en:'Undo the crop on this page?', ca:'Treure el retall d’aquesta pàgina?', ru:'Убрать обрезку этой страницы?'},
   'sc.delete':{es:'Quitar esta página', en:'Remove this page', ca:'Treu aquesta pàgina', ru:'Удалить страницу'},
+  'sc.addpage':{es:'Añadir una página', en:'Add a page', ca:'Afegeix una pàgina', ru:'Добавить страницу'},
   'sc.page':{es:'Página', en:'Page', ca:'Pàgina', ru:'Страница'},
   'sc.pageof':{es:'Página {n} de {t}', en:'Page {n} of {t}', ca:'Pàgina {n} de {t}', ru:'Страница {n} из {t}'},
   'sc.empty':{es:'Haz una foto a un documento o abre una imagen', en:'Photograph a document or open an image', ca:'Fes una foto a un document o obre una imatge', ru:'Сфотографируйте документ или откройте изображение'},
@@ -6296,6 +6344,9 @@ const I18N={
   'gs.search':{es:'Buscar…', en:'Search…', ca:'Cerca…', ru:'Поиск…'},
   'gs.allcats':{es:'Todas las categorías', en:'All categories', ca:'Totes les categories', ru:'Все категории'},
   'gs.fixed':{es:'Gastos fijos', en:'Recurring expenses', ca:'Despeses fixes', ru:'Постоянные расходы'},
+  'pwm.copyuser':{es:'Copiar el usuario', en:'Copy the username', ca:'Copia l’usuari', ru:'Скопировать логин'},
+  'pwm.copypass':{es:'Copiar la contraseña', en:'Copy the password', ca:'Copia la contrasenya', ru:'Скопировать пароль'},
+  'gs.fixedadd':{es:'Añadir un gasto fijo', en:'Add a fixed expense', ca:'Afegeix una despesa fixa', ru:'Добавить регулярный расход'},
   'gs.fixedintro':{es:'Se apuntan solos el día que digas de cada mes.', en:'They are added automatically on the day you choose each month.', ca:'S’apunten sols el dia que diguis de cada mes.', ru:'Добавляются автоматически в выбранный день месяца.'},
   'gs.nofixed':{es:'Ningún gasto fijo todavía.', en:'No recurring expenses yet.', ca:'Cap despesa fixa encara.', ru:'Постоянных расходов пока нет.'},
   'gs.dayn':{es:'día {d}', en:'day {d}', ca:'dia {d}', ru:'{d}-го'},
@@ -9252,13 +9303,17 @@ function uiSfx(kind){
 })();
 
 // ========== DIÁLOGO GENÉRICO ESTILO XP ==========
+// El TITULO es texto, el CUERPO es marcado: quien llama compone el cuerpo a proposito, pero
+// el titulo llega tal cual (un nombre de receta, de archivo, de producto) y tenia que salir
+// escapado. xpPrompt ya lo hacia y la barra de tareas tambien; aqui faltaba, y con ello
+// xpConfirm, que delega en esta.
 function xpDialog(title,bodyHTML,buttons){
   uiSfx('dialog');
   const ov=document.createElement('div');
   ov.className='xp-dialog-ov';
   ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
-  ov.innerHTML=`<div role="dialog" aria-label="${title}" style="width:min(380px,92vw);background:var(--xp-cara);border:2px solid var(--xp-borde);border-radius:var(--xp-radio) var(--xp-radio) 4px 4px;box-shadow:var(--xp-sombra);overflow:hidden;font-family:Tahoma,sans-serif">
-    <div style="background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">${title}</div>
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(title)}" style="width:min(380px,92vw);background:var(--xp-cara);border:2px solid var(--xp-borde);border-radius:var(--xp-radio) var(--xp-radio) 4px 4px;box-shadow:var(--xp-sombra);overflow:hidden;font-family:Tahoma,sans-serif">
+    <div style="background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">${escHtml(title)}</div>
     <div style="padding:14px 16px;font-size:12px;color:#222;display:flex;gap:12px;align-items:flex-start;line-height:1.5">${bodyHTML}</div>
     <div class="xp-dialog-btns" style="padding:0 16px 12px;display:flex;gap:8px;justify-content:flex-end"></div>
   </div>`;
@@ -10740,7 +10795,7 @@ function openMiPC(){
         {label:'Abrir Encarta 99',primary:true,action:()=>openEncarta()},
         {label:'Cerrar'}
       ]),
-      a:()=>xpDialog('Disquete 3&frac12; (A:)','<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-guardar"></use></svg></div><div><b>A:\\ no est&aacute; accesible.</b><br>El dispositivo no est&aacute; preparado.<br><span class="dlg-sub">Nunca lo estuvo. Nunca lo estar&aacute;.</span></div>'),
+      a:()=>xpDialog('Disquete 3½ (A:)','<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-guardar"></use></svg></div><div><b>A:\\ no est&aacute; accesible.</b><br>El dispositivo no est&aacute; preparado.<br><span class="dlg-sub">Nunca lo estuvo. Nunca lo estar&aacute;.</span></div>'),
       proyectos:()=>openProyectos(),
       juegos:()=>openGamesFolder()
     };
@@ -12699,7 +12754,7 @@ function openPixelArt(){
     <div class="px-actions">
       <button type="button" class="px-btn" id="px-dl">&#11015;&#65039; PNG</button>
       <button type="button" class="px-btn" id="px-fs">&#128190; ${t('btn.tofiles')}</button>
-      <button type="button" class="px-btn" id="px-copy">&#128203;</button>
+      <button type="button" class="px-btn" id="px-copy" data-i18n-aria="btn.copy" aria-label="Copiar">&#128203;</button>
       <span class="px-scale"><label>${t('px.exportscale')}</label><select id="px-scale"><option value="8">×8</option><option value="16" selected>×16</option><option value="24">×24</option></select></span>
     </div>
   </div>`;
@@ -12989,7 +13044,7 @@ function setMagnifier(on){
     document.addEventListener('mousemove',_magMove); document.addEventListener('touchmove',_magMove,{passive:true});
     if(!panel){
       panel=document.createElement('div'); panel.id='mag-ctrl'; panel.className='mag-ctrl';
-      panel.innerHTML=`<span class="mag-t">&#128269; ${escHtml(t('mag.title'))}</span><button type="button" class="mag-b" data-z="-">&#8722;</button><b id="mag-z"></b><button type="button" class="mag-b" data-z="+">+</button><button type="button" class="mag-b mag-close" data-z="x" aria-label="${escHtml(t('btn.close'))}">&#10005;</button>`;
+      panel.innerHTML=`<span class="mag-t">&#128269; ${escHtml(t('mag.title'))}</span><button type="button" class="mag-b" data-z="-" aria-label="${escHtml(t('btn.zoomout'))}">&#8722;</button><b id="mag-z"></b><button type="button" class="mag-b" data-z="+" aria-label="${escHtml(t('btn.zoomin'))}">+</button><button type="button" class="mag-b mag-close" data-z="x" aria-label="${escHtml(t('btn.close'))}">&#10005;</button>`;
       document.body.appendChild(panel);
       const zl=panel.querySelector('#mag-z');
       const upd=()=>{ zl.textContent=_magZoom+'×'; _magApply(_magLast.x,_magLast.y); };
@@ -13444,7 +13499,7 @@ function openAgenda(targetKey){
   closeStartMenu();
   if(focusExisting('agenda-grid')){ if(targetKey&&_agendaGoto)_agendaGoto(targetKey); return; }
   const content=`<div class="agenda-root">
-    <div class="agenda-bar"><button type="button" class="ag-nav" id="ag-prev">&#9664;</button><span class="ag-month" id="ag-month"></span><button type="button" class="ag-nav" id="ag-next">&#9654;</button>
+    <div class="agenda-bar"><button type="button" class="ag-nav" id="ag-prev" data-i18n-aria="agenda.prev" aria-label="Mes anterior">&#9664;</button><span class="ag-month" id="ag-month"></span><button type="button" class="ag-nav" id="ag-next" data-i18n-aria="agenda.next" aria-label="Mes siguiente">&#9654;</button>
       <button type="button" class="ag-hoy" id="ag-today" data-i18n="agenda.today">Hoy</button>
       <button type="button" class="ag-icon" id="ag-ics" data-i18n-title="agenda.movetitle" data-i18n-aria="agenda.movetitle" title="Llevarte el calendario o traer otro" aria-label="Llevarte el calendario o traer otro"></button></div>
     <div class="agenda-grid" id="agenda-grid"></div>
@@ -14518,7 +14573,7 @@ function openTareas(){
       <input type="text" id="tk-in" class="tk-in" autocomplete="off" spellcheck="false" placeholder="llamar al fontanero mañana !alta" data-i18n-ph="tk.ph" data-i18n-aria="tk.add" aria-label="Nueva tarea">
       <button type="button" class="tk-btn os-mic" id="tk-mic">&#127908;</button>
       <select id="tk-list" class="tk-list" data-i18n-aria="tk.list" aria-label="Lista"></select>
-      <button type="button" class="tk-btn primary" id="tk-ok">&#10133;</button>
+      <button type="button" class="tk-btn primary" id="tk-ok" data-i18n-aria="tk.add" aria-label="Nueva tarea">&#10133;</button>
     </div>
     <div class="tk-bar">
       <span class="tk-vistas">
@@ -14816,7 +14871,7 @@ function openHabitos(){
   const content=`<div class="hb-root" id="hb-root">
     <div class="hb-add">
       <input type="text" id="hb-in" class="hb-in" maxlength="40" placeholder="Beber 2 litros de agua" data-i18n-ph="hb.ph" data-i18n-aria="hb.add" aria-label="Nuevo hábito">
-      <button type="button" class="hb-btn primary" id="hb-ok">&#10133;</button>
+      <button type="button" class="hb-btn primary" id="hb-ok" data-i18n-aria="hb.add" aria-label="Nuevo hábito">&#10133;</button>
     </div>
     <div class="hb-body" id="hb-body"></div>
     <div class="hb-foot"><span id="hb-status"></span>
@@ -14904,8 +14959,8 @@ function openHabitos(){
               +'<div class="hb-acts">'
                 +'<span class="hb-colores">'+HB_COLORES.map(c=>'<button type="button" class="hb-color'+((h.color||HB_COLORES[0])===c?' on':'')+'" data-col="'+escHtml(h.id)+'|'+c+'" style="background:'+c+'" aria-label="color"></button>').join('')+'</span>'
                 +'<span class="hb-iconos">'+HB_ICONOS.map(ic=>'<button type="button" class="hb-icb'+((h.icono||HB_ICONOS[0])===ic?' on':'')+'" data-ic="'+escHtml(h.id)+'|'+ic+'">'+ic+'</button>').join('')+'</span>'
-                +'<button type="button" class="hb-mini" data-ren="'+escHtml(h.id)+'">&#9998;</button>'
-                +'<button type="button" class="hb-mini danger" data-del="'+escHtml(h.id)+'">&#10006;</button>'
+                +'<button type="button" class="hb-mini" data-ren="'+escHtml(h.id)+'" aria-label="'+escHtml(t('btn.rename'))+'">&#9998;</button>'
+                +'<button type="button" class="hb-mini danger" data-del="'+escHtml(h.id)+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10006;</button>'
               +'</div></div>':'')
             +'</div>';
         }).join('');
@@ -15396,7 +15451,7 @@ function openRecetas(){
             +'<button type="button" class="rc-mini" data-share="'+escHtml(r.id)+'">&#128228; '+escHtml(t('rc.share'))+'</button>'
             +(r.t?'<button type="button" class="rc-mini" data-timer="'+escHtml(r.id)+'">&#9200; '+(+r.t)+"'"+'</button>':'')
             +'<button type="button" class="rc-mini" data-pdf="'+escHtml(r.id)+'">&#128196; PDF</button>'
-            +'<button type="button" class="rc-mini danger" data-del="'+escHtml(r.id)+'">&#10006;</button>'
+            +'<button type="button" class="rc-mini danger" data-del="'+escHtml(r.id)+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10006;</button>'
           +'</div></div>':'')
         +'</div>').join('')+'</div>';
       body.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{ abierta=abierta===b.dataset.open?null:b.dataset.open; renderRecetas(); });
@@ -16014,7 +16069,7 @@ function openScanner(preload){
       }
       // Tira de miniaturas
       $('#sc-pages').innerHTML=paginas.map((p,i)=>'<button type="button" class="sc-thumb'+(i===actual?' on':'')+'" data-i="'+i+'"><span>'+(i+1)+'</span></button>').join('')
-        +(paginas.length?'<button type="button" class="sc-thumb add" id="sc-more">&#10133;</button>':'');
+        +(paginas.length?'<button type="button" class="sc-thumb add" id="sc-more" aria-label="'+escHtml(t('sc.addpage'))+'">&#10133;</button>':'');
       $('#sc-pages').querySelectorAll('.sc-thumb[data-i]').forEach(b=>b.onclick=()=>{ actual=+b.dataset.i; recortando=false; croprect.hidden=true; pinta(); });
       const more=$('#sc-more');
       if(more)more.onclick=()=>abreCamara();
@@ -17827,6 +17882,10 @@ function cpParse(txt){
 }
 function cpLista(){ return osListaGuardada('tos-compra',i=>typeof i.name==='string'?i:null); }
 function cpWrite(arr){ return osGuardaLista('tos-compra',arr,t('cp.title')); }
+// Pasillos plegados. Es preferencia de vista, no datos de la compra: va en su propia clave
+// para que vaciar la lista no la toque.
+function cpPlegadosLee(){ try{ const a=JSON.parse(Store.get('tos-compra-plegados')||'[]'); return Array.isArray(a)?a.filter(x=>typeof x==='string'):[]; }catch(e){ return []; } }
+function cpPlegadosGuarda(a){ try{ Store.set('tos-compra-plegados',JSON.stringify(a)); }catch(e){_ignora(e);} }
 function cpHist(){ try{ const o=JSON.parse(Store.get('tos-compra-hist')||'{}'); return (o&&typeof o==='object')?o:{}; }catch(e){ return {}; } }
 function cpHistWrite(o){ return Store.set('tos-compra-hist',JSON.stringify(o)); }
 function cpHistSuma(nombre,pasillo,precio){
@@ -17929,7 +17988,7 @@ function openCompra(){
       <input type="text" id="cp-in" class="cp-in" autocomplete="off" spellcheck="false" placeholder="2 leche 1,20" data-i18n-ph="cp.ph" data-i18n-aria="cp.add" aria-label="Añadir">
       <button type="button" class="cp-btn os-mic" id="cp-mic">&#127908;</button>
       <select id="cp-cat" class="cp-cat" data-i18n-aria="cp.aisle" aria-label="Pasillo"></select>
-      <button type="button" class="cp-btn primary" id="cp-ok">&#10133;</button>
+      <button type="button" class="cp-btn primary" id="cp-ok" data-i18n-aria="cp.add" aria-label="Añadir a la lista">&#10133;</button>
       <div class="cp-sug" id="cp-sug" hidden></div>
     </div>
     <div class="cp-bar">
@@ -17950,6 +18009,9 @@ function openCompra(){
     const $=(s)=>win.querySelector(s);
     const inp=$('#cp-in'), catSel=$('#cp-cat'), body=$('#cp-body'), sug=$('#cp-sug');
     let items=cpLista(), sugIdx=-1;
+    // Que pasillos estan plegados. Se guarda: quien no compra fruta no quiere volver a
+    // cerrar «Frutas y verduras» cada vez que abre la lista.
+    const cpPlegados=new Set(cpPlegadosLee());
     catSel.innerHTML='<option value="">'+escHtml(t('cp.auto'))+'</option>'+CP_PASILLOS.map(p=>'<option value="'+p[0]+'">'+p[1]+' '+escHtml(t('cp.p.'+p[0]))+'</option>').join('');
 
     const guarda=()=>{ cpWrite(items); }; // el aviso de almacenamiento lleno lo da el propio guardado
@@ -17975,13 +18037,20 @@ function openCompra(){
           +'<span class="cp-pl" style="color:'+p[2]+'">'+p[1]+'</span>'
           +'<button type="button" class="cp-mini" data-del="'+escHtml(i.id)+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10006;</button></div>';
       };
+      // Cabecera de pasillo plegable: el nombre entero es el blanco, no un triangulito de 9 px
+      const cab=(clave,txt,extra,estilo)=>{
+        const cerr=cpPlegados.has(clave);
+        return '<div class="cp-grupo'+(cerr?' cerrado':'')+(clave==='_done'?' cp-done':'')+'" data-grp="'+escHtml(clave)+'">'
+          +'<div class="cp-gh" role="button" tabindex="0" aria-expanded="'+(cerr?'false':'true')+'" data-plg="'+escHtml(clave)+'"'+(estilo||'')+'>'
+          +'<span class="cp-gh-t"><i class="cp-gh-ar">&#9660;</i>'+txt+'</span>'+extra+'</div>';
+      };
       body.innerHTML=orden.map(k=>{
         const p=CP_PASILLO(k);
-        return '<div class="cp-grupo"><div class="cp-gh" style="border-color:'+p[2]+'"><span>'+p[1]+' '+escHtml(t('cp.p.'+k))+'</span><b>'+porPasillo[k].length+'</b></div>'
+        return cab(k,p[1]+' '+escHtml(t('cp.p.'+k)),'<b class="cp-gh-n">'+porPasillo[k].length+'</b>',' style="border-color:'+p[2]+'"')
           +porPasillo[k].map(fila).join('')+'</div>';
       }).join('')
-      +(hechos.length?'<div class="cp-grupo cp-done"><div class="cp-gh"><span>&#128717;&#65039; '+escHtml(t('cp.incart',{n:hechos.length}))+'</span>'
-        +'<button type="button" class="cp-mini" id="cp-clear-done">'+escHtml(t('cp.clearcart'))+'</button></div>'
+      +(hechos.length?cab('_done','&#128717;&#65039; '+escHtml(t('cp.incart',{n:hechos.length})),
+        '<button type="button" class="cp-mini" id="cp-clear-done">'+escHtml(t('cp.clearcart'))+'</button>')
         +hechos.map(fila).join('')+'</div>':'');
       applyI18n(win);
     };
@@ -18005,9 +18074,28 @@ function openCompra(){
     // líneas) volver a enganchar 600 manejadores en cada toque costaba ~150 ms: el tic
     // llegaba tarde. Ahora el clic se resuelve por delegación y el repintado es lo único
     // que queda.
+    const plega=(clave)=>{
+      if(cpPlegados.has(clave))cpPlegados.delete(clave); else cpPlegados.add(clave);
+      cpPlegadosGuarda([...cpPlegados]);
+      const g=body.querySelector('.cp-grupo[data-grp="'+(window.CSS&&CSS.escape?CSS.escape(clave):clave)+'"]');
+      // Se abre y se cierra en el sitio, sin repintar la lista entera: con la compra del mes
+      // repintar costaba mas que el propio gesto.
+      if(g){ const cerr=cpPlegados.has(clave); g.classList.toggle('cerrado',cerr); const h=g.querySelector('.cp-gh'); if(h)h.setAttribute('aria-expanded',cerr?'false':'true'); }
+      else render();
+    };
+    body.onkeydown=(e)=>{
+      if(e.key!=='Enter'&&e.key!==' ')return;
+      const h=e.target.closest&&e.target.closest('[data-plg]');
+      if(!h)return;
+      e.preventDefault();
+      plega(h.dataset.plg);
+    };
     body.onclick=(e)=>{
       let tog=e.target.closest('[data-tog]');
       const del=e.target.closest('[data-del]'), cd=e.target.closest('#cp-clear-done');
+      // El plegado se mira ANTES que el modo tienda (que convierte la fila entera en blanco),
+      // pero DESPUES de «Vaciar», que vive dentro de la propia cabecera.
+      if(!del&&!cd){ const plg=e.target.closest('[data-plg]'); if(plg){ plega(plg.dataset.plg); return; } }
       // De pie en el súper, el blanco es la línea entera, no un cuadradito de 20 px
       if(!tog&&tienda&&!del&&!cd){ const fila=e.target.closest('.cp-item'); if(fila)tog=fila.querySelector('[data-tog]'); }
       if(tog){
@@ -18639,14 +18727,14 @@ function openGastos(){
     const abreFijos=()=>{
       const pinta=()=>gastosFijos().map(f=>'<div class="gs-fijo"><span>'+GASTO_CAT(f.c)[1]+' '+escHtml(f.n||t('gs.c.'+f.c))+'</span>'
         +'<b>'+gastoFmt(f.a)+'</b><span class="gs-fd">'+t('gs.dayn',{d:f.day})+'</span>'
-        +'<button type="button" class="gs-mini" data-fdel="'+escHtml(f.id)+'">&#10006;</button></div>').join('');
+        +'<button type="button" class="gs-mini" data-fdel="'+escHtml(f.id)+'" aria-label="'+escHtml(t('btn.delete'))+'">&#10006;</button></div>').join('');
       const body2='<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-calendario"></use></svg></div><div class="gs-fijos"><div class="gs-fijos-t">'+escHtml(t('gs.fixedintro'))+'</div>'
         +'<div id="gs-fijolist">'+(pinta()||'<span class="hint-muted">'+escHtml(t('gs.nofixed'))+'</span>')+'</div>'
         +'<div class="gs-fijoadd"><input type="text" id="gs-f-n" placeholder="'+escHtml(t('gs.concept'))+'" maxlength="40">'
         +'<input type="text" id="gs-f-a" inputmode="decimal" placeholder="0,00" size="6">'
         +'<input type="number" id="gs-f-d" min="1" max="28" value="1" title="'+escHtml(t('gs.dayofmonth'))+'">'
         +'<select id="gs-f-c">'+GASTO_CATS.map(c=>'<option value="'+c[0]+'"'+(c[0]==='recibos'?' selected':'')+'>'+c[1]+' '+escHtml(t('gs.c.'+c[0]))+'</option>').join('')+'</select>'
-        +'<button type="button" class="gs-btn primary" id="gs-f-add">&#10133;</button></div></div>';
+        +'<button type="button" class="gs-btn primary" id="gs-f-add" data-i18n-aria="gs.fixedadd" aria-label="Añadir un gasto fijo">&#10133;</button></div></div>';
       const ov=xpDialog(t('gs.fixed'),body2);
       const refresca=()=>{
         ov.querySelector('#gs-fijolist').innerHTML=pinta()||'<span class="hint-muted">'+escHtml(t('gs.nofixed'))+'</span>';
@@ -20883,8 +20971,8 @@ function openPasswords(){
       const st=pwStrength(e.pw);
       detEl.innerHTML='<div class="pwm-card">'
         +'<h3 class="pwm-title">'+escHtml(e.site||t('pwm.untitled'))+'</h3>'
-        +fieldRow(t('pwm.user'),'<code>'+escHtml(e.user||'—')+'</code>','<button type="button" class="pwm-mini" id="pwm-cpu">&#128203;</button>')
-        +fieldRow(t('pwm.pass'),'<code id="pwm-pwtxt">••••••••</code>','<button type="button" class="pwm-mini" id="pwm-eye" aria-label="'+escHtml(t('pwm.show'))+'">&#128065;&#65039;</button><button type="button" class="pwm-mini" id="pwm-cpp">&#128203;</button>')
+        +fieldRow(t('pwm.user'),'<code>'+escHtml(e.user||'—')+'</code>','<button type="button" class="pwm-mini" id="pwm-cpu" aria-label="'+escHtml(t('pwm.copyuser'))+'">&#128203;</button>')
+        +fieldRow(t('pwm.pass'),'<code id="pwm-pwtxt">••••••••</code>','<button type="button" class="pwm-mini" id="pwm-eye" aria-label="'+escHtml(t('pwm.show'))+'">&#128065;&#65039;</button><button type="button" class="pwm-mini" id="pwm-cpp" aria-label="'+escHtml(t('pwm.copypass'))+'">&#128203;</button>')
         +'<div class="pwm-meter" aria-hidden="true"><i style="width:'+st.pct+'%;background:'+st.color+'"></i></div>'
         +'<div class="pwm-bits">'+st.bits+' '+escHtml(t('pwm.bits'))+'</div>'
         +(e.url?fieldRow(t('pwm.url'),'<a href="'+escHtml(e.url)+'" target="_blank" rel="noopener noreferrer">'+escHtml(e.url)+'</a>',''):'')
@@ -24888,7 +24976,7 @@ function openClock(pestana){
       <div class="clk-newalarm">
         <input type="time" id="alarm-h" class="clk-time" value="07:30" aria-label="${escHtml(t('clk.alarm'))}">
         <input type="text" id="alarm-n" class="clk-name" maxlength="40" placeholder="${escHtml(t('clk.alarm.name'))}" aria-label="${escHtml(t('clk.alarm.name'))}">
-        <button id="alarm-add" class="g-btn">&#10133;</button>
+        <button id="alarm-add" class="g-btn" aria-label="${escHtml(t('btn.add'))}">&#10133;</button>
       </div>
       <div id="alarm-list" class="clk-list"></div>
     </div>
@@ -25031,8 +25119,8 @@ function openImageViewer(){
   const content=`<div style="display:flex;flex-direction:column;height:100%;background:#2b2b2b">
     <div style="flex-shrink:0;display:flex;gap:5px;align-items:center;padding:5px 7px;background:#ece9d8;border-bottom:1px solid #aca899;flex-wrap:wrap">
       <button id="iv-open" style="font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fff,#e6e2d6);cursor:pointer">&#128193; Abrir imagen</button>
-      <button id="iv-zin" style="font-family:Tahoma;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">+</button>
-      <button id="iv-zout" style="font-family:Tahoma;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">&minus;</button>
+      <button id="iv-zin" data-i18n-aria="btn.zoomin" aria-label="Acercar" style="font-family:Tahoma;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">+</button>
+      <button id="iv-zout" data-i18n-aria="btn.zoomout" aria-label="Alejar" style="font-family:Tahoma;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">&minus;</button>
       <button id="iv-fit" style="font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">Ajustar</button>
       <span id="iv-zoom" style="font-size:11px;color:#444;margin-left:auto">100%</span>
       <input type="file" id="iv-file" accept="image/*" aria-label="Abrir una imagen" style="display:none">
