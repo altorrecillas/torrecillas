@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Torrecillas OS">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta property="og:description" content="17 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
+<meta property="og:description" content="21 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP. Sin instalaciones: entra y juega.">
 <meta property="og:url" content="https://torrecillas.cat/">
 <meta property="og:image" content="https://torrecillas.cat/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="Logo de Torrecillas OS sobre una colina estilo Bliss con el texto: un escritorio XP en tu navegador">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Torrecillas OS — un escritorio XP en tu navegador">
-<meta name="twitter:description" content="17 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
+<meta name="twitter:description" content="21 juegos clásicos, Paint, terminal y portfolio en una página que parece Windows XP.">
 <meta name="twitter:image" content="https://torrecillas.cat/og.png">
 <!-- Datos estructurados para buscadores (schema.org).
      Va escrito a mano y NO se genera al vuelo: los rastreadores que no ejecutan JS
@@ -31,7 +31,7 @@
      proyectosApps, garminApps y juegazosApps. Si tocas esos arrays, toca esto. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
-  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 17 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
+  {"@type":"WebSite","@id":"https://torrecillas.cat/#website","url":"https://torrecillas.cat/","name":"Torrecillas OS","description":"Un escritorio estilo Windows XP en el navegador: 21 juegos clásicos, Paint, terminal y portfolio de proyectos.","inLanguage":"es","author":{"@id":"https://torrecillas.cat/#author"}},
   {"@type":"Person","@id":"https://torrecillas.cat/#author","name":"Alejandro Torrecillas","url":"https://torrecillas.cat/","sameAs":["https://apps.garmin.com/es-ES/developer/cbfbf385-0c43-49ab-9644-4861d4b9f47b/apps"]},
   {"@type":"ItemList","@id":"https://torrecillas.cat/#proyectos","name":"Proyectos","itemListElement":[
     {"@type":"ListItem","position":1,"item":{"@type":"WebSite","name":"Woodpecker's","url":"https://woodpeckers.es","description":"Web oficial de la hamburguesería Woodpecker's de Gavà"}},
@@ -1937,7 +1937,8 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .window:not(.focused) .window-title{color:#f2f6fc;text-shadow:1px 1px 1px rgba(40,60,95,.35)}
 .window:not(.focused) .window-controls button{filter:saturate(.45) brightness(1.12)}
 .window-title{color:#fff;font-size:12px;font-weight:bold;text-shadow:1px 1px 1px rgba(0,0,0,.4);display:flex;align-items:center;gap:5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.window-title .wt-icon{font-size:14px}
+.window-title .wt-icon{font-size:14px;background:none;border:none;padding:1px;margin:0;color:inherit;font:inherit;font-size:14px;line-height:1;cursor:pointer;border-radius:3px}
+.window-title .wt-icon:hover,.window-title .wt-icon:focus-visible{background:rgba(255,255,255,.25)}
 .window-controls{display:flex;gap:2px}
 .window-controls button{width:21px;height:21px;border:1px solid rgba(0,0,0,.3);border-radius:3px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;text-shadow:1px 1px 1px rgba(0,0,0,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(0,0,0,.22)}
 .btn-minimize{background:linear-gradient(180deg,#5ba6f6 0%,#2f7fe0 45%,#1a5fc0 100%)}
@@ -4836,6 +4837,8 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 .bk-row b.ok{color:#2f7d4b}
 .bk-row b.warn{color:#9a5a20}
 .bk-note{font-size:10px;color:#79808f;line-height:1.4;margin-top:3px}
+.sync-info{margin-top:2px}
+.sync-note{font-size:11px;color:#5a6472;line-height:1.4;margin:2px 0}
 .bkx-dlg{width:min(420px,94vw);max-height:88svh;display:flex;flex-direction:column;background:var(--xp-cara);border:2px solid var(--xp-borde);border-radius:var(--xp-radio) var(--xp-radio) 4px 4px;box-shadow:var(--xp-sombra);overflow:hidden;font-family:Tahoma,sans-serif}
 .bkx-title{background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px;flex:0 0 auto}
 .bkx-body{padding:12px 14px 6px;font-size:12px;color:#222;overflow-y:auto;flex:1 1 auto}
@@ -5310,7 +5313,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.66.3';
+const APP_VERSION = '0.67.0';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -5370,6 +5373,14 @@ const I18N={
   'win.max':          {es:'Maximizar', en:'Maximize', ca:'Maximitza', ru:'Развернуть'},
   'win.close':        {es:'Cerrar', en:'Close', ca:'Tanca', ru:'Закрыть'},
   'win.restart':      {es:'Reiniciar', en:'Restart', ca:'Reinicia', ru:'Перезапуск'},
+  'win.restore':      {es:'Restaurar', en:'Restore', ca:'Restaura', ru:'Восстановить'},
+  'win.sysmenu':      {es:'Menú de la ventana', en:'Window menu', ca:'Menú de la finestra', ru:'Меню окна'},
+  'win.sysmove':      {es:'Mover', en:'Move', ca:'Mou', ru:'Переместить'},
+  'win.sysresize':    {es:'Tamaño', en:'Size', ca:'Mida', ru:'Размер'},
+  'win.movehint':     {es:'Modo mover: flechas para desplazar, Entrar para confirmar, Escape para cancelar', en:'Move mode: arrows to move, Enter to confirm, Escape to cancel', ca:'Mode moure: fletxes per desplaçar, Retorn per confirmar, Escape per cancel·lar', ru:'Режим перемещения: стрелки — двигать, Enter — подтвердить, Escape — отмена'},
+  'win.resizehint':   {es:'Modo tamaño: flechas para cambiar el tamaño, Entrar para confirmar, Escape para cancelar', en:'Size mode: arrows to resize, Enter to confirm, Escape to cancel', ca:'Mode mida: fletxes per canviar la mida, Retorn per confirmar, Escape per cancel·lar', ru:'Режим размера: стрелки — менять размер, Enter — подтвердить, Escape — отмена'},
+  'win.adjusted':     {es:'Cambio aplicado', en:'Change applied', ca:'Canvi aplicat', ru:'Изменение применено'},
+  'win.adjustcancel': {es:'Cambio cancelado', en:'Change cancelled', ca:'Canvi cancel·lat', ru:'Изменение отменено'},
   'set.language':     {es:'Idioma', en:'Language', ca:'Idioma', ru:'Язык'},
   'set.language.hint':{es:'La interfaz cambia al instante; el contenido retro se queda en español.', en:'The interface changes instantly; the retro content stays in Spanish.', ca:'La interfície canvia a l’instant; el contingut retro es queda en castellà.', ru:'Интерфейс меняется сразу; ретро-контент остаётся на испанском.'},
   'search.placeholder':{es:'Buscar programas y juegos...', en:'Search programs and games...', ca:'Cerca programes i jocs...', ru:'Поиск программ и игр...'},
@@ -5892,6 +5903,33 @@ const I18N={
   'bk.protected':{es:'Hecho: el navegador ya no borrará estos datos para hacer sitio.', en:'Done: the browser will no longer evict this data to free space.', ca:'Fet: el navegador ja no esborrarà aquestes dades per fer lloc.', ru:'Готово: браузер не будет удалять эти данные ради места.'},
   'bk.notprotected':{es:'El navegador no lo ha concedido. Suele darlo si instalas la app en la pantalla de inicio y la usas a menudo.', en:'The browser refused. It usually grants it once you install the app to your home screen and use it often.', ca:'El navegador no ho ha concedit. Sol donar-ho si instal·les l’app a la pantalla d’inici.', ru:'Браузер отказал. Обычно разрешает после установки приложения.'},
   'bk.note':{es:'Ni el cifrado ni la persistencia salvan tus datos si borras a mano los datos del sitio o desinstalas la app: para eso está la copia de seguridad.', en:'Neither encryption nor persistence saves your data if you clear the site data or uninstall the app: that is what the backup is for.', ca:'Ni el xifratge ni la persistència salven les dades si esborres les dades del lloc o desinstal·les l’app: per això hi ha la còpia.', ru:'Ни шифрование, ни постоянное хранилище не спасут при очистке данных сайта: для этого есть резервная копия.'},
+  'sync.title':      {es:'Sincronización', en:'Sync', ca:'Sincronització', ru:'Синхронизация'},
+  'sync.what':       {es:'Enlaza una carpeta del disco —puede ser una que ya sincronicen Dropbox, Drive o OneDrive— para llevar tus datos cifrados a otro dispositivo. Aviso honesto: solo en Chrome, Edge u Opera de escritorio y Android, no en Firefox ni en Safari/iPhone.', en:'Link a folder on disk — it can be one that Dropbox, Drive or OneDrive already sync — to carry your encrypted data to another device. Honest warning: only on Chrome, Edge or Opera desktop and Android, not on Firefox or Safari/iPhone.', ca:'Enllaça una carpeta del disc —pot ser una que ja sincronitzin Dropbox, Drive o OneDrive— per portar les teves dades xifrades a un altre dispositiu. Avís honest: només a Chrome, Edge o Opera d’escriptori i Android, no a Firefox ni a Safari/iPhone.', ru:'Свяжите папку на диске — это может быть папка, которую уже синхронизирует Dropbox, Drive или OneDrive — чтобы перенести зашифрованные данные на другое устройство. Честное предупреждение: только в Chrome, Edge или Opera для компьютера и Android, не в Firefox или Safari/iPhone.'},
+  'sync.guest':      {es:'La sincronización no está disponible en modo invitado: aquí no se guarda nada al salir.', en:'Sync isn’t available in guest mode: nothing here is saved when you leave.', ca:'La sincronització no està disponible en mode convidat: aquí no es desa res en sortir.', ru:'Синхронизация недоступна в гостевом режиме: здесь ничего не сохраняется при выходе.'},
+  'sync.unsupported':{es:'Tu navegador no admite esta función (hace falta Chrome, Edge u Opera de escritorio o Android).', en:'Your browser doesn’t support this feature (Chrome, Edge or Opera desktop/Android is needed).', ca:'El teu navegador no admet aquesta funció (cal Chrome, Edge o Opera d’escriptori o Android).', ru:'Ваш браузер не поддерживает эту функцию (нужен Chrome, Edge или Opera для компьютера или Android).'},
+  'sync.choose':     {es:'Elegir carpeta', en:'Choose folder', ca:'Tria una carpeta', ru:'Выбрать папку'},
+  'sync.never':      {es:'nunca', en:'never', ca:'mai', ru:'никогда'},
+  'sync.folder':     {es:'Carpeta', en:'Folder', ca:'Carpeta', ru:'Папка'},
+  'sync.last':       {es:'Última sincronización', en:'Last synced', ca:'Última sincronització', ru:'Последняя синхронизация'},
+  'sync.now':        {es:'Sincronizar ahora', en:'Sync now', ca:'Sincronitza ara', ru:'Синхронизировать сейчас'},
+  'sync.stop':       {es:'Dejar de sincronizar', en:'Stop syncing', ca:'Deixa de sincronitzar', ru:'Прекратить синхронизацию'},
+  'sync.stop.t':     {es:'¿Dejar de sincronizar?', en:'Stop syncing?', ca:'Deixar de sincronitzar?', ru:'Прекратить синхронизацию?'},
+  'sync.stop.d':     {es:'Se olvida la carpeta enlazada en este dispositivo. Tus datos de aquí NO se borran; el fichero de la carpeta tampoco.', en:'This device forgets the linked folder. Your data here is NOT deleted; the file in the folder isn’t either.', ca:'S’oblida la carpeta enllaçada en aquest dispositiu. Les teves dades d’aquí NO s’esborren; el fitxer de la carpeta tampoc.', ru:'Устройство забудет связанную папку. Ваши данные здесь НЕ удаляются; файл в папке тоже остаётся.'},
+  'sync.linked':     {es:'Sincronización activada', en:'Sync turned on', ca:'Sincronització activada', ru:'Синхронизация включена'},
+  'sync.unlinked':   {es:'Sincronización desactivada', en:'Sync turned off', ca:'Sincronització desactivada', ru:'Синхронизация выключена'},
+  'sync.badkey':     {es:'No se ha podido descifrar: puede que la contraseña de sincronización haya cambiado en otro dispositivo.', en:'Couldn’t decrypt: the sync password may have changed on another device.', ca:'No s’ha pogut desxifrar: potser la contrasenya de sincronització ha canviat en un altre dispositiu.', ru:'Не удалось расшифровать: возможно, пароль синхронизации был изменён на другом устройстве.'},
+  'sync.conflict.t':     {es:'Hay una copia más nueva', en:'There’s a newer copy', ca:'Hi ha una còpia més nova', ru:'Есть более новая копия'},
+  'sync.conflict.d':     {es:'Este dispositivo sincronizó por última vez el {local}. La carpeta tiene una copia del {remoto}, de otro dispositivo. ¿Qué copia quieres usar?', en:'This device last synced on {local}. The folder has a copy from {remoto}, from another device. Which copy do you want to use?', ca:'Aquest dispositiu va sincronitzar per última vegada el {local}. La carpeta té una còpia del {remoto}, d’un altre dispositiu. Quina còpia vols fer servir?', ru:'Это устройство последний раз синхронизировалось {local}. В папке есть копия от {remoto} с другого устройства. Какую копию использовать?'},
+  'sync.conflict.remote':{es:'Usar la copia de la carpeta', en:'Use the folder’s copy', ca:'Fes servir la còpia de la carpeta', ru:'Использовать копию из папки'},
+  'sync.conflict.local': {es:'Usar la de este dispositivo', en:'Use this device’s', ca:'Fes servir la d’aquest dispositiu', ru:'Использовать копию с этого устройства'},
+  'sync.join.t':     {es:'Unirse a la sincronización', en:'Join sync', ca:'Uneix-te a la sincronització', ru:'Присоединиться к синхронизации'},
+  'sync.join.d':     {es:'Esta carpeta ya tiene datos sincronizados desde otro dispositivo. Escribe la contraseña de sincronización que pusiste allí.', en:'This folder already has data synced from another device. Enter the sync password you set there.', ca:'Aquesta carpeta ja té dades sincronitzades des d’un altre dispositiu. Escriu la contrasenya de sincronització que vas posar allà.', ru:'В этой папке уже есть данные, синхронизированные с другого устройства. Введите пароль синхронизации, который вы задали там.'},
+  'sync.join.found': {es:'Copia del {f} con {n} ajustes. ¿Traerla a este dispositivo? Sobrescribe lo que haya aquí.', en:'Copy from {f} with {n} settings. Bring it to this device? This overwrites what’s here.', ca:'Còpia del {f} amb {n} ajustos. La vols portar a aquest dispositiu? Sobreescriu el que hi hagi aquí.', ru:'Копия от {f}, {n} настроек. Перенести на это устройство? Это перезапишет текущие данные.'},
+  'sync.join.yes':   {es:'Sí, traerla', en:'Yes, bring it', ca:'Sí, porta-la', ru:'Да, перенести'},
+  'sync.new.t':      {es:'Contraseña de sincronización', en:'Sync password', ca:'Contrasenya de sincronització', ru:'Пароль синхронизации'},
+  'sync.new.d':      {es:'Esta carpeta está vacía: es la primera vez que se sincroniza. Elige una contraseña — la necesitarás en cada dispositivo que quieras enlazar a esta misma carpeta.', en:'This folder is empty: it’s the first time it’s synced. Choose a password — you’ll need it on every device you link to this same folder.', ca:'Aquesta carpeta és buida: és la primera vegada que se sincronitza. Tria una contrasenya — la necessitaràs a cada dispositiu que vulguis enllaçar a aquesta mateixa carpeta.', ru:'Эта папка пуста: синхронизация выполняется впервые. Придумайте пароль — он понадобится на каждом устройстве, которое вы свяжете с этой же папкой.'},
+  'sync.new.short':  {es:'Al menos 4 caracteres', en:'At least 4 characters', ca:'Almenys 4 caràcters', ru:'Не менее 4 символов'},
+  'sync.new.go':     {es:'Crear y activar', en:'Create and turn on', ca:'Crea i activa', ru:'Создать и включить'},
   'bk.sel.title':{es:'Exportar copia de seguridad', en:'Export backup', ca:'Exporta còpia de seguretat', ru:'Экспорт резервной копии'},
   'bk.sel.desc':{es:'Elige qué se lleva la copia. Lo que no marques no sale de este equipo.', en:'Choose what goes into the backup. Whatever you leave unchecked never leaves this device.', ca:'Tria què s’emporta la còpia. El que no marquis no surt d’aquest equip.', ru:'Выберите, что войдёт в копию. Неотмеченное не покинет это устройство.'},
   'bk.all':{es:'Marcar todo', en:'Select all', ca:'Marca-ho tot', ru:'Выбрать всё'},
@@ -7021,6 +7059,272 @@ async function autoLoginIntenta(){
     return false;
   }
 }
+// ========== SINCRONIZACIÓN OPCIONAL ENTRE DISPOSITIVOS (carpeta local) ==========
+// Sin servidor propio: el usuario elige una carpeta del disco (puede ser una que ya sincronizan
+// Dropbox/Drive/OneDrive/Syncthing) y aquí se lee/escribe un fichero cifrado con el MISMO formato
+// que "Exportar copia cifrada" (osExportBackupCifrado, § COPIA DE SEGURIDAD) — así el fichero de
+// sync es también un backup válido de verdad, importable a mano en cualquier otro dispositivo
+// aunque nunca haya tenido sync activado.
+// Solo Chrome/Edge/Opera de escritorio y Android: showDirectoryPicker no existe en Firefox ni
+// Safari/iPhone. Se avisa de esto en Ajustes en vez de fingir que funciona en todas partes.
+const SYNC_DIR_ID='syncdir', SYNC_KEY_ID='synckey', SYNC_FILE='torrecillas-os-sync.json';
+const SYNC_NO_SUBIR=['tos-session','tos-icon-pos']; // posiciones de ventana/icono: sin sentido entre dispositivos
+let _syncOn=false, _syncDirHandle=null, _syncOwnKey=null, _syncTmr=null, _syncBusy=false, _syncLastCheck=0;
+function _syncOk(){ return typeof window.showDirectoryPicker==='function'; }
+// La clave de cifrado: si hay cuenta local desbloqueada, la MISMA CryptoKey del vault (nada
+// nuevo que pedir); si no, una CryptoKey propia derivada una vez y cacheada en IndexedDB con el
+// mismo mecanismo que el login automático.
+async function _syncKey(){
+  if(hasAccount())return isVaultUnlocked()?_acctKey:null;
+  if(!_syncOwnKey)_syncOwnKey=await _llaveLeer(SYNC_KEY_ID);
+  return _syncOwnKey;
+}
+// La sal/iteraciones tienen que ser SIEMPRE las mismas en cada escritura (si no, la contraseña
+// de sync dejaría de sacar la misma clave): con cuenta salen de accountInfo(); sin cuenta, de un
+// par de claves propias fijadas la primera vez que se creó la contraseña de sync.
+function _syncSaltIter(){
+  if(hasAccount()){ const info=accountInfo(); return info?{salt:info.salt,iter:info.iter||200000}:null; }
+  const salt=Store.get('tos-sync-salt'); if(!salt)return null;
+  return {salt,iter:parseInt(Store.get('tos-sync-iter'),10)||200000};
+}
+async function _syncSobre(){
+  const key=await _syncKey(), si=_syncSaltIter();
+  if(!key||!si)return null;
+  const datos=osBackupDatos();
+  SYNC_NO_SUBIR.forEach(k=>delete datos[k]);
+  const fecha=new Date().toISOString();
+  const blob=await _encJSON(key,{app:'torrecillas-os',version:APP_VERSION,fecha,data:datos});
+  return {app:'torrecillas-os',enc:'pbkdf2-aes-gcm',ver:1,version:APP_VERSION,fecha,salt:si.salt,iter:si.iter,blob};
+}
+async function _syncEscribir(sobre){
+  if(!_syncDirHandle)return false;
+  try{
+    if(await _syncDirHandle.queryPermission({mode:'readwrite'})!=='granted')return false;
+    const fh=await _syncDirHandle.getFileHandle(SYNC_FILE,{create:true});
+    const w=await fh.createWritable();
+    await w.write(JSON.stringify(sobre));
+    await w.close();
+    return true;
+  }catch(e){ return false; }
+}
+async function _syncLeerRemoto(){
+  if(!_syncDirHandle)return null;
+  try{
+    if(await _syncDirHandle.queryPermission({mode:'read'})!=='granted')return null;
+    const fh=await _syncDirHandle.getFileHandle(SYNC_FILE,{create:false});
+    const f=await fh.getFile();
+    return JSON.parse(await f.text());
+  }catch(e){ return null; } // no existe todavía, o no se pudo leer: nada que traer
+}
+// Único punto de "algo cambió", enganchado desde Store.set/Store.del. Coste cero con la sync
+// apagada: _syncOn es una bandera en memoria, no una lectura de Store en cada escritura.
+function _syncMarkDirty(k){
+  if(!_syncOn)return;
+  if(_guestMode)return;                              // invitado: caja efímera, nunca sincroniza
+  if(hasAccount()&&!isVaultUnlocked())return;         // cuenta bloqueada: sin datos reales que leer
+  if(k.indexOf('tos-sync')===0)return;                // contabilidad interna: no dispares otra sync
+  clearTimeout(_syncTmr);
+  _syncTmr=setTimeout(_syncFlush,2500);
+}
+async function _syncFlush(){
+  if(_syncBusy||!_syncOn||!_syncDirHandle)return;
+  if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return;
+  _syncBusy=true;
+  try{
+    const sobre=await _syncSobre();
+    if(sobre&&await _syncEscribir(sobre))Store.set('tos-sync-last',sobre.fecha);
+  }catch(e){_ignora(e);}
+  finally{ _syncBusy=false; }
+}
+// Comprueba si el fichero remoto es más nuevo que la última vez que escribimos o trajimos algo.
+// manual=true (botón "Sincronizar ahora") salta el límite de "no martillear" al cambiar de pestaña.
+async function _syncCheckRemote(manual){
+  if(!_syncOn||!_syncOk()||!_syncDirHandle)return;
+  if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return;
+  const ahora=Date.now();
+  if(!manual&&ahora-_syncLastCheck<30000)return;
+  _syncLastCheck=ahora;
+  const remoto=await _syncLeerRemoto();
+  if(!remoto)return;
+  const propio=Store.get('tos-sync-last');
+  if(propio&&remoto.fecha<=propio)return; // ya es lo que escribimos nosotros, o más viejo
+  _syncConflictoDialog(remoto);
+}
+function _syncConflictoDialog(remoto){
+  const local=Store.get('tos-sync-last');
+  const fmt=(iso)=>iso?String(iso).slice(0,16).replace('T',' '):'—';
+  xpDialog(t('sync.conflict.t'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-guardar"></use></svg></div><div>'+
+    escHtml(t('sync.conflict.d',{remoto:fmt(remoto.fecha),local:fmt(local)}))+'</div>',[
+    {label:t('sync.conflict.remote'),primary:true,action:()=>_syncTraerRemoto(remoto)},
+    {label:t('sync.conflict.local'),action:()=>_syncFlush()},
+    {label:t('btn.cancel')}
+  ]);
+}
+async function _syncTraerRemoto(remoto){
+  const key=await _syncKey();
+  if(!key)return;
+  try{
+    const plano=await _decJSON(key,remoto.blob);
+    if(!plano||!plano.data)return;
+    Object.keys(plano.data).forEach(k=>{ if(k.indexOf('tos-')===0&&BACKUP_NO_EXPORTAR.indexOf(k)<0)Store.set(k,plano.data[k]); });
+    Store.set('tos-sync-last',remoto.fecha);
+    try{location.reload();}catch(e){_ignora(e);}
+  }catch(e){ xpDialog(t('sync.title'),'<div>'+escHtml(t('sync.badkey'))+'</div>'); }
+}
+// Primer enlace con una carpeta que YA tiene una copia (otro dispositivo la enlazó antes):
+// pide la contraseña de sync, valida descifrando, y si cuadra ofrece traer esos datos.
+function _syncPedirClaveUnirse(remoto){
+  uiSfx('dialog');
+  const ov=document.createElement('div');
+  ov.className='xp-dialog-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('sync.join.t'))}" class="bkx-dlg">
+    <div class="bkx-title">&#128274; ${escHtml(t('sync.join.t'))}</div>
+    <div class="bkx-body">
+      <p class="bkx-desc">${escHtml(t('sync.join.d'))}</p>
+      <div class="bkx-pw">
+        <label class="pw-wrap"><input type="password" class="bkx-pw1 pw-input" placeholder="${escHtml(t('bk.pw'))}" aria-label="${escHtml(t('bk.pw'))}" autocomplete="current-password"><button type="button" class="pw-eye bkx-eye" aria-label="${escHtml(t('bk.eye'))}">&#128065;&#65039;</button></label>
+        <div class="bkx-warn">&#9888;&#65039; ${escHtml(t('bk.caps'))}</div>
+      </div>
+      <div class="bkx-err" role="alert"></div>
+    </div>
+    <div class="xp-dialog-btns bkx-btns"></div>
+  </div>`;
+  const q=(c)=>ov.querySelector('.'+c);
+  const pw=q('bkx-pw1'), err=q('bkx-err'), btns=q('bkx-btns');
+  attachPwHelpers(pw,q('bkx-eye'),q('bkx-warn'));
+  const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
+  let go;
+  const intentar=async()=>{
+    if(!pw.value){ err.textContent=t('bk.imp.bad'); err.classList.add('on'); return; }
+    err.classList.remove('on'); go.disabled=true; go.classList.add('busy');
+    try{
+      const key=await _deriveKey(pw.value,_b64dec(remoto.salt),remoto.iter||200000);
+      const plano=await _decJSON(key,remoto.blob); // contraseña mala = esto lanza
+      _syncOwnKey=key;
+      await _llaveGuardar(SYNC_KEY_ID,key);
+      Store.set('tos-sync-salt',remoto.salt); Store.set('tos-sync-iter',String(remoto.iter||200000));
+      ov.remove();
+      _syncImportarConfirmando(plano,remoto.fecha);
+    }catch(e){
+      go.disabled=false; go.classList.remove('busy');
+      err.textContent=t('bk.imp.bad'); err.classList.add('on');
+      pw.value=''; try{pw.focus();}catch(_e){_ignora(_e);}
+    }
+  };
+  go=mk(t('bk.imp.dec'),'primary bkx-go',intentar);
+  mk(t('btn.cancel'),'',()=>{ov.remove();_syncOlvidarCarpeta();});
+  pw.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); intentar(); } });
+  ov.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ e.preventDefault(); ov.remove(); _syncOlvidarCarpeta(); } });
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ pw.focus(); }catch(e){_ignora(e);} },30);
+}
+function _syncImportarConfirmando(plano,fecha){
+  if(!plano||!plano.data)return;
+  const aplicar=()=>{
+    Object.keys(plano.data).forEach(k=>{ if(k.indexOf('tos-')===0&&BACKUP_NO_EXPORTAR.indexOf(k)<0)Store.set(k,plano.data[k]); });
+    _syncOn=true; Store.set('tos-sync-on','1'); Store.set('tos-sync-last',fecha);
+    try{location.reload();}catch(e){_ignora(e);}
+  };
+  const n=Object.keys(plano.data).length;
+  const resumen=osBackupGrupos(plano.data).map(g=>'<div class="bkx-row"><span>'+g.ic+' '+escHtml(t('bk.cat.'+g.id))+'</span><b>'+g.n+'</b></div>').join('');
+  xpDialog(t('sync.join.t'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-guardar"></use></svg></div><div>'+
+    escHtml(t('sync.join.found',{f:String(fecha||'').slice(0,10),n:n}))+
+    (resumen?'<div class="bkx-sum"><i style="font-style:normal;color:#79808f;font-size:11px">'+escHtml(t('bk.imp.has'))+'</i>'+resumen+'</div>':'')+'</div>',[
+    {label:t('sync.join.yes'),primary:true,action:aplicar},
+    {label:t('btn.cancel'),action:()=>_syncOlvidarCarpeta()}
+  ]);
+}
+// Primera vez que se enlaza una carpeta VACÍA sin cuenta local: hace falta una contraseña
+// de sync propia (con cuenta no hace falta pedir nada, se reutiliza la de la cuenta).
+function _syncPedirClaveNueva(){
+  uiSfx('dialog');
+  const ov=document.createElement('div');
+  ov.className='xp-dialog-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:99997;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3)';
+  ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('sync.new.t'))}" class="bkx-dlg">
+    <div class="bkx-title">&#128274; ${escHtml(t('sync.new.t'))}</div>
+    <div class="bkx-body">
+      <p class="bkx-desc">${escHtml(t('sync.new.d'))}</p>
+      <div class="bkx-pw">
+        <label class="pw-wrap"><input type="password" class="bkx-pw1 pw-input" placeholder="${escHtml(t('bk.pw'))}" aria-label="${escHtml(t('bk.pw'))}" autocomplete="new-password"><button type="button" class="pw-eye bkx-eye" aria-label="${escHtml(t('bk.eye'))}">&#128065;&#65039;</button></label>
+        <div class="bkx-warn">&#9888;&#65039; ${escHtml(t('bk.caps'))}</div>
+      </div>
+      <div class="bkx-err" role="alert"></div>
+    </div>
+    <div class="xp-dialog-btns bkx-btns"></div>
+  </div>`;
+  const q=(c)=>ov.querySelector('.'+c);
+  const pw=q('bkx-pw1'), err=q('bkx-err'), btns=q('bkx-btns');
+  attachPwHelpers(pw,q('bkx-eye'),q('bkx-warn'));
+  const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
+  let go;
+  const crear=async()=>{
+    if(!pw.value||pw.value.length<4){ err.textContent=t('sync.new.short'); err.classList.add('on'); return; }
+    err.classList.remove('on'); go.disabled=true; go.classList.add('busy');
+    const salt=window.crypto.getRandomValues(new Uint8Array(16)), iter=200000;
+    const key=await _deriveKey(pw.value,salt,iter);
+    _syncOwnKey=key;
+    await _llaveGuardar(SYNC_KEY_ID,key);
+    Store.set('tos-sync-salt',_b64enc(salt)); Store.set('tos-sync-iter',String(iter));
+    _syncOn=true; Store.set('tos-sync-on','1');
+    ov.remove();
+    await _syncFlush();
+    announce(t('sync.linked'));
+  };
+  go=mk(t('sync.new.go'),'primary bkx-go',crear);
+  mk(t('btn.cancel'),'',()=>{ov.remove();_syncOlvidarCarpeta();});
+  pw.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ e.preventDefault(); crear(); } });
+  ov.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ e.preventDefault(); ov.remove(); _syncOlvidarCarpeta(); } });
+  document.body.appendChild(ov);
+  setTimeout(()=>{ try{ pw.focus(); }catch(e){_ignora(e);} },30);
+}
+// Elegir carpeta: si ya tiene una copia dentro, es que otro dispositivo la enlazó antes (unirse);
+// si está vacía y hay cuenta, se activa sin más (misma clave); si está vacía y no hay cuenta,
+// toca fijar una contraseña de sync nueva.
+async function _syncElegirCarpeta(){
+  if(!_syncOk())return;
+  let handle;
+  try{ handle=await window.showDirectoryPicker({id:'torrecillas-sync',mode:'readwrite'}); }
+  catch(e){ return; } // cancelado por el usuario
+  let perm; try{ perm=await handle.requestPermission({mode:'readwrite'}); }catch(e){ perm='denied'; } // hay gesto: aquí sí vale pedirlo
+  if(perm!=='granted')return;
+  _syncDirHandle=handle;
+  await _llaveGuardar(SYNC_DIR_ID,handle);
+  const remoto=await _syncLeerRemoto();
+  if(remoto){ _syncPedirClaveUnirse(remoto); return; }
+  if(hasAccount()){
+    if(!isVaultUnlocked())return; // no debería poder llegar aquí sin sesión abierta
+    _syncOn=true; Store.set('tos-sync-on','1');
+    await _syncFlush();
+    announce(t('sync.linked'));
+  }else{
+    _syncPedirClaveNueva();
+  }
+}
+async function _syncOlvidarCarpeta(){
+  _syncOn=false; _syncDirHandle=null; _syncOwnKey=null;
+  Store.set('tos-sync-on','0');
+  await _llaveBorrar(SYNC_DIR_ID); await _llaveBorrar(SYNC_KEY_ID);
+  Store.del('tos-sync-salt'); Store.del('tos-sync-iter'); Store.del('tos-sync-last');
+  announce(t('sync.unlinked'));
+}
+// Se llama una vez por sesión desde arrancaServicios(), cuando ya se sabe si hay invitado o
+// vault desbloqueado — antes de eso Store.get('tos-sync-on') podría estar leyendo una caja
+// todavía cerrada y dar un falso "apagado".
+let _syncInitDone=false;
+async function _syncInit(){
+  if(_syncInitDone||!_syncOk())return;
+  if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return;
+  _syncInitDone=true;
+  if(Store.get('tos-sync-on')!=='1')return;
+  const handle=await _llaveLeer(SYNC_DIR_ID);
+  if(!handle){ Store.set('tos-sync-on','0'); return; } // "activo" pero sin carpeta: estado roto, se apaga solo
+  _syncDirHandle=handle;
+  _syncOn=true;
+  if(!hasAccount())_syncOwnKey=await _llaveLeer(SYNC_KEY_ID);
+  _syncCheckRemote(true);
+}
 // ---------- DESBLOQUEO RÁPIDO: PIN Y HUELLA ----------
 // Escribir una contraseña larga cada vez que abres el móvil empuja a activar el login
 // automático, que es justo lo que anula la protección. El punto medio es un CERROJO
@@ -7177,12 +7481,14 @@ const Store = {
   // Devuelve false si no se pudo guardar (cuota llena con fondos/dibujos grandes,
   // modo incognito...) para que quien guarde algo gordo pueda avisar al usuario.
   // Con la caja abierta escribe en memoria (síncrono) y difiere el re-cifrado.
-  set(k,v){ try{ if(k==='tos-lang')langCacheReset(); if(_vault!==null&&!VAULT_PLAINTEXT.has(k)){ _vault[k]=String(v); _scheduleVaultPersist(); return true; } localStorage.setItem(k,v); return true; }catch(e){ return false; } },
-  del(k){ try{ if(k==='tos-lang')langCacheReset(); if(_vault!==null&&!VAULT_PLAINTEXT.has(k)){ delete _vault[k]; _scheduleVaultPersist(); return; } localStorage.removeItem(k); }catch(e){_ignora(e);} }
+  set(k,v){ try{ if(k==='tos-lang')langCacheReset(); if(_vault!==null&&!VAULT_PLAINTEXT.has(k)){ _vault[k]=String(v); _scheduleVaultPersist(); _syncMarkDirty(k); return true; } localStorage.setItem(k,v); _syncMarkDirty(k); return true; }catch(e){ return false; } },
+  del(k){ try{ if(k==='tos-lang')langCacheReset(); if(_vault!==null&&!VAULT_PLAINTEXT.has(k)){ delete _vault[k]; _scheduleVaultPersist(); _syncMarkDirty(k); return; } localStorage.removeItem(k); _syncMarkDirty(k); }catch(e){_ignora(e);} }
 };
 // Al ocultar la pestaña o cerrar, forzar el re-cifrado pendiente (por si el diferido no llegó)
 document.addEventListener('visibilitychange',()=>{ if(document.hidden&&_vault&&_acctKey)persistVault(); });
 window.addEventListener('pagehide',()=>{ if(_vault&&_acctKey)persistVault(); });
+// Al volver a la pestaña: ¿hay algo más nuevo en la carpeta de sync que otro dispositivo dejó?
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden)_syncCheckRemote(); });
 
 // ========== INTERVALOS QUE DUERMEN CON LA PESTAÑA OCULTA ==========
 // Los timers de fondo (reloj, estados del MSN...) no pintan nada si nadie mira:
@@ -8069,6 +8375,7 @@ function arrancaServicios(){
   try{ if(radarCfg().aviso)radarArranca(); }catch(e){_ignora(e);} // vigilancia del radar de lluvia, si la dejaste puesta
   try{ osPidePersistencia(); }catch(e){_ignora(e);}    // que el navegador no desaloje los datos
   try{ osAvisaCopia(); }catch(e){_ignora(e);}          // y recordatorio de copia si toca
+  try{ _syncInit(); }catch(e){_ignora(e);}             // retoma la sincronización si estaba activa
   try{
     const pkg=osPaqueteDeURL();             // ¿nos han pasado una lista por enlace?
     if(pkg)setTimeout(()=>osImportaPaquete(pkg),700);
@@ -8709,7 +9016,7 @@ const OS_ATAJOS_PWA=[
   function injectFallback(){
     const m={
       name:'Torrecillas OS',short_name:'Torrecillas OS',lang:'es',
-      description:'Un escritorio estilo Windows XP en tu navegador: 17 juegos clásicos, Paint, terminal y portfolio.',
+      description:'Un escritorio estilo Windows XP en tu navegador: 21 juegos clásicos, Paint, terminal y portfolio.',
       // id fija la identidad de la app instalada: sin él se deriva de start_url y el día
       // que esa URL cambie el navegador creería que es otra app distinta (instalación
       // duplicada). Tiene que ser el mismo valor que el manifest de verdad.
@@ -9732,7 +10039,11 @@ const GAME_ICONS={
   sudoku:GI('<rect width="32" height="32" rx="5" fill="#fbfaf4"/><g stroke="#c3ccd6" stroke-width="1"><path d="M12 3v26M21 3v26M3 12h26M3 21h26"/></g><g stroke="#5b6b7c" stroke-width="1.9"><path d="M3.5 3.5h25v25h-25Z" fill="none"/></g><g fill="#1b4f9c" font-family="Tahoma,sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle"><text x="7.6" y="10.4">5</text><text x="16.5" y="19.4">3</text><text x="25.4" y="28.2">7</text><text x="25.4" y="10.4">9</text></g><g fill="#8d99a6" font-family="Tahoma,sans-serif" font-size="7.5" text-anchor="middle"><text x="7.6" y="28.2">1</text><text x="16.5" y="10.4">8</text></g>'),
   simon:GI('<rect width="32" height="32" rx="5" fill="#20242c"/><path d="M16 16V3.4A12.6 12.6 0 0 0 3.4 16Z" fill="#4bd06a"/><path d="M16 16h12.6A12.6 12.6 0 0 0 16 3.4Z" fill="#e0453e"/><path d="M16 16v12.6A12.6 12.6 0 0 0 28.6 16Z" fill="#39a7f0"/><path d="M16 16H3.4A12.6 12.6 0 0 0 16 28.6Z" fill="#f0c419"/><circle cx="16" cy="16" r="5" fill="#20242c"/><circle cx="16" cy="16" r="3.2" fill="#3a4150"/><path d="M8 8.6A11 11 0 0 1 15 4.6" stroke="#fff" stroke-width="1.6" opacity=".45" fill="none" stroke-linecap="round"/>'),
   chess:GI('<rect width="32" height="32" rx="5" fill="#efe6d4"/><g fill="#b58a5c"><rect x="3" y="3" width="6.5" height="6.5"/><rect x="16" y="3" width="6.5" height="6.5"/><rect x="9.5" y="9.5" width="6.5" height="6.5"/><rect x="22.5" y="9.5" width="6" height="6.5"/><rect x="3" y="16" width="6.5" height="6.5"/><rect x="16" y="16" width="6.5" height="6.5"/><rect x="9.5" y="22.5" width="6.5" height="6"/><rect x="22.5" y="22.5" width="6" height="6"/></g><path d="M12.6 25.4c0-3 1.4-4 2.6-5.2-1.6-.3-2.8-1-3.4-2.2l-1.6 1-1-2.2 2.2-1.3c.1-2.6 1.7-4.6 4.2-5.3l-.5-1.6 2 .3.3 1.4c2.9.3 4.8 2.4 5 5.6.2 3.6-1.3 6.2-1.3 9.5Z" fill="#20242c" stroke="#000" stroke-width=".8" stroke-linejoin="round"/><rect x="10.6" y="25.2" width="12" height="2.6" rx="1.2" fill="#20242c"/><circle cx="18.6" cy="14.4" r="1" fill="#fff"/>'),
-  mahjong:GI('<rect width="32" height="32" rx="5" fill="#0e5c39"/><rect x="6" y="4" width="20" height="24" rx="2.6" fill="#fdfaf0" stroke="#b7ac90"/><rect x="7.4" y="5.2" width="17.2" height="10" rx="1.6" fill="#fff" opacity=".7"/><g stroke="#1f7a44" stroke-width="2.4" stroke-linecap="round"><path d="M12 9v6M16 9v6M20 9v6"/></g><g fill="#e0453e"><circle cx="12" cy="20.4" r="2"/><circle cx="20" cy="20.4" r="2"/><circle cx="16" cy="24.4" r="2"/></g>')
+  mahjong:GI('<rect width="32" height="32" rx="5" fill="#0e5c39"/><rect x="6" y="4" width="20" height="24" rx="2.6" fill="#fdfaf0" stroke="#b7ac90"/><rect x="7.4" y="5.2" width="17.2" height="10" rx="1.6" fill="#fff" opacity=".7"/><g stroke="#1f7a44" stroke-width="2.4" stroke-linecap="round"><path d="M12 9v6M16 9v6M20 9v6"/></g><g fill="#e0453e"><circle cx="12" cy="20.4" r="2"/><circle cx="20" cy="20.4" r="2"/><circle cx="16" cy="24.4" r="2"/></g>'),
+  checkers:GI('<rect width="32" height="32" rx="5" fill="#3a2418"/><rect x="0" y="0" width="16" height="16" fill="#d9c19c"/><rect x="16" y="16" width="16" height="16" fill="#d9c19c"/><circle cx="9" cy="9" r="6" fill="#8f1616" stroke="#5c0d0d"/><circle cx="7" cy="7" r="1.8" fill="#fff" opacity=".3"/><circle cx="23" cy="23" r="6" fill="#f6ecd8" stroke="#c9b48c"/><circle cx="23" cy="23" r="3" fill="none" stroke="#c9a227" stroke-width="1.6"/>'),
+  reversi:GI('<rect width="32" height="32" rx="5" fill="#0f6b3a"/><g stroke="#083c20" stroke-width=".6"><circle cx="13" cy="13" r="4.6" fill="#1a1a1a"/><circle cx="19" cy="19" r="4.6" fill="#1a1a1a"/><circle cx="19" cy="13" r="4.6" fill="#f4f4f0"/><circle cx="13" cy="19" r="4.6" fill="#f4f4f0"/></g><circle cx="11.6" cy="11.6" r="1.3" fill="#fff" opacity=".35"/><circle cx="17.6" cy="11.6" r="1.3" fill="#fff" opacity=".8"/>'),
+  hangman:GI('<rect width="32" height="32" rx="5" fill="#fdf3e3"/><path d="M7 28V5h13M18 5v4" stroke="#6b4a2b" stroke-width="2.8" fill="none" stroke-linecap="round"/><circle cx="18" cy="13.6" r="3.6" fill="none" stroke="#e0453e" stroke-width="2.4"/><path d="M9 27h11" stroke="#39a7f0" stroke-width="2.8" stroke-linecap="round"/>'),
+  wordsearch:GI('<rect width="32" height="32" rx="5" fill="#fbfaf4"/><g stroke="#c3ccd6" stroke-width="1"><path d="M10.7 3v26M21.3 3v26M3 10.7h26M3 21.3h26"/></g><path d="M5 27 27 5" stroke="#ffdc5a" stroke-width="5" stroke-linecap="round" opacity=".55"/><g fill="#3a4150" font-family="Tahoma,sans-serif" font-size="8" font-weight="bold" text-anchor="middle"><text x="7" y="9.5">S</text><text x="16.5" y="19">O</text><text x="26" y="28.5">L</text></g>')
 };
 const RECORD_DEFS=[
   {icon:GAME_ICONS.snake,label:'Snake',key:'tos-snake-best',unit:'puntos'},
@@ -9757,7 +10068,13 @@ const RECORD_DEFS=[
   {icon:GAME_ICONS.chess,label:'Ajedrez',key:'tos-chess-best',unit:'victorias'},
   {icon:GAME_ICONS.mahjong,label:'Mahjong · tortuga',key:'tos-mahjong-best-tortuga',unit:'s'},
   {icon:GAME_ICONS.mahjong,label:'Mahjong · pirámide',key:'tos-mahjong-best-piramide',unit:'s'},
-  {icon:GAME_ICONS.mahjong,label:'Mahjong · rápida',key:'tos-mahjong-best-rapida',unit:'s'}
+  {icon:GAME_ICONS.mahjong,label:'Mahjong · rápida',key:'tos-mahjong-best-rapida',unit:'s'},
+  {icon:GAME_ICONS.checkers,label:'Damas · racha',key:'tos-checkers-best',unit:'sin perder'},
+  {icon:GAME_ICONS.reversi,label:'Reversi · racha',key:'tos-reversi-best',unit:'sin perder'},
+  {icon:GAME_ICONS.hangman,label:'Ahorcado · racha',key:'tos-hangman-best',unit:'palabras'},
+  {icon:GAME_ICONS.wordsearch,label:'Sopa de letras · fácil',key:'tos-wordsearch-best-facil',unit:'s'},
+  {icon:GAME_ICONS.wordsearch,label:'Sopa de letras · medio',key:'tos-wordsearch-best-medio',unit:'s'},
+  {icon:GAME_ICONS.wordsearch,label:'Sopa de letras · difícil',key:'tos-wordsearch-best-dificil',unit:'s'}
 ];
 // Punto único para la mejor marca de un juego: evita repetir el
 // parseInt(Store.get(...))||0 + comparar + guardar en cada uno, y avisa si la clave
@@ -9808,7 +10125,11 @@ const ACHIEVEMENTS=[
   {id:'solitario-completo',icon:GAME_ICONS.solitaire,label:'Paciencia infinita',desc:'Completar el Solitario'},
   {id:'sudoku-resuelto',icon:GAME_ICONS.sudoku,label:'Cuadrícula perfecta',desc:'Resolver un Sudoku'},
   {id:'simon-ronda8',icon:GAME_ICONS.simon,label:'Buena oreja',desc:'Llegar a la ronda 8 en Simon'},
-  {id:'mahjong-limpio',icon:GAME_ICONS.mahjong,label:'Tablero limpio',desc:'Despejar un tablero de Mahjong'}
+  {id:'mahjong-limpio',icon:GAME_ICONS.mahjong,label:'Tablero limpio',desc:'Despejar un tablero de Mahjong'},
+  {id:'checkers-victoria',icon:GAME_ICONS.checkers,label:'Coronado',desc:'Ganar una partida de Damas a la CPU'},
+  {id:'reversi-victoria',icon:GAME_ICONS.reversi,label:'Esquinas ganadas',desc:'Ganar una partida de Reversi a la CPU'},
+  {id:'hangman-racha5',icon:GAME_ICONS.hangman,label:'Adivino',desc:'Acertar 5 palabras seguidas en el Ahorcado'},
+  {id:'wordsearch-dificil',icon:GAME_ICONS.wordsearch,label:'Ojo de lince',desc:'Completar la Sopa de letras difícil'}
 ];
 function _achState(){ return osObjetoGuardado('tos-achievements'); }
 function _playedState(){ try{return JSON.parse(Store.get('tos-played')||'{}');}catch(e){return {};} }
@@ -21409,6 +21730,744 @@ function initChess(){
   }});
 }
 
+// ========== DAMAS ==========
+// Reglas españolas/internacionales: captura obligatoria Y de la secuencia más larga (si hay
+// varias cadenas de captura posibles, solo son legales las de longitud máxima), dama "voladora"
+// que se mueve y captura cualquier distancia por la diagonal libre. Una pieza que corona a
+// mitad de una cadena de capturas se para ahí: no sigue comiendo como dama en la misma jugada
+// (regla estándar). El tablero es de 8x8 con 12 piezas por bando, como el ajedrez de al lado.
+const DM_NIVELES=[
+  {id:'facil',label:'Fácil',prof:2},
+  {id:'normal',label:'Normal',prof:4},
+  {id:'dificil',label:'Difícil',prof:6}
+];
+function _dmNivel(id){ return DM_NIVELES.find(n=>n.id===id)||DM_NIVELES[1]; }
+function _dmColor(p){ return p.toLowerCase(); }
+function _dmEsRey(p){ return p==='R'||p==='N'; }
+function _dmEnTablero(r,c){ return r>=0&&r<8&&c>=0&&c<8; }
+function _dmInicial(){
+  const b=Array.from({length:8},()=>Array(8).fill(''));
+  for(let r=0;r<3;r++)for(let c=0;c<8;c++)if((r+c)%2===1)b[r][c]='n';
+  for(let r=5;r<8;r++)for(let c=0;c<8;c++)if((r+c)%2===1)b[r][c]='r';
+  return b;
+}
+// Saltos de captura de UNA pieza. Peón: solo puede comer aterrizando en la casilla justa
+// detrás del enemigo. Dama: "vuela" — cualquier hueco libre antes y después de la pieza comida.
+function _dmSaltos(tablero,r,c){
+  const p=tablero[r][c], color=_dmColor(p), rey=_dmEsRey(p);
+  const dirs=[[-1,-1],[-1,1],[1,-1],[1,1]];
+  const out=[];
+  if(rey){
+    dirs.forEach(([dr,dc])=>{
+      let rr=r+dr,cc=c+dc,enemigo=null;
+      while(_dmEnTablero(rr,cc)){
+        const q=tablero[rr][cc];
+        if(!q){ if(enemigo)out.push({capR:enemigo[0],capC:enemigo[1],toR:rr,toC:cc}); rr+=dr;cc+=dc; continue; }
+        if(enemigo)break;               // segunda pieza en la misma diagonal: no se puede saltar dos
+        if(_dmColor(q)===color)break;   // pieza propia: corta la diagonal
+        enemigo=[rr,cc]; rr+=dr;cc+=dc; // pieza enemiga: sigue mirando huecos detrás para aterrizar
+      }
+    });
+  }else{
+    dirs.forEach(([dr,dc])=>{
+      const mr=r+dr,mc=c+dc,ar=r+2*dr,ac=c+2*dc;
+      if(!_dmEnTablero(ar,ac))return;
+      const q=tablero[mr]&&tablero[mr][mc];
+      if(q&&_dmColor(q)!==color&&!tablero[ar][ac])out.push({capR:mr,capC:mc,toR:ar,toC:ac});
+    });
+  }
+  return out;
+}
+function _dmMovsSimples(tablero,color){
+  const out=[];
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    const p=tablero[r][c]; if(!p||_dmColor(p)!==color)continue;
+    const rey=_dmEsRey(p);
+    const dirs=rey?[[-1,-1],[-1,1],[1,-1],[1,1]]:(color==='r'?[[-1,-1],[-1,1]]:[[1,-1],[1,1]]);
+    dirs.forEach(([dr,dc])=>{
+      if(rey){
+        let rr=r+dr,cc=c+dc;
+        while(_dmEnTablero(rr,cc)&&!tablero[rr][cc]){ out.push({from:[r,c],to:[rr,cc]}); rr+=dr;cc+=dc; }
+      }else{
+        const rr=r+dr,cc=c+dc;
+        if(_dmEnTablero(rr,cc)&&!tablero[rr][cc])out.push({from:[r,c],to:[rr,cc]});
+      }
+    });
+  }
+  return out;
+}
+function _dmSecuenciasMax(tablero,color){
+  let max=0,mejor=[];
+  const clona=(b)=>b.map(f=>f.slice());
+  function explora(t,r,c,capturadas,inicio,coronada){
+    const saltos=coronada?[]:_dmSaltos(t,r,c);
+    if(!saltos.length){
+      if(!capturadas.length)return;
+      if(capturadas.length>max){ max=capturadas.length; mejor=[]; }
+      if(capturadas.length===max)mejor.push({from:inicio,to:[r,c],capturadas:capturadas.slice()});
+      return;
+    }
+    saltos.forEach(s=>{
+      const t2=clona(t);
+      const pieza=t2[r][c];
+      t2[r][c]='';
+      t2[s.capR][s.capC]='';
+      const filaCorona=color==='r'?0:7;
+      const corona=!_dmEsRey(pieza)&&s.toR===filaCorona;
+      t2[s.toR][s.toC]=corona?pieza.toUpperCase():pieza;
+      explora(t2,s.toR,s.toC,capturadas.concat([[s.capR,s.capC]]),inicio,corona);
+    });
+  }
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++)if(tablero[r][c]&&_dmColor(tablero[r][c])===color)explora(tablero,r,c,[],[r,c],false);
+  return mejor;
+}
+function _dmLegal(tablero,color){
+  const capturas=_dmSecuenciasMax(tablero,color);
+  if(capturas.length)return capturas.map(s=>({from:s.from,to:s.to,capturadas:s.capturadas,captura:true}));
+  return _dmMovsSimples(tablero,color).map(m=>({from:m.from,to:m.to,capturadas:[],captura:false}));
+}
+function _dmAplicar(tablero,mov){
+  const t2=tablero.map(f=>f.slice());
+  const pieza=t2[mov.from[0]][mov.from[1]];
+  t2[mov.from[0]][mov.from[1]]='';
+  mov.capturadas.forEach(([r,c])=>{ t2[r][c]=''; });
+  const filaCorona=_dmColor(pieza)==='r'?0:7;
+  t2[mov.to[0]][mov.to[1]]=(!_dmEsRey(pieza)&&mov.to[0]===filaCorona)?pieza.toUpperCase():pieza;
+  return t2;
+}
+function _dmEval(tablero){
+  let v=0;
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    const p=tablero[r][c]; if(!p)continue;
+    const valor=_dmEsRey(p)?3:(1+(_dmColor(p)==='n'?r:7-r)*0.03); // avanzar hacia coronar suma un pelín
+    v+=_dmColor(p)==='n'?valor:-valor;
+  }
+  return v;
+}
+// Minimax con poda alfa-beta a profundidad fija: el espacio de búsqueda de las damas (más
+// estrecho que el ajedrez, y más aún con captura obligada) juega bien sin profundización
+// iterativa ni presupuesto de tiempo — a diferencia de _chBestMove, que sí los necesita.
+function _dmMinimax(tablero,color,prof,alpha,beta){
+  const legales=_dmLegal(tablero,color);
+  if(!legales.length)return {score:color==='n'?-99:99};
+  if(prof===0)return {score:_dmEval(tablero)};
+  const maximiza=color==='n';
+  let mejor=null,mejorScore=maximiza?-Infinity:Infinity;
+  for(const mov of legales){
+    const t2=_dmAplicar(tablero,mov);
+    const r=_dmMinimax(t2,color==='n'?'r':'n',prof-1,alpha,beta);
+    if(maximiza){ if(r.score>mejorScore){mejorScore=r.score;mejor=mov;} alpha=Math.max(alpha,mejorScore); }
+    else{ if(r.score<mejorScore){mejorScore=r.score;mejor=mov;} beta=Math.min(beta,mejorScore); }
+    if(beta<=alpha)break;
+  }
+  return {score:mejorScore,move:mejor};
+}
+function initCheckers(){
+  const content=`<div id="checkers-game" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#2a1810;color:#fff;padding:10px;gap:8px;font-family:Rajdhani,sans-serif">
+    <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:300px;gap:8px">
+      <div id="dm-status" style="font-size:14px;font-weight:700;min-height:20px;flex:1">Tu turno</div>
+      <label style="font-size:12px;display:flex;align-items:center;gap:4px;white-space:nowrap">Nivel
+        <select id="dm-lvl" aria-label="Nivel de la máquina">${DM_NIVELES.map(n=>`<option value="${n.id}">${n.label}</option>`).join('')}</select>
+      </label>
+    </div>
+    <div id="dm-board" role="grid" aria-label="Tablero de damas" style="display:grid;grid-template-columns:repeat(8,34px);grid-template-rows:repeat(8,34px);border:2px solid #6b4a2b"></div>
+    <button type="button" id="dm-reset" class="g-btn">${t('btn.newgame')}</button>
+  </div>`;
+  createWindow('Damas','&#128308;',300,430,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const boardEl=win.querySelector('#dm-board'), statusEl=win.querySelector('#dm-status'), lvlSel=win.querySelector('#dm-lvl');
+    const rec=useRecord('tos-checkers-best');
+    let board,sel,legal,over,pensando,racha=0,cursor=[7,0];
+    const casilla=(r,c)=>String.fromCharCode(97+c)+(8-r);
+    function estadoTexto(){
+      if(over)return over;
+      return legal.some(m=>m.captura)?'Tu turno — captura obligatoria':'Tu turno';
+    }
+    function render(){
+      boardEl.innerHTML='';
+      for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+        const oscura=(r+c)%2===1;
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.setAttribute('role','gridcell');
+        btn.dataset.r=r;btn.dataset.c=c;
+        btn.tabIndex=(cursor[0]===r&&cursor[1]===c)?0:-1;
+        const marcaMov=legal.some(m=>sel&&m.from[0]===sel[0]&&m.from[1]===sel[1]&&m.to[0]===r&&m.to[1]===c);
+        btn.style.cssText='width:34px;height:34px;border:none;padding:0;display:flex;align-items:center;justify-content:center;background:'+(oscura?'#7a5233':'#e8d5b5')+';cursor:pointer'+(marcaMov?';box-shadow:inset 0 0 0 3px #4bd06a':'');
+        const p=board[r][c];
+        let piezaDesc='vacía';
+        if(p){
+          const rey=_dmEsRey(p), rojo=_dmColor(p)==='r';
+          piezaDesc=(rojo?'roja':'negra')+(rey?' dama':'');
+          const disco=document.createElement('div');
+          const elegida=sel&&sel[0]===r&&sel[1]===c;
+          disco.style.cssText='width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:'+(rojo?'radial-gradient(circle at 35% 30%,#e0645a,#8f1616)':'radial-gradient(circle at 35% 30%,#5a5a5a,#161616)')+';border:2px solid '+(elegida?'#ffdc5a':(rojo?'#5c0d0d':'#000'));
+          if(rey){ const k=document.createElement('span'); k.textContent='♛'; k.setAttribute('aria-hidden','true'); k.style.cssText='color:#ffdc5a;font-size:14px;line-height:1'; disco.appendChild(k); }
+          btn.appendChild(disco);
+        }
+        btn.setAttribute('aria-label',casilla(r,c)+', '+piezaDesc+(marcaMov?', movimiento legal':''));
+        btn.onclick=()=>onSquare(r,c);
+        boardEl.appendChild(btn);
+      }
+    }
+    function onSquare(r,c){
+      if(over||pensando)return;
+      cursor=[r,c];
+      if(sel){
+        const mv=legal.find(m=>m.from[0]===sel[0]&&m.from[1]===sel[1]&&m.to[0]===r&&m.to[1]===c);
+        if(mv){
+          board=_dmAplicar(board,mv);
+          sel=null;
+          const cpuLegal=_dmLegal(board,'n');
+          if(!cpuLegal.length){
+            over='¡Ganaste! 🎉'; racha++; unlock('checkers-victoria');
+            if(rec.submit(racha))announce('Nuevo récord en Damas: '+racha+' sin perder');
+            legal=[]; render(); statusEl.textContent=over; return;
+          }
+          legal=[]; render(); statusEl.textContent='La IA piensa…';
+          pensando=true;
+          setTimeout(cpuMueve,250);
+          return;
+        }
+      }
+      const p=board[r][c];
+      sel=(p&&_dmColor(p)==='r')?[r,c]:null;
+      render();
+      statusEl.textContent=estadoTexto();
+      const btn=boardEl.querySelector('[data-r="'+r+'"][data-c="'+c+'"]');
+      if(btn)try{btn.focus();}catch(e){_ignora(e);}
+    }
+    function cpuMueve(){
+      if(over)return;
+      const nivel=_dmNivel(lvlSel.value);
+      const r=_dmMinimax(board,'n',nivel.prof,-Infinity,Infinity);
+      if(r.move)board=_dmAplicar(board,r.move);
+      pensando=false;
+      legal=_dmLegal(board,'r');
+      if(!legal.length){ over='Gana la CPU'; racha=0; render(); statusEl.textContent=over; announce('Damas: gana la CPU'); return; }
+      render();
+      statusEl.textContent=estadoTexto();
+    }
+    function reset(){
+      board=_dmInicial(); sel=null; over=null; pensando=false; cursor=[7,0];
+      legal=_dmLegal(board,'r');
+      render();
+      statusEl.textContent=estadoTexto();
+    }
+    boardEl.addEventListener('keydown',(e)=>{
+      if(!e.key.startsWith('Arrow'))return;
+      e.preventDefault();
+      let [r,c]=cursor;
+      if(e.key==='ArrowUp')r=(r+7)%8; else if(e.key==='ArrowDown')r=(r+1)%8;
+      else if(e.key==='ArrowLeft')c=(c+7)%8; else c=(c+1)%8;
+      cursor=[r,c];
+      render();
+      const btn=boardEl.querySelector('[data-r="'+r+'"][data-c="'+c+'"]');
+      if(btn)try{btn.focus();}catch(_e){_ignora(_e);}
+    });
+    win.querySelector('#dm-reset').onclick=reset;
+    lvlSel.value='normal';
+    lvlSel.onchange=()=>announce('Nivel de Damas: '+_dmNivel(lvlSel.value).label);
+    mountGame(id,{rootId:'checkers-game',restart:reset});
+    reset();
+  }});
+}
+
+// ========== REVERSI / OTELO ==========
+// Negras empieza (juegas tú, como en el resto de juegos de tablero) y blancas es la CPU. La
+// regla que se olvida siempre: si a quien le toca no tiene ninguna jugada legal, el turno pasa
+// automáticamente al otro — no es fin de partida ni empate. Solo se acaba cuando NINGUNO de los
+// dos puede mover (tablero lleno, o antes).
+const RV_NIVELES=[
+  {id:'facil',label:'Fácil',prof:2},
+  {id:'normal',label:'Normal',prof:4},
+  {id:'dificil',label:'Difícil',prof:6}
+];
+function _rvNivel(id){ return RV_NIVELES.find(n=>n.id===id)||RV_NIVELES[1]; }
+function _rvEnTablero(r,c){ return r>=0&&r<8&&c>=0&&c<8; }
+function _rvInicial(){
+  const b=Array.from({length:8},()=>Array(8).fill(''));
+  b[3][3]='b'; b[4][4]='b'; b[3][4]='n'; b[4][3]='n';
+  return b;
+}
+function _rvVolteos(board,r,c,color){
+  if(board[r][c])return [];
+  const rival=color==='n'?'b':'n';
+  const dirs=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+  const out=[];
+  dirs.forEach(([dr,dc])=>{
+    let rr=r+dr,cc=c+dc;
+    const linea=[];
+    while(_rvEnTablero(rr,cc)&&board[rr][cc]===rival){ linea.push([rr,cc]); rr+=dr;cc+=dc; }
+    if(linea.length&&_rvEnTablero(rr,cc)&&board[rr][cc]===color)out.push(...linea);
+  });
+  return out;
+}
+function _rvLegal(board,color){
+  const out=[];
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+    if(board[r][c])continue;
+    const volteos=_rvVolteos(board,r,c,color);
+    if(volteos.length)out.push({r,c,volteos});
+  }
+  return out;
+}
+function _rvAplicar(board,mov,color){
+  const t2=board.map(f=>f.slice());
+  t2[mov.r][mov.c]=color;
+  mov.volteos.forEach(([r,c])=>{ t2[r][c]=color; });
+  return t2;
+}
+// Esquinas primero (valen mucho y nadie te las quita), evitar las casillas pegadas a una
+// esquina TODAVÍA vacía (le regalan la esquina al rival) y movilidad por encima de fichas —
+// tener muchas fichas pronto suele ser malo en Otelo, así que el recuento pesa poco.
+const RV_ESQUINA_PELIGRO=[
+  {esquina:[0,0],peligro:[[0,1],[1,0],[1,1]]},
+  {esquina:[0,7],peligro:[[0,6],[1,7],[1,6]]},
+  {esquina:[7,0],peligro:[[7,1],[6,0],[6,1]]},
+  {esquina:[7,7],peligro:[[6,7],[7,6],[6,6]]}
+];
+function _rvEval(board){
+  let v=0;
+  for(let r=0;r<8;r++)for(let c=0;c<8;c++){ const p=board[r][c]; if(p)v+=(p==='n'?1:-1); }
+  let vEsq=0;
+  [[0,0],[0,7],[7,0],[7,7]].forEach(([r,c])=>{ if(board[r][c])vEsq+=(board[r][c]==='n'?20:-20); });
+  let vPeligro=0;
+  RV_ESQUINA_PELIGRO.forEach(({esquina,peligro})=>{
+    if(board[esquina[0]][esquina[1]])return; // esquina ya ocupada: sus vecinas ya no son peligrosas
+    peligro.forEach(([r,c])=>{ if(board[r][c])vPeligro+=(board[r][c]==='n'?-6:6); });
+  });
+  const vMov=(_rvLegal(board,'n').length-_rvLegal(board,'b').length)*2;
+  return v*0.5+vEsq+vPeligro+vMov;
+}
+function _rvMinimax(board,color,prof,alpha,beta){
+  const legal=_rvLegal(board,color);
+  const rival=color==='n'?'b':'n';
+  if(!legal.length){
+    if(!_rvLegal(board,rival).length)return {score:_rvEval(board)}; // nadie puede mover: fin
+    if(prof===0)return {score:_rvEval(board)};
+    return _rvMinimax(board,rival,prof-1,alpha,beta); // sin jugada: turno pasa sin gastar tirada
+  }
+  if(prof===0)return {score:_rvEval(board)};
+  const maximiza=color==='n';
+  let mejor=null,mejorScore=maximiza?-Infinity:Infinity;
+  for(const mov of legal){
+    const t2=_rvAplicar(board,mov,color);
+    const r=_rvMinimax(t2,rival,prof-1,alpha,beta);
+    if(maximiza){ if(r.score>mejorScore){mejorScore=r.score;mejor=mov;} alpha=Math.max(alpha,mejorScore); }
+    else{ if(r.score<mejorScore){mejorScore=r.score;mejor=mov;} beta=Math.min(beta,mejorScore); }
+    if(beta<=alpha)break;
+  }
+  return {score:mejorScore,move:mejor};
+}
+function initReversi(){
+  const content=`<div id="reversi-game" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0b3d24;color:#fff;padding:10px;gap:8px;font-family:Rajdhani,sans-serif">
+    <div style="display:flex;justify-content:space-between;align-items:center;width:100%;max-width:300px;gap:8px">
+      <div id="rv-status" style="font-size:14px;font-weight:700;min-height:20px;flex:1">Tu turno (negras) &middot; 2-2</div>
+      <label style="font-size:12px;display:flex;align-items:center;gap:4px;white-space:nowrap">Nivel
+        <select id="rv-lvl" aria-label="Nivel de la máquina">${RV_NIVELES.map(n=>`<option value="${n.id}">${n.label}</option>`).join('')}</select>
+      </label>
+    </div>
+    <div id="rv-board" role="grid" aria-label="Tablero de Otelo" style="display:grid;grid-template-columns:repeat(8,34px);grid-template-rows:repeat(8,34px);gap:1px;background:#062814;border:2px solid #062814"></div>
+    <button type="button" id="rv-reset" class="g-btn">${t('btn.newgame')}</button>
+  </div>`;
+  createWindow('Reversi','&#9899;',300,430,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const boardEl=win.querySelector('#rv-board'), statusEl=win.querySelector('#rv-status'), lvlSel=win.querySelector('#rv-lvl');
+    const rec=useRecord('tos-reversi-best');
+    let board,over,pensando,racha=0,cursor=[2,3],legal;
+    const casilla=(r,c)=>String.fromCharCode(97+c)+(8-r);
+    const cuenta=()=>{ let n=0,b=0; board.forEach(f=>f.forEach(p=>{if(p==='n')n++;else if(p==='b')b++;})); return {n,b}; };
+    function estadoTexto(){
+      if(over)return over;
+      const c=cuenta();
+      return 'Tu turno (negras) · '+c.n+'-'+c.b;
+    }
+    function render(){
+      boardEl.innerHTML='';
+      for(let r=0;r<8;r++)for(let c=0;c<8;c++){
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.setAttribute('role','gridcell');
+        btn.dataset.r=r;btn.dataset.c=c;
+        btn.tabIndex=(cursor[0]===r&&cursor[1]===c)?0:-1;
+        const esLegal=legal.some(m=>m.r===r&&m.c===c);
+        btn.style.cssText='width:34px;height:34px;border:none;padding:0;display:flex;align-items:center;justify-content:center;background:#0f6b3a;cursor:pointer'+(esLegal?';box-shadow:inset 0 0 0 3px #ffdc5a':'');
+        const p=board[r][c];
+        let desc='vacía'+(esLegal?', movimiento legal':'');
+        if(p){
+          desc=p==='n'?'negra':'blanca';
+          const disco=document.createElement('div');
+          disco.style.cssText='width:27px;height:27px;border-radius:50%;background:'+(p==='n'?'radial-gradient(circle at 35% 30%,#4a4a4a,#0a0a0a)':'radial-gradient(circle at 35% 30%,#fff,#d8d8d8)')+';border:1px solid '+(p==='n'?'#000':'#aaa');
+          btn.appendChild(disco);
+        }
+        btn.setAttribute('aria-label',casilla(r,c)+', '+desc);
+        btn.onclick=()=>onSquare(r,c);
+        boardEl.appendChild(btn);
+      }
+    }
+    function finPartida(){
+      const c=cuenta();
+      over=c.n>c.b?'¡Ganaste! 🎉 '+c.n+'-'+c.b:(c.n<c.b?'Gana la CPU '+c.b+'-'+c.n:'Empate '+c.n+'-'+c.n);
+      if(c.n>c.b){ racha++; unlock('reversi-victoria'); if(rec.submit(racha))announce('Nuevo récord en Reversi: '+racha+' sin perder'); }
+      else if(c.n<c.b){ racha=0; announce('Reversi: gana la CPU'); }
+      else announce('Reversi: empate');
+      render();
+      statusEl.textContent=over;
+    }
+    // Recalcula SIEMPRE desde el tablero (nunca de una variable vieja) de quién es el turno:
+    // tuyo si tienes jugada, de la CPU si no la tienes pero ella sí, fin de partida si ninguno.
+    function despuesDeMover(){
+      legal=_rvLegal(board,'n');
+      if(legal.length){ pensando=false; render(); statusEl.textContent=estadoTexto(); return; }
+      if(!_rvLegal(board,'b').length){ finPartida(); return; }
+      announce('Sin jugadas, pasas turno');
+      cpuJuega();
+    }
+    function cpuJuega(){
+      pensando=true; render(); statusEl.textContent='La IA piensa…';
+      setTimeout(()=>{
+        const nivel=_rvNivel(lvlSel.value);
+        const r=_rvMinimax(board,'b',nivel.prof,-Infinity,Infinity);
+        if(r.move)board=_rvAplicar(board,r.move,'b');
+        despuesDeMover();
+      },250);
+    }
+    function onSquare(r,c){
+      if(over||pensando)return;
+      cursor=[r,c];
+      const mv=legal.find(m=>m.r===r&&m.c===c);
+      if(mv){
+        board=_rvAplicar(board,mv,'n');
+        cpuJuega();
+        return;
+      }
+      render();
+    }
+    function reset(){
+      board=_rvInicial(); over=null; pensando=false; cursor=[2,3];
+      legal=_rvLegal(board,'n');
+      render();
+      statusEl.textContent=estadoTexto();
+    }
+    boardEl.addEventListener('keydown',(e)=>{
+      if(!e.key.startsWith('Arrow'))return;
+      e.preventDefault();
+      let [r,c]=cursor;
+      if(e.key==='ArrowUp')r=(r+7)%8; else if(e.key==='ArrowDown')r=(r+1)%8;
+      else if(e.key==='ArrowLeft')c=(c+7)%8; else c=(c+1)%8;
+      cursor=[r,c];
+      render();
+      const btn=boardEl.querySelector('[data-r="'+r+'"][data-c="'+c+'"]');
+      if(btn)try{btn.focus();}catch(_e){_ignora(_e);}
+    });
+    win.querySelector('#rv-reset').onclick=reset;
+    lvlSel.value='normal';
+    lvlSel.onchange=()=>announce('Nivel de Reversi: '+_rvNivel(lvlSel.value).label);
+    mountGame(id,{rootId:'reversi-game',restart:reset});
+    reset();
+  }});
+}
+
+// ========== AHORCADO ==========
+// Sin acentos a propósito: el teclado en pantalla solo tiene A-Z y Ñ (como el resto de juegos,
+// el contenido va en español fijo, sin pasar por el diccionario de idiomas). LEON en vez de
+// LEÓN es la misma concesión que hacían las máquinas de escribir y muchos crucigramas: con
+// mayúsculas sueltas, quitar la tilde no cambia qué palabra es.
+const HM_PALABRAS=[
+  {p:'LEON',c:'animales'},{p:'TIGRE',c:'animales'},{p:'ELEFANTE',c:'animales'},{p:'JIRAFA',c:'animales'},
+  {p:'CEBRA',c:'animales'},{p:'MONO',c:'animales'},{p:'DELFIN',c:'animales'},{p:'BALLENA',c:'animales'},
+  {p:'TIBURON',c:'animales'},{p:'PINGUINO',c:'animales'},{p:'COCODRILO',c:'animales'},{p:'SERPIENTE',c:'animales'},
+  {p:'AGUILA',c:'animales'},{p:'BUHO',c:'animales'},{p:'ARDILLA',c:'animales'},{p:'CONEJO',c:'animales'},
+  {p:'CABALLO',c:'animales'},{p:'OVEJA',c:'animales'},{p:'CERDO',c:'animales'},{p:'GALLINA',c:'animales'},
+  {p:'PATO',c:'animales'},{p:'TORTUGA',c:'animales'},{p:'RANA',c:'animales'},{p:'MARIPOSA',c:'animales'},
+  {p:'ABEJA',c:'animales'},{p:'HORMIGA',c:'animales'},{p:'ARAÑA',c:'animales'},{p:'PULPO',c:'animales'},
+  {p:'CANGREJO',c:'animales'},{p:'MEDUSA',c:'animales'},
+  {p:'ESPAÑA',c:'países'},{p:'FRANCIA',c:'países'},{p:'ITALIA',c:'países'},{p:'ALEMANIA',c:'países'},
+  {p:'PORTUGAL',c:'países'},{p:'MEXICO',c:'países'},{p:'ARGENTINA',c:'países'},{p:'BRASIL',c:'países'},
+  {p:'COLOMBIA',c:'países'},{p:'CHILE',c:'países'},{p:'PERU',c:'países'},{p:'CANADA',c:'países'},
+  {p:'JAPON',c:'países'},{p:'CHINA',c:'países'},{p:'INDIA',c:'países'},{p:'EGIPTO',c:'países'},
+  {p:'MARRUECOS',c:'países'},{p:'GRECIA',c:'países'},{p:'NORUEGA',c:'países'},{p:'SUECIA',c:'países'},
+  {p:'IRLANDA',c:'países'},{p:'HOLANDA',c:'países'},{p:'POLONIA',c:'países'},{p:'TURQUIA',c:'países'},{p:'CUBA',c:'países'},
+  {p:'PAELLA',c:'comida'},{p:'TORTILLA',c:'comida'},{p:'GAZPACHO',c:'comida'},{p:'CROQUETA',c:'comida'},
+  {p:'JAMON',c:'comida'},{p:'QUESO',c:'comida'},{p:'CHORIZO',c:'comida'},{p:'TARTA',c:'comida'},
+  {p:'HELADO',c:'comida'},{p:'CHOCOLATE',c:'comida'},{p:'PIZZA',c:'comida'},{p:'HAMBURGUESA',c:'comida'},
+  {p:'ENSALADA',c:'comida'},{p:'SOPA',c:'comida'},{p:'ARROZ',c:'comida'},{p:'PASTA',c:'comida'},
+  {p:'PAN',c:'comida'},{p:'MANZANA',c:'comida'},{p:'PLATANO',c:'comida'},{p:'PERA',c:'comida'},
+  {p:'FRESA',c:'comida'},{p:'SANDIA',c:'comida'},{p:'MELON',c:'comida'},{p:'UVA',c:'comida'},{p:'LIMON',c:'comida'},
+  {p:'PARAGUAS',c:'objetos'},{p:'BICICLETA',c:'objetos'},{p:'TELEFONO',c:'objetos'},{p:'ORDENADOR',c:'objetos'},
+  {p:'VENTANA',c:'objetos'},{p:'ESPEJO',c:'objetos'},{p:'RELOJ',c:'objetos'},{p:'MOCHILA',c:'objetos'},
+  {p:'ZAPATO',c:'objetos'},{p:'SOMBRERO',c:'objetos'},{p:'GAFAS',c:'objetos'},{p:'LLAVE',c:'objetos'},
+  {p:'MALETA',c:'objetos'},{p:'LAMPARA',c:'objetos'},{p:'SILLA',c:'objetos'},{p:'MESA',c:'objetos'},
+  {p:'LIBRO',c:'objetos'},{p:'CUADERNO',c:'objetos'},{p:'BOLIGRAFO',c:'objetos'},{p:'TIJERAS',c:'objetos'},
+  {p:'CAMARA',c:'objetos'},{p:'GUITARRA',c:'objetos'},{p:'PIANO',c:'objetos'},{p:'TAMBOR',c:'objetos'},{p:'VIOLIN',c:'objetos'},
+  {p:'FUTBOL',c:'deporte'},{p:'BALONCESTO',c:'deporte'},{p:'TENIS',c:'deporte'},{p:'NATACION',c:'deporte'},
+  {p:'CICLISMO',c:'deporte'},{p:'ATLETISMO',c:'deporte'},{p:'BOXEO',c:'deporte'},{p:'ESQUI',c:'deporte'},
+  {p:'SURF',c:'deporte'},{p:'GOLF',c:'deporte'},{p:'RUGBY',c:'deporte'},{p:'VOLEIBOL',c:'deporte'},
+  {p:'ESGRIMA',c:'deporte'},{p:'JUDO',c:'deporte'},{p:'KARATE',c:'deporte'},{p:'AJEDREZ',c:'deporte'},{p:'BEISBOL',c:'deporte'},
+  {p:'ROJO',c:'colores'},{p:'AZUL',c:'colores'},{p:'VERDE',c:'colores'},{p:'AMARILLO',c:'colores'},
+  {p:'NARANJA',c:'colores'},{p:'MORADO',c:'colores'},{p:'ROSA',c:'colores'},{p:'MARRON',c:'colores'},
+  {p:'GRIS',c:'colores'},{p:'NEGRO',c:'colores'},{p:'BLANCO',c:'colores'},{p:'TURQUESA',c:'colores'},
+  {p:'DORADO',c:'colores'},{p:'PLATEADO',c:'colores'},
+  {p:'MEDICO',c:'profesiones'},{p:'PROFESOR',c:'profesiones'},{p:'BOMBERO',c:'profesiones'},{p:'POLICIA',c:'profesiones'},
+  {p:'COCINERO',c:'profesiones'},{p:'PANADERO',c:'profesiones'},{p:'PINTOR',c:'profesiones'},{p:'ESCRITOR',c:'profesiones'},
+  {p:'MUSICO',c:'profesiones'},{p:'ACTOR',c:'profesiones'},{p:'PERIODISTA',c:'profesiones'},{p:'ABOGADO',c:'profesiones'},
+  {p:'INGENIERO',c:'profesiones'},{p:'ENFERMERA',c:'profesiones'},{p:'ASTRONAUTA',c:'profesiones'},{p:'PILOTO',c:'profesiones'},
+  {p:'CARPINTERO',c:'profesiones'},{p:'ELECTRICISTA',c:'profesiones'},{p:'FONTANERO',c:'profesiones'},{p:'JARDINERO',c:'profesiones'},
+  {p:'MONTAÑA',c:'naturaleza'},{p:'RIO',c:'naturaleza'},{p:'LAGO',c:'naturaleza'},{p:'BOSQUE',c:'naturaleza'},
+  {p:'DESIERTO',c:'naturaleza'},{p:'VOLCAN',c:'naturaleza'},{p:'PLAYA',c:'naturaleza'},{p:'ISLA',c:'naturaleza'},
+  {p:'CASCADA',c:'naturaleza'},{p:'GLACIAR',c:'naturaleza'},{p:'ESTRELLA',c:'naturaleza'},{p:'LUNA',c:'naturaleza'},
+  {p:'COMETA',c:'naturaleza'},{p:'ARCOIRIS',c:'naturaleza'},{p:'TORMENTA',c:'naturaleza'},{p:'NUBE',c:'naturaleza'},
+  {p:'VIENTO',c:'naturaleza'},{p:'NIEVE',c:'naturaleza'}
+];
+function initHangman(){
+  const content=`<div id="hangman-game" style="display:flex;flex-direction:column;align-items:center;height:100%;background:#fdf3e3;color:#3a2a1a;padding:10px;gap:6px;font-family:Rajdhani,sans-serif;overflow:auto">
+    <div id="hm-status" style="font-size:14px;font-weight:700;min-height:20px;text-align:center" role="status" aria-live="polite">Adivina la palabra</div>
+    <svg id="hm-svg" viewBox="0 0 100 110" style="width:80px;height:88px;flex-shrink:0" aria-hidden="true"></svg>
+    <div id="hm-cat" style="font-size:11px;color:#8a6a40;text-transform:uppercase;letter-spacing:.5px"></div>
+    <div id="hm-word" style="font-size:22px;font-weight:700;letter-spacing:5px;font-family:'Courier New',monospace"></div>
+    <div id="hm-keys" style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:320px"></div>
+    <button type="button" id="hm-reset" class="g-btn">${t('btn.newgame')}</button>
+  </div>`;
+  createWindow('Ahorcado','&#128292;',340,440,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const statusEl=win.querySelector('#hm-status'), svgEl=win.querySelector('#hm-svg'), catEl=win.querySelector('#hm-cat'),
+      wordEl=win.querySelector('#hm-word'), keysEl=win.querySelector('#hm-keys');
+    const rec=useRecord('tos-hangman-best');
+    const LETRAS='ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+    const MAXF=6;
+    let palabra,adivinadas,fallos,over,racha=0,ultimas=[];
+    function elegirPalabra(){
+      let opciones=HM_PALABRAS.filter(w=>ultimas.indexOf(w.p)<0);
+      if(!opciones.length)opciones=HM_PALABRAS; // ya salieron todas hace poco: se reinicia el filtro
+      const el=opciones[Math.floor(Math.random()*opciones.length)];
+      ultimas.push(el.p); if(ultimas.length>15)ultimas.shift();
+      return el;
+    }
+    function dibujaAhorcado(){
+      const partes=[
+        '<path d="M5 105h50M20 105V8h45M65 8v14" stroke="#6b4a2b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+        '<circle cx="65" cy="30" r="11" fill="none" stroke="#e0453e" stroke-width="3.5"/>',
+        '<path d="M65 41v28" stroke="#39a7f0" stroke-width="3.5" stroke-linecap="round"/>',
+        '<path d="M65 48 50 60" stroke="#39a7f0" stroke-width="3.5" stroke-linecap="round"/>',
+        '<path d="M65 48 80 60" stroke="#39a7f0" stroke-width="3.5" stroke-linecap="round"/>',
+        '<path d="M65 69 52 90" stroke="#39a7f0" stroke-width="3.5" stroke-linecap="round"/>',
+        '<path d="M65 69 78 90" stroke="#39a7f0" stroke-width="3.5" stroke-linecap="round"/>'
+      ];
+      svgEl.innerHTML=partes.slice(0,1+fallos).join('');
+    }
+    function pintaPalabra(){ wordEl.textContent=palabra.p.split('').map(l=>adivinadas.has(l)?l:'_').join(' '); }
+    function pintaTeclado(){
+      keysEl.innerHTML='';
+      LETRAS.forEach(l=>{
+        const usada=adivinadas.has(l), acierto=usada&&palabra.p.indexOf(l)>=0;
+        const b=document.createElement('button');
+        b.type='button'; b.textContent=l; b.disabled=usada||!!over;
+        b.style.cssText='width:26px;height:26px;font-size:12px;font-weight:700;border-radius:4px;border:1px solid #c9b48c;cursor:pointer;background:'+(usada?(acierto?'#bfe8c8':'#f0b8b0'):'#fffaf0')+';color:#3a2a1a';
+        b.setAttribute('aria-label','Letra '+l+(usada?(acierto?', acertada':', fallada'):''));
+        b.onclick=()=>adivina(l);
+        keysEl.appendChild(b);
+      });
+    }
+    function adivina(l){
+      if(over||adivinadas.has(l))return;
+      adivinadas.add(l);
+      if(palabra.p.indexOf(l)<0){
+        fallos++;
+        dibujaAhorcado();
+        if(fallos>=MAXF){
+          over='lose'; racha=0;
+          statusEl.textContent='¡Te ha atrapado! Era '+palabra.p;
+          announce('Ahorcado: fin del juego, la palabra era '+palabra.p);
+          pintaTeclado();
+          return;
+        }
+      }
+      pintaPalabra();
+      if(palabra.p.split('').every(ch=>adivinadas.has(ch))){
+        over='win'; racha++;
+        if(racha>=5)unlock('hangman-racha5');
+        if(rec.submit(racha))announce('Nuevo récord en Ahorcado: '+racha+' palabras seguidas');
+        statusEl.textContent='¡Acertaste! '+palabra.p;
+      }
+      pintaTeclado();
+    }
+    function reset(){
+      palabra=elegirPalabra(); adivinadas=new Set(); fallos=0; over=null;
+      catEl.textContent=palabra.c;
+      dibujaAhorcado(); pintaPalabra(); pintaTeclado();
+      statusEl.textContent='Adivina la palabra';
+    }
+    win.querySelector('#hm-reset').onclick=reset;
+    mountGame(id,{rootId:'hangman-game',restart:reset,keydown:(e)=>{
+      const l=(e.key||'').toUpperCase();
+      if(l.length===1&&LETRAS.indexOf(l)>=0){ e.preventDefault(); adivina(l); }
+    }});
+    reset();
+  }});
+}
+
+// ========== SOPA DE LETRAS ==========
+// Reutiliza el banco de palabras del Ahorcado (HM_PALABRAS) en vez de mantener una lista
+// aparte: mismo contenido, dos formas de jugarlo. Selección a base de dos clics (inicio y fin
+// de la línea) en vez de arrastrar: funciona igual con ratón, táctil y teclado sin triplicar
+// el código de cada camino de entrada.
+const WS_DIFICULTADES=[
+  {id:'facil',label:'Fácil',n:10,palabras:6,maxLen:8},
+  {id:'medio',label:'Medio',n:12,palabras:8,maxLen:10},
+  {id:'dificil',label:'Difícil',n:14,palabras:10,maxLen:12}
+];
+// Pesado hacia las letras más frecuentes en español, para que el relleno no cante tanto.
+const WS_RELLENO='AAAAEEEEEOOOOSSSRRNNLLTTIIIDDUUCCMMPPBGVFHJQZKWXY';
+const WS_DIRS=[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+function _wsPalabras(n,maxLen){
+  const candidatas=HM_PALABRAS.map(w=>w.p).filter(p=>p.length<=maxLen&&p.length>=3);
+  const barajadas=candidatas.slice();
+  for(let i=barajadas.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; const t=barajadas[i];barajadas[i]=barajadas[j];barajadas[j]=t; }
+  return barajadas.slice(0,n).sort((a,b)=>b.length-a.length); // las más largas primero: encajan peor si se dejan para el final
+}
+// Coloca cada palabra con reintentos acotados (200 por palabra); si no cabe, se descarta esa
+// palabra en vez de colgarse en un bucle — nunca hay menos palabras jugables de las que caben,
+// pero tampoco un cuelgue si el tablero va muy cargado.
+function _wsColocar(n,palabras){
+  const grid=Array.from({length:n},()=>Array(n).fill(''));
+  const colocadas=[];
+  palabras.forEach(palabra=>{
+    for(let intento=0;intento<200;intento++){
+      const dir=WS_DIRS[(Math.random()*8)|0];
+      const r0=(Math.random()*n)|0, c0=(Math.random()*n)|0;
+      const rf=r0+dir[0]*(palabra.length-1), cf=c0+dir[1]*(palabra.length-1);
+      if(rf<0||rf>=n||cf<0||cf>=n)continue;
+      let cabe=true;
+      for(let i=0;i<palabra.length;i++){
+        const r=r0+dir[0]*i, c=c0+dir[1]*i;
+        if(grid[r][c]&&grid[r][c]!==palabra[i]){ cabe=false; break; }
+      }
+      if(!cabe)continue;
+      for(let i=0;i<palabra.length;i++){ const r=r0+dir[0]*i, c=c0+dir[1]*i; grid[r][c]=palabra[i]; }
+      colocadas.push({palabra,r0,c0});
+      break;
+    }
+  });
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(!grid[r][c])grid[r][c]=WS_RELLENO[(Math.random()*WS_RELLENO.length)|0];
+  return {grid,colocadas};
+}
+// Casillas entre dos puntos SOLO si forman una línea recta en una de las 8 direcciones
+// (si no, no es una jugada válida: se ignora en vez de intentar interpretarla).
+function _wsLinea(r0,c0,r1,c1){
+  const dr=r1-r0,dc=c1-c0;
+  if(dr===0&&dc===0)return null;
+  if(dr!==0&&dc!==0&&Math.abs(dr)!==Math.abs(dc))return null;
+  const pasos=Math.max(Math.abs(dr),Math.abs(dc));
+  const sr=dr===0?0:dr/Math.abs(dr), sc=dc===0?0:dc/Math.abs(dc);
+  const cel=[];
+  for(let i=0;i<=pasos;i++)cel.push([r0+sr*i,c0+sc*i]);
+  return cel;
+}
+function initWordSearch(){
+  const content=`<div id="wordsearch-game" style="display:flex;flex-direction:column;align-items:center;height:100%;background:#fdfaf0;color:#2a2a2a;padding:8px;gap:6px;font-family:Rajdhani,sans-serif;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;width:100%;gap:8px;flex-wrap:wrap">
+      <div id="ws-status" style="font-size:13px;font-weight:700;flex:1;min-width:140px" role="status" aria-live="polite">Encuentra las palabras</div>
+      <div id="ws-timer" style="font-size:13px;font-family:'Courier New',monospace" aria-hidden="true">0 s</div>
+      <label style="font-size:12px;display:flex;align-items:center;gap:4px;white-space:nowrap">Dificultad
+        <select id="ws-dif" aria-label="Dificultad">${WS_DIFICULTADES.map(d=>`<option value="${d.id}">${d.label}</option>`).join('')}</select>
+      </label>
+    </div>
+    <div id="ws-board" role="grid" aria-label="Sopa de letras" style="display:grid;gap:1px;background:#c9b48c;border:2px solid #c9b48c"></div>
+    <div id="ws-lista" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:11px;max-width:340px"></div>
+    <button type="button" id="ws-reset" class="g-btn">${t('btn.newgame')}</button>
+  </div>`;
+  createWindow('Sopa de letras','&#128269;',360,480,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const boardEl=win.querySelector('#ws-board'), statusEl=win.querySelector('#ws-status'), timerEl=win.querySelector('#ws-timer'),
+      listaEl=win.querySelector('#ws-lista'), difSel=win.querySelector('#ws-dif');
+    let dif,rec,grid,colocadas,encontradas,inicio,cursor,cronometro,segundos,over;
+    const casilla=(r,c)=>'fila '+(r+1)+', columna '+(c+1);
+    function celdaTam(){ return dif.n<=10?30:(dif.n<=12?26:22); }
+    function render(){
+      const n=dif.n, px=celdaTam();
+      boardEl.style.gridTemplateColumns='repeat('+n+','+px+'px)';
+      boardEl.style.gridTemplateRows='repeat('+n+','+px+'px)';
+      boardEl.innerHTML='';
+      const enSeleccion=(inicio&&cursor)?(_wsLinea(inicio[0],inicio[1],cursor[0],cursor[1])||[]):[];
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+        const btn=document.createElement('button');
+        btn.type='button'; btn.setAttribute('role','gridcell');
+        btn.dataset.r=r;btn.dataset.c=c;
+        btn.tabIndex=(cursor&&cursor[0]===r&&cursor[1]===c)?0:-1;
+        const enPalabraHallada=encontradas.some(f=>f.celdas.some(([fr,fc])=>fr===r&&fc===c));
+        const enSel=enSeleccion.some(([sr,sc])=>sr===r&&sc===c);
+        const esInicio=inicio&&inicio[0]===r&&inicio[1]===c;
+        btn.textContent=grid[r][c];
+        btn.style.cssText='width:'+px+'px;height:'+px+'px;border:none;padding:0;font-size:'+(px>26?13:11)+'px;font-weight:700;font-family:\'Courier New\',monospace;cursor:pointer;background:'+(enPalabraHallada?'#bfe8c8':(enSel?'#ffe9a8':'#fffaf0'))+(esInicio?';outline:2px solid #e0453e;outline-offset:-2px':'');
+        btn.setAttribute('aria-label',casilla(r,c)+', letra '+grid[r][c]+(enPalabraHallada?', ya encontrada':''));
+        btn.onclick=()=>onCelda(r,c);
+        boardEl.appendChild(btn);
+      }
+    }
+    function pintaLista(){
+      listaEl.innerHTML=colocadas.map(cp=>{
+        const hallada=encontradas.some(f=>f.palabra===cp.palabra);
+        return '<span style="padding:2px 6px;border-radius:3px;background:'+(hallada?'#bfe8c8':'#eee')+';text-decoration:'+(hallada?'line-through':'none')+';color:'+(hallada?'#2f7d4b':'#2a2a2a')+'">'+cp.palabra+'</span>';
+      }).join('');
+    }
+    function compruebaSeleccion(r,c){
+      const linea=_wsLinea(inicio[0],inicio[1],r,c);
+      if(!linea)return false;
+      const recta=linea.map(([lr,lc])=>grid[lr][lc]).join('');
+      const alReves=recta.split('').reverse().join('');
+      const cp=colocadas.find(x=>!encontradas.some(f=>f.palabra===x.palabra)&&(x.palabra===recta||x.palabra===alReves));
+      if(!cp)return false;
+      encontradas.push({palabra:cp.palabra,celdas:linea});
+      return true;
+    }
+    function pararCronometro(){ if(cronometro){clearInterval(cronometro);cronometro=null;} }
+    function onCelda(r,c){
+      if(over)return;
+      cursor=[r,c];
+      if(!inicio){ inicio=[r,c]; render(); return; }
+      if(inicio[0]===r&&inicio[1]===c){ inicio=null; render(); return; } // clic en la misma casilla: cancela
+      const acierto=compruebaSeleccion(r,c);
+      inicio=null;
+      render();
+      if(!acierto){ statusEl.textContent='Esa línea no es ninguna palabra — inténtalo otra vez'; return; }
+      pintaLista();
+      announce('Palabra encontrada');
+      if(encontradas.length<colocadas.length){ statusEl.textContent='Encuentra las palabras'; return; }
+      over=true; pararCronometro();
+      if(rec.submit(segundos))announce('Nuevo récord en Sopa de letras · '+dif.label+': '+segundos+' s');
+      if(dif.id==='dificil')unlock('wordsearch-dificil');
+      statusEl.textContent='¡Completada en '+segundos+' s!';
+    }
+    function reset(){
+      dif=WS_DIFICULTADES.find(d=>d.id===difSel.value)||WS_DIFICULTADES[0];
+      rec=useRecord('tos-wordsearch-best-'+dif.id,{lowerIsBetter:true});
+      const res=_wsColocar(dif.n,_wsPalabras(dif.palabras,dif.maxLen));
+      grid=res.grid; colocadas=res.colocadas; encontradas=[]; inicio=null; cursor=[0,0]; over=false;
+      segundos=0; timerEl.textContent='0 s';
+      pararCronometro();
+      cronometro=setInterval(()=>{ segundos++; timerEl.textContent=segundos+' s'; },1000);
+      render(); pintaLista();
+      statusEl.textContent='Encuentra las palabras';
+    }
+    boardEl.addEventListener('keydown',(e)=>{
+      if(e.key.startsWith('Arrow')){
+        e.preventDefault();
+        const n=dif.n; let [r,c]=cursor;
+        if(e.key==='ArrowUp')r=(r+n-1)%n; else if(e.key==='ArrowDown')r=(r+1)%n;
+        else if(e.key==='ArrowLeft')c=(c+n-1)%n; else c=(c+1)%n;
+        cursor=[r,c];
+        render();
+        const btn=boardEl.querySelector('[data-r="'+r+'"][data-c="'+c+'"]');
+        if(btn)try{btn.focus();}catch(_e){_ignora(_e);}
+      }else if(e.key==='Escape'&&inicio){
+        e.preventDefault(); inicio=null; render();
+      }
+    });
+    win.querySelector('#ws-reset').onclick=reset;
+    difSel.value='facil';
+    difSel.onchange=reset;
+    mountGame(id,{rootId:'wordsearch-game',restart:reset,onDestroy:pararCronometro});
+    reset();
+  }});
+}
+
 // ========== MAHJONG SOLITARIO ==========
 // Solitario chino clásico: fichas apiladas en capas de las que solo se pueden
 // retirar las que tienen la cara despejada y un lado libre, de dos en dos.
@@ -22692,7 +23751,9 @@ const BACKUP_CATS=[
 // Fuera de la copia: la cuenta y su caja, y los cerrojos de ESTE dispositivo. El PIN,
 // la huella y el login automático no valen nada en otro móvil (allí no está la llave
 // guardada en IndexedDB): llevarlos solo daría una pantalla de PIN que no abre nada.
-const BACKUP_NO_EXPORTAR=['tos-account','tos-vault','tos-pin','tos-bio','tos-autologin'];
+// tos-sync-*: contabilidad de ESTE dispositivo (si sincroniza, cuándo lo hizo, su sal propia sin
+// cuenta) — llevarla a otro dispositivo o al fichero de sync no significa nada allí.
+const BACKUP_NO_EXPORTAR=['tos-account','tos-vault','tos-pin','tos-bio','tos-autologin','tos-sync-on','tos-sync-last','tos-sync-salt','tos-sync-iter'];
 function osBackupCat(k){
   for(let i=0;i<BACKUP_CATS.length;i++){ const c=BACKUP_CATS[i]; if(c.keys&&c.keys.indexOf(k)>=0)return c.id; }
   for(let i=0;i<BACKUP_CATS.length;i++){ const c=BACKUP_CATS[i]; if(c.pref&&c.pref.some(p=>k.indexOf(p)===0))return c.id; }
@@ -23290,7 +24351,11 @@ const gamesApps=[
   {key:'sudoku',label:'Sudoku',icon:GAME_ICONS.sudoku},
   {key:'simon',label:'Simon',icon:GAME_ICONS.simon},
   {key:'chess',label:'Ajedrez',icon:GAME_ICONS.chess},
-  {key:'mahjong',label:'Mahjong',icon:GAME_ICONS.mahjong}
+  {key:'mahjong',label:'Mahjong',icon:GAME_ICONS.mahjong},
+  {key:'checkers',label:'Damas',icon:GAME_ICONS.checkers},
+  {key:'reversi',label:'Reversi',icon:GAME_ICONS.reversi},
+  {key:'hangman',label:'Ahorcado',icon:GAME_ICONS.hangman},
+  {key:'wordsearch',label:'Sopa de letras',icon:GAME_ICONS.wordsearch}
 ];
 // Poblar la carpeta desplegable del menu inicio desde la misma lista de juegos
 function buildStartGamesSubmenu(){
@@ -23378,7 +24443,7 @@ const garminApps=[
 
 // Subcarpetas dentro de Proyectos (antes eran iconos sueltos del escritorio)
 const PROY_SUBFOLDERS=[
-  {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 17 juegos clásicos del sistema'},
+  {id:'juegos',label:'Juegos',icon:'&#128377;',open:()=>openGamesFolder(),desc:'Los 21 juegos clásicos del sistema'},
   {id:'juegazos',label:'Juegos AAA',icon:'&#127918;',open:()=>openJuegazos(),desc:'Mis juegos web publicados'},
   {id:'garmin',label:'Aplicaciones Garmin',icon:'&#8986;&#65039;',open:()=>openGarmin(),desc:'Mis apps y esferas publicadas en Connect IQ'}
 ];
@@ -23634,22 +24699,44 @@ function toggleStartUtils(e){_toggleStartFlyout(e,'start-utils-submenu','start-u
 function toggleStartNostalgia(e){_toggleStartFlyout(e,'start-nostalgia-submenu','start-nostalgia-toggle');}
 
 // ===== Menú contextual del escritorio (clic derecho) =====
+// Foco a devolver al cerrar el menú (patrón ARIA APG: un menú devuelve el foco a quien lo abrió).
+let _ctxReturnFocus=null;
 function showContextMenu(x,y,items){
+  _ctxReturnFocus=document.activeElement;
   const m=document.getElementById('context-menu');
   m.innerHTML=items.map((it,i)=> it.sep?'<div class="ctx-sep"></div>'
-    :`<div class="ctx-item" role="menuitem" tabindex="0" data-i="${i}"><span class="ctx-ic">${it.icon||''}</span>${it.label}</div>`).join('');
+    :`<div class="ctx-item" role="menuitem" tabindex="-1" data-i="${i}"><span class="ctx-ic">${it.icon||''}</span>${it.label}</div>`).join('');
+  const focusables=()=>[...m.querySelectorAll('.ctx-item')];
+  // Tabindex "rotatorio": un solo ítem alcanzable por Tab a la vez, las flechas lo mueven — el
+  // patrón real de un role="menu", en vez del Tab-uno-a-uno de antes.
+  const roving=(el)=>{ if(!el)return; focusables().forEach(o=>o.tabIndex=-1); el.tabIndex=0; el.focus(); };
   m.querySelectorAll('.ctx-item').forEach(el=>{
     const it=items[+el.dataset.i];
     const run=()=>{hideContextMenu();it.action&&it.action();};
     el.onclick=run;
-    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();run();}});
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();run();return;}
+      const els=focusables(),cur=els.indexOf(el);
+      if(e.key==='ArrowDown'){e.preventDefault();roving(els[(cur+1)%els.length]);}
+      else if(e.key==='ArrowUp'){e.preventDefault();roving(els[(cur-1+els.length)%els.length]);}
+      else if(e.key==='Home'){e.preventDefault();roving(els[0]);}
+      else if(e.key==='End'){e.preventDefault();roving(els[els.length-1]);}
+      else if(e.key==='Tab'){hideContextMenu();} // un menú no deja tabs sueltos dentro
+    });
   });
   m.classList.add('show');
   const r=m.getBoundingClientRect();
   m.style.left=Math.max(2,Math.min(x,window.innerWidth-r.width-4))+'px';
   m.style.top=Math.max(2,Math.min(y,window.innerHeight-r.height-40))+'px';
+  roving(focusables()[0]);
 }
-function hideContextMenu(){const m=document.getElementById('context-menu');if(m)m.classList.remove('show');}
+function hideContextMenu(){
+  const m=document.getElementById('context-menu');
+  if(!m||!m.classList.contains('show'))return; // ya estaba cerrado: nada que restaurar
+  m.classList.remove('show');
+  if(_ctxReturnFocus){ try{_ctxReturnFocus.focus({preventScroll:true});}catch(e){_ignora(e);} }
+  _ctxReturnFocus=null;
+}
 document.addEventListener('contextmenu',(e)=>{
   // Solo en el fondo del escritorio: en ventanas/apps/barra se respeta el menú nativo
   // Los iconos y el menú Inicio tienen el suyo propio; ventanas y barra, el nativo
@@ -23710,7 +24797,7 @@ function createWindow(title,icon,width,height,content,opts={}){
 
   win.innerHTML=`
     <div class="window-titlebar">
-      <div class="window-title"><span class="wt-icon">${icon}</span>${escHtml(title)}</div>
+      <div class="window-title"><button type="button" class="wt-icon" title="${t('win.sysmenu')}" aria-label="${t('win.sysmenu')}" onclick="openWindowSysMenu('${id}',this)">${icon}</button>${escHtml(title)}</div>
       <div class="window-controls">
         ${isGame?'<button class="btn-restart" onclick="restartGameWindow(\''+id+'\')" title="'+t('win.restart')+'" aria-label="'+t('win.restart')+'">&#8635;</button>':''}
         <button class="btn-minimize" onclick="minimizeWindow('${id}')" title="${t('win.min')}" aria-label="${t('win.min')}">_</button>
@@ -23740,8 +24827,16 @@ function createWindow(title,icon,width,height,content,opts={}){
   makeDraggable(win,_titlebar);
   // Doble clic en la barra de título: maximizar / restaurar (clásico)
   _titlebar.addEventListener('dblclick',(e)=>{ if(e.target.closest('button'))return; toggleMaximize(id); });
+  // Clic derecho en la barra: el mismo menú de sistema que el icono, en el punto del clic
+  _titlebar.addEventListener('contextmenu',(e)=>{ if(e.target.closest('button'))return; e.preventDefault(); openWindowSysMenu(id,e); });
   // Resize
   makeResizable(win);
+
+  // Si el contenido cambia mientras esta tapada (p.ej. llega un mensaje del MSN con un botón
+  // nuevo), hay que rebarrer: a diferencia del inert nativo, este polyfill no es "vivo" por si solo.
+  const _inertObs=new MutationObserver(()=>{ if(win.getAttribute('aria-hidden')==='true')_winSetInert(win,true); });
+  _inertObs.observe(win,{childList:true,subtree:true});
+  (win._cleanups=win._cleanups||[]).push(()=>_inertObs.disconnect());
 
   // Focus
   win.onmousedown=()=>focusWindow(id);
@@ -23761,6 +24856,59 @@ function createWindow(title,icon,width,height,content,opts={}){
   return id;
 }
 
+// ===== Menú de sistema de la ventana (mover/tamaño/minimizar/maximizar/cerrar) =====
+// Se abre con el icono de la barra de título, clic derecho en la barra, o Mayús+F10 con la
+// ventana activa — reutiliza showContextMenu tal cual, sin inventar una UI nueva que mantener.
+function openWindowSysMenu(id,anchor){
+  const win=document.getElementById(id);
+  if(!win)return;
+  let x,y;
+  if(anchor&&anchor.clientX!=null){ x=anchor.clientX; y=anchor.clientY; }
+  else{
+    const r=(anchor&&anchor.getBoundingClientRect)?anchor.getBoundingClientRect():win.querySelector('.window-titlebar').getBoundingClientRect();
+    x=r.left; y=r.bottom;
+  }
+  const info=openWindows[id];
+  const maximized=!!(info&&info.maximized);
+  const items=[];
+  // Mover/Tamaño con teclado no tienen sentido maximizada (no hay a donde moverla ni que
+  // redimensionar): igual que en Windows real, esas dos opciones desaparecen del menú.
+  if(!maximized){
+    items.push({icon:'&#9995;',label:t('win.sysmove'),action:()=>_kbAdjustStart(id,'move')});
+    items.push({icon:'&#128208;',label:t('win.sysresize'),action:()=>_kbAdjustStart(id,'resize')});
+    items.push({sep:true});
+  }
+  items.push({icon:'_',label:t('win.min'),action:()=>minimizeWindow(id)});
+  items.push({icon:'&#9723;',label:maximized?t('win.restore'):t('win.max'),action:()=>toggleMaximize(id)});
+  items.push({sep:true});
+  items.push({icon:'&#10005;',label:t('win.close'),action:()=>closeWindow(id)});
+  showContextMenu(x,y,items);
+}
+// ===== "inert" a mano, sin bloquear el clic =====
+// El atributo inert nativo saca del arbol de accesibilidad Y bloquea el puntero — no sirve aqui,
+// porque hace falta poder clicar una ventana tapada para traerla al frente (win.onmousedown en
+// createWindow). Esto hace lo mismo que inert pero SOLO para foco/lectores de pantalla: aria-hidden
+// (fuera del arbol de accesibilidad) mas un barrido manual de tabindex (aria-hidden por si solo NO
+// saca los controles del orden de Tab: seguirian siendo alcanzables por teclado aunque el lector de
+// pantalla los calle, que es justo el fallo que se queria evitar).
+const _INERT_SEL='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex],iframe,audio[controls],video[controls],[contenteditable="true"],[contenteditable=""]';
+function _winSetInert(win,hide){
+  if(hide){
+    win.setAttribute('aria-hidden','true');
+    win.querySelectorAll(_INERT_SEL).forEach(el=>{
+      if(el.dataset.inertTab!==undefined)return; // ya barrida (el observer puede repasarla)
+      el.dataset.inertTab=el.hasAttribute('tabindex')?el.getAttribute('tabindex'):'';
+      el.setAttribute('tabindex','-1');
+    });
+  }else{
+    win.removeAttribute('aria-hidden');
+    win.querySelectorAll('[data-inert-tab]').forEach(el=>{
+      const prev=el.dataset.inertTab;
+      if(prev==='')el.removeAttribute('tabindex'); else el.setAttribute('tabindex',prev);
+      delete el.dataset.inertTab;
+    });
+  }
+}
 function focusWindow(id){
   document.querySelectorAll('.window').forEach(w=>w.classList.remove('focused'));
   const win=document.getElementById(id);
@@ -23768,6 +24916,9 @@ function focusWindow(id){
   // Llevar también el foco real (lectores de pantalla y teclado), sin robárselo a un
   // campo que ya esté dentro de esa misma ventana.
   if(win&&!win.contains(document.activeElement)){ try{win.focus({preventScroll:true});}catch(e){_ignora(e);} }
+  // El barrido de aria-hidden/tabindex va DESPUES de mover el foco real: si fuera antes, el foco
+  // podria quedar un instante atrapado dentro de un contenedor aria-hidden, que es invalido.
+  if(win)document.querySelectorAll('.window').forEach(w=>_winSetInert(w,w.id!==id));
   if(id===_msnWinId)msnSetUnread(false); // ver el chat marca los mensajes como leídos
   updateTaskbar();
 }
@@ -23921,7 +25072,55 @@ function _atClose(commit){
     else focusWindow(id);
   }
 }
+// ===== Mover/redimensionar una ventana solo con teclado =====
+// Se arma desde el menú de sistema (openWindowSysMenu). Vive en el MISMO listener que Alt+Tab
+// a propósito: ese listener se registra al cargar el script, antes de que exista ninguna ventana
+// de juego, así que corre ANTES que el keydown de cualquier juego — con stopImmediatePropagation
+// una flecha en este modo no mueve también una pala o una nave por debajo.
+let _kbAdjust=null;
+function _kbAdjustStart(id,mode){
+  const win=document.getElementById(id);
+  if(!win)return;
+  focusWindow(id);
+  _kbAdjust={id,mode,orig:{left:win.style.left,top:win.style.top,width:win.style.width,height:win.style.height}};
+  announce(mode==='move'?t('win.movehint'):t('win.resizehint'));
+}
+function _kbAdjustStep(e){
+  const win=document.getElementById(_kbAdjust.id);
+  if(!win){_kbAdjust=null;return;}
+  const paso=e.shiftKey?2:16; // Mayús = ajuste fino
+  if(_kbAdjust.mode==='move'){
+    let left=parseFloat(win.style.left)||0, top=parseFloat(win.style.top)||0;
+    if(e.key==='ArrowLeft')left-=paso; else if(e.key==='ArrowRight')left+=paso;
+    else if(e.key==='ArrowUp')top-=paso; else if(e.key==='ArrowDown')top+=paso;
+    else return;
+    left=Math.max(60-win.offsetWidth,Math.min(left,window.innerWidth-60));
+    top=Math.max(0,Math.min(top,window.innerHeight-60));
+    win.style.left=left+'px'; win.style.top=top+'px';
+  }else{
+    let w=win.offsetWidth, h=win.offsetHeight;
+    if(e.key==='ArrowLeft')w-=paso; else if(e.key==='ArrowRight')w+=paso;
+    else if(e.key==='ArrowUp')h-=paso; else if(e.key==='ArrowDown')h+=paso;
+    else return;
+    win.style.width=Math.max(280,w)+'px'; win.style.height=Math.max(180,h)+'px';
+  }
+}
+function _kbAdjustEnd(commit){
+  const a=_kbAdjust; if(!a)return;
+  const win=document.getElementById(a.id);
+  _kbAdjust=null;
+  if(!win)return;
+  if(!commit){ win.style.left=a.orig.left; win.style.top=a.orig.top; win.style.width=a.orig.width; win.style.height=a.orig.height; }
+  else{ const info=openWindows[a.id]; if(info)info.snap=null; saveSession(); }
+  announce(commit?t('win.adjusted'):t('win.adjustcancel'));
+}
 document.addEventListener('keydown',(e)=>{
+  if(_kbAdjust){
+    if(e.key.startsWith('Arrow')){ e.preventDefault(); e.stopImmediatePropagation(); _kbAdjustStep(e); }
+    else if(e.key==='Enter'){ e.preventDefault(); e.stopImmediatePropagation(); _kbAdjustEnd(true); }
+    else if(e.key==='Escape'){ e.preventDefault(); e.stopImmediatePropagation(); _kbAdjustEnd(false); }
+    return;
+  }
   if(e.altKey&&e.key==='Tab'){
     e.preventDefault();
     if(!_atState)_atOpen();
@@ -23932,6 +25131,12 @@ document.addEventListener('keydown',(e)=>{
     // Tecla Windows o Ctrl+Esc: menú Inicio (cuando el navegador nos deja verla)
     const desk=document.getElementById('desktop');
     if(desk&&desk.style.display==='block'){e.preventDefault();toggleStartMenu();}
+  }else if(((e.key==='F10'&&e.shiftKey)||e.key==='ContextMenu')&&activeWindowId){
+    // Mayús+F10 / tecla Menú: el menú de sistema de la ventana activa — PERO no si el foco está
+    // en un campo de texto, porque ahí esa misma tecla es el menú nativo de cortar/copiar/pegar.
+    const tag=(e.target&&e.target.tagName)||'';
+    const editable=tag==='INPUT'||tag==='TEXTAREA'||(e.target&&e.target.isContentEditable);
+    if(!editable){ e.preventDefault(); openWindowSysMenu(activeWindowId); }
   }
 });
 document.addEventListener('keyup',(e)=>{ if(_atState&&e.key==='Alt')_atClose(true); });
@@ -24132,25 +25337,25 @@ function _aboutGameLines(perLine=4){
 // tabla para que no se quede desfasado como el parrafo del "Acerca de".
 const HELP_I18N={
  es:[
-  ['Ventanas',[['Alt + Tab','Cambiar entre ventanas abiertas (Mayús invierte)'],['Ctrl + Esc · ⊞ Win','Abrir el menú Inicio'],['Ctrl + W','Cerrar la ventana activa'],['Ctrl + Alt + Supr','Administrador de tareas'],['Doble clic en la barra','Maximizar / restaurar la ventana'],['Arrastrar a un borde','Encajar la ventana (arriba = maximizar)']]],
+  ['Ventanas',[['Alt + Tab','Cambiar entre ventanas abiertas (Mayús invierte)'],['Ctrl + Esc · ⊞ Win','Abrir el menú Inicio'],['Ctrl + W','Cerrar la ventana activa'],['Ctrl + Alt + Supr','Administrador de tareas'],['Doble clic en la barra','Maximizar / restaurar la ventana'],['Arrastrar a un borde','Encajar la ventana (arriba = maximizar)'],['Mayús + F10','Menú de la ventana: mover o cambiar tamaño con el teclado']]],
   ['Escritorio',[['Flechas','Moverte entre los iconos del escritorio'],['Inicio / Fin','Primer / último icono'],['Enter','Abrir el icono seleccionado'],['Arrastrar a la papelera','Eliminar un icono del escritorio'],['Ctrl + V (imagen)','Pegar una imagen del portapapeles en Paint'],['Soltar un archivo','Abrirlo en la app que le toque']]],
   ['Juegos',[['Flechas / Espacio','Controles habituales de cada juego'],['R','Reiniciar la partida'],['Mando 🎮','Cruceta / stick + A también funcionan']]],
   ['Trucos',[['Escribe "crash"','…en el Símbolo del sistema. Tú confía'],['3 minutos quieto','Aparece el salvapantallas de estrellas'],['Papelera','Guarda alguna sorpresa dentro']]]
  ],
  en:[
-  ['Windows',[['Alt + Tab','Switch between open windows (Shift reverses)'],['Ctrl + Esc · ⊞ Win','Open the Start menu'],['Ctrl + W','Close the active window'],['Ctrl + Alt + Del','Task manager'],['Double-click title bar','Maximize / restore the window'],['Drag to an edge','Snap the window (top = maximize)']]],
+  ['Windows',[['Alt + Tab','Switch between open windows (Shift reverses)'],['Ctrl + Esc · ⊞ Win','Open the Start menu'],['Ctrl + W','Close the active window'],['Ctrl + Alt + Del','Task manager'],['Double-click title bar','Maximize / restore the window'],['Drag to an edge','Snap the window (top = maximize)'],['Shift + F10','Window menu: move or resize with the keyboard']]],
   ['Desktop',[['Arrow keys','Move between desktop icons'],['Home / End','First / last icon'],['Enter','Open the selected icon'],['Drag to the bin','Remove a desktop icon'],['Ctrl + V (image)','Paste a clipboard image into Paint'],['Drop a file','Opens in the matching app']]],
   ['Games',[['Arrows / Space','Usual controls of each game'],['R','Restart the game'],['Gamepad 🎮','D-pad / stick + A work too']]],
   ['Secrets',[['Type "crash"','…in the Command Prompt. Trust me'],['3 minutes idle','The starfield screensaver appears'],['Recycle Bin','Keeps a surprise inside']]]
  ],
  ca:[
-  ['Finestres',[['Alt + Tab','Canviar entre finestres obertes (Maj inverteix)'],['Ctrl + Esc · ⊞ Win','Obrir el menú Inici'],['Ctrl + W','Tancar la finestra activa'],['Ctrl + Alt + Supr','Gestor de tasques'],['Doble clic a la barra','Maximitzar / restaurar la finestra'],['Arrossegar a una vora','Encaixar la finestra (a dalt = maximitzar)']]],
+  ['Finestres',[['Alt + Tab','Canviar entre finestres obertes (Maj inverteix)'],['Ctrl + Esc · ⊞ Win','Obrir el menú Inici'],['Ctrl + W','Tancar la finestra activa'],['Ctrl + Alt + Supr','Gestor de tasques'],['Doble clic a la barra','Maximitzar / restaurar la finestra'],['Arrossegar a una vora','Encaixar la finestra (a dalt = maximitzar)'],['Maj + F10','Menú de la finestra: moure-la o canviar-ne la mida amb el teclat']]],
   ['Escriptori',[['Fletxes','Moure’t entre les icones'],['Inici / Fi','Primera / última icona'],['Enter','Obrir la icona seleccionada'],['Arrossegar a la paperera','Eliminar una icona'],['Ctrl + V (imatge)','Enganxar una imatge al Paint'],['Deixar anar un fitxer','S’obre a l’app que toqui']]],
   ['Jocs',[['Fletxes / Espai','Controls habituals de cada joc'],['R','Reiniciar la partida'],['Comandament 🎮','Creueta / stick + A també van']]],
   ['Trucs',[['Escriu "crash"','…al Símbol del sistema. Confia-hi'],['3 minuts quiet','Apareix el salvapantalles d’estrelles'],['Paperera','Guarda alguna sorpresa a dins']]]
  ],
  ru:[
-  ['Окна',[['Alt + Tab','Переключение между окнами (Shift — назад)'],['Ctrl + Esc · ⊞ Win','Открыть меню «Пуск»'],['Ctrl + W','Закрыть активное окно'],['Ctrl + Alt + Del','Диспетчер задач'],['Двойной клик по заголовку','Развернуть / восстановить окно'],['Перетащить к краю','Прикрепить окно (вверх = развернуть)']]],
+  ['Окна',[['Alt + Tab','Переключение между окнами (Shift — назад)'],['Ctrl + Esc · ⊞ Win','Открыть меню «Пуск»'],['Ctrl + W','Закрыть активное окно'],['Ctrl + Alt + Del','Диспетчер задач'],['Двойной клик по заголовку','Развернуть / восстановить окно'],['Перетащить к краю','Прикрепить окно (вверх = развернуть)'],['Shift + F10','Меню окна: перемещение и изменение размера с клавиатуры']]],
   ['Рабочий стол',[['Стрелки','Перемещение по значкам'],['Home / End','Первый / последний значок'],['Enter','Открыть выбранный значок'],['Перетащить в корзину','Удалить значок'],['Ctrl + V (картинка)','Вставить картинку в Paint'],['Бросить файл','Откроется в нужном приложении']]],
   ['Игры',[['Стрелки / Пробел','Обычное управление в играх'],['R','Начать заново'],['Геймпад 🎮','Крестовина / стик + A тоже работают']]],
   ['Секреты',[['Введите "crash"','…в командной строке. Доверься'],['3 минуты покоя','Появится звёздная заставка'],['Корзина','Хранит сюрприз внутри']]]
@@ -24395,6 +25600,11 @@ function openSettings(){
         <div class="bk-info" id="bk-info"></div>
       </div>
       <div class="settings-group">
+        <h3>&#128260; <span data-i18n="sync.title">Sincronización</span></h3>
+        <p data-i18n="sync.what">Enlaza una carpeta del disco &mdash;puede ser una que ya sincronicen Dropbox, Drive o OneDrive&mdash; para llevar tus datos cifrados a otro dispositivo. Aviso honesto: solo en Chrome, Edge u Opera de escritorio y Android, no en Firefox ni en Safari/iPhone.</p>
+        <div class="sync-info" id="sync-info"></div>
+      </div>
+      <div class="settings-group">
         <h3>&#128197; <span data-i18n="agenda.title">Agenda</span></h3>
         <p data-i18n="set.agenda.what">Ll&eacute;vate el calendario a otro dispositivo, o tr&aacute;ete el de Google Calendar, Apple u Outlook</p>
         <div class="color-row" style="flex-wrap:wrap">
@@ -24474,6 +25684,38 @@ function openSettings(){
       });
     };
     pintaAlmacen();
+    // Sincronización: el estado depende de si hay invitado, soporte del navegador y si ya
+    // está enlazada una carpeta, así que se pinta entera de nuevo tras cada acción.
+    const pintaSyncEstado=()=>{
+      const box=document.getElementById('sync-info');
+      if(!box)return;
+      if(_guestMode){ box.innerHTML='<p class="sync-note">'+escHtml(t('sync.guest'))+'</p>'; return; }
+      if(!_syncOk()){ box.innerHTML='<p class="sync-note">'+escHtml(t('sync.unsupported'))+'</p>'; return; }
+      if(!_syncOn){
+        box.innerHTML='<button type="button" class="settings-btn" id="sync-choose">&#128193; '+escHtml(t('sync.choose'))+'</button>';
+        const b=document.getElementById('sync-choose');
+        if(b)b.onclick=async()=>{ b.disabled=true; await _syncElegirCarpeta(); pintaSyncEstado(); };
+        return;
+      }
+      const last=Store.get('tos-sync-last');
+      const fecha=last?new Date(last).toLocaleString('es-ES'):t('sync.never');
+      const nombre=(_syncDirHandle&&_syncDirHandle.name)||'?';
+      box.innerHTML='<div class="bk-row"><span>'+escHtml(t('sync.folder'))+'</span><b>&#128193; '+escHtml(nombre)+'</b></div>'
+        +'<div class="bk-row"><span>'+escHtml(t('sync.last'))+'</span><b>'+escHtml(fecha)+'</b></div>'
+        +'<div class="color-row" style="flex-wrap:wrap;margin-top:6px">'
+        +'<button type="button" class="settings-btn" id="sync-now">&#128260; '+escHtml(t('sync.now'))+'</button>'
+        +'<button type="button" class="settings-btn" id="sync-stop">&#128683; '+escHtml(t('sync.stop'))+'</button></div>';
+      const bn=document.getElementById('sync-now');
+      if(bn)bn.onclick=async()=>{ bn.disabled=true; await _syncCheckRemote(true); await _syncFlush(); pintaSyncEstado(); };
+      const bs=document.getElementById('sync-stop');
+      if(bs)bs.onclick=()=>{
+        xpDialog(t('sync.stop.t'),'<div class="dlg-icon">'+ico('aviso')+'</div><div>'+escHtml(t('sync.stop.d'))+'</div>',[
+          {label:t('sync.stop'),primary:true,action:async()=>{ await _syncOlvidarCarpeta(); pintaSyncEstado(); }},
+          {label:t('btn.cancel')}
+        ]);
+      };
+    };
+    pintaSyncEstado();
     const bp=document.getElementById('bk-persist');
     if(bp)bp.onclick=()=>{ osPidePersistencia().then(ok=>{ pintaAlmacen(); xpDialog(t('bk.storage'),'<div class="dlg-icon">'+(ok?'&#128737;&#65039;':'&#9888;&#65039;')+'</div><div>'+escHtml(ok?t('bk.protected'):t('bk.notprotected'))+'</div>'); }); };
     const langSel=document.getElementById('lang-select');
@@ -25957,7 +27199,7 @@ function initPinball(){
   }});
 }
 
-const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game',sudoku:'sudoku-game',simon:'simon-game',chess:'chess-game',mahjong:'mahjong-game'};
+const GAME_ROOT_IDS={snake:'new-snake-game',tetris:'new-tetris-game',flappy:'new-flappy-game',arkanoid:'new-arkanoid-game',spaceinvaders:'new-invaders-game',minesweeper:'new-ms-game',pong:'new-pong-game',g2048:'new-g2048-game',ttt:'ttt-game',connect4:'c4-game',memory:'mem-game',solitaire:'sol-game',pinball:'new-pinball-game',sudoku:'sudoku-game',simon:'simon-game',chess:'chess-game',mahjong:'mahjong-game',checkers:'checkers-game',reversi:'reversi-game',hangman:'hangman-game',wordsearch:'wordsearch-game'};
 
 // ========== MOTOR DE JUEGO COMÚN ==========
 // Centraliza el ciclo de vida que antes cada juego duplicaba: bucle rAF con
@@ -26077,6 +27319,10 @@ function openGame(game){
     case 'simon':initSimon();break;
     case 'chess':initChess();break;
     case 'mahjong':initMahjong();break;
+    case 'checkers':initCheckers();break;
+    case 'reversi':initReversi();break;
+    case 'hangman':initHangman();break;
+    case 'wordsearch':initWordSearch();break;
   }
   _pendingGameSession=null;
 }

@@ -4,10 +4,10 @@
 
 **Un escritorio de verdad dentro de una pestaña del navegador.**
 
-Windows XP renacido en HTML: 17 juegos clásicos, ~70 aplicaciones, terminal,
+Windows XP renacido en HTML: 21 juegos clásicos, ~70 aplicaciones, terminal,
 Paint y mi portfolio. Sin instalar nada, sin cuentas, sin servidor.
 
-[![Versión](https://img.shields.io/badge/versión-0.66.1-7c8cff)](#historial)
+[![Versión](https://img.shields.io/badge/versión-0.67.0-7c8cff)](#historial)
 [![PWA](https://img.shields.io/badge/PWA-instalable%20y%20sin%20conexión-2ea44f)](#instalarlo-como-app)
 [![Dependencias](https://img.shields.io/badge/dependencias-0-blue)](#cómo-está-hecho)
 [![Build](https://img.shields.io/badge/build-ninguno-lightgrey)](#cómo-está-hecho)
@@ -53,14 +53,14 @@ Todo eso vive en **un solo archivo `index.html`**. Sin React, sin webpack, sin
 
 ## Qué hay dentro
 
-### 17 juegos
+### 21 juegos
 
 Snake · Tetris · Flappy Bird · Arkanoid · Invaders · Buscaminas · Pong · 2048 ·
 Tres en raya · Conecta 4 · Memoria · Solitario · Pinball · Sudoku · Simon ·
-Ajedrez · Mahjong
+Ajedrez · Mahjong · Damas · Reversi · Ahorcado · Sopa de letras
 
-Los 17 guardan marca en el **Salón de la fama**, con récord separado por
-dificultad donde tiene sentido (Buscaminas, Sudoku y Mahjong).
+Los 21 guardan marca en el **Salón de la fama**, con récord separado por
+dificultad donde tiene sentido (Buscaminas, Sudoku, Mahjong y Sopa de letras).
 
 ### ~70 aplicaciones
 
@@ -110,6 +110,15 @@ Si quieres, puedes crear una **cuenta local cifrada**: se protege con una
 contraseña y todo lo guardado se cifra con **PBKDF2 + AES-GCM** dentro del
 propio navegador. También puedes exportar e importar tus datos como un archivo,
 en claro o cifrado.
+
+### Sincronizar entre tus dispositivos (opcional)
+
+Sigue sin haber servidor: en **Ajustes → Sincronización** enlazas una carpeta
+del disco (puede ser una que ya sincronicen Dropbox, Drive o OneDrive) y ahí se
+guarda un fichero cifrado con el mismo formato que la copia de seguridad
+manual. Aviso honesto: usa la *File System Access API*, así que solo funciona
+en Chrome, Edge u Opera de escritorio y Android — no en Firefox ni en
+Safari/iPhone.
 
 ## Idiomas
 
@@ -163,7 +172,7 @@ Para publicar: sube los archivos tal cual. Es estático.
 
 ## Historial
 
-La versión vive en `APP_VERSION`. La actual es la **0.66.1**.
+La versión vive en `APP_VERSION`. La actual es la **0.67.0**.
 
 ---
 
