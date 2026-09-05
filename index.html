@@ -1237,6 +1237,14 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
             <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-conversor"></use></svg></div>
             <div><div class="si-label" data-i18n="cv.title">Conversor</div><div class="si-desc" data-i18n="cv.desc">Unidades y divisas</div></div>
           </button>
+          <button type="button" class="start-item" onclick="openValidador()">
+            <div class="si-icon">&#129706;</div>
+            <div><div class="si-label" data-i18n="val.title">Validador de documentos</div><div class="si-desc" data-i18n="val.desc">DNI, NIE, CIF e IBAN</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openComparadorPrecio()">
+            <div class="si-icon">&#128722;</div>
+            <div><div class="si-label" data-i18n="ppu.title">Comparador de precio</div><div class="si-desc" data-i18n="ppu.desc">Precio por kg o litro</div></div>
+          </button>
           <button type="button" class="start-item" onclick="openSpreadsheet()">
             <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-hoja"></use></svg></div>
             <div><div class="si-label" data-i18n="ss.title">Hoja de c&aacute;lculo</div><div class="si-desc" data-i18n="ss.desc">F&oacute;rmulas, CSV y gr&aacute;ficos</div></div>
@@ -1296,6 +1304,18 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <button type="button" class="start-item" onclick="openLuz()">
             <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-bombilla"></use></svg></div>
             <div><div class="si-label" data-i18n="luz.title">Precio de la luz</div><div class="si-desc" data-i18n="luz.desc">PVPC por horas, tarifa regulada</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openGasolina()">
+            <div class="si-icon">&#9981;</div>
+            <div><div class="si-label" data-i18n="gsl.title">Precio de la gasolina</div><div class="si-desc" data-i18n="gsl.desc">Gasolineras más baratas cerca de ti</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openCalidadAire()">
+            <div class="si-icon">&#127788;</div>
+            <div><div class="si-label" data-i18n="caq.title">Calidad del aire</div><div class="si-desc" data-i18n="caq.desc">Índice europeo, ciudad a ciudad</div></div>
+          </button>
+          <button type="button" class="start-item" onclick="openGastosCompartidos()">
+            <div class="si-icon">&#129309;</div>
+            <div><div class="si-label" data-i18n="gc.title">Gastos compartidos</div><div class="si-desc" data-i18n="gc.menudesc">Quién debe a quién</div></div>
           </button>
         </div>
         <button type="button" class="start-item" id="start-creatividad-toggle" onclick="toggleStartCreatividad(event)">
@@ -5313,7 +5333,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.67.0';
+const APP_VERSION = '0.68.0';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -5587,6 +5607,91 @@ const I18N={
   'tb.reverse':{es:'Invertir', en:'Reverse', ca:'Invertir', ru:'Обратить'},
   'tb.badjson':{es:'El texto no es JSON válido.', en:'The text is not valid JSON.', ca:'El text no és JSON vàlid.', ru:'Текст не является корректным JSON.'},
   'tb.badb64':{es:'El texto no es Base64 válido.', en:'The text is not valid Base64.', ca:'El text no és Base64 vàlid.', ru:'Текст не является корректным Base64.'},
+  'tb.badurl':{es:'Eso no se puede decodificar como URL.', en:'That can’t be decoded as a URL.', ca:'Això no es pot descodificar com a URL.', ru:'Это невозможно декодировать как URL.'},
+  'val.title':      {es:'Validador de documentos', en:'Document validator', ca:'Validador de documents', ru:'Валидатор документов'},
+  'val.what':       {es:'Escribe un DNI, NIE, CIF o IBAN y comprueba si el dígito de control cuadra. Todo se calcula aquí, nada viaja a ningún sitio.', en:'Type a DNI, NIE, CIF or IBAN and check whether the control digit matches. Everything is calculated here — nothing leaves your device.', ca:'Escriu un DNI, NIE, CIF o IBAN i comprova si el dígit de control quadra. Tot es calcula aquí, res viatja enlloc.', ru:'Введите DNI, NIE, CIF или IBAN и проверьте контрольную цифру. Всё считается здесь, ничего никуда не отправляется.'},
+  'val.placeholder':{es:'12345678Z · X1234567L · B12345674 · ES91...', en:'12345678Z · X1234567L · B12345674 · ES91...', ca:'12345678Z · X1234567L · B12345674 · ES91...', ru:'12345678Z · X1234567L · B12345674 · ES91...'},
+  'val.unknown':    {es:'No reconozco ese formato (¿falta o sobra algún carácter?)', en:'I don’t recognize that format (missing or extra character?)', ca:'No reconec aquest format (falta o sobra algun caràcter?)', ru:'Не удаётся распознать формат (не хватает или лишний символ?)'},
+  'val.ok':         {es:'válido', en:'valid', ca:'vàlid', ru:'действителен'},
+  'val.bad':        {es:'no válido', en:'not valid', ca:'no vàlid', ru:'недействителен'},
+  'val.expected':   {es:'la letra de control debería ser {l}', en:'the check letter should be {l}', ca:'la lletra de control hauria de ser {l}', ru:'контрольная буква должна быть {l}'},
+  'val.country':    {es:'País', en:'Country', ca:'País', ru:'Страна'},
+  'val.cif.A':{es:'Sociedad Anónima', en:'Public limited company', ca:'Societat Anònima', ru:'Акционерное общество'},
+  'val.cif.B':{es:'Sociedad de Responsabilidad Limitada', en:'Limited liability company', ca:'Societat de Responsabilitat Limitada', ru:'Общество с ограниченной ответственностью'},
+  'val.cif.C':{es:'Sociedad Colectiva', en:'General partnership', ca:'Societat Col·lectiva', ru:'Полное товарищество'},
+  'val.cif.D':{es:'Sociedad Comanditaria', en:'Limited partnership', ca:'Societat Comanditària', ru:'Товарищество на вере'},
+  'val.cif.E':{es:'Comunidad de Bienes', en:'Community of property', ca:'Comunitat de Béns', ru:'Общность имущества'},
+  'val.cif.F':{es:'Sociedad Cooperativa', en:'Cooperative', ca:'Societat Cooperativa', ru:'Кооператив'},
+  'val.cif.G':{es:'Asociación', en:'Association', ca:'Associació', ru:'Ассоциация'},
+  'val.cif.H':{es:'Comunidad de Propietarios', en:'Community of owners', ca:'Comunitat de Propietaris', ru:'Товарищество собственников'},
+  'val.cif.J':{es:'Sociedad Civil', en:'Civil partnership', ca:'Societat Civil', ru:'Гражданское товарищество'},
+  'val.cif.N':{es:'Entidad Extranjera', en:'Foreign entity', ca:'Entitat Estrangera', ru:'Иностранное юридическое лицо'},
+  'val.cif.P':{es:'Corporación Local', en:'Local government body', ca:'Corporació Local', ru:'Орган местного самоуправления'},
+  'val.cif.Q':{es:'Organismo Público', en:'Public body', ca:'Organisme Públic', ru:'Государственный орган'},
+  'val.cif.R':{es:'Congregación Religiosa', en:'Religious congregation', ca:'Congregació Religiosa', ru:'Религиозная организация'},
+  'val.cif.S':{es:'Órgano de la Administración del Estado', en:'State administration body', ca:'Òrgan de l’Administració de l’Estat', ru:'Орган государственного управления'},
+  'val.cif.U':{es:'Unión Temporal de Empresas', en:'Temporary business consortium', ca:'Unió Temporal d’Empreses', ru:'Временное объединение предприятий'},
+  'val.cif.V':{es:'Otros tipos no definidos', en:'Other, unclassified types', ca:'Altres tipus no definits', ru:'Прочие неклассифицированные типы'},
+  'val.cif.W':{es:'Establecimiento de entidad extranjera', en:'Branch of a foreign entity', ca:'Establiment d’entitat estrangera', ru:'Филиал иностранной организации'},
+  'val.desc':{es:'DNI, NIE, CIF e IBAN: ¿está bien escrito?', en:'DNI, NIE, CIF and IBAN: is it well-formed?', ca:'DNI, NIE, CIF i IBAN: està ben escrit?', ru:'DNI, NIE, CIF и IBAN: правильно ли записан?'},
+  'ppu.title':{es:'Comparador de precio', en:'Price comparator', ca:'Comparador de preu', ru:'Сравнение цены'},
+  'ppu.desc':{es:'Precio por kg o litro, para comparar dos productos', en:'Price per kg or litre, to compare two products', ca:'Preu per kg o litre, per comparar dos productes', ru:'Цена за кг или литр — сравнение двух товаров'},
+  'ppu.what':{es:'Compara dos productos por su precio real (por kilo, litro o unidad), no por el precio que ves en la etiqueta.', en:'Compare two products by their real price (per kilo, litre or unit), not the price shown on the label.', ca:'Compara dos productes pel seu preu real (per kg, litre o unitat), no pel preu que veus a l’etiqueta.', ru:'Сравните два товара по реальной цене (за килограмм, литр или штуку), а не по цене на этикетке.'},
+  'ppu.a':{es:'Producto A', en:'Product A', ca:'Producte A', ru:'Товар А'},
+  'ppu.b':{es:'Producto B', en:'Product B', ca:'Producte B', ru:'Товар Б'},
+  'ppu.price':{es:'Precio (€)', en:'Price', ca:'Preu', ru:'Цена'},
+  'ppu.qty':{es:'Cantidad', en:'Quantity', ca:'Quantitat', ru:'Количество'},
+  'ppu.units':{es:'unidades', en:'units', ca:'unitats', ru:'штук'},
+  'ppu.incompatible':{es:'No se pueden comparar directamente (una es peso/volumen y la otra es por unidades).', en:'These can’t be compared directly (one is weight/volume, the other is per unit).', ca:'No es poden comparar directament (una és pes/volum i l’altra és per unitats).', ru:'Их нельзя сравнить напрямую (один — вес/объём, другой — поштучно).'},
+  'ppu.same':{es:'Cuestan lo mismo.', en:'They cost the same.', ca:'Costen el mateix.', ru:'Стоят одинаково.'},
+  'ppu.cheaper':{es:'{who} sale un {pct}% más barato', en:'{who} is {pct}% cheaper', ca:'{who} surt un {pct}% més barat', ru:'{who} дешевле на {pct}%'},
+  'gc.title':{es:'Gastos compartidos', en:'Shared expenses', ca:'Despeses compartides', ru:'Общие расходы'},
+  'gc.desc':{es:'Descripción', en:'Description', ca:'Descripció', ru:'Описание'},
+  'gc.menudesc':{es:'Quién ha pagado qué en un viaje o piso, y quién debe a quién', en:'Who paid what on a trip or shared flat, and who owes whom', ca:'Qui ha pagat què en un viatge o pis, i qui deu a qui', ru:'Кто что оплатил в поездке или квартире, и кто кому должен'},
+  'gc.new':{es:'Nueva', en:'New', ca:'Nova', ru:'Новая'},
+  'gc.newname':{es:'Nombre (p.ej. "Viaje a Roma")', en:'Name (e.g. "Trip to Rome")', ca:'Nom (p.ex. "Viatge a Roma")', ru:'Название (напр. «Поездка в Рим»)'},
+  'gc.none':{es:'Sin sesiones', en:'No sessions', ca:'Sense sessions', ru:'Нет сессий'},
+  'gc.empty':{es:'Crea una sesión para empezar (un viaje, un piso compartido...)', en:'Create a session to start (a trip, a shared flat...)', ca:'Crea una sessió per començar (un viatge, un pis compartit...)', ru:'Создайте сессию, чтобы начать (поездка, съёмная квартира...)'},
+  'gc.people':{es:'Personas', en:'People', ca:'Persones', ru:'Участники'},
+  'gc.newperson':{es:'Nombre de la persona', en:'Person’s name', ca:'Nom de la persona', ru:'Имя участника'},
+  'gc.removeperson':{es:'Quitar a {p}', en:'Remove {p}', ca:'Treu {p}', ru:'Удалить {p}'},
+  'gc.expenses':{es:'Gastos', en:'Expenses', ca:'Despeses', ru:'Расходы'},
+  'gc.noDesc':{es:'Gasto sin descripción', en:'Unnamed expense', ca:'Despesa sense descripció', ru:'Расход без описания'},
+  'gc.noexpenses':{es:'Todavía no hay gastos', en:'No expenses yet', ca:'Encara no hi ha despeses', ru:'Расходов пока нет'},
+  'gc.addexpense':{es:'Añadir gasto', en:'Add expense', ca:'Afegeix despesa', ru:'Добавить расход'},
+  'gc.balance':{es:'Balance', en:'Balance', ca:'Balanç', ru:'Баланс'},
+  'gc.settle':{es:'Para saldar cuentas', en:'To settle up', ca:'Per saldar comptes', ru:'Чтобы рассчитаться'},
+  'gc.settled':{es:'Todo saldado', en:'All settled', ca:'Tot saldat', ru:'Всё рассчитано'},
+  'gc.delete':{es:'Borrar', en:'Delete', ca:'Esborra', ru:'Удалить'},
+  'gc.delconfirm':{es:'¿Borrar la sesión "{n}" y todos sus datos?', en:'Delete session "{n}" and all its data?', ca:'Esborrar la sessió "{n}" i totes les seves dades?', ru:'Удалить сессию «{n}» и все данные?'},
+  'gsl.title':{es:'Precio de la gasolina', en:'Fuel prices', ca:'Preu de la gasolina', ru:'Цены на топливо'},
+  'gsl.desc':{es:'Gasolineras más baratas cerca de tu código postal', en:'Cheapest fuel stations near your postal code', ca:'Gasolineres més barates a prop del teu codi postal', ru:'Самые дешёвые заправки рядом с вашим индексом'},
+  'gsl.what':{es:'Datos abiertos del Ministerio, en tiempo real. Escribe tu código postal y el combustible.', en:'Open data from the Spanish Ministry, in real time. Enter your postal code and fuel type.', ca:'Dades obertes del Ministeri, en temps real. Escriu el teu codi postal i el combustible.', ru:'Открытые данные Министерства Испании в реальном времени. Введите почтовый индекс и вид топлива.'},
+  'gsl.cp':{es:'Código postal', en:'Postal code', ca:'Codi postal', ru:'Почтовый индекс'},
+  'gsl.search':{es:'Buscar', en:'Search', ca:'Cerca', ru:'Найти'},
+  'gsl.badcp':{es:'Escribe un código postal de 5 dígitos', en:'Enter a 5-digit postal code', ca:'Escriu un codi postal de 5 dígits', ru:'Введите 5-значный почтовый индекс'},
+  'gsl.loading':{es:'Buscando gasolineras...', en:'Looking up fuel stations...', ca:'Cercant gasolineres...', ru:'Ищем заправки...'},
+  'gsl.noresults':{es:'No hay datos de esa provincia con este combustible', en:'No data for that province with this fuel', ca:'No hi ha dades d’aquesta província amb aquest combustible', ru:'Нет данных по этой провинции для этого топлива'},
+  'gsl.near':{es:'Gasolineras cerca del {cp}', en:'Fuel stations near {cp}', ca:'Gasolineres a prop del {cp}', ru:'Заправки рядом с {cp}'},
+  'gsl.province':{es:'Pocas cerca: te enseño toda la provincia de {p}', en:'Few nearby: showing the whole province of {p}', ca:'Poques a prop: et mostro tota la província de {p}', ru:'Мало рядом: показываю всю провинцию {p}'},
+  'gsl.error':{es:'No se ha podido consultar. ¿Sigues conectado?', en:'Couldn’t fetch the data. Still online?', ca:'No s’ha pogut consultar. Segueixes connectat?', ru:'Не удалось получить данные. Вы всё ещё в сети?'},
+  'gsl.source':{es:'Fuente: Ministerio para la Transición Ecológica', en:'Source: Spanish Ministry for the Ecological Transition', ca:'Font: Ministeri per a la Transició Ecològica', ru:'Источник: Министерство экологического перехода Испании'},
+  'caq.title':{es:'Calidad del aire', en:'Air quality', ca:'Qualitat de l’aire', ru:'Качество воздуха'},
+  'caq.desc':{es:'Índice europeo de calidad del aire por ciudad', en:'European air quality index by city', ca:'Índex europeu de qualitat de l’aire per ciutat', ru:'Европейский индекс качества воздуха по городам'},
+  'caq.what':{es:'Índice europeo de calidad del aire (EAQI) en tiempo real, ciudad a ciudad.', en:'Real-time European Air Quality Index (EAQI), city by city.', ca:'Índex europeu de qualitat de l’aire (EAQI) en temps real, ciutat a ciutat.', ru:'Европейский индекс качества воздуха (EAQI) в реальном времени, по городам.'},
+  'caq.city':{es:'Ciudad', en:'City', ca:'Ciutat', ru:'Город'},
+  'caq.search':{es:'Buscar', en:'Search', ca:'Cerca', ru:'Найти'},
+  'caq.noresults':{es:'No encuentro esa ciudad', en:'Can’t find that city', ca:'No trobo aquesta ciutat', ru:'Не удаётся найти этот город'},
+  'caq.loading':{es:'Consultando...', en:'Checking...', ca:'Consultant...', ru:'Проверяем...'},
+  'caq.error':{es:'No se ha podido consultar. ¿Sigues conectado?', en:'Couldn’t fetch the data. Still online?', ca:'No s’ha pogut consultar. Segueixes connectat?', ru:'Не удалось получить данные. Вы всё ещё в сети?'},
+  'caq.ozone':{es:'Ozono', en:'Ozone', ca:'Ozó', ru:'Озон'},
+  'caq.source':{es:'Fuente: Open-Meteo (datos del Copernicus Atmosphere Monitoring Service)', en:'Source: Open-Meteo (Copernicus Atmosphere Monitoring Service data)', ca:'Font: Open-Meteo (dades del Copernicus Atmosphere Monitoring Service)', ru:'Источник: Open-Meteo (данные Copernicus Atmosphere Monitoring Service)'},
+  'caq.good':{es:'Buena', en:'Good', ca:'Bona', ru:'Хорошее'},
+  'caq.fair':{es:'Aceptable', en:'Fair', ca:'Acceptable', ru:'Приемлемое'},
+  'caq.moderate':{es:'Moderada', en:'Moderate', ca:'Moderada', ru:'Умеренное'},
+  'caq.poor':{es:'Mala', en:'Poor', ca:'Dolenta', ru:'Плохое'},
+  'caq.verypoor':{es:'Muy mala', en:'Very poor', ca:'Molt dolenta', ru:'Очень плохое'},
+  'caq.extreme':{es:'Extremadamente mala', en:'Extremely poor', ca:'Extremadament dolenta', ru:'Крайне плохое'},
   'px.title':{es:'Pixel Art', en:'Pixel Art', ca:'Pixel Art', ru:'Пиксель-арт'},
   'px.desc':{es:'Editor de sprites', en:'Sprite editor', ca:'Editor d’sprites', ru:'Редактор спрайтов'},
   'px.pen':{es:'Lápiz', en:'Pencil', ca:'Llapis', ru:'Карандаш'},
@@ -12890,6 +12995,8 @@ function openToolbox(initTab){
           <button type="button" class="tb-mini" data-op="json">JSON</button>
           <button type="button" class="tb-mini" data-op="b64e">Base64 &#8594;</button>
           <button type="button" class="tb-mini" data-op="b64d">&#8594; texto</button>
+          <button type="button" class="tb-mini" data-op="urle">URL &#8594;</button>
+          <button type="button" class="tb-mini" data-op="urld">URL &#8592;</button>
           <button type="button" class="tb-mini" id="tb-txt-copy">&#128203; ${t('btn.copy')}</button>
         </div>
       </section>
@@ -12944,7 +13051,9 @@ function openToolbox(initTab){
       reverse:v=>Array.from(v).reverse().join(''),
       json:v=>{ try{ return JSON.stringify(JSON.parse(v),null,2); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-aviso"></use></svg></div><div>'+t('tb.badjson')+'</div>'); return v; } },
       b64e:v=>{ try{ return btoa(unescape(encodeURIComponent(v))); }catch(e){ return v; } },
-      b64d:v=>{ try{ return decodeURIComponent(escape(atob(v.trim()))); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-aviso"></use></svg></div><div>'+t('tb.badb64')+'</div>'); return v; } }
+      b64d:v=>{ try{ return decodeURIComponent(escape(atob(v.trim()))); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-aviso"></use></svg></div><div>'+t('tb.badb64')+'</div>'); return v; } },
+      urle:v=>{ try{ return encodeURIComponent(v); }catch(e){ return v; } },
+      urld:v=>{ try{ return decodeURIComponent(v); }catch(e){ xpDialog(t('tb.title'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-aviso"></use></svg></div><div>'+t('tb.badurl')+'</div>'); return v; } }
     };
     win.querySelectorAll('.tb-txt-btns [data-op]').forEach(b=>b.onclick=()=>{ txtIn.value=ops[b.dataset.op](txtIn.value); updTxt(); });
     win.querySelector('#tb-txt-copy').onclick=()=>{ if(txtIn.value){ osCopy(txtIn.value); notify({icon:ico('tareas'),title:t('tb.title'),body:t('tb.copied')}); } };
@@ -14529,6 +14638,443 @@ function openConverter(){
     fillUnits(); calc();
     // Tasas del día en segundo plano: si llegan, se repinta con las de verdad
     convCargaTasas().then(()=>{ try{ if(cat==='currency'){ fillUnits(); } calc(); }catch(e){_ignora(e);} });
+  }});
+}
+
+// ========== VALIDADOR DE NIF/NIE/CIF/IBAN ==========
+// Todo el cálculo es un dígito de control: sin red, sin base de datos que mantener. Detecta
+// el tipo de documento por su forma y aplica el algoritmo que le toca.
+function _valLimpia(s){ return String(s||'').toUpperCase().replace(/[^0-9A-Z]/g,''); }
+const VAL_DNI_LETRAS='TRWAGMYFPDXBNJZSQVHLCKE';
+function valDNI(s){
+  const m=s.match(/^(\d{8})([A-Z])$/); if(!m)return null;
+  const letra=VAL_DNI_LETRAS[+m[1]%23];
+  return {tipo:'DNI',ok:letra===m[2],esperada:letra};
+}
+const VAL_NIE_PREF={X:'0',Y:'1',Z:'2'};
+function valNIE(s){
+  const m=s.match(/^([XYZ])(\d{7})([A-Z])$/); if(!m)return null;
+  const letra=VAL_DNI_LETRAS[+(VAL_NIE_PREF[m[1]]+m[2])%23];
+  return {tipo:'NIE',ok:letra===m[3],esperada:letra};
+}
+// Letras que exigen control numérico, las que exigen letra, y el resto (admiten cualquiera
+// de las dos formas: la norma ha cambiado de criterio con los años y conviene ser flexible).
+const VAL_CIF_NUM=new Set(['A','B','E','H']);
+const VAL_CIF_LET=new Set(['K','N','P','Q','R','S','W']);
+const VAL_CIF_TIPOS='A,B,C,D,E,F,G,H,J,N,P,Q,R,S,U,V,W'.split(',');
+function valCIF(s){
+  const m=s.match(/^([A-HJ-NP-SUVW])(\d{7})([0-9A-J])$/); if(!m)return null;
+  const letra=m[1],digitos=m[2],control=m[3];
+  let sumaPar=0,sumaImpar=0;
+  for(let i=0;i<7;i++){
+    const d=+digitos[i];
+    if(i%2===0){ let doble=d*2; if(doble>9)doble=Math.floor(doble/10)+doble%10; sumaImpar+=doble; } // posiciones 1,3,5,7
+    else sumaPar+=d; // posiciones 2,4,6
+  }
+  const total=sumaPar+sumaImpar;
+  const cDigito=(10-(total%10))%10;
+  const cLetra='JABCDEFGHI'[cDigito];
+  let ok;
+  if(VAL_CIF_NUM.has(letra))ok=(control===String(cDigito));
+  else if(VAL_CIF_LET.has(letra))ok=(control===cLetra);
+  else ok=(control===String(cDigito)||control===cLetra);
+  return {tipo:'CIF',ok,letra};
+}
+// Longitud real del IBAN por país (evita que dos erratas que se compensen cuelen por casualidad
+// el módulo 97). Si el país no está en la tabla, se valida igual solo con el módulo 97.
+const VAL_IBAN_LEN={ES:24,DE:22,FR:27,IT:27,PT:25,GB:22,NL:18,BE:16,IE:22,AT:20,CH:21,PL:28,GR:27,LU:20,DK:18,SE:24,FI:18,NO:15,CZ:24,SK:24,HU:28,RO:24,BG:22,HR:21,SI:19,EE:20,LV:21,LT:20,MT:31,CY:28,AD:24,MC:27,SM:27,GI:23,IS:26};
+function valIBAN(s){
+  if(s.length<15||s.length>34||!/^[A-Z]{2}\d{2}[0-9A-Z]+$/.test(s))return null;
+  const pais=s.slice(0,2);
+  const reordenado=s.slice(4)+s.slice(0,4);
+  let numerico='';
+  for(const ch of reordenado)numerico+=(ch>='0'&&ch<='9')?ch:String(ch.charCodeAt(0)-55);
+  let resto=0;
+  for(let i=0;i<numerico.length;i++)resto=(resto*10+ +numerico[i])%97;
+  const long=VAL_IBAN_LEN[pais];
+  return {tipo:'IBAN',ok:resto===1&&(!long||long===s.length),pais};
+}
+function valDetecta(raw){
+  const s=_valLimpia(raw);
+  if(!s)return null;
+  if(/^[A-Z]{2}\d{2}[0-9A-Z]{6,}$/.test(s))return valIBAN(s)||{tipo:'IBAN',ok:false};
+  if(/^\d{8}[A-Z]$/.test(s))return valDNI(s)||{tipo:'DNI',ok:false};
+  if(/^[XYZ]\d{7}[A-Z]$/.test(s))return valNIE(s)||{tipo:'NIE',ok:false};
+  if(/^[A-Z]\d{7}[0-9A-J]$/.test(s))return valCIF(s)||{tipo:'CIF',ok:false};
+  return {tipo:null,ok:false};
+}
+function openValidador(){
+  closeStartMenu();
+  if(focusExisting('val-root'))return;
+  const content=`<div class="val-root" id="val-root" style="display:flex;flex-direction:column;height:100%;padding:14px;gap:10px;font-family:Rajdhani,sans-serif;overflow:auto">
+    <p style="margin:0;font-size:12px;color:#5a6472">${t('val.what')}</p>
+    <input type="text" id="val-in" placeholder="${escHtml(t('val.placeholder'))}" autocapitalize="characters" autocomplete="off" spellcheck="false"
+      style="font-size:19px;letter-spacing:1.5px;font-family:'Courier New',monospace;padding:10px;border:2px inset #7f9db9;border-radius:4px;text-transform:uppercase">
+    <div id="val-out" role="status" aria-live="polite" style="font-size:13px;line-height:1.5;min-height:60px"></div>
+  </div>`;
+  createWindow(t('val.title'),'&#129706;',360,280,content,{session:'validador',statusbar:false,onCreated:(id,win)=>{
+    const inp=win.querySelector('#val-in'), out=win.querySelector('#val-out');
+    const pinta=()=>{
+      const v=inp.value.trim();
+      if(!v){ out.innerHTML=''; return; }
+      const r=valDetecta(v);
+      if(!r||!r.tipo){ out.innerHTML='<span style="color:#8a6a40">'+escHtml(t('val.unknown'))+'</span>'; return; }
+      const color=r.ok?'#2f7d4b':'#b3392f';
+      let extra='';
+      if(r.tipo==='CIF'&&r.letra)extra='<div style="margin-top:4px;color:#5a6472">'+escHtml(t('val.cif.'+r.letra))+'</div>';
+      if(r.tipo==='IBAN'&&r.pais)extra='<div style="margin-top:4px;color:#5a6472">'+escHtml(t('val.country'))+': '+r.pais+'</div>';
+      if((r.tipo==='DNI'||r.tipo==='NIE')&&!r.ok&&r.esperada)extra='<div style="margin-top:4px;color:#5a6472">'+escHtml(t('val.expected',{l:r.esperada}))+'</div>';
+      out.innerHTML='<b style="color:'+color+'">'+r.tipo+' '+escHtml(r.ok?t('val.ok'):t('val.bad'))+'</b>'+extra;
+      announce(r.tipo+' '+(r.ok?t('val.ok'):t('val.bad')));
+    };
+    inp.addEventListener('input',pinta);
+    setTimeout(()=>{ try{inp.focus();}catch(e){_ignora(e);} },30);
+  }});
+}
+
+// ========== COMPARADOR DE PRECIO POR UNIDAD ==========
+// Normaliza cada producto a precio/kg, precio/L o precio/unidad, y solo compara dos productos
+// si acaban en la misma magnitud (comparar €/kg con €/unidad no significa nada).
+function ppuNormaliza(precio,cantidad,unidad){
+  precio=+precio; cantidad=+cantidad;
+  if(!(precio>0)||!(cantidad>0))return null;
+  const F={g:{base:'peso',mul:0.001,ud:'kg'},kg:{base:'peso',mul:1,ud:'kg'},ml:{base:'volumen',mul:0.001,ud:'L'},l:{base:'volumen',mul:1,ud:'L'},ud:{base:'unidad',mul:1,ud:t('ppu.units')}};
+  const f=F[unidad]; if(!f)return null;
+  return {base:f.base,unidad:f.ud,precioBase:precio/(cantidad*f.mul)};
+}
+function openComparadorPrecio(){
+  closeStartMenu();
+  if(focusExisting('ppu-root'))return;
+  const cardHTML=(id,label)=>`<div style="flex:1;min-width:150px;border:1px solid #c9b48c;border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:6px;background:#fffaf0">
+    <b style="font-size:13px">${escHtml(label)}</b>
+    <input type="number" id="ppu-${id}-precio" placeholder="${escHtml(t('ppu.price'))}" step="0.01" min="0" style="padding:6px;border:1px solid #c9b48c;border-radius:4px">
+    <input type="number" id="ppu-${id}-cant" placeholder="${escHtml(t('ppu.qty'))}" step="0.01" min="0" style="padding:6px;border:1px solid #c9b48c;border-radius:4px">
+    <select id="ppu-${id}-unidad" style="padding:6px;border:1px solid #c9b48c;border-radius:4px">
+      <option value="g">g</option><option value="kg">kg</option><option value="ml">ml</option><option value="l">L</option><option value="ud">${escHtml(t('ppu.units'))}</option>
+    </select>
+  </div>`;
+  const content=`<div id="ppu-root" style="display:flex;flex-direction:column;height:100%;padding:14px;gap:12px;font-family:Rajdhani,sans-serif;overflow:auto">
+    <p style="margin:0;font-size:12px;color:#5a6472">${escHtml(t('ppu.what'))}</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">${cardHTML('a',t('ppu.a'))}${cardHTML('b',t('ppu.b'))}</div>
+    <div id="ppu-out" role="status" aria-live="polite" style="font-size:14px;text-align:center;padding:10px;min-height:24px"></div>
+  </div>`;
+  createWindow(t('ppu.title'),'&#128722;',380,340,content,{session:'comparadorprecio',statusbar:false,onCreated:(id,win)=>{
+    const out=win.querySelector('#ppu-out');
+    const leeCarta=(c)=>ppuNormaliza(win.querySelector('#ppu-'+c+'-precio').value,win.querySelector('#ppu-'+c+'-cant').value,win.querySelector('#ppu-'+c+'-unidad').value);
+    const fmt=(n)=>(Math.round(n*1000)/1000).toString().replace('.',',');
+    const calcula=()=>{
+      const a=leeCarta('a'), b=leeCarta('b');
+      if(!a&&!b){ out.innerHTML=''; return; }
+      if(a&&!b){ out.innerHTML=t('ppu.a')+': <b>'+fmt(a.precioBase)+' €/'+a.unidad+'</b>'; return; }
+      if(b&&!a){ out.innerHTML=t('ppu.b')+': <b>'+fmt(b.precioBase)+' €/'+b.unidad+'</b>'; return; }
+      const linea='A: <b>'+fmt(a.precioBase)+' €/'+a.unidad+'</b> &middot; B: <b>'+fmt(b.precioBase)+' €/'+b.unidad+'</b>';
+      if(a.base!==b.base){ out.innerHTML=linea+'<div style="margin-top:6px;color:#8a6a40;font-size:12px">'+escHtml(t('ppu.incompatible'))+'</div>'; return; }
+      if(Math.abs(a.precioBase-b.precioBase)<0.001){ out.innerHTML=linea+'<div style="margin-top:6px;color:#5a6472">'+escHtml(t('ppu.same'))+'</div>'; return; }
+      const barato=a.precioBase<b.precioBase?'A':'B', pct=Math.round(Math.abs(a.precioBase-b.precioBase)/Math.max(a.precioBase,b.precioBase)*1000)/10;
+      out.innerHTML=linea+'<div style="margin-top:6px;color:#2f7d4b;font-weight:700">'+escHtml(t('ppu.cheaper',{who:barato,pct:pct}))+'</div>';
+    };
+    win.querySelectorAll('#ppu-root input,#ppu-root select').forEach(el=>el.addEventListener('input',calcula));
+    setTimeout(()=>{ try{win.querySelector('#ppu-a-precio').focus();}catch(e){_ignora(e);} },30);
+  }});
+}
+
+// ========== GASTOS COMPARTIDOS ENTRE VARIAS PERSONAS ==========
+// Varias "sesiones" (un viaje, un piso...), cada una con personas y gastos. La liquidación
+// reduce todo a "quién le paga a quién y cuánto" con el mínimo de movimientos razonable:
+// primero se calcula el balance de cada persona (lo que ha pagado menos su parte de todo en
+// lo que participa), y luego se empareja el mayor deudor con el mayor acreedor, repitiendo.
+function gcCargaSesiones(){ try{ return JSON.parse(Store.get('tos-gc-sesiones')||'[]'); }catch(e){ return []; } }
+function gcGuardaSesiones(lista){ return osGuardaLista('tos-gc-sesiones',lista,t('gc.title')); }
+function gcCalculaBalances(personas,gastos){
+  const balance={}; personas.forEach(p=>balance[p]=0);
+  gastos.forEach(g=>{
+    const entre=(g.entre&&g.entre.length)?g.entre.filter(p=>personas.indexOf(p)>=0):personas;
+    if(!entre.length)return;
+    const parte=g.importe/entre.length;
+    entre.forEach(p=>{ balance[p]=(balance[p]||0)-parte; });
+    if(personas.indexOf(g.pagadoPor)>=0)balance[g.pagadoPor]=(balance[g.pagadoPor]||0)+g.importe;
+  });
+  return balance;
+}
+// Redondea a céntimos con el "método del resto mayor": redondear cada balance por separado
+// puede desviar la suma total unos céntimos aunque en teoría sea 0 — así la suma siempre cuadra.
+function gcRedondeaBalances(balance){
+  const personas=Object.keys(balance);
+  if(!personas.length)return {};
+  const real=personas.map(p=>balance[p]*100);
+  const suelo=real.map(Math.floor);
+  const objetivo=Math.round(real.reduce((a,b)=>a+b,0));
+  let restante=objetivo-suelo.reduce((a,b)=>a+b,0);
+  const orden=personas.map((p,i)=>({i,frac:real[i]-suelo[i]})).sort((a,b)=>b.frac-a.frac);
+  const centimos=suelo.slice();
+  let k=0;
+  while(restante>0){ centimos[orden[k%orden.length].i]++; restante--; k++; }
+  while(restante<0){ centimos[orden[orden.length-1-(k%orden.length)].i]--; restante++; k++; }
+  const out={}; personas.forEach((p,i)=>out[p]=Math.round(centimos[i])/100);
+  return out;
+}
+function gcLiquida(balanceRedondeado){
+  const deudores=[],acreedores=[];
+  Object.keys(balanceRedondeado).forEach(p=>{
+    const v=balanceRedondeado[p];
+    if(v<0)deudores.push({p,v:-v}); else if(v>0)acreedores.push({p,v});
+  });
+  deudores.sort((a,b)=>b.v-a.v); acreedores.sort((a,b)=>b.v-a.v);
+  const movimientos=[]; let i=0,j=0;
+  while(i<deudores.length&&j<acreedores.length){
+    const pago=Math.round(Math.min(deudores[i].v,acreedores[j].v)*100)/100;
+    if(pago>0)movimientos.push({de:deudores[i].p,a:acreedores[j].p,importe:pago});
+    deudores[i].v=Math.round((deudores[i].v-pago)*100)/100;
+    acreedores[j].v=Math.round((acreedores[j].v-pago)*100)/100;
+    if(deudores[i].v<=0)i++;
+    if(acreedores[j].v<=0)j++;
+  }
+  return movimientos;
+}
+function openGastosCompartidos(){
+  closeStartMenu();
+  if(focusExisting('gc-root'))return;
+  const content=`<div class="gc-root" id="gc-root" style="display:flex;flex-direction:column;height:100%;font-family:Rajdhani,sans-serif">
+    <div style="padding:8px;border-bottom:1px solid #c9b48c;display:flex;gap:6px;align-items:center">
+      <select id="gc-sel" style="flex:1;min-width:0"></select>
+      <button type="button" class="g-btn g-btn-alt" id="gc-nueva">+ ${escHtml(t('gc.new'))}</button>
+      <button type="button" class="g-btn g-btn-alt" id="gc-borra" aria-label="${escHtml(t('gc.delete'))}">&#128465;&#65039;</button>
+    </div>
+    <div id="gc-body" style="flex:1;overflow:auto;padding:12px"></div>
+  </div>`;
+  createWindow(t('gc.title'),'&#129309;',400,480,content,{session:'gastoscompartidos',statusbar:false,onCreated:(id,win)=>{
+    const sel=win.querySelector('#gc-sel'), body=win.querySelector('#gc-body');
+    let sesiones=gcCargaSesiones();
+    let actualId=sesiones.length?sesiones[0].id:null;
+    const actual=()=>sesiones.find(s=>s.id===actualId);
+    const guarda=()=>gcGuardaSesiones(sesiones);
+    function pintaSelector(){
+      sel.innerHTML=sesiones.length?sesiones.map(s=>'<option value="'+s.id+'">'+escHtml(s.nombre)+'</option>').join(''):'<option value="">'+escHtml(t('gc.none'))+'</option>';
+      sel.value=actualId!=null?String(actualId):'';
+    }
+    function pintaBody(){
+      const s=actual();
+      if(!s){ body.innerHTML='<p style="color:#8a6a40;font-size:12px">'+escHtml(t('gc.empty'))+'</p>'; return; }
+      const balance=gcRedondeaBalances(gcCalculaBalances(s.personas,s.gastos));
+      const movimientos=gcLiquida(Object.assign({},balance));
+      body.innerHTML=
+        '<b style="font-size:12px">'+escHtml(t('gc.people'))+'</b>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0">'+
+          s.personas.map(p=>'<span style="background:#eef4ff;border:1px solid #b9cdf0;border-radius:12px;padding:2px 8px;font-size:12px;display:inline-flex;align-items:center;gap:5px">'+escHtml(p)+
+            '<button type="button" data-p="'+escHtml(p)+'" aria-label="'+escHtml(t('gc.removeperson',{p:p}))+'" style="border:none;background:none;cursor:pointer;color:#b3392f;font-weight:700">&times;</button></span>').join('')+
+        '</div>'+
+        '<div style="display:flex;gap:6px;margin-bottom:12px"><input type="text" id="gc-persona-in" placeholder="'+escHtml(t('gc.newperson'))+'" style="flex:1;padding:6px;border:1px solid #c9b48c;border-radius:4px"><button type="button" class="g-btn g-btn-alt" id="gc-persona-add">+</button></div>'+
+        '<b style="font-size:12px">'+escHtml(t('gc.expenses'))+'</b>'+
+        '<div style="display:flex;flex-direction:column;gap:4px;margin:6px 0;font-size:12px">'+
+          (s.gastos.length?s.gastos.map(g=>'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;background:#f7f5ee;border-radius:4px;padding:4px 8px"><span>'+escHtml(g.desc||t('gc.noDesc'))+' — '+g.importe.toFixed(2)+'€ ('+escHtml(g.pagadoPor)+')</span><button type="button" data-g="'+g.id+'" aria-label="'+escHtml(t('btn.delete'))+'" style="border:none;background:none;cursor:pointer;color:#b3392f;font-weight:700">&times;</button></div>').join('')
+            :'<p style="font-size:11px;color:#8a6a40">'+escHtml(t('gc.noexpenses'))+'</p>')+
+        '</div>'+
+        (s.personas.length?
+          '<div style="display:flex;flex-direction:column;gap:5px;border-top:1px dashed #c9b48c;padding-top:8px;margin-bottom:12px">'+
+            '<input type="text" id="gc-desc" placeholder="'+escHtml(t('gc.desc'))+'" style="padding:6px;border:1px solid #c9b48c;border-radius:4px">'+
+            '<div style="display:flex;gap:6px"><input type="number" id="gc-importe" placeholder="€" step="0.01" min="0" style="flex:1;padding:6px;border:1px solid #c9b48c;border-radius:4px">'+
+              '<select id="gc-pagadopor" style="padding:6px;border:1px solid #c9b48c;border-radius:4px">'+s.personas.map(p=>'<option>'+escHtml(p)+'</option>').join('')+'</select></div>'+
+            '<div id="gc-entre" style="display:flex;flex-wrap:wrap;gap:8px;font-size:11px">'+s.personas.map(p=>'<label><input type="checkbox" checked value="'+escHtml(p)+'"> '+escHtml(p)+'</label>').join('')+'</div>'+
+            '<button type="button" class="g-btn" id="gc-add-gasto">'+escHtml(t('gc.addexpense'))+'</button>'+
+          '</div>'
+        :'')+
+        '<b style="font-size:12px">'+escHtml(t('gc.balance'))+'</b>'+
+        '<div style="display:flex;flex-direction:column;gap:3px;margin:6px 0;font-size:12px">'+
+          s.personas.map(p=>{ const v=balance[p]||0; return '<div style="display:flex;justify-content:space-between"><span>'+escHtml(p)+'</span><b style="color:'+(v>0?'#2f7d4b':v<0?'#b3392f':'#5a6472')+'">'+(v>0?'+':'')+v.toFixed(2)+'€</b></div>'; }).join('')+
+        '</div>'+
+        (movimientos.length?
+          '<b style="font-size:12px">'+escHtml(t('gc.settle'))+'</b><div style="display:flex;flex-direction:column;gap:3px;font-size:12px;margin-top:4px">'+
+            movimientos.map(m=>'<div>'+escHtml(m.de)+' &#8594; '+escHtml(m.a)+': <b>'+m.importe.toFixed(2)+'€</b></div>').join('')+'</div>'
+          :(s.personas.length?'<p style="font-size:12px;color:#2f7d4b">'+escHtml(t('gc.settled'))+'</p>':''));
+      body.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
+        const s2=actual(); s2.personas=s2.personas.filter(p=>p!==b.dataset.p);
+        s2.gastos.forEach(g=>{ g.entre=(g.entre||[]).filter(p=>p!==b.dataset.p); if(g.pagadoPor===b.dataset.p)g.pagadoPor=s2.personas[0]||''; });
+        guarda(); pintaBody();
+      });
+      body.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{
+        const s2=actual(); s2.gastos=s2.gastos.filter(g=>String(g.id)!==b.dataset.g);
+        guarda(); pintaBody();
+      });
+      const personaIn=body.querySelector('#gc-persona-in');
+      const addPersona=()=>{
+        const v=(personaIn.value||'').trim(); if(!v)return;
+        const s2=actual(); if(s2.personas.indexOf(v)>=0){ personaIn.value=''; return; }
+        s2.personas.push(v); guarda(); pintaBody();
+      };
+      const addPersonaBtn=body.querySelector('#gc-persona-add');
+      if(addPersonaBtn)addPersonaBtn.onclick=addPersona;
+      if(personaIn)personaIn.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();addPersona();} });
+      const addGastoBtn=body.querySelector('#gc-add-gasto');
+      if(addGastoBtn)addGastoBtn.onclick=()=>{
+        const desc=(body.querySelector('#gc-desc').value||'').trim();
+        const importe=+body.querySelector('#gc-importe').value;
+        const pagadoPor=body.querySelector('#gc-pagadopor').value;
+        const entre=[...body.querySelectorAll('#gc-entre input:checked')].map(c=>c.value);
+        if(!(importe>0)||!pagadoPor||!entre.length)return;
+        const s2=actual();
+        s2.gastos.push({id:Date.now()+Math.random(),desc,importe:Math.round(importe*100)/100,pagadoPor,entre});
+        guarda(); pintaBody();
+      };
+    }
+    function nuevaSesion(){
+      xpPrompt(t('gc.new'),t('gc.newname'),'',(nombreRaw)=>{
+        const nombre=(nombreRaw||'').trim(); if(!nombre)return;
+        const s={id:Date.now(),nombre,personas:[],gastos:[]};
+        sesiones.push(s); actualId=s.id; guarda(); pintaSelector(); pintaBody();
+      });
+    }
+    sel.onchange=()=>{ actualId=sel.value?+sel.value:null; pintaBody(); };
+    win.querySelector('#gc-nueva').onclick=nuevaSesion;
+    win.querySelector('#gc-borra').onclick=()=>{
+      const s=actual(); if(!s)return;
+      xpDialog(t('gc.title'),'<div>'+escHtml(t('gc.delconfirm',{n:s.nombre}))+'</div>',[
+        {label:t('gc.delete'),primary:true,action:()=>{ sesiones=sesiones.filter(x=>x.id!==s.id); actualId=sesiones.length?sesiones[0].id:null; guarda(); pintaSelector(); pintaBody(); }},
+        {label:t('btn.cancel')}
+      ]);
+    };
+    pintaSelector(); pintaBody();
+  }});
+}
+
+// ========== PRECIO DE LA GASOLINA ==========
+// API del Ministerio para la Transición Ecológica: pública, sin clave, con CORS abierto
+// (comprobado a mano: Access-Control-Allow-Origin: *). Los dos primeros dígitos del código
+// postal SON el id de provincia que pide la API — es el mismo estándar desde siempre, no
+// hace falta tabla de conversión — así que solo se pide una vez por provincia (cientos de KB)
+// en vez de la lista nacional entera (más de 10 MB) que serviría de golpe FiltroProvincia/.
+const GSL_URL='https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroProvincia/';
+const GSL_PROVINCIAS={'01':'Araba/Álava','02':'Albacete','03':'Alicante','04':'Almería','05':'Ávila','06':'Badajoz','07':'Illes Balears','08':'Barcelona','09':'Burgos','10':'Cáceres','11':'Cádiz','12':'Castellón','13':'Ciudad Real','14':'Córdoba','15':'A Coruña','16':'Cuenca','17':'Girona','18':'Granada','19':'Guadalajara','20':'Gipuzkoa','21':'Huelva','22':'Huesca','23':'Jaén','24':'León','25':'Lleida','26':'La Rioja','27':'Lugo','28':'Madrid','29':'Málaga','30':'Murcia','31':'Navarra','32':'Ourense','33':'Asturias','34':'Palencia','35':'Las Palmas','36':'Pontevedra','37':'Salamanca','38':'Santa Cruz de Tenerife','39':'Cantabria','40':'Segovia','41':'Sevilla','42':'Soria','43':'Tarragona','44':'Teruel','45':'Toledo','46':'Valencia','47':'Valladolid','48':'Bizkaia','49':'Zamora','50':'Zaragoza','51':'Ceuta','52':'Melilla'};
+const GSL_COMBUSTIBLES=[{id:'Precio Gasoleo A',label:'Gasóleo A'},{id:'Precio Gasolina 95 E5',label:'Gasolina 95'},{id:'Precio Gasolina 98 E5',label:'Gasolina 98'}];
+async function gslBuscar(cp,combustible){
+  const prov=cp.slice(0,2);
+  const j=await tpFetchJSON(GSL_URL+prov);
+  if(!j||!j.ListaEESSPrecio)throw new Error('sinresultado');
+  const conPrecio=j.ListaEESSPrecio.filter(e=>e[combustible]&&String(e[combustible]).trim()).map(e=>({
+    rotulo:e['Rótulo']||'',direccion:e['Dirección']||'',municipio:e['Municipio']||'',cp:e['C.P.']||'',
+    precio:parseFloat(String(e[combustible]).replace(',','.'))
+  })).filter(e=>Number.isFinite(e.precio));
+  const cerca=conPrecio.filter(e=>e.cp.slice(0,3)===cp.slice(0,3));
+  const usarCerca=cerca.length>=5;
+  return {lista:(usarCerca?cerca:conPrecio).sort((a,b)=>a.precio-b.precio).slice(0,20),ambito:usarCerca?'cp':'provincia'};
+}
+function openGasolina(){
+  closeStartMenu();
+  if(focusExisting('gsl-root'))return;
+  const content=`<div id="gsl-root" style="display:flex;flex-direction:column;height:100%;padding:12px;gap:8px;font-family:Rajdhani,sans-serif;overflow:hidden">
+    <p style="margin:0;font-size:12px;color:#5a6472">${escHtml(t('gsl.what'))}</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <input type="text" id="gsl-cp" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="${escHtml(t('gsl.cp'))}" style="flex:1;min-width:90px;padding:7px;border:1px solid #c9b48c;border-radius:4px">
+      <select id="gsl-tipo" style="padding:7px;border:1px solid #c9b48c;border-radius:4px">${GSL_COMBUSTIBLES.map(c=>'<option value="'+escHtml(c.id)+'">'+escHtml(c.label)+'</option>').join('')}</select>
+      <button type="button" class="g-btn" id="gsl-go">${escHtml(t('gsl.search'))}</button>
+    </div>
+    <div id="gsl-out" role="status" aria-live="polite" style="flex:1;overflow:auto;font-size:12px"></div>
+  </div>`;
+  createWindow(t('gsl.title'),'&#9981;',400,460,content,{session:'gasolina',statusbar:false,onCreated:(id,win)=>{
+    const cpIn=win.querySelector('#gsl-cp'), tipoSel=win.querySelector('#gsl-tipo'), out=win.querySelector('#gsl-out'), goBtn=win.querySelector('#gsl-go');
+    const ultimoCP=Store.get('tos-gsl-cp')||'';
+    cpIn.value=ultimoCP;
+    async function buscar(){
+      const cp=cpIn.value.replace(/\D/g,'').slice(0,5);
+      if(cp.length!==5){ out.innerHTML='<p style="color:#b3392f">'+escHtml(t('gsl.badcp'))+'</p>'; return; }
+      Store.set('tos-gsl-cp',cp);
+      out.innerHTML='<p>'+escHtml(t('gsl.loading'))+'</p>';
+      goBtn.disabled=true;
+      try{
+        const r=await gslBuscar(cp,tipoSel.value);
+        if(!r.lista.length){ out.innerHTML='<p>'+escHtml(t('gsl.noresults'))+'</p>'; return; }
+        const prov=GSL_PROVINCIAS[cp.slice(0,2)]||'';
+        out.innerHTML='<p style="color:#8a6a40;margin:0 0 6px">'+escHtml(r.ambito==='cp'?t('gsl.near',{cp:cp}):t('gsl.province',{p:prov}))+'</p>'+
+          '<div style="display:flex;flex-direction:column;gap:4px">'+r.lista.map((e,i)=>
+            '<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 8px;background:'+(i===0?'#e8f5e9':'#f7f5ee')+';border-radius:4px">'+
+              '<span><b>'+escHtml(e.rotulo)+'</b><br><span style="color:#5a6472;font-size:11px">'+escHtml(e.direccion)+', '+escHtml(e.municipio)+'</span></span>'+
+              '<b style="white-space:nowrap;color:'+(i===0?'#2f7d4b':'#2a2a2a')+'">'+e.precio.toFixed(3)+' €</b>'+
+            '</div>').join('')+
+          '</div><p style="font-size:10px;color:#8a6a40;margin-top:8px">'+escHtml(t('gsl.source'))+'</p>';
+      }catch(e){
+        out.innerHTML='<p style="color:#b3392f">'+escHtml(t('gsl.error'))+'</p>';
+      }finally{
+        goBtn.disabled=false;
+      }
+    }
+    goBtn.onclick=buscar;
+    cpIn.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();buscar();} });
+    tipoSel.onchange=()=>{ if(cpIn.value.replace(/\D/g,'').length===5)buscar(); };
+    if(ultimoCP.length===5)buscar();
+    else setTimeout(()=>{ try{cpIn.focus();}catch(e){_ignora(e);} },30);
+  }});
+}
+
+// ========== CALIDAD DEL AIRE ==========
+// Mismo proveedor que El tiempo (Open-Meteo, gratis, sin clave, CORS abierto) y reutiliza
+// literalmente su buscador de ciudades (tpBuscaCiudad): un geocodificador menos que mantener.
+const CAQ_URL='https://air-quality-api.open-meteo.com/v1/air-quality';
+const CAQ_NIVELES=[
+  {max:20,label:'caq.good',color:'#4caf50'},
+  {max:40,label:'caq.fair',color:'#8bc34a'},
+  {max:60,label:'caq.moderate',color:'#ffc107'},
+  {max:80,label:'caq.poor',color:'#ff7043'},
+  {max:100,label:'caq.verypoor',color:'#e53935'},
+  {max:Infinity,label:'caq.extreme',color:'#8b1a1a'}
+];
+function caqNivel(aqi){ return CAQ_NIVELES.find(n=>aqi<=n.max)||CAQ_NIVELES[CAQ_NIVELES.length-1]; }
+async function caqBuscar(lat,lon){
+  const j=await tpFetchJSON(CAQ_URL+'?latitude='+(+lat).toFixed(3)+'&longitude='+(+lon).toFixed(3)+'&current=european_aqi,pm10,pm2_5,ozone,nitrogen_dioxide&timezone=auto');
+  if(!j||!j.current)throw new Error('sinresultado');
+  return j.current;
+}
+function openCalidadAire(){
+  closeStartMenu();
+  if(focusExisting('caq-root'))return;
+  const content=`<div id="caq-root" style="display:flex;flex-direction:column;height:100%;padding:12px;gap:8px;font-family:Rajdhani,sans-serif;overflow:auto">
+    <p style="margin:0;font-size:12px;color:#5a6472">${escHtml(t('caq.what'))}</p>
+    <div style="display:flex;gap:6px">
+      <input type="text" id="caq-in" placeholder="${escHtml(t('caq.city'))}" style="flex:1;padding:7px;border:1px solid #c9b48c;border-radius:4px">
+      <button type="button" class="g-btn" id="caq-go">${escHtml(t('caq.search'))}</button>
+    </div>
+    <div id="caq-sug" style="display:flex;flex-direction:column;gap:3px"></div>
+    <div id="caq-out" role="status" aria-live="polite" style="font-size:13px"></div>
+  </div>`;
+  createWindow(t('caq.title'),'&#127788;',360,420,content,{session:'calidadaire',statusbar:false,onCreated:(id,win)=>{
+    const inp=win.querySelector('#caq-in'), goBtn=win.querySelector('#caq-go'), sug=win.querySelector('#caq-sug'), out=win.querySelector('#caq-out');
+    async function muestra(lugar){
+      sug.innerHTML='';
+      out.innerHTML='<p>'+escHtml(t('caq.loading'))+'</p>';
+      try{
+        const c=await caqBuscar(lugar.lat,lugar.lon);
+        const aqi=c.european_aqi;
+        if(aqi==null){ out.innerHTML='<p>'+escHtml(t('caq.noresults'))+'</p>'; return; }
+        const nivel=caqNivel(aqi);
+        out.innerHTML='<div style="text-align:center;padding:10px">'+
+          '<div style="font-size:12px;color:#5a6472">'+escHtml(lugar.name)+(lugar.zona?', '+escHtml(lugar.zona):'')+'</div>'+
+          '<div style="font-size:44px;font-weight:700;color:'+nivel.color+'">'+Math.round(aqi)+'</div>'+
+          '<div style="font-weight:700;color:'+nivel.color+'">'+escHtml(t(nivel.label))+'</div>'+
+        '</div>'+
+        '<div style="display:flex;flex-direction:column;gap:3px;font-size:12px;border-top:1px dashed #c9b48c;padding-top:8px">'+
+          '<div style="display:flex;justify-content:space-between"><span>PM2.5</span><b>'+(c.pm2_5!=null?c.pm2_5+' µg/m³':'—')+'</b></div>'+
+          '<div style="display:flex;justify-content:space-between"><span>PM10</span><b>'+(c.pm10!=null?c.pm10+' µg/m³':'—')+'</b></div>'+
+          '<div style="display:flex;justify-content:space-between"><span>'+escHtml(t('caq.ozone'))+'</span><b>'+(c.ozone!=null?c.ozone+' µg/m³':'—')+'</b></div>'+
+          '<div style="display:flex;justify-content:space-between"><span>NO&#8322;</span><b>'+(c.nitrogen_dioxide!=null?c.nitrogen_dioxide+' µg/m³':'—')+'</b></div>'+
+        '</div><p style="font-size:10px;color:#8a6a40;margin-top:8px">'+escHtml(t('caq.source'))+'</p>';
+      }catch(e){
+        out.innerHTML='<p style="color:#b3392f">'+escHtml(t('caq.error'))+'</p>';
+      }
+    }
+    async function buscar(){
+      const nombre=inp.value.trim(); if(!nombre)return;
+      sug.innerHTML='<p style="font-size:12px">'+escHtml(t('caq.loading'))+'</p>'; out.innerHTML='';
+      try{
+        const resultados=await tpBuscaCiudad(nombre);
+        if(!resultados.length){ sug.innerHTML='<p style="font-size:12px;color:#b3392f">'+escHtml(t('caq.noresults'))+'</p>'; return; }
+        if(resultados.length===1){ sug.innerHTML=''; muestra(resultados[0]); return; }
+        sug.innerHTML=resultados.slice(0,6).map((r,i)=>'<button type="button" class="g-btn g-btn-alt" data-i="'+i+'" style="text-align:left">'+escHtml(r.name)+(r.zona?', '+escHtml(r.zona):'')+(r.pais?' ('+escHtml(r.pais)+')':'')+'</button>').join('');
+        sug.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>muestra(resultados[+b.dataset.i]));
+      }catch(e){
+        sug.innerHTML='<p style="color:#b3392f">'+escHtml(t('caq.error'))+'</p>';
+      }
+    }
+    goBtn.onclick=buscar;
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();buscar();} });
+    setTimeout(()=>{ try{inp.focus();}catch(e){_ignora(e);} },30);
   }});
 }
 
@@ -24099,7 +24645,7 @@ function _searchIndex(){
    ['Nota adhesiva',ico('nota'),openStickyNote],['Récords',ico('trofeo'),openRecords],['Papelera de reciclaje',ico('papelera'),openPapelera],
    ['Mi PC','&#128421;&#65039;',openMiPC],['Ajustes',ico('engranaje'),openSettings],['Acerca de',ico('info'),openAbout],
    ['Administrador de tareas',ico('taskmgr'),openTaskManager],['Logros',ico('medalla'),openAchievements],['Ayuda',ico('ayuda'),openHelp],['Tour de bienvenida',ico('bandera'),openTour],['Mis documentos',ico('docs'),openMyDocuments],
-   ['Instalar app',ico('guardar'),openInstallApp],['Regedit (editor del registro)',ico('regedit'),openRegedit],['Encarta 99',ico('globo'),openEncarta],['Loquendo',ico('voz'),openLoquendo],['Grabadora de sonidos',ico('micro'),openRecorder],['Photo Booth',ico('camara'),openPhotoBooth],['Lector (EPUB/PDF)',ico('libro'),openEbookReader],['Retoques (editor de imágenes)',ico('retoques'),openImageTools],['Pixel Art (sprites)',ico('pixelart'),openPixelArt],['Generador de memes',ico('meme'),openMemeGen],['Caja de ritmos',ico('ritmos'),openDrumMachine],['Caleidoscopio',ico('caleidoscopio'),openKaleidoscope],['Piano',ico('piano'),openPiano],['Agenda (calendario)',ico('calendario'),openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control',ico('panel'),openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica',ico('quimica'),openPeriodicTable],['Conversor de unidades',ico('conversor'),openConverter],['Calculadoras (hipoteca, IVA, %)',ico('porcentaje'),openCalculadoras],['Fichas de estudio (Anki)',ico('fichas'),openFichas],['Hoja de cálculo',ico('hoja'),openSpreadsheet],['Graficadora de funciones',ico('grafica'),openGrapher],['Precio de la luz (PVPC)',ico('bombilla'),openLuz],['Gastos (control de gastos)',ico('gastos'),openGastos],['Lista de la compra',ico('compra'),openCompra],['Recetas y menú semanal',ico('recetas'),openRecetas],['El tiempo (previsión)',ico('tiempo'),openTiempo],['Aviso de lluvia (radar)',ico('lluvia'),openRadar],['Etiquetas (escáner de productos)',ico('etiqueta'),openProductos],['Hoy (todo lo del día)',ico('hoy'),openHoy],['Tareas (lo que hay que hacer)',ico('tareas'),openTareas],['Notas (Markdown)',ico('notas'),openNotes],['Herramientas (QR, contraseñas, texto)',ico('llave'),openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)',ico('llaves'),openPasswords],['Carpetas comprimidas (ZIP)',ico('zip'),openZipFolder],['Escáner (documentos a PDF)',ico('escaner'),openScanner],['Hábitos (rachas)',ico('diana'),openHabitos],['Lector de códigos QR',ico('qr'),openLectorQR],['Herramientas del móvil (nivel, brújula)',ico('brujula'),openSensores],['Generador de QR',ico('qr'),()=>openToolbox('qr')],['Generador de contraseñas',ico('candado'),()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo',ico('arena'),openTimeMachine]
+   ['Instalar app',ico('guardar'),openInstallApp],['Regedit (editor del registro)',ico('regedit'),openRegedit],['Encarta 99',ico('globo'),openEncarta],['Loquendo',ico('voz'),openLoquendo],['Grabadora de sonidos',ico('micro'),openRecorder],['Photo Booth',ico('camara'),openPhotoBooth],['Lector (EPUB/PDF)',ico('libro'),openEbookReader],['Retoques (editor de imágenes)',ico('retoques'),openImageTools],['Pixel Art (sprites)',ico('pixelart'),openPixelArt],['Generador de memes',ico('meme'),openMemeGen],['Caja de ritmos',ico('ritmos'),openDrumMachine],['Caleidoscopio',ico('caleidoscopio'),openKaleidoscope],['Piano',ico('piano'),openPiano],['Agenda (calendario)',ico('calendario'),openAgenda],['Gadgets de escritorio','&#127899;&#65039;',openGadgetGallery],['Panel de Control',ico('panel'),openControlPanel],['Lupa (magnificador)','&#128269;',toggleMagnifier],['Tabla periódica',ico('quimica'),openPeriodicTable],['Conversor de unidades',ico('conversor'),openConverter],['Calculadoras (hipoteca, IVA, %)',ico('porcentaje'),openCalculadoras],['Fichas de estudio (Anki)',ico('fichas'),openFichas],['Hoja de cálculo',ico('hoja'),openSpreadsheet],['Graficadora de funciones',ico('grafica'),openGrapher],['Precio de la luz (PVPC)',ico('bombilla'),openLuz],['Gastos (control de gastos)',ico('gastos'),openGastos],['Lista de la compra',ico('compra'),openCompra],['Recetas y menú semanal',ico('recetas'),openRecetas],['El tiempo (previsión)',ico('tiempo'),openTiempo],['Aviso de lluvia (radar)',ico('lluvia'),openRadar],['Etiquetas (escáner de productos)',ico('etiqueta'),openProductos],['Hoy (todo lo del día)',ico('hoy'),openHoy],['Tareas (lo que hay que hacer)',ico('tareas'),openTareas],['Notas (Markdown)',ico('notas'),openNotes],['Herramientas (QR, contraseñas, texto)',ico('llave'),openToolbox],['Cuenta local (cifrado)','&#128272;',openAccountEntry],['Claves (gestor de contraseñas)',ico('llaves'),openPasswords],['Carpetas comprimidas (ZIP)',ico('zip'),openZipFolder],['Escáner (documentos a PDF)',ico('escaner'),openScanner],['Hábitos (rachas)',ico('diana'),openHabitos],['Lector de códigos QR',ico('qr'),openLectorQR],['Herramientas del móvil (nivel, brújula)',ico('brujula'),openSensores],['Generador de QR',ico('qr'),()=>openToolbox('qr')],['Generador de contraseñas',ico('candado'),()=>openToolbox('pw')],['Herramientas de texto','&#128196;',()=>openToolbox('txt')],['Máquina del tiempo',ico('arena'),openTimeMachine],['Validador de documentos (DNI, NIE, CIF, IBAN)','&#129706;',openValidador],['Comparador de precio por unidad','&#128722;',openComparadorPrecio],['Gastos compartidos','&#129309;',openGastosCompartidos],['Precio de la gasolina','&#9981;',openGasolina],['Calidad del aire','&#127788;',openCalidadAire]
   ].forEach(a=>ix.push({label:a[0],icon:a[1],hint:'Aplicación',run:a[2]}));
   return ix;
 }

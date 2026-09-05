@@ -4,10 +4,10 @@
 
 **Un escritorio de verdad dentro de una pestaña del navegador.**
 
-Windows XP renacido en HTML: 21 juegos clásicos, ~70 aplicaciones, terminal,
+Windows XP renacido en HTML: 21 juegos clásicos, ~75 aplicaciones, terminal,
 Paint y mi portfolio. Sin instalar nada, sin cuentas, sin servidor.
 
-[![Versión](https://img.shields.io/badge/versión-0.67.0-7c8cff)](#historial)
+[![Versión](https://img.shields.io/badge/versión-0.68.0-7c8cff)](#historial)
 [![PWA](https://img.shields.io/badge/PWA-instalable%20y%20sin%20conexión-2ea44f)](#instalarlo-como-app)
 [![Dependencias](https://img.shields.io/badge/dependencias-0-blue)](#cómo-está-hecho)
 [![Build](https://img.shields.io/badge/build-ninguno-lightgrey)](#cómo-está-hecho)
@@ -62,15 +62,15 @@ Ajedrez · Mahjong · Damas · Reversi · Ahorcado · Sopa de letras
 Los 21 guardan marca en el **Salón de la fama**, con récord separado por
 dificultad donde tiene sentido (Buscaminas, Sudoku, Mahjong y Sopa de letras).
 
-### ~70 aplicaciones
+### ~75 aplicaciones
 
 | | |
 |---|---|
 | **Clásicos de la época** | Paint, Bloc de notas, Calculadora, WordArt, MSN Messenger, Winamp, Outlook Express, Netscape Navigator, eMule, Encarta 99, Regedit, Desfragmentador, Loquendo |
-| **Día a día** | Tareas, Lista de la compra, Gastos, Agenda, Recetas y menú semanal, Hábitos, Notas en Markdown, Hoy |
-| **Utilidades** | Hoja de cálculo, Graficadora de funciones, Conversor de unidades, Tabla periódica, Calculadoras de hipoteca/IVA/%, Generador de QR y lector, Gestor de contraseñas, Carpetas ZIP, Escáner a PDF |
+| **Día a día** | Tareas, Lista de la compra, Gastos, Gastos compartidos, Agenda, Recetas y menú semanal, Hábitos, Notas en Markdown, Hoy |
+| **Utilidades** | Hoja de cálculo, Graficadora de funciones, Conversor de unidades, Tabla periódica, Calculadoras de hipoteca/IVA/%/fechas, Comparador de precio por unidad, Validador de NIF/NIE/CIF/IBAN, Generador de QR y lector, Gestor de contraseñas, Carpetas ZIP, Escáner a PDF |
 | **Creatividad** | Retoques de imagen, Pixel Art, Generador de memes, Caja de ritmos, Piano, Caleidoscopio, Photo Booth, Grabadora |
-| **Del mundo real** | El tiempo, Aviso de lluvia por radar, Precio de la luz (PVPC), Escáner de etiquetas de productos |
+| **Del mundo real** | El tiempo, Aviso de lluvia por radar, Precio de la luz (PVPC), Precio de la gasolina, Calidad del aire, Escáner de etiquetas de productos |
 | **Lectura y estudio** | Lector de EPUB y PDF, Fichas de estudio (Anki) |
 
 ### Mi portfolio
@@ -172,7 +172,7 @@ Para publicar: sube los archivos tal cual. Es estático.
 
 ## Historial
 
-La versión vive en `APP_VERSION`. La actual es la **0.67.0**.
+La versión vive en `APP_VERSION`. La actual es la **0.68.0**.
 
 ---
 
