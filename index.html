@@ -46,7 +46,11 @@
     {"@type":"ListItem","position":3,"item":{"@type":"MobileApplication","name":"Block Drop","url":"https://apps.garmin.com/es-ES/apps/96c3fafb-94b2-428e-9dcf-ba085d5207c8","description":"Juego de encajar piezas para reloj Garmin: tablero 10x20, bolsa de siete y giros con empujón de pared.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
     {"@type":"ListItem","position":4,"item":{"@type":"MobileApplication","name":"Flappy Wings","url":"https://apps.garmin.com/es-ES/apps/e9a3cbac-132b-40ee-881d-b29c4faeee83","description":"Un pájaro, dos tubos y un hueco, en el reloj. Con reto del día igual para todo el mundo.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
     {"@type":"ListItem","position":5,"item":{"@type":"MobileApplication","name":"España Campeona!","url":"https://apps.garmin.com/es-ES/apps/e8d50c35-edc3-426f-9adb-20d6eefff19e","description":"Esfera de reloj con la bandera de España y las dos estrellas: colores oficiales, dos medidores y cuatro campos configurables.","applicationCategory":"UtilitiesApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
-    {"@type":"ListItem","position":6,"item":{"@type":"MobileApplication","name":"Corta fruta a lo loco","url":"https://apps.garmin.com/es-ES/apps/db343517-8427-4eff-8845-c645698ad321","description":"Corta la fruta deslizando el dedo por la pantalla del reloj, con modo clásico y bombas.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}}
+    {"@type":"ListItem","position":6,"item":{"@type":"MobileApplication","name":"Corta fruta a lo loco","url":"https://apps.garmin.com/es-ES/apps/db343517-8427-4eff-8845-c645698ad321","description":"Corta la fruta deslizando el dedo por la pantalla del reloj, con modo clásico y bombas.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":7,"item":{"@type":"MobileApplication","name":"Fling Fury","url":"https://apps.garmin.com/es-ES/apps/2986fa99-a434-4b98-870f-0a30d31a4dc3","description":"Fling Fury para reloj Garmin: tirachinas con cuarenta niveles en cuatro mundos, derribando fortalezas de madera, piedra y hielo.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":8,"item":{"@type":"MobileApplication","name":"One More Run","url":"https://apps.garmin.com/es-ES/apps/2ce042a2-f83f-4d5d-93bb-3c4c432337e3","description":"One More Run para reloj Garmin: runner sin fin por cuatro escenarios, con reto diario igual para todo el mundo.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":9,"item":{"@type":"MobileApplication","name":"Memoria de Colores","url":"https://apps.garmin.com/es-ES/apps/c9ebd880-24f3-4079-885b-0a912bf39228","description":"Memoria de Colores para reloj Garmin: repite secuencias de colores cada vez más largas, con tres niveles de dificultad.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}},
+    {"@type":"ListItem","position":10,"item":{"@type":"MobileApplication","name":"Neon Snake","url":"https://apps.garmin.com/es-ES/apps/c2ac19a8-13e7-4600-a06f-817a0454c37e","description":"Neon Snake para reloj Garmin: la serpiente clásica en un tablero redondo con cuatro modos y premios especiales.","applicationCategory":"GameApplication","operatingSystem":"Garmin Connect IQ","author":{"@id":"https://torrecillas.cat/#author"}}}
   ]},
   {"@type":"ItemList","@id":"https://torrecillas.cat/#juegos-aaa","name":"Juegos AAA","description":"Juegos web publicados aparte del escritorio","itemListElement":[
     {"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Karts Racing","url":"https://karts.torrecillas.cat","gamePlatform":"Navegador web","author":{"@id":"https://torrecillas.cat/#author"}}},
@@ -1682,7 +1686,9 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 .ach-t-h{font-size:10px;color:#7a6320;font-weight:bold}
 .ach-t-l{font-size:13px;font-weight:bold;color:#3d3000}
 @keyframes achIn{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:none}}
-@media(max-width:600px){#ach-toast{right:8px;left:8px;bottom:calc(var(--tb-h) + 6px)}}
+/* En móvil el aviso ocupa casi todo el ancho, igual que el menú Inicio (z-index:5001):
+   por debajo de él para que si coinciden sea el menú el que gane, no el aviso tapándolo. */
+@media(max-width:600px){#ach-toast{right:8px;left:8px;bottom:calc(var(--tb-h) + 6px);z-index:4990}}
 /* Progreso del Coleccionista dentro del panel de Logros */
 .ach-collector{margin:0 10px 6px;padding:8px 10px;background:linear-gradient(180deg,#fffef5,#f3eeda);border:1px solid #d8cfa8;border-radius:5px;flex-shrink:0}
 .ach-col-head{font-size:11px;font-weight:bold;color:#8a6d1a;margin-bottom:6px}
@@ -2428,6 +2434,23 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .gc-grid b{color:#888;font-size:9px}
 .gc-grid span{padding:3px 0;color:#333;border-radius:3px}
 .gc-grid .gc-today{background:#e63946;color:#fff;font-weight:bold}
+.gadget.gadget-resizable{display:flex;flex-direction:column}
+.gadget.gadget-resizable .gadget-body{flex:1;min-height:0;position:relative;display:flex;flex-direction:column;align-items:stretch;padding:0}
+.ga-scroll{flex:1;min-height:0;overflow-y:auto;padding:7px 8px 30px}
+.ga-list{display:flex;flex-direction:column;width:100%;font-size:11px}
+.ga-day-h{font-size:9px;font-weight:bold;color:#8892a6;text-transform:uppercase;letter-spacing:.4px;margin:7px 0 3px;padding:0 2px}
+.ga-day-h:first-child{margin-top:0}
+.ga-row{display:flex;align-items:baseline;gap:7px;padding:4px 6px;margin:1px 0;border-radius:0 4px 4px 0;border-left:4px solid #3a6fd8;background:#f4f6fb;cursor:pointer;transition:background .12s}
+.ga-row:hover{background:#e6ecf9}
+.ga-row .ga-hora{font-size:10px;color:#556;font-weight:bold;min-width:34px;flex:none}
+.ga-row .ga-t{font-size:12px;color:#243;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ga-empty{font-size:11px;color:#888;text-align:center;padding:22px 8px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ga-empty>div:first-child,.ga-empty span{font-size:22px}
+.ga-fab{position:absolute;right:8px;bottom:8px;width:26px;height:26px;border-radius:50%;border:none;background:#3a6fd8;color:#fff;font-size:16px;line-height:1;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px rgba(20,50,120,.45);transition:transform .12s,background .12s}
+.ga-fab:hover{background:#2f5bc0;transform:scale(1.08)}
+.gadget-resize{position:absolute;right:1px;bottom:1px;width:13px;height:13px;cursor:nwse-resize;opacity:.5;z-index:3;
+  background:linear-gradient(135deg,transparent 0 40%,#5a6478 40% 52%,transparent 52% 60%,#5a6478 60% 72%,transparent 72%)}
+.gadget-resize:hover{opacity:.9}
 .gm-row{display:flex;align-items:center;gap:6px;width:100%;margin:3px 0;font-size:11px;color:#334}
 .gm-row span{width:30px}
 .gm-row em{width:32px;text-align:right;color:#556;font-style:normal}
@@ -2541,6 +2564,10 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .ag-form textarea{resize:vertical}
 .ag-f2{display:flex;gap:8px}
 .ag-f2 label{flex:1;min-width:0}
+.ag-colors{display:flex;gap:7px;flex-wrap:wrap;padding:2px 0 4px}
+.ag-color-dot{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.ag-color-dot:hover{transform:scale(1.12)}
+.ag-color-dot.sel{border-color:#223;box-shadow:0 0 0 2px #fff,0 0 0 3px #223}
 .ag-ev.rep{border-left:3px solid #63a80c}
 .ag-ev.tarea{background:#fbf7ea;border-color:#e6dcc0}
 .ag-ev-x{flex:1;min-width:0}
@@ -2943,6 +2970,9 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 #welcome-tip::after{content:'';position:absolute;bottom:-9px;left:26px;border:9px solid transparent;border-top-color:#ffffe1;border-bottom:none}
 #welcome-tip b{display:block;margin-bottom:3px}
 #welcome-tip .tip-close{position:absolute;top:4px;right:7px;cursor:pointer;font-weight:bold;color:#666}
+/* En móvil el menú Inicio ocupa casi todo el ancho (z-index:5001): por debajo de él para
+   que si coinciden sea el menú el que gane, no el globo tapándolo (mismo caso que #ach-toast). */
+@media(max-width:600px){#welcome-tip{z-index:4990}}
 @keyframes tipIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* ═══════════════════  § JUEGOS CANVAS (Snake, Tetris, Flappy...)  ═══════════════════ */
@@ -5333,7 +5363,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.68.0';
+const APP_VERSION = '0.69.0';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -5731,6 +5761,7 @@ const I18N={
   'agenda.prev':{es:'Mes anterior', en:'Previous month', ca:'Mes anterior', ru:'Предыдущий месяц'},
   'agenda.next':{es:'Mes siguiente', en:'Next month', ca:'Mes següent', ru:'Следующий месяц'},
   'agenda.today':{es:'Hoy', en:'Today', ca:'Avui', ru:'Сегодня'},
+  'agenda.tomorrow':{es:'Mañana', en:'Tomorrow', ca:'Demà', ru:'Завтра'},
   'agenda.new':{es:'Nuevo evento', en:'New event', ca:'Nou esdeveniment', ru:'Новое событие'},
   'agenda.noev':{es:'Sin eventos este día.', en:'No events this day.', ca:'Sense esdeveniments aquest dia.', ru:'Событий на этот день нет.'},
   'agenda.prompt':{es:'Escribe el evento (opcional hora al inicio, ej: «17:00 Dentista»):', en:'Type the event (optional time first, e.g. “17:00 Dentist”):', ca:'Escriu l’esdeveniment (hora opcional al principi, ex: «17:00 Dentista»):', ru:'Введите событие (можно время в начале, напр. «17:00 Стоматолог»):'},
@@ -6709,6 +6740,8 @@ const I18N={
   'pwm.wiped':{es:'Portapapeles limpiado.', en:'Clipboard wiped.', ca:'Porta-retalls netejat.', ru:'Буфер обмена очищен.'},
   'gad.clock':{es:'Reloj', en:'Clock', ca:'Rellotge', ru:'Часы'},
   'gad.calendar':{es:'Calendario', en:'Calendar', ca:'Calendari', ru:'Календарь'},
+  'gad.agenda':{es:'Próximos eventos', en:'Upcoming events', ca:'Pròxims esdeveniments', ru:'Ближайшие события'},
+  'gad.agenda.empty':{es:'Sin eventos próximos', en:'No upcoming events', ca:'Sense esdeveniments pròxims', ru:'Нет ближайших событий'},
   'gad.notes':{es:'Nota rápida', en:'Quick note', ca:'Nota ràpida', ru:'Заметка'},
   'gad.monitor':{es:'Sistema', en:'System', ca:'Sistema', ru:'Система'},
   'cmdk.title':{es:'Paleta de comandos', en:'Command palette', ca:'Paleta d’ordres', ru:'Палитра команд'},
@@ -6776,6 +6809,7 @@ const I18N={
   'agenda.av.min':{es:'{n} min antes', en:'{n} min before', ca:'{n} min abans', ru:'за {n} мин'},
   'agenda.av.dia':{es:'Un día antes', en:'A day before', ca:'Un dia abans', ru:'За день'},
   'agenda.note':{es:'Nota', en:'Note', ca:'Nota', ru:'Заметка'},
+  'agenda.color':{es:'Color', en:'Color', ca:'Color', ru:'Цвет'},
   'agenda.edit':{es:'Editar evento', en:'Edit event', ca:'Edita l\'esdeveniment', ru:'Изменить событие'},
   'agenda.allday':{es:'Todo el día', en:'All day', ca:'Tot el dia', ru:'Весь день'},
   'agenda.noevents':{es:'Nada este día.', en:'Nothing on this day.', ca:'Res aquest dia.', ru:'В этот день ничего.'},
@@ -8485,8 +8519,10 @@ function arrancaServicios(){
     const pkg=osPaqueteDeURL();             // ¿nos han pasado una lista por enlace?
     if(pkg)setTimeout(()=>osImportaPaquete(pkg),700);
   }catch(e){_ignora(e);}
-  visibleInterval(()=>{ try{ checkEventReminders(); }catch(e){_ignora(e);}
-                        try{ hbRecordatorio(); }catch(e){_ignora(e);} },60000); // y cada minuto
+  visibleInterval(()=>{ try{ hbRecordatorio(); }catch(e){_ignora(e);} },60000); // y cada minuto
+  // setInterval normal (no visibleInterval), igual que el latido del Reloj: un aviso de la
+  // Agenda tiene que poder saltar con la pestaña en segundo plano, no solo mirándola.
+  setInterval(()=>{ try{ checkEventReminders(); }catch(e){_ignora(e);} },60000);
   // Si la PWA se abrió con un archivo (.epub/.pdf) antes de estar lista, abrirlo ahora
   if(_pendingLaunchFiles){ const f=_pendingLaunchFiles; _pendingLaunchFiles=null; setTimeout(()=>{try{openEbookReader(f[0]);}catch(e){_ignora(e);}},400); }
   // Atajo del icono de la PWA (?app=tareas): tras restaurar la sesión, para que la app
@@ -13089,6 +13125,52 @@ function _renderGadgetCalendar(body){
   body.innerHTML='<div class="gc-head">'+months[mo]+' '+y+'</div><div class="gc-grid">'+wd.map(x=>'<b>'+x+'</b>').join('')+cells+'</div>';
 }
 function _gadgetCalRefresh(){ try{ document.querySelectorAll('.gadget[data-type="calendar"] .gadget-body').forEach(b=>_renderGadgetCalendar(b)); }catch(e){_ignora(e);} }
+// Los próximos N eventos a partir de hoy (no solo el mes): mira día a día, como mucho dos
+// meses por delante, hasta reunir n o quedarse sin fechas que mirar.
+function _agendaProximos(n){
+  const hoy=new Date(); hoy.setHours(0,0,0,0);
+  const out=[];
+  for(let i=0;i<60&&out.length<n;i++){
+    const d=new Date(hoy.getTime()+i*86400000);
+    eventsForDay(_dayKey(d.getFullYear(),d.getMonth(),d.getDate())).forEach(e=>out.push(e));
+  }
+  return out.slice(0,n);
+}
+// Etiqueta corta de un día para el widget: Hoy / Mañana / "vie, 26 sept" para el resto.
+function _agendaEtiquetaDia(key,hoyKey){
+  if(key===hoyKey)return t('agenda.today');
+  const m=new Date(hoyKey+'T00:00'); m.setDate(m.getDate()+1);
+  if(key===_dayKey(m.getFullYear(),m.getMonth(),m.getDate()))return t('agenda.tomorrow');
+  return agFecha(key,{weekday:'short',day:'numeric',month:'short'});
+}
+// El widget agrupa por día (como el de Google Calendar) y cada evento lleva la franja de su
+// propio color. No recorta según el tamaño: se piden de sobra (24) y el que no quepa hace
+// scroll dentro del gadget, así agrandarlo con el asa de resize enseña más de golpe.
+function _renderGadgetAgenda(body){
+  const items=_agendaProximos(24), hoyKey=tkHoyISO();
+  let html;
+  if(!items.length){
+    html='<div class="ga-empty"><span>&#127881;</span><div>'+escHtml(t('gad.agenda.empty'))+'</div></div>';
+  }else{
+    const porDia=[];
+    items.forEach(e=>{ let g=porDia.find(x=>x.dia===e._dia); if(!g){ g={dia:e._dia,evs:[]}; porDia.push(g); } g.evs.push(e); });
+    html='<div class="ga-list">'+porDia.map(g=>
+      '<div class="ga-day-h">'+escHtml(_agendaEtiquetaDia(g.dia,hoyKey))+'</div>'
+      +g.evs.map(e=>'<div class="ga-row" data-day="'+g.dia+'" style="border-left-color:'+evColor(e)+'">'
+        +'<span class="ga-hora">'+(e.time?escHtml(e.time):'&#9679;')+'</span>'
+        +'<span class="ga-t">'+escHtml(e.text)+'</span></div>').join('')
+    ).join('')+'</div>';
+  }
+  body.innerHTML='<div class="ga-scroll">'+html+'</div><button type="button" class="ga-fab" aria-label="'+escHtml(t('agenda.new'))+'" title="'+escHtml(t('agenda.new'))+'">+</button>';
+  body.querySelectorAll('.ga-row').forEach(r=>r.onclick=()=>openAgenda(r.dataset.day));
+  body.querySelector('.ga-fab').onclick=()=>agEditor(null,hoyKey,(out)=>{
+    const arr=eventsLoad();
+    arr.push(Object.assign({id:'e'+Date.now()+Math.floor(Math.random()*999),notified:false},out));
+    eventsSave(arr);
+    _agendaSync();
+  });
+}
+function _gadgetAgendaRefresh(){ try{ document.querySelectorAll('.gadget[data-type="agenda"] .gadget-body').forEach(b=>_renderGadgetAgenda(b)); }catch(e){_ignora(e);} }
 function _gadgetMonitor(body){
   body.innerHTML='<div class="gm-row"><span>CPU</span><div class="gm-bar"><i id="gm-cpu"></i></div><em id="gm-cpuv">0%</em></div>'+
     '<div class="gm-row"><span>RAM</span><div class="gm-bar"><i id="gm-ram"></i></div><em id="gm-ramv">0%</em></div>'+
@@ -13105,6 +13187,7 @@ function _gadgetMonitor(body){
 const GADGET_DEFS={
   clock:{ key:'gad.clock', w:148, build(body){ body.innerHTML='<canvas class="gadget-clock-cv" width="128" height="128"></canvas>'; const cv=body.querySelector('canvas'); const draw=()=>_drawAnalogClock(cv); draw(); return setInterval(()=>{ if(!document.hidden)draw(); },1000); } },
   calendar:{ key:'gad.calendar', w:184, build(body){ _renderGadgetCalendar(body); } },
+  agenda:{ key:'gad.agenda', w:230, h:250, resizable:true, minW:190, minH:150, maxW:400, maxH:520, build(body){ _renderGadgetAgenda(body); } },
   notes:{ key:'gad.notes', w:172, build(body,g){ body.innerHTML='<textarea class="gadget-notes" aria-label="Nota rápida"></textarea>'; const ta=body.querySelector('textarea'); ta.value=g.data||''; ta.oninput=()=>{ g.data=ta.value; persistGadgets(); }; } },
   monitor:{ key:'gad.monitor', w:176, build(body){ return _gadgetMonitor(body); } },
   luz:{ key:'luz.gadget', w:168, build(body){ return _gadgetLuz(body); } },
@@ -13136,11 +13219,13 @@ function _gadgetLuz(body){
   return setInterval(()=>{ if(document.hidden)return; pinta(); },600000);
 }
 function loadGadgets(){ try{ const a=JSON.parse(Store.get('tos-gadgets')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
-function persistGadgets(){ const arr=[...document.querySelectorAll('.gadget')].map(d=>({id:d._g.id,type:d._g.type,x:parseInt(d.style.left)||20,y:parseInt(d.style.top)||60,data:d._g.data})); Store.set('tos-gadgets',JSON.stringify(arr)); }
+function persistGadgets(){ const arr=[...document.querySelectorAll('.gadget')].map(d=>({id:d._g.id,type:d._g.type,x:parseInt(d.style.left)||20,y:parseInt(d.style.top)||60,data:d._g.data,w:d._g.w,h:d._g.h})); Store.set('tos-gadgets',JSON.stringify(arr)); }
 function makeGadgetEl(g){
   const def=GADGET_DEFS[g.type]; if(!def)return null;
   const d=document.createElement('div'); d.className='gadget'; d.dataset.id=g.id; d.dataset.type=g.type; d._g=g;
-  d.style.cssText=`position:absolute;left:${g.x}px;top:${g.y}px;width:${def.w}px;z-index:45`;
+  const w0=(def.resizable&&g.w)?g.w:def.w;
+  d.style.cssText=`position:absolute;left:${g.x}px;top:${g.y}px;width:${w0}px;z-index:45`;
+  if(def.resizable){ g.w=w0; g.h=g.h||def.h; d.style.height=g.h+'px'; d.classList.add('gadget-resizable'); }
   d.innerHTML=`<div class="gadget-bar"><span class="gadget-t">${escHtml(t(def.key))}</span><button type="button" class="gadget-x" aria-label="${escHtml(t('btn.close'))}">×</button></div><div class="gadget-body"></div>`;
   const body=d.querySelector('.gadget-body');
   const iv=def.build(body,g);
@@ -13153,7 +13238,37 @@ function makeGadgetEl(g){
   const up=()=>{ if(drag){ drag=false; persistGadgets(); } };
   document.addEventListener('mousemove',mm); document.addEventListener('touchmove',tm,{passive:false});
   document.addEventListener('mouseup',up); document.addEventListener('touchend',up);
-  const del=()=>{ if(iv)clearInterval(iv); document.removeEventListener('mousemove',mm); document.removeEventListener('touchmove',tm); document.removeEventListener('mouseup',up); document.removeEventListener('touchend',up); d.remove(); persistGadgets(); };
+  // Asa de redimensionado: solo en los gadgets que se declaran resizable. El tamaño se aplica
+  // al momento por CSS (ancho/alto del propio .gadget) — el contenido no se vuelve a construir
+  // durante el arrastre, así que es tan barato como mover la ventana.
+  let rw=false,sx,sy,sw,sh;
+  const rmm=e=>{ if(rw)resizeTo(e.clientX,e.clientY); };
+  const rtm=e=>{ if(rw){ resizeTo(e.touches[0].clientX,e.touches[0].clientY); e.preventDefault(); } };
+  const rup=()=>{ if(rw){ rw=false; persistGadgets(); } };
+  let resizeTo=()=>{};
+  if(def.resizable){
+    const rh=document.createElement('div'); rh.className='gadget-resize'; rh.setAttribute('aria-hidden','true'); d.appendChild(rh);
+    const minW=def.minW||160, maxW=def.maxW||420, minH=def.minH||100, maxH=def.maxH||520;
+    resizeTo=(cx,cy)=>{
+      // Sin tope de viewport, agrandar hacia la derecha o hacia abajo podía sacar la esquina
+      // (y con ella el botón +) fuera de la pantalla: el mismo criterio que ya usa moveTo.
+      const availW=window.innerWidth-g.x-4, availH=window.innerHeight-g.y-4;
+      g.w=Math.max(minW,Math.min(maxW,availW,sw+(cx-sx))); g.h=Math.max(minH,Math.min(maxH,availH,sh+(cy-sy)));
+      d.style.width=g.w+'px'; d.style.height=g.h+'px';
+    };
+    rh.addEventListener('mousedown',e=>{ rw=true; sx=e.clientX; sy=e.clientY; sw=d.offsetWidth; sh=d.offsetHeight; e.preventDefault(); e.stopPropagation(); });
+    rh.addEventListener('touchstart',e=>{ rw=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY; sw=d.offsetWidth; sh=d.offsetHeight; e.preventDefault(); e.stopPropagation(); },{passive:false});
+  }
+  document.addEventListener('mousemove',rmm); document.addEventListener('touchmove',rtm,{passive:false});
+  document.addEventListener('mouseup',rup); document.addEventListener('touchend',rup);
+  const del=()=>{
+    if(iv)clearInterval(iv);
+    document.removeEventListener('mousemove',mm); document.removeEventListener('touchmove',tm);
+    document.removeEventListener('mouseup',up); document.removeEventListener('touchend',up);
+    document.removeEventListener('mousemove',rmm); document.removeEventListener('touchmove',rtm);
+    document.removeEventListener('mouseup',rup); document.removeEventListener('touchend',rup);
+    d.remove(); persistGadgets();
+  };
   const xb=d.querySelector('.gadget-x'); xb.addEventListener('click',del); xb.addEventListener('touchend',(e)=>{ e.stopPropagation(); e.preventDefault(); del(); });
   return d;
 }
@@ -13161,7 +13276,10 @@ function restoreGadgets(){ const desk=document.getElementById('desktop'); loadGa
 function addGadget(type){
   if(!GADGET_DEFS[type])return;
   const n=document.querySelectorAll('.gadget').length;
-  const g={ id:'g'+Date.now()+Math.floor(Math.random()*999), type, x:window.innerWidth-210, y:20+n*24, data:'' };
+  // window.innerWidth-210 se quedaba corto con el widget de Agenda (230px de ancho): se salía
+  // de la pantalla por la derecha. Mejor calcularlo a partir del ancho real de cada gadget.
+  const x=Math.max(10,window.innerWidth-(GADGET_DEFS[type].w+20));
+  const g={ id:'g'+Date.now()+Math.floor(Math.random()*999), type, x, y:20+n*24, data:'' };
   const el=makeGadgetEl(g); if(!el)return;
   document.getElementById('desktop').appendChild(el); persistGadgets();
   try{ notify({icon:ico('gadgets'),title:t('gad.title'),body:t('gad.added',{name:t(GADGET_DEFS[type].key)}),silent:true}); }catch(e){_ignora(e);}
@@ -13172,7 +13290,7 @@ function openGadgetGallery(){
   ov.innerHTML=`<div role="dialog" aria-label="${escHtml(t('gad.title'))}" style="width:min(360px,92vw);background:var(--xp-cara);border:2px solid var(--xp-borde);border-radius:var(--xp-radio) var(--xp-radio) 4px 4px;box-shadow:var(--xp-sombra);overflow:hidden">
     <div style="background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">&#129513; ${escHtml(t('gad.title'))}</div>
     <div style="padding:10px 14px;font-size:12px;color:#333">${escHtml(t('gad.intro'))}</div>
-    <div class="gad-gallery">${Object.keys(GADGET_DEFS).map(k=>'<button type="button" class="gad-card" data-g="'+k+'"><span class="gad-ic">'+({clock:'&#128368;',calendar:'&#128197;',notes:'&#128221;',monitor:'&#128200;',luz:'&#128161;',tiempo:'&#9925;'}[k])+'</span><span>'+escHtml(t(GADGET_DEFS[k].key))+'</span></button>').join('')}</div>
+    <div class="gad-gallery">${Object.keys(GADGET_DEFS).map(k=>'<button type="button" class="gad-card" data-g="'+k+'"><span class="gad-ic">'+({clock:'&#128368;',calendar:'&#128197;',agenda:'&#128467;',notes:'&#128221;',monitor:'&#128200;',luz:'&#128161;',tiempo:'&#9925;',radar:'&#127783;'}[k])+'</span><span>'+escHtml(t(GADGET_DEFS[k].key))+'</span></button>').join('')}</div>
     <div class="xp-dialog-btns" style="padding:6px 16px 12px;display:flex;justify-content:flex-end"><button type="button" id="gad-close" style="font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid #aca899;border-radius:3px;background:#f4f2ec;cursor:pointer">${escHtml(t('btn.close'))}</button></div>
   </div>`;
   ov.querySelectorAll('.gad-card').forEach(b=>b.onclick=()=>addGadget(b.dataset.g));
@@ -13647,6 +13765,10 @@ function _dayKey(y,m,d){ return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).
 // vuelo si toca en un día concreto. `salta` lleva las fechas de las que se ha borrado una
 // suelta, que es lo que uno hace cuando esa semana no hay clase.
 const EV_REPS=['','d','s','m','a'];
+// Paleta de colores del evento (mismo espíritu que Google Calendar: unos pocos tonos muy
+// distinguibles, no una rueda de color completa). '' = sin color propio, usa el azul por defecto.
+const EVENT_COLORS=['#d50000','#f4511e','#f6bf26','#33b679','#039be5','#3f51b5','#8e24aa','#616161'];
+function evColor(e){ return (e&&e.color)||'#3a6fd8'; }
 function evRepiteEn(e,key){
   if(!e.rep||EV_REPS.indexOf(e.rep)<1)return false;
   if(key<e.date)return false;
@@ -13697,7 +13819,16 @@ function checkEventReminders(){
     if(isNaN(dt))return;
     const cuando=dt-(+e.aviso||0)*60000;
     if(cuando>ahora||cuando<ahora-24*3600*1000)return;
-    try{ notify({icon:ico('calendario'),title:t('agenda.title'),body:(e.time?e.time+' · ':'')+e.text,action:()=>openAgenda(hoy)}); }catch(err){_ignora(err);}
+    const cuerpo=(e.time?e.time+' · ':'')+e.text;
+    // Con la pestaña en segundo plano, el globo interno no lo ve nadie: una notificación de
+    // verdad del sistema (mismo patrón que el aviso de MSN) es lo único que se nota entonces.
+    if(document.hidden&&typeof Notification!=='undefined'&&Notification.permission==='granted'){
+      try{
+        const n=new Notification(t('agenda.title'),{body:cuerpo,tag:'tos-agenda-'+(e.id||e.date+e.time),icon:TOS_ICON_192});
+        n.onclick=()=>{ try{window.focus();}catch(err){_ignora(err);} try{openAgenda(hoy);}catch(err){_ignora(err);} };
+      }catch(err){_ignora(err);}
+    }
+    try{ notify({icon:ico('calendario'),title:t('agenda.title'),body:cuerpo,action:()=>openAgenda(hoy),silent:document.hidden}); }catch(err){_ignora(err);}
     if(repiteHoy)e.avisado=hoy; else e.notified=true;
     cambio=true;
   });
@@ -13718,10 +13849,13 @@ function agMesNombre(y,m){
 // Editor de evento: hora de inicio y fin, repetición con final, aviso con antelación y nota.
 // Un prompt de una línea no da para una agenda que se use de verdad.
 function agEditor(ev,key,alGuardar){
-  const e=ev||{date:key,time:'',fin:'',text:'',nota:'',rep:'',hasta:'',aviso:0};
+  const e=ev||{date:key,time:'',fin:'',text:'',nota:'',rep:'',hasta:'',aviso:0,color:''};
   const sel=(v,val,txt)=>'<option value="'+val+'"'+(String(v)===String(val)?' selected':'')+'>'+escHtml(txt)+'</option>';
   const cuerpo='<div class="ag-form">'
     +'<label>'+escHtml(t('agenda.what'))+'<input type="text" id="ag-f-text" maxlength="120" value="'+escHtml(e.text||'')+'"></label>'
+    +'<div class="ag-colors" id="ag-f-colors" role="radiogroup" aria-label="'+escHtml(t('agenda.color'))+'">'
+      +EVENT_COLORS.map(c=>'<button type="button" class="ag-color-dot'+(evColor(e)===c?' sel':'')+'" data-c="'+c+'" style="background:'+c+'" aria-label="'+c+'"></button>').join('')
+    +'</div>'
     +'<div class="ag-f2"><label>'+escHtml(t('agenda.from'))+'<input type="time" id="ag-f-time" value="'+escHtml(e.time||'')+'"></label>'
     +'<label>'+escHtml(t('agenda.to'))+'<input type="time" id="ag-f-fin" value="'+escHtml(e.fin||'')+'"></label></div>'
     +'<div class="ag-f2"><label>'+escHtml(t('agenda.repeat'))+'<select id="ag-f-rep">'
@@ -13738,16 +13872,23 @@ function agEditor(ev,key,alGuardar){
     {label:t('btn.save'),primary:true,action:()=>{}}
   ]);
   const q=(id)=>ov.querySelector(id);
+  let colorSel=evColor(e);
+  q('#ag-f-colors').querySelectorAll('.ag-color-dot').forEach(b=>b.onclick=()=>{
+    q('#ag-f-colors').querySelectorAll('.ag-color-dot').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel'); colorSel=b.dataset.c;
+  });
   const guardar=()=>{
     const texto=(q('#ag-f-text').value||'').trim();
     if(!texto){ q('#ag-f-text').focus(); return; }
     const out=Object.assign({},e,{
       text:texto, time:q('#ag-f-time').value||'', fin:q('#ag-f-fin').value||'',
       rep:q('#ag-f-rep').value||'', hasta:q('#ag-f-hasta').value||'',
-      aviso:+q('#ag-f-aviso').value||0, nota:(q('#ag-f-nota').value||'').trim()
+      aviso:+q('#ag-f-aviso').value||0, nota:(q('#ag-f-nota').value||'').trim(), color:colorSel
     });
     if(out.fin&&out.time&&out.fin<out.time)out.fin='';   // una hora de fin anterior al inicio no es una hora de fin
     if(!out.rep)out.hasta='';
+    // El aviso solo se ve de verdad en segundo plano si el navegador deja notificar
+    if(out.aviso>0){ try{ if(typeof Notification!=='undefined'&&Notification.permission==='default')Notification.requestPermission(); }catch(err){_ignora(err);} }
     ov.remove();
     alGuardar(out);
   };
@@ -13984,7 +14125,7 @@ function openAgenda(targetKey){
       }else{
         html+='<div class="ag-evs">'+list.map(e=>{
           const hora=e.time?(e.time+(e.fin?'–'+e.fin:'')):t('agenda.allday');
-          return '<div class="ag-ev'+(e._rep?' rep':'')+'" data-id="'+escHtml(e.id)+'">'
+          return '<div class="ag-ev'+(e._rep?' rep':'')+'" data-id="'+escHtml(e.id)+'" style="border-left:4px solid '+evColor(e)+'">'
             +'<span class="ag-ev-t">'+escHtml(hora)+'</span>'
             +'<span class="ag-ev-x"><b>'+escHtml(e.text)+(e._rep?' <i class="ag-rep" title="'+escHtml(t('agenda.rep.'+e.rep))+'">&#128260;</i>':'')
             +(+e.aviso>0?' <i class="ag-av">&#128276;</i>':'')+'</b>'
@@ -14036,7 +14177,7 @@ function openAgenda(targetKey){
   }});
 }
 // Refresca todas las vistas de calendario que compartan tos-events (gadget + popup de la hora)
-function _agendaSync(){ try{ if(typeof _gadgetCalRefresh==='function')_gadgetCalRefresh(); }catch(e){_ignora(e);} try{ if(typeof _calRefresh==='function')_calRefresh(); }catch(e){_ignora(e);} }
+function _agendaSync(){ try{ if(typeof _gadgetCalRefresh==='function')_gadgetCalRefresh(); }catch(e){_ignora(e);} try{ if(typeof _gadgetAgendaRefresh==='function')_gadgetAgendaRefresh(); }catch(e){_ignora(e);} try{ if(typeof _calRefresh==='function')_calRefresh(); }catch(e){_ignora(e);} }
 
 // ========== ESCRITORIOS VIRTUALES ==========
 let _curDesktop=0, _desktopCount=1;
@@ -24725,7 +24866,9 @@ function openProjectProps(pid){
   if(!app)return;
   if(focusExisting('props-'+pid))return;
   const chips=(app.tech||[]).map(t=>`<span class="props-chip">${t}</span>`).join('');
-  const host=app.link.replace(/^https?:\/\//,'').replace(/\/$/,'');
+  // Solo el dominio: la ruta completa (el UUID de las fichas de Garmin) partía fatal a
+  // media palabra en el diálogo. El enlace sigue yendo a la URL completa, solo cambia el texto.
+  const host=new URL(app.link).hostname;
   const filas=_propsFilas(app,host)
     .map(([k,v])=>`<div class="props-row"><span>${k}:</span>${v}</div>`).join('');
   const content=`<div class="props-panel" id="props-${pid}">
@@ -24968,23 +25111,35 @@ const juegazosApps=[
 // Mis apps publicadas en la tienda Connect IQ de Garmin (relojes)
 const garminApps=[
   {id:'buscaminas',label:'Buscaminas',icon:'&#128163;',link:'https://apps.garmin.com/es-ES/apps/8f3b2efb-da22-4f1c-8d11-d8f1df22bbe4',
-   type:'Aplicación de reloj',ver:'0.8',devs:165,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Lógica'],
+   type:'Aplicación de reloj',ver:'0.9.1',devs:172,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Lógica'],
    desc:'Despeja el campo de minas sin adivinar: el reloj comprueba que el tablero se pueda resolver razonando. Tres tamaños y reto diario.'},
   {id:'sunsetdrive',label:'Sunset Drive',icon:'&#127749;',link:'https://apps.garmin.com/es-ES/apps/dd3f811c-7495-4fe6-8591-abe7addc33ce',
-   type:'Aplicación de reloj',ver:'0.9.5',devs:165,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
+   type:'Aplicación de reloj',ver:'0.9.8',devs:172,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
    desc:'Arcade de conducción al estilo de los ochenta: descapotable rojo, sol en el horizonte y el tiempo agotándose.'},
   {id:'blockdrop',label:'Block Drop',icon:'&#129521;',link:'https://apps.garmin.com/es-ES/apps/96c3fafb-94b2-428e-9dcf-ba085d5207c8',
-   type:'Aplicación de reloj',ver:'1.1',devs:165,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Puzle'],
+   type:'Aplicación de reloj',ver:'1.3',devs:172,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Puzle'],
    desc:'El clásico de encajar piezas, con tablero 10x20, bolsa de siete y giros con empujón de pared.'},
   {id:'flappywings',label:'Flappy Wings',icon:'&#128038;',link:'https://apps.garmin.com/es-ES/apps/e9a3cbac-132b-40ee-881d-b29c4faeee83',
-   type:'Aplicación de reloj',ver:'1.2',devs:166,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
+   type:'Aplicación de reloj',ver:'1.4',devs:173,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
    desc:'Un pájaro, dos tubos y un hueco. Reto del día con los mismos tubos para todo el mundo.'},
   {id:'espanacampeona',label:'España Campeona!',icon:'&#127466;&#127480;',link:'https://apps.garmin.com/es-ES/apps/e8d50c35-edc3-426f-9adb-20d6eefff19e',
-   type:'Esfera de reloj',ver:'2.1',devs:111,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Watch face'],
+   type:'Esfera de reloj',ver:'2.2',devs:118,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Watch face'],
    desc:'Esfera con la bandera de España y las dos estrellas: colores oficiales, dos medidores y cuatro campos configurables.'},
   {id:'cortafruta',label:'Corta fruta a lo loco',icon:'&#127817;',link:'https://apps.garmin.com/es-ES/apps/db343517-8427-4eff-8845-c645698ad321',
-   type:'Aplicación de reloj',ver:'1.6',devs:80,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Táctil'],
-   desc:'Desliza el dedo y parte la fruta en dos. Modo clásico con tres vidas y bombas que acaban la partida.'}
+   type:'Aplicación de reloj',ver:'1.8',devs:87,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Táctil'],
+   desc:'Desliza el dedo y parte la fruta en dos. Modo clásico con tres vidas y bombas que acaban la partida.'},
+  {id:'flingfury',label:'Fling Fury',icon:'&#127919;',link:'https://apps.garmin.com/es-ES/apps/2986fa99-a434-4b98-870f-0a30d31a4dc3',
+   type:'Aplicación de reloj',ver:'0.9.7',devs:90,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Física'],
+   desc:'Tirachinas para el reloj: arrastra al pájaro, apunta y derriba fortalezas de madera, piedra y hielo. Cuarenta niveles en cuatro mundos.'},
+  {id:'onemorerun',label:'One More Run',icon:'&#128095;',link:'https://apps.garmin.com/es-ES/apps/2ce042a2-f83f-4d5d-93bb-3c4c432337e3',
+   type:'Aplicación de reloj',ver:'0.9.4',devs:162,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
+   desc:'Corres solo sin parar: cambia de carril, salta y agáchate para esquivar. Reto diario con la misma secuencia para todo el mundo.'},
+  {id:'memoriacolores',label:'Memoria de Colores',icon:'&#129504;',link:'https://apps.garmin.com/es-ES/apps/c9ebd880-24f3-4079-885b-0a912bf39228',
+   type:'Aplicación de reloj',ver:'1.2',devs:189,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Memoria'],
+   desc:'El clásico juego de memoria: repite secuencias de colores cada vez más largas y rápidas, con tres niveles de dificultad.'},
+  {id:'neonsnake',label:'Neon Snake',icon:'&#128013;',link:'https://apps.garmin.com/es-ES/apps/c2ac19a8-13e7-4600-a06f-817a0454c37e',
+   type:'Aplicación de reloj',ver:'1.2',devs:200,tienda:'Garmin Connect IQ',tech:['Connect IQ','Monkey C','Arcade'],
+   desc:'La serpiente de siempre en un tablero redondo que llega hasta el bisel, con cuatro modos y premios que cambian la partida.'}
 ];
 
 // Subcarpetas dentro de Proyectos (antes eran iconos sueltos del escritorio)

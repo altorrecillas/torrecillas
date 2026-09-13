@@ -7,7 +7,7 @@
 Windows XP renacido en HTML: 21 juegos clásicos, ~75 aplicaciones, terminal,
 Paint y mi portfolio. Sin instalar nada, sin cuentas, sin servidor.
 
-[![Versión](https://img.shields.io/badge/versión-0.68.0-7c8cff)](#historial)
+[![Versión](https://img.shields.io/badge/versión-0.69.0-7c8cff)](#historial)
 [![PWA](https://img.shields.io/badge/PWA-instalable%20y%20sin%20conexión-2ea44f)](#instalarlo-como-app)
 [![Dependencias](https://img.shields.io/badge/dependencias-0-blue)](#cómo-está-hecho)
 [![Build](https://img.shields.io/badge/build-ninguno-lightgrey)](#cómo-está-hecho)
@@ -75,8 +75,8 @@ dificultad donde tiene sentido (Buscaminas, Sudoku, Mahjong y Sopa de letras).
 
 ### Mi portfolio
 
-La carpeta **Proyectos** reúne webs de clientes, mis 6 juegos web publicados
-aparte y mis 6 apps y esferas en la tienda **Garmin Connect IQ**. Cada ficha
+La carpeta **Proyectos** reúne webs de clientes, mis 7 juegos web publicados
+aparte y mis 10 apps y esferas en la tienda **Garmin Connect IQ**. Cada ficha
 tiene su diálogo de propiedades al estilo XP.
 
 ## Instalarlo como app
@@ -172,7 +172,7 @@ Para publicar: sube los archivos tal cual. Es estático.
 
 ## Historial
 
-La versión vive en `APP_VERSION`. La actual es la **0.68.0**.
+La versión vive en `APP_VERSION`. La actual es la **0.69.0**.
 
 ---
 
