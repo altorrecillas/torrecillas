@@ -10,7 +10,7 @@
 // nueva es este worker quien lo anuncia (la página enseña el banner "Actualizar"), así
 // que la app no tiene por qué esperar a la red para pintar. Debe coincidir con
 // APP_VERSION de index.html (un test lo verifica).
-const APP_VERSION = '0.69.0';
+const APP_VERSION = '0.70.0';
 const CACHE = 'tos-' + APP_VERSION;
 const DOC = './index.html';          // el documento, con su alias './'
 const ASSETS = [
@@ -36,9 +36,10 @@ self.addEventListener('install', (e) => {
   // Precachear lo que exista. NO se llama a skipWaiting: el nuevo worker espera a
   // que la página confirme la actualización (mensaje SKIP_WAITING).
   e.waitUntil(
-    caches.open(CACHE).then((c) => Promise.allSettled(
-      [cacheDoc(c)].concat(ASSETS.map((a) => c.add(a)))
-    ))
+    caches.open(CACHE).then((c) => Promise.all([
+      cacheDoc(c),
+      Promise.allSettled(ASSETS.map((a) => c.add(a)))
+    ]))
   );
 });
 

@@ -1165,6 +1165,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
     </button>
     <button id="show-desktop" onclick="toggleShowDesktop()" title="Mostrar escritorio" aria-label="Mostrar escritorio"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.4" y="3" width="13.2" height="10" rx="1.1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.15" y="10.4" width="11.7" height="2.2" rx="0.4" fill="currentColor"/></svg></button>
     <button id="taskview-btn" onclick="openTaskView()" title="Vista de tareas" aria-label="Vista de tareas"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+    <select id="mobile-window-switch" onchange="_mobileSwitch(this.value)"></select>
     <div id="taskbar-items"></div>
     <div id="system-tray">
       <div id="tray-icons"><span id="tray-net" role="img"><svg width="15" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect class="tn-scr" x="1" y="3.5" width="9.5" height="6.5" rx="1" fill="#c9d3e0" stroke="#5a6b80" stroke-width="1"/><rect x="2" y="4.5" width="7.5" height="4.5" fill="#2f6fd0"/><path d="M4 11.5h4.5v1.2H4z" fill="#8494a8"/><rect class="tn-scr" x="5.5" y="6" width="9.5" height="6.5" rx="1" fill="#e2e8f0" stroke="#5a6b80" stroke-width="1"/><rect x="6.5" y="7" width="7.5" height="4.5" fill="#4b8de8"/><g class="tn-x" stroke="#d40000" stroke-width="2.2" stroke-linecap="round"><path d="M10.4 9.4l4.4 4.4"/><path d="M14.8 9.4l-4.4 4.4"/></g></svg></span><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-quick" onclick="toggleActionCenter(event)" role="button" tabindex="0" aria-label="Ajustes rápidos" title="Ajustes rápidos" style="cursor:pointer">&#9889;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
@@ -1188,6 +1189,14 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
       <div class="start-left">
         <div id="start-search-row"><input id="start-search" placeholder="Buscar..." data-i18n-ph="search.placeholder" autocomplete="off" spellcheck="false" aria-label="Buscar aplicaciones, juegos y proyectos"></div>
         <div id="start-search-results"></div>
+        <button type="button" class="start-item" onclick="openContentSearch()">
+          <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-docs"></use></svg></div>
+          <div><div class="si-label" data-i18n="content.title">Búsqueda global de contenido</div><div class="si-desc">Ctrl+Shift+F</div></div>
+        </button>
+        <button type="button" class="start-item" onclick="openSystemHealth()">
+          <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-taskmgr"></use></svg></div>
+          <div class="si-label" data-i18n="health.title">Centro de salud del sistema</div>
+        </button>
         <button type="button" class="start-item" id="start-games-toggle" onclick="toggleStartGames(event)">
           <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-juegos"></use></svg></div>
           <div style="flex:1"><div class="si-label" data-i18n="menu.games">Juegos</div><div class="si-desc" id="start-games-desc">juegos cl&aacute;sicos</div></div>
@@ -4268,11 +4277,6 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 /* Responsive */
 @media(max-width:600px){
   #start-menu{width:calc(100% - 10px);left:0;right:10px;border-radius:8px 0 0 0}
-  .window.game-window{width:calc(100% - 16px)!important;left:8px!important;top:8px!important;bottom:calc(var(--tb-h) + 8px)!important;height:auto!important;max-height:calc(100svh - var(--tb-h) - 16px)!important;border-radius:8px}
-  /* El tope de alto descuenta el top:15% para que el pie nunca quede bajo la taskbar + 12px de aire */
-  .window:not(.game-window){width:calc(100% - 20px)!important;max-height:calc(85svh - var(--tb-h) - 12px)!important;top:15%;border-radius:8px}
-  .window:not(.game-window).maximized{max-height:calc(100svh - var(--tb-h))!important}
-  .window .resize-handle{display:none}
   #flappy-canvas{max-height:55vh!important}
   .game-btn{padding:3px 10px;font-size:10px;margin:2px}
   .touch-controls{margin-top:3px}
@@ -4289,6 +4293,35 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
   .drive-item .drive-icon{font-size:30px;margin-bottom:3px}
   .drive-item .drive-label{font-size:10px;line-height:1.2}
 }
+
+#mobile-window-switch{display:none}
+#mobile-layout{min-height:44px;max-width:100%;padding:6px;font:inherit}
+body.mobile-layout{--tb-h:calc(48px + var(--sab));--mobile-left:calc(var(--vv-left,0px) + env(safe-area-inset-left,0px));--mobile-top:calc(var(--vv-top,0px) + env(safe-area-inset-top,0px));--mobile-width:calc(var(--vv-width,100vw) - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));--mobile-height:max(0px,calc(var(--vv-height,100dvh) - env(safe-area-inset-top,0px) - var(--tb-h)))}
+body.mobile-layout .window{position:fixed;left:var(--mobile-left)!important;top:var(--mobile-top)!important;width:var(--mobile-width)!important;height:var(--mobile-height)!important;right:auto!important;bottom:auto!important;min-width:0!important;min-height:0!important;max-width:var(--mobile-width)!important;max-height:var(--mobile-height)!important;overflow:hidden;border-radius:0}
+body.mobile-layout .window-titlebar{height:48px;flex:0 0 48px;padding:2px;gap:2px}
+body.mobile-layout .window-title{min-width:0;font-size:12px}
+body.mobile-layout .window-controls{flex-shrink:0;gap:2px}
+body.mobile-layout .window-controls button,body.mobile-layout .window-title .wt-icon{width:44px;height:44px;flex:0 0 44px;font-size:16px;touch-action:manipulation}
+body.mobile-layout .window .btn-maximize,body.mobile-layout .window .resize-handle,body.mobile-layout .window-statusbar{display:none}
+body.mobile-layout .window-body{min-height:0;min-width:0;overscroll-behavior:contain}
+body.mobile-layout .window-body :is(input,textarea,select){font-size:16px}
+body.mobile-layout #taskbar{left:var(--mobile-left);top:calc(var(--vv-top,0px) + var(--vv-height,100dvh) - var(--tb-h));bottom:auto;width:var(--mobile-width);height:var(--tb-h)}
+body.mobile-layout #taskbar-items,body.mobile-layout #taskview-btn,body.mobile-layout #tray-icons{display:none}
+body.mobile-layout #mobile-window-switch{display:block;flex:1;min-width:0;height:44px;margin:0 2px;padding:0 4px;border:1px solid #7f9db9;border-radius:3px;background:#fff;color:#123890;font-size:16px}
+body.mobile-layout #start-btn{flex-shrink:0;min-width:44px;padding-left:6px;padding-right:6px}
+body.mobile-layout #show-desktop{flex:0 0 44px;width:44px;height:44px;margin:0 2px}
+body.mobile-layout #system-tray{flex-shrink:0;padding-left:3px;padding-right:3px;gap:0}
+body.mobile-layout #clock{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+body.mobile-layout #vd-pips{display:none}
+body.mobile-layout #start-menu{left:var(--mobile-left);right:auto;bottom:auto;top:calc(var(--mobile-top) + var(--mobile-height));transform:translateY(-100%);width:min(420px,var(--mobile-width));max-height:var(--mobile-height);overflow:auto}
+body.mobile-layout #start-menu.show{display:flex;flex-direction:column}
+body.mobile-layout .start-header,body.mobile-layout .start-footer{flex-shrink:0}
+body.mobile-layout .start-body{min-height:0;overflow:auto}
+body.mobile-layout .start-item,body.mobile-layout .settings-tab{min-height:44px}
+body.mobile-layout #context-menu{min-width:0;max-width:var(--mobile-width);max-height:var(--mobile-height);overflow:auto}
+body.mobile-layout #context-menu .ctx-item{min-height:44px;white-space:normal}
+body.mobile-layout #calendar-popup{left:var(--mobile-left);right:auto;bottom:auto;top:calc(var(--mobile-top) + var(--mobile-height));transform:translateY(-100%);width:min(320px,var(--mobile-width));max-height:var(--mobile-height);overflow:auto}
+body.mobile-layout .window.win-open,body.mobile-layout .window.win-min{animation:none}
 
 /* Anillo de foco visible solo para navegación por teclado (no con ratón) */
 :focus-visible{outline:2px solid #ffd54a;outline-offset:1px}
@@ -5363,7 +5396,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.69.0';
+const APP_VERSION = '0.70.0';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -5384,6 +5417,46 @@ function _ignora(e){
 // a propósito: ahí está el chiste. Idiomas: es (defecto), en, ca, ru.
 const I18N_LANGS=[['es','Español'],['en','English'],['ca','Català'],['ru','Русский']];
 const I18N={
+  'health.title':{es:'Centro de salud del sistema',en:'System health center',ca:'Centre de salut del sistema',ru:'Состояние системы'},
+  'health.refresh':{es:'Actualizar diagnóstico',en:'Refresh diagnostics',ca:'Actualitzar diagnòstic',ru:'Обновить диагностику'},
+  'health.unknown':{es:'No medido / desconocido',en:'Not measured / unknown',ca:'No mesurat / desconegut',ru:'Не измерено / неизвестно'},
+  'health.local':{es:'localStorage de esta app (tamaño lógico UTF-16)',en:'This app’s localStorage (logical UTF-16 size)',ca:'localStorage d’aquesta app (mida lògica UTF-16)',ru:'localStorage приложения (логический размер UTF-16)'},
+  'health.groups':{es:'Por categoría · datos de la sesión (UTF-16)',en:'By category · session data (UTF-16)',ca:'Per categoria · dades de la sessió (UTF-16)',ru:'По категориям · данные сеанса (UTF-16)'},
+  'health.space':{es:'Origen completo · estimación / cuota del navegador',en:'Entire origin · browser estimate / quota',ca:'Origen complet · estimació / quota del navegador',ru:'Весь origin · оценка / квота браузера'},
+  'health.space.note':{es:'Los tamaños lógicos no son uso físico ni se suman a la estimación. El origen puede incluir cachés y otras apps. Si la API falla, solo se mide localStorage; no se inventa una cuota.',en:'Logical sizes are not physical usage and must not be added to the estimate. The origin may include caches and other apps. If the API fails, only localStorage is measured; no quota is assumed.',ca:'Les mides lògiques no són ús físic ni se sumen a l’estimació. L’origen pot incloure memòries cau i altres apps. Si falla l’API, només es mesura localStorage; no s’inventa una quota.',ru:'Логические размеры не равны физическому объёму и не суммируются с оценкой. Origin может включать кеши и другие приложения. Без API измеряется только localStorage; квота неизвестна.'},
+  'health.save':{es:'Guardado de la sesión',en:'Session saving',ca:'Desament de la sessió',ru:'Сохранение сеанса'},
+  'health.guest':{es:'Invitado · solo memoria',en:'Guest · memory only',ca:'Convidat · només memòria',ru:'Гость · только память'},
+  'health.direct':{es:'Escrituras directas · sin confirmación global',en:'Direct writes · no global confirmation',ca:'Escriptures directes · sense confirmació global',ru:'Прямая запись · нет общего подтверждения'},
+  'health.busy':{es:'En curso',en:'In progress',ca:'En curs',ru:'Выполняется'},
+  'health.pending':{es:'Cambios pendientes',en:'Pending changes',ca:'Canvis pendents',ru:'Есть несохранённые изменения'},
+  'health.clean':{es:'Sin cambios pendientes en la caja',en:'No pending vault changes',ca:'Sense canvis pendents a la caixa',ru:'Нет ожидающих изменений хранилища'},
+  'health.retrySave':{es:'Reintentar guardado de la caja',en:'Retry vault save',ca:'Reintentar desament de la caixa',ru:'Повторить сохранение хранилища'},
+  'health.saved':{es:'Este intento se guardó; nuevas ediciones pueden quedar pendientes.',en:'This attempt was saved; newer edits may still be pending.',ca:'Aquest intent s’ha desat; les edicions noves poden quedar pendents.',ru:'Эта попытка сохранена; новые изменения могут ещё ожидать записи.'},
+  'health.failed':{es:'Operación no completada. Puedes reintentar o abrir una copia de seguridad.',en:'Operation not completed. Retry or open backup.',ca:'Operació no completada. Pots reintentar o obrir una còpia de seguretat.',ru:'Операция не завершена. Повторите или откройте резервное копирование.'},
+  'health.config':{es:'Configurada',en:'Configured',ca:'Configurada',ru:'Настроена'},
+  'health.off':{es:'No configurada',en:'Not configured',ca:'No configurada',ru:'Не настроена'},
+  'health.idle':{es:'Sin operación activa · no verifica el proveedor de nube',en:'No active operation · cloud provider not verified',ca:'Sense operació activa · no verifica el proveïdor de núvol',ru:'Нет активной операции · облачный провайдер не проверен'},
+  'health.paused':{es:'Pausada · conflicto o error sin resolver',en:'Paused · unresolved conflict or error',ca:'Pausada · conflicte o error sense resoldre',ru:'Приостановлено · неразрешённый конфликт или ошибка'},
+  'health.conflict':{es:'Conflicto · requiere tu decisión',en:'Conflict · your decision is required',ca:'Conflicte · cal la teva decisió',ru:'Конфликт · требуется ваше решение'},
+  'health.network':{es:'Red según el navegador (no comprueba Internet)',en:'Network reported by browser (not an Internet check)',ca:'Xarxa segons el navegador (no comprova Internet)',ru:'Сеть по данным браузера (без проверки Интернета)'},
+  'health.online':{es:'Con conexión',en:'Online',ca:'Amb connexió',ru:'В сети'},
+  'health.offline':{es:'Sin conexión',en:'Offline',ca:'Sense connexió',ru:'Не в сети'},
+  'health.pwa':{es:'Modo PWA / control del service worker',en:'PWA mode / service worker control',ca:'Mode PWA / control del service worker',ru:'Режим PWA / управление service worker'},
+  'health.standalone':{es:'Ventana independiente',en:'Standalone window',ca:'Finestra independent',ru:'Отдельное окно'},
+  'health.tab':{es:'Pestaña',en:'Browser tab',ca:'Pestanya',ru:'Вкладка'},
+  'health.controlled':{es:'Controlada · no garantiza caché sin conexión',en:'Controlled · offline cache not guaranteed',ca:'Controlada · no garanteix memòria cau sense connexió',ru:'Под управлением · автономный кеш не гарантирован'},
+  'health.uncontrolled':{es:'Sin controlador',en:'No controller',ca:'Sense controlador',ru:'Нет контроллера'},
+  'health.windows':{es:'Ventanas abiertas / no minimizadas',en:'Open / non-minimized windows',ca:'Finestres obertes / no minimitzades',ru:'Открытые / несвёрнутые окна'},
+  'health.resources':{es:'Pistas multimedia vivas observables en elementos de esta página',en:'Live media tracks observable in this page’s elements',ca:'Pistes multimèdia vives observables als elements d’aquesta pàgina',ru:'Живые медиадорожки, наблюдаемые в элементах страницы'},
+  'health.resources.note':{es:'No incluye recursos internos sin registro. No se estima CPU, RAM por app, cámaras ni micrófonos fuera de estos elementos.',en:'Unregistered internal resources are excluded. CPU, per-app RAM, cameras and microphones outside these elements are not estimated.',ca:'No inclou recursos interns sense registre. No s’estima CPU, RAM per app, càmeres ni micròfons fora d’aquests elements.',ru:'Внутренние ресурсы без реестра не включены. CPU, RAM по приложениям, камеры и микрофоны вне этих элементов не оцениваются.'},
+  'content.title':{es:'Búsqueda global de contenido',en:'Global content search',ca:'Cerca global de contingut',ru:'Глобальный поиск содержимого'},
+  'content.query':{es:'Buscar texto (mínimo 2 caracteres)',en:'Search text (at least 2 characters)',ca:'Cercar text (mínim 2 caràcters)',ru:'Искать текст (минимум 2 символа)'},
+  'content.type':{es:'Tipo de contenido',en:'Content type',ca:'Tipus de contingut',ru:'Тип содержимого'},
+  'content.all':{es:'Todos',en:'All',ca:'Tots',ru:'Все'},
+  'content.scope':{es:'Notas Markdown, tareas y documentos TXT/hojas guardados. Sin claves, binarios ni papelera. No incluye ediciones aún no guardadas.',en:'Saved Markdown notes, tasks and TXT/spreadsheet documents. No passwords, binaries or trash. Unsaved edits are not included.',ca:'Notes Markdown, tasques i documents TXT/fulls desats. Sense claus, binaris ni paperera. No inclou edicions encara no desades.',ru:'Сохранённые заметки Markdown, задачи и документы TXT/таблицы. Без паролей, двоичных файлов и корзины. Несохранённые правки не включены.'},
+  'content.count':{es:'{n} resultados · máximo 50',en:'{n} results · maximum 50',ca:'{n} resultats · màxim 50',ru:'Результатов: {n} · максимум 50'},
+  'content.missing':{es:'El resultado ya no está disponible. Actualiza la búsqueda.',en:'This result is no longer available. Refresh the search.',ca:'El resultat ja no està disponible. Actualitza la cerca.',ru:'Результат больше недоступен. Обновите поиск.'},
+  'content.error':{es:'No se pudo leer alguna fuente. Los resultados pueden estar incompletos.',en:'A source could not be read. Results may be incomplete.',ca:'No s’ha pogut llegir alguna font. Els resultats poden ser incomplets.',ru:'Не удалось прочитать источник. Результаты могут быть неполными.'},
   'start':            {es:'Inicio', en:'Start', ca:'Inici', ru:'Пуск'},
   'menu.games':       {es:'Juegos', en:'Games', ca:'Jocs', ru:'Игры'},
   'menu.games.desc':  {es:'{n} juegos clásicos', en:'{n} classic games', ca:'{n} jocs clàssics', ru:'{n} классических игр'},
@@ -7043,7 +7116,13 @@ let gameInstances = {};
 // descifra la caja UNA vez a un objeto en memoria (_vault); Store lee/escribe ahí
 // de forma síncrona y un guardado diferido re-cifra la caja a localStorage.
 const VAULT_PLAINTEXT=new Set(['tos-account','tos-vault','tos-lang','tos-autologin','tos-fastboot','tos-pin','tos-bio']); // no se cifran (hacen falta antes de entrar)
-let _acctKey=null, _vault=null, _vaultTmr=null, _vaultFailNotified=false, _guestMode=false;
+let _acctKey=null, _vault=null, _vaultTmr=null, _vaultFailNotified=false, _guestMode=false, _vaultQueue=Promise.resolve(), _vaultEpoch=0;
+let _vaultDirty=false, _vaultPersistPromise=null, _vaultRevision=0;
+function _vaultBeginSession(key,vault,dirty=false){
+  clearTimeout(_vaultTmr); _vaultTmr=null;
+  _vaultEpoch++; _acctKey=key; _vault=vault;
+  _vaultDirty=dirty; _vaultPersistPromise=null; _vaultRevision=0; _vaultFailNotified=false;
+}
 function _b64enc(bytes){ let s=''; for(let i=0;i<bytes.length;i++)s+=String.fromCharCode(bytes[i]); return btoa(s); }
 function _b64dec(b64){ const s=atob(b64); const u=new Uint8Array(s.length); for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i); return u; }
 function _cryptoOk(){ return !!(window.crypto&&window.crypto.subtle&&window.crypto.getRandomValues); }
@@ -7075,27 +7154,68 @@ function vaultDaniado(){
 function accountInfo(){ try{ const o=JSON.parse(localStorage.getItem('tos-account')||'null'); return (o&&typeof o==='object'&&!Array.isArray(o))?o:null; }catch(e){ return null; } }
 function hasAccount(){ return !!accountInfo(); }
 function isVaultUnlocked(){ return _vault!==null; }
-function _scheduleVaultPersist(){ if(!_vault||!_acctKey)return; clearTimeout(_vaultTmr); _vaultTmr=setTimeout(()=>{ persistVault(); },150); }
-async function persistVault(){
-  if(!_vault||!_acctKey)return false;
-  try{ localStorage.setItem('tos-vault',await _encJSON(_acctKey,_vault)); _vaultFailNotified=false; return true; }
-  catch(e){ if(!_vaultFailNotified){ _vaultFailNotified=true; try{ notify({icon:ico('candado'),title:t('acct.title'),body:t('acct.savefail')}); }catch(_e){_ignora(_e);} } return false; }
+function _scheduleVaultPersist(){
+  if(!_vault||!_acctKey||_guestMode)return;
+  _vaultDirty=true; _vaultRevision++;
+  clearTimeout(_vaultTmr); _vaultTmr=setTimeout(()=>{ _vaultTmr=null; persistVault(); },150);
+}
+function persistVault(){
+  const vault=_vault, key=_acctKey, epoch=_vaultEpoch;
+  if(!vault||!key||_guestMode)return Promise.resolve(false);
+  const vigente=()=>vault===_vault&&key===_acctKey&&epoch===_vaultEpoch&&!_guestMode;
+  clearTimeout(_vaultTmr); _vaultTmr=null;
+  _vaultDirty=true;
+  const guardar=async()=>{
+    try{
+      while(vigente()){
+        const revision=_vaultRevision, snapshot=JSON.stringify(vault);
+        const blob=await _encJSON(key,JSON.parse(snapshot));
+        if(!vigente())return false;
+        if(revision!==_vaultRevision||snapshot!==JSON.stringify(vault))continue;
+        localStorage.setItem('tos-vault',blob);
+        if(!vigente())return false;
+        _vaultDirty=revision!==_vaultRevision||snapshot!==JSON.stringify(vault);
+        _vaultFailNotified=false;
+        if(!_vaultDirty){ clearTimeout(_vaultTmr); _vaultTmr=null; }
+        return true;
+      }
+    }catch(e){
+      if(vigente()){
+        _vaultDirty=true;
+        if(!_vaultFailNotified){ _vaultFailNotified=true; try{ notify({icon:ico('candado'),title:t('acct.title'),body:t('acct.savefail')}); }catch(_e){_ignora(_e);} }
+      }
+    }
+    return false;
+  };
+  const pending=_vaultQueue.then(guardar,guardar).finally(()=>{
+    if(epoch===_vaultEpoch&&_vaultPersistPromise===pending)_vaultPersistPromise=null;
+  });
+  _vaultQueue=pending; _vaultPersistPromise=pending;
+  return pending;
 }
 async function createAccount(user,password,opts){
   if(!_cryptoOk())throw new Error('nocrypto');
+  if(hasAccount()||_vault||_guestMode)throw new Error('savefail');
   opts=opts||{};
+  const previousBlob=localStorage.getItem('tos-vault');
   const salt=window.crypto.getRandomValues(new Uint8Array(16)); const iter=200000;
   const key=await _deriveKey(password,salt,iter);
+  if(hasAccount()||_vault||_guestMode)throw new Error('savefail');
   // Absorber el estado tos-* actual (menos las claves en claro) dentro de la caja
   const keys=[]; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.indexOf('tos-')===0&&!VAULT_PLAINTEXT.has(k))keys.push(k); }
   const vault={}; keys.forEach(k=>{ vault[k]=localStorage.getItem(k); });
-  _acctKey=key; _vault=vault; _guestMode=false;
+  _vaultBeginSession(key,vault,true); _guestMode=false;
   // Guardar la caja cifrada PRIMERO. Si falla (cuota, incógnito), abortar sin dejar
   // una cuenta a medias: no se escribe tos-account y los datos en claro siguen intactos.
   const ok=await persistVault();
-  if(!ok){ _acctKey=null; _vault=null; throw new Error('savefail'); }
+  if(!ok){ lockAccount(); throw new Error('savefail'); }
   // avatar y pista van en claro (hacen falta en el login, antes de descifrar)
-  localStorage.setItem('tos-account',JSON.stringify({user:String(user),salt:_b64enc(salt),iter:iter,ver:1,ts:Date.now(),avatar:opts.avatar||'',hint:opts.hint||''}));
+  try{ localStorage.setItem('tos-account',JSON.stringify({user:String(user),salt:_b64enc(salt),iter:iter,ver:1,ts:Date.now(),avatar:opts.avatar||'',hint:opts.hint||''})); }
+  catch(e){
+    lockAccount();
+    try{ if(previousBlob===null)localStorage.removeItem('tos-vault'); else localStorage.setItem('tos-vault',previousBlob); }catch(_e){_ignora(_e);}
+    throw new Error('savefail');
+  }
   keys.forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){_ignora(e);} }); // ya está cifrado: borrar el claro
   return true;
 }
@@ -7103,8 +7223,8 @@ async function unlockAccount(password){
   const info=accountInfo(); if(!info||!_cryptoOk())return false;
   let key; try{ key=await _deriveKey(password,_b64dec(info.salt),info.iter||200000); }catch(e){ return false; }
   const blob=localStorage.getItem('tos-vault');
-  if(blob==null){ _acctKey=key; _vault={}; return true; } // cuenta sin caja todavía
-  try{ const v=await _decJSON(key,blob); _acctKey=key; _vault=(v&&typeof v==='object')?v:{}; return true; }
+  if(blob==null){ _vaultBeginSession(key,{},true); return true; } // cuenta sin caja todavía
+  try{ const v=await _decJSON(key,blob); _vaultBeginSession(key,(v&&typeof v==='object')?v:{}); return true; }
   catch(e){ return false; } // el fallo de autenticación de AES-GCM = contraseña incorrecta
 }
 // ---------- LOGIN AUTOMÁTICO ----------
@@ -7137,6 +7257,7 @@ async function _llaveGuardar(id,key){
       tx.objectStore(AUTOL_STORE).put(key,id);
       tx.oncomplete=()=>res(true);
       tx.onerror=()=>res(false);
+      tx.onabort=()=>res(false);
     });
   }catch(e){ return false; }
 }
@@ -7188,10 +7309,10 @@ async function autoLoginIntenta(){
   const key=await autoLoginLeer();
   if(!key)return false;
   const blob=localStorage.getItem('tos-vault');
-  if(blob==null){ _acctKey=key; _vault={}; return true; }
+  if(blob==null){ _vaultBeginSession(key,{},true); return true; }
   try{
     const v=await _decJSON(key,blob);
-    _acctKey=key; _vault=(v&&typeof v==='object')?v:{};
+    _vaultBeginSession(key,(v&&typeof v==='object')?v:{});
     return true;
   }catch(e){
     await autoLoginBorrar(); // la clave guardada ya no vale (contraseña cambiada fuera)
@@ -7209,22 +7330,53 @@ async function autoLoginIntenta(){
 const SYNC_DIR_ID='syncdir', SYNC_KEY_ID='synckey', SYNC_FILE='torrecillas-os-sync.json';
 const SYNC_NO_SUBIR=['tos-session','tos-icon-pos']; // posiciones de ventana/icono: sin sentido entre dispositivos
 let _syncOn=false, _syncDirHandle=null, _syncOwnKey=null, _syncTmr=null, _syncBusy=false, _syncLastCheck=0;
+let _syncPaused=false, _syncDialog=null, _syncDirty=0, _syncPending=false, _syncRevision, _syncEpoch=0;
+const SYNC_REV_ID='syncrevision';
 function _syncOk(){ return typeof window.showDirectoryPicker==='function'; }
-// La clave de cifrado: si hay cuenta local desbloqueada, la MISMA CryptoKey del vault (nada
-// nuevo que pedir); si no, una CryptoKey propia derivada una vez y cacheada en IndexedDB con el
-// mismo mecanismo que el login automático.
 async function _syncKey(){
-  if(hasAccount())return isVaultUnlocked()?_acctKey:null;
-  if(!_syncOwnKey)_syncOwnKey=await _llaveLeer(SYNC_KEY_ID);
+  if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return null;
+  const epoch=_syncEpoch;
+  if(!_syncOwnKey){
+    const key=await _llaveLeer(SYNC_KEY_ID);
+    if(epoch!==_syncEpoch)return null;
+    _syncOwnKey=key;
+  }
   return _syncOwnKey;
 }
-// La sal/iteraciones tienen que ser SIEMPRE las mismas en cada escritura (si no, la contraseña
-// de sync dejaría de sacar la misma clave): con cuenta salen de accountInfo(); sin cuenta, de un
-// par de claves propias fijadas la primera vez que se creó la contraseña de sync.
 function _syncSaltIter(){
-  if(hasAccount()){ const info=accountInfo(); return info?{salt:info.salt,iter:info.iter||200000}:null; }
   const salt=Store.get('tos-sync-salt'); if(!salt)return null;
   return {salt,iter:parseInt(Store.get('tos-sync-iter'),10)||200000};
+}
+async function _syncGuardarIdentidad(key,salt,iter){
+  const epoch=_syncEpoch, vault=_vault, acctKey=_acctKey;
+  const previousSalt=Store.get('tos-sync-salt'), previousIter=Store.get('tos-sync-iter');
+  const previousKey=await _llaveLeer(SYNC_KEY_ID);
+  const vigente=()=>epoch===_syncEpoch&&vault===_vault&&acctKey===_acctKey;
+  if(!key||!salt||!vigente()||!await _llaveGuardar(SYNC_KEY_ID,key))return false;
+  try{
+    if(!vigente())return false;
+    if(!Store.set('tos-sync-salt',salt)||!Store.set('tos-sync-iter',String(iter)))throw new Error('savefail');
+    if(_acctKey&&!await persistVault())throw new Error('savefail');
+    if(!vigente())return false;
+    _syncOwnKey=key;
+    return true;
+  }catch(e){
+    if(vigente()){
+      if(previousSalt===null)Store.del('tos-sync-salt'); else Store.set('tos-sync-salt',previousSalt);
+      if(previousIter===null)Store.del('tos-sync-iter'); else Store.set('tos-sync-iter',previousIter);
+      if(previousKey)await _llaveGuardar(SYNC_KEY_ID,previousKey); else await _llaveBorrar(SYNC_KEY_ID);
+      if(vigente()&&_acctKey)await persistVault();
+    }
+    return false;
+  }
+}
+function _syncRevisionDe(remoto){
+  return remoto?JSON.stringify([remoto.app,remoto.enc,remoto.ver,remoto.fecha,remoto.salt,remoto.iter,remoto.blob]):null;
+}
+async function _syncRecordar(remoto){
+  _syncRevision=_syncRevisionDe(remoto);
+  if(!await _llaveGuardar(SYNC_REV_ID,_syncRevision))return false;
+  return Store.set('tos-sync-last',remoto.fecha);
 }
 async function _syncSobre(){
   const key=await _syncKey(), si=_syncSaltIter();
@@ -7235,84 +7387,143 @@ async function _syncSobre(){
   const blob=await _encJSON(key,{app:'torrecillas-os',version:APP_VERSION,fecha,data:datos});
   return {app:'torrecillas-os',enc:'pbkdf2-aes-gcm',ver:1,version:APP_VERSION,fecha,salt:si.salt,iter:si.iter,blob};
 }
-async function _syncEscribir(sobre){
-  if(!_syncDirHandle)return false;
-  try{
-    if(await _syncDirHandle.queryPermission({mode:'readwrite'})!=='granted')return false;
-    const fh=await _syncDirHandle.getFileHandle(SYNC_FILE,{create:true});
-    const w=await fh.createWritable();
-    await w.write(JSON.stringify(sobre));
-    await w.close();
+async function _syncEscribir(sobre,revision,epoch,explicito){
+  const dir=_syncDirHandle;
+  let w;
+  const vigente=()=>_syncOn&&dir===_syncDirHandle&&epoch===_syncEpoch&&(!_syncPaused||explicito)&&!_guestMode&&(!hasAccount()||isVaultUnlocked());
+  const comprobar=async()=>{
+    const remoto=await _syncLeerRemoto(dir);
+    if(!vigente())return false;
+    if(_syncRevisionDe(remoto)!==revision){ _syncConflictoDialog(remoto); return false; }
     return true;
-  }catch(e){ return false; }
-}
-async function _syncLeerRemoto(){
-  if(!_syncDirHandle)return null;
+  };
   try{
-    if(await _syncDirHandle.queryPermission({mode:'read'})!=='granted')return null;
-    const fh=await _syncDirHandle.getFileHandle(SYNC_FILE,{create:false});
-    const f=await fh.getFile();
-    return JSON.parse(await f.text());
-  }catch(e){ return null; } // no existe todavía, o no se pudo leer: nada que traer
+    if(!dir||!vigente()||await dir.queryPermission({mode:'readwrite'})!=='granted')return false;
+    if(!await comprobar())return false;
+    const fh=await dir.getFileHandle(SYNC_FILE,{create:true});
+    w=await fh.createWritable();
+    await w.write(JSON.stringify(sobre));
+    if(!await comprobar()){ await w.abort(); return false; }
+    await w.close();
+    w=null;
+    return vigente();
+  }catch(e){ if(w)try{ await w.abort(); }catch(_e){_ignora(_e);} return false; }
+}
+async function _syncLeerRemoto(dir=_syncDirHandle){
+  if(!dir)throw new Error('syncdir');
+  if(await dir.queryPermission({mode:'read'})!=='granted')throw new Error('syncpermission');
+  let fh;
+  try{ fh=await dir.getFileHandle(SYNC_FILE,{create:false}); }
+  catch(e){ if(e.name==='NotFoundError')return null; throw e; }
+  const f=await fh.getFile();
+  if(f.size===0)return null;
+  const remoto=JSON.parse(await f.text());
+  if(!remoto||remoto.app!=='torrecillas-os'||remoto.enc!=='pbkdf2-aes-gcm'||typeof remoto.blob!=='string'||!remoto.salt||!remoto.fecha)throw new Error('syncformat');
+  return remoto;
 }
 // Único punto de "algo cambió", enganchado desde Store.set/Store.del. Coste cero con la sync
 // apagada: _syncOn es una bandera en memoria, no una lectura de Store en cada escritura.
 function _syncMarkDirty(k){
-  if(!_syncOn)return;
-  if(_guestMode)return;                              // invitado: caja efímera, nunca sincroniza
-  if(hasAccount()&&!isVaultUnlocked())return;         // cuenta bloqueada: sin datos reales que leer
-  if(k.indexOf('tos-sync')===0)return;                // contabilidad interna: no dispares otra sync
+  if(!_syncOn||_guestMode||(hasAccount()&&!isVaultUnlocked()))return;
+  if(k.indexOf('tos-sync')===0||BACKUP_NO_EXPORTAR.indexOf(k)>=0||SYNC_NO_SUBIR.indexOf(k)>=0)return;
+  _syncDirty++; _syncPending=true;
   clearTimeout(_syncTmr);
-  _syncTmr=setTimeout(_syncFlush,2500);
+  if(!_syncPaused)_syncTmr=setTimeout(()=>_syncFlush(),2500);
 }
-async function _syncFlush(){
-  if(_syncBusy||!_syncOn||!_syncDirHandle)return;
-  if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return;
+async function _syncFlush(aceptado){
+  const explicito=typeof aceptado==='string'||aceptado===null;
+  if(_syncBusy||!_syncOn||!_syncDirHandle||(_syncPaused&&!explicito))return false;
+  if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return false;
   _syncBusy=true;
+  clearTimeout(_syncTmr);
+  const epoch=_syncEpoch, dirty=_syncDirty;
+  let escrito=false;
   try{
+    const remoto=await _syncLeerRemoto();
+    if(epoch!==_syncEpoch||!_syncOn)return false;
+    const revision=_syncRevisionDe(remoto);
+    if(revision!==(explicito?aceptado:_syncRevision)){ _syncConflictoDialog(remoto); return false; }
     const sobre=await _syncSobre();
-    if(sobre&&await _syncEscribir(sobre))Store.set('tos-sync-last',sobre.fecha);
-  }catch(e){_ignora(e);}
-  finally{ _syncBusy=false; }
+    if(!sobre||!await _syncEscribir(sobre,revision,epoch,explicito))return false;
+    if(!await _syncRecordar(sobre)){ _syncPaused=true; return false; }
+    if(_acctKey&&!await persistVault()){ _syncPaused=true; return false; }
+    if(epoch!==_syncEpoch)return false;
+    escrito=true; _syncPaused=false; _syncPending=_syncDirty!==dirty;
+    return true;
+  }catch(e){_ignora(e); return false;}
+  finally{
+    _syncBusy=false;
+    if(epoch===_syncEpoch&&_syncOn&&!_syncPaused&&_syncPending&&(escrito||_syncDirty!==dirty))_syncTmr=setTimeout(()=>_syncFlush(),2500);
+  }
 }
 // Comprueba si el fichero remoto es más nuevo que la última vez que escribimos o trajimos algo.
 // manual=true (botón "Sincronizar ahora") salta el límite de "no martillear" al cambiar de pestaña.
 async function _syncCheckRemote(manual){
-  if(!_syncOn||!_syncOk()||!_syncDirHandle)return;
+  if(_syncBusy||!_syncOn||!_syncOk()||!_syncDirHandle)return;
   if(_guestMode||(hasAccount()&&!isVaultUnlocked()))return;
-  const ahora=Date.now();
+  const ahora=Date.now(), epoch=_syncEpoch;
   if(!manual&&ahora-_syncLastCheck<30000)return;
-  _syncLastCheck=ahora;
-  const remoto=await _syncLeerRemoto();
-  if(!remoto)return;
-  const propio=Store.get('tos-sync-last');
-  if(propio&&remoto.fecha<=propio)return; // ya es lo que escribimos nosotros, o más viejo
-  _syncConflictoDialog(remoto);
+  _syncLastCheck=ahora; _syncBusy=true;
+  try{
+    const remoto=await _syncLeerRemoto();
+    if(epoch!==_syncEpoch||!_syncOn)return;
+    if(_syncRevisionDe(remoto)!==_syncRevision||(manual&&_syncPaused))_syncConflictoDialog(remoto);
+  }catch(e){ _syncPaused=true; _ignora(e); }
+  finally{
+    _syncBusy=false;
+    if(_syncPending&&!_syncPaused&&epoch===_syncEpoch)_syncTmr=setTimeout(()=>_syncFlush(),2500);
+  }
 }
 function _syncConflictoDialog(remoto){
-  const local=Store.get('tos-sync-last');
+  _syncPaused=true; clearTimeout(_syncTmr);
+  if(_syncDialog)return;
+  const local=Store.get('tos-sync-last'), epoch=_syncEpoch;
   const fmt=(iso)=>iso?String(iso).slice(0,16).replace('T',' '):'—';
-  xpDialog(t('sync.conflict.t'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-guardar"></use></svg></div><div>'+
-    escHtml(t('sync.conflict.d',{remoto:fmt(remoto.fecha),local:fmt(local)}))+'</div>',[
-    {label:t('sync.conflict.remote'),primary:true,action:()=>_syncTraerRemoto(remoto)},
-    {label:t('sync.conflict.local'),action:()=>_syncFlush()},
-    {label:t('btn.cancel')}
-  ]);
+  const elegir=(fn)=>()=>{ _syncDialog=null; if(epoch===_syncEpoch)return fn(); };
+  const buttons=[];
+  if(remoto)buttons.push({label:t('sync.conflict.remote'),primary:true,action:elegir(()=>_syncTraerRemoto(remoto))});
+  buttons.push({label:t('sync.conflict.local'),action:elegir(()=>_syncFlush(_syncRevisionDe(remoto)))},{label:t('btn.cancel'),action:elegir(()=>{})});
+  _syncDialog=xpDialog(t('sync.conflict.t'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-guardar"></use></svg></div><div>'+
+    escHtml(t('sync.conflict.d',{remoto:fmt(remoto&&remoto.fecha),local:fmt(local)}))+'</div>',buttons);
+}
+async function _syncAplicar(plano,remoto){
+  if(!plano||!plano.data||typeof plano.data!=='object'||Array.isArray(plano.data)||_guestMode||(hasAccount()&&!_acctKey))return false;
+  const epoch=_syncEpoch;
+  _syncPaused=true; clearTimeout(_syncTmr);
+  try{
+    for(const k of Object.keys(plano.data)){
+      if(k.indexOf('tos-')===0&&BACKUP_NO_EXPORTAR.indexOf(k)<0&&SYNC_NO_SUBIR.indexOf(k)<0&&!Store.set(k,plano.data[k]))throw new Error('savefail');
+    }
+    if(!Store.set('tos-sync-on','1')||!Store.set('tos-sync-last',remoto.fecha))throw new Error('savefail');
+    if(_acctKey&&!await persistVault())return false;
+    if(epoch!==_syncEpoch||!await _syncRecordar(remoto))return false;
+    if(_acctKey&&!await persistVault())return false;
+    if(epoch!==_syncEpoch)return false;
+    _syncOn=true;
+    location.reload();
+    return true;
+  }catch(e){ xpDialog(t('sync.title'),'<div>'+escHtml(t('acct.savefail'))+'</div>'); return false; }
 }
 async function _syncTraerRemoto(remoto){
-  const key=await _syncKey();
-  if(!key)return;
+  if(_syncBusy)return false;
+  _syncPaused=true; _syncBusy=true; clearTimeout(_syncTmr);
+  const epoch=_syncEpoch;
   try{
+    const actual=await _syncLeerRemoto();
+    if(epoch!==_syncEpoch)return false;
+    if(_syncRevisionDe(actual)!==_syncRevisionDe(remoto)){ _syncConflictoDialog(actual); return false; }
+    const key=await _syncKey();
+    if(!key)return false;
     const plano=await _decJSON(key,remoto.blob);
-    if(!plano||!plano.data)return;
-    Object.keys(plano.data).forEach(k=>{ if(k.indexOf('tos-')===0&&BACKUP_NO_EXPORTAR.indexOf(k)<0)Store.set(k,plano.data[k]); });
-    Store.set('tos-sync-last',remoto.fecha);
-    try{location.reload();}catch(e){_ignora(e);}
-  }catch(e){ xpDialog(t('sync.title'),'<div>'+escHtml(t('sync.badkey'))+'</div>'); }
+    if(epoch!==_syncEpoch)return false;
+    return await _syncAplicar(plano,remoto);
+  }catch(e){ xpDialog(t('sync.title'),'<div>'+escHtml(t('sync.badkey'))+'</div>'); return false; }
+  finally{ _syncBusy=false; }
 }
 // Primer enlace con una carpeta que YA tiene una copia (otro dispositivo la enlazó antes):
 // pide la contraseña de sync, valida descifrando, y si cuadra ofrece traer esos datos.
 function _syncPedirClaveUnirse(remoto){
+  const epoch=_syncEpoch;
   uiSfx('dialog');
   const ov=document.createElement('div');
   ov.className='xp-dialog-ov';
@@ -7335,16 +7546,17 @@ function _syncPedirClaveUnirse(remoto){
   const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
   let go;
   const intentar=async()=>{
+    if(go.disabled||epoch!==_syncEpoch)return;
     if(!pw.value){ err.textContent=t('bk.imp.bad'); err.classList.add('on'); return; }
     err.classList.remove('on'); go.disabled=true; go.classList.add('busy');
     try{
       const key=await _deriveKey(pw.value,_b64dec(remoto.salt),remoto.iter||200000);
       const plano=await _decJSON(key,remoto.blob); // contraseña mala = esto lanza
-      _syncOwnKey=key;
-      await _llaveGuardar(SYNC_KEY_ID,key);
-      Store.set('tos-sync-salt',remoto.salt); Store.set('tos-sync-iter',String(remoto.iter||200000));
+      if(epoch!==_syncEpoch)return;
+      if(!await _syncGuardarIdentidad(key,remoto.salt,remoto.iter||200000))throw new Error('savefail');
+      if(epoch!==_syncEpoch)return;
       ov.remove();
-      _syncImportarConfirmando(plano,remoto.fecha);
+      _syncImportarConfirmando(plano,remoto);
     }catch(e){
       go.disabled=false; go.classList.remove('busy');
       err.textContent=t('bk.imp.bad'); err.classList.add('on');
@@ -7358,12 +7570,15 @@ function _syncPedirClaveUnirse(remoto){
   document.body.appendChild(ov);
   setTimeout(()=>{ try{ pw.focus(); }catch(e){_ignora(e);} },30);
 }
-function _syncImportarConfirmando(plano,fecha){
+function _syncImportarConfirmando(plano,remoto){
   if(!plano||!plano.data)return;
-  const aplicar=()=>{
-    Object.keys(plano.data).forEach(k=>{ if(k.indexOf('tos-')===0&&BACKUP_NO_EXPORTAR.indexOf(k)<0)Store.set(k,plano.data[k]); });
-    _syncOn=true; Store.set('tos-sync-on','1'); Store.set('tos-sync-last',fecha);
-    try{location.reload();}catch(e){_ignora(e);}
+  const fecha=remoto.fecha, epoch=_syncEpoch;
+  _syncPaused=true; clearTimeout(_syncTmr);
+  const aplicar=async()=>{
+    if(epoch!==_syncEpoch||_syncBusy)return false;
+    _syncBusy=true;
+    try{ return await _syncAplicar(plano,remoto); }
+    finally{ _syncBusy=false; }
   };
   const n=Object.keys(plano.data).length;
   const resumen=osBackupGrupos(plano.data).map(g=>'<div class="bkx-row"><span>'+g.ic+' '+escHtml(t('bk.cat.'+g.id))+'</span><b>'+g.n+'</b></div>').join('');
@@ -7377,6 +7592,7 @@ function _syncImportarConfirmando(plano,fecha){
 // Primera vez que se enlaza una carpeta VACÍA sin cuenta local: hace falta una contraseña
 // de sync propia (con cuenta no hace falta pedir nada, se reutiliza la de la cuenta).
 function _syncPedirClaveNueva(){
+  const epoch=_syncEpoch;
   uiSfx('dialog');
   const ov=document.createElement('div');
   ov.className='xp-dialog-ov';
@@ -7399,17 +7615,23 @@ function _syncPedirClaveNueva(){
   const mk=(label,cls,fn)=>{ const el=document.createElement('button'); el.type='button'; el.textContent=label; if(cls)el.className=cls; el.onclick=fn; btns.appendChild(el); return el; };
   let go;
   const crear=async()=>{
+    if(go.disabled||epoch!==_syncEpoch)return;
     if(!pw.value||pw.value.length<4){ err.textContent=t('sync.new.short'); err.classList.add('on'); return; }
     err.classList.remove('on'); go.disabled=true; go.classList.add('busy');
-    const salt=window.crypto.getRandomValues(new Uint8Array(16)), iter=200000;
-    const key=await _deriveKey(pw.value,salt,iter);
-    _syncOwnKey=key;
-    await _llaveGuardar(SYNC_KEY_ID,key);
-    Store.set('tos-sync-salt',_b64enc(salt)); Store.set('tos-sync-iter',String(iter));
-    _syncOn=true; Store.set('tos-sync-on','1');
-    ov.remove();
-    await _syncFlush();
-    announce(t('sync.linked'));
+    try{
+      const salt=window.crypto.getRandomValues(new Uint8Array(16)), iter=200000;
+      const key=await _deriveKey(pw.value,salt,iter);
+      if(epoch!==_syncEpoch)return;
+      if(!await _syncGuardarIdentidad(key,_b64enc(salt),iter))throw new Error('savefail');
+      if(epoch!==_syncEpoch)return;
+      if(!Store.set('tos-sync-on','1'))throw new Error('savefail');
+      _syncOn=true; _syncPaused=false;
+      ov.remove();
+      if(await _syncFlush())announce(t('sync.linked'));
+    }catch(e){
+      go.disabled=false; go.classList.remove('busy');
+      err.textContent=t('acct.savefail'); err.classList.add('on');
+    }
   };
   go=mk(t('sync.new.go'),'primary bkx-go',crear);
   mk(t('btn.cancel'),'',()=>{ov.remove();_syncOlvidarCarpeta();});
@@ -7428,25 +7650,36 @@ async function _syncElegirCarpeta(){
   catch(e){ return; } // cancelado por el usuario
   let perm; try{ perm=await handle.requestPermission({mode:'readwrite'}); }catch(e){ perm='denied'; } // hay gesto: aquí sí vale pedirlo
   if(perm!=='granted')return;
-  _syncDirHandle=handle;
-  await _llaveGuardar(SYNC_DIR_ID,handle);
-  const remoto=await _syncLeerRemoto();
-  if(remoto){ _syncPedirClaveUnirse(remoto); return; }
-  if(hasAccount()){
-    if(!isVaultUnlocked())return; // no debería poder llegar aquí sin sesión abierta
-    _syncOn=true; Store.set('tos-sync-on','1');
-    await _syncFlush();
-    announce(t('sync.linked'));
-  }else{
-    _syncPedirClaveNueva();
-  }
+  if(_syncBusy)return;
+  _syncEpoch++; _syncOn=false; _syncPaused=true; clearTimeout(_syncTmr);
+  if(_syncDialog){ _syncDialog.remove(); _syncDialog=null; }
+  _syncDirHandle=handle; _syncOwnKey=null; _syncRevision=undefined; _syncPending=false;
+  try{
+    if(!await _llaveGuardar(SYNC_DIR_ID,handle))throw new Error('savefail');
+    const remoto=await _syncLeerRemoto();
+    if(remoto){ _syncPedirClaveUnirse(remoto); return; }
+    _syncRevision=null;
+    if(hasAccount()){
+      if(!isVaultUnlocked())return;
+      const info=accountInfo();
+      if(!await _syncGuardarIdentidad(_acctKey,info.salt,info.iter||200000)||!Store.set('tos-sync-on','1')||!await persistVault())throw new Error('savefail');
+      _syncOn=true; _syncPaused=false;
+      if(await _syncFlush())announce(t('sync.linked'));
+    }else{
+      _syncPedirClaveNueva();
+    }
+  }catch(e){ xpDialog(t('sync.title'),'<div>'+escHtml(t('acct.savefail'))+'</div>'); }
 }
 async function _syncOlvidarCarpeta(){
-  _syncOn=false; _syncDirHandle=null; _syncOwnKey=null;
+  _syncEpoch++; _syncOn=false; _syncPaused=true; clearTimeout(_syncTmr);
+  _syncDirHandle=null; _syncOwnKey=null; _syncRevision=undefined; _syncPending=false; _syncLastCheck=0;
+  if(_syncDialog){ _syncDialog.remove(); _syncDialog=null; }
   Store.set('tos-sync-on','0');
-  await _llaveBorrar(SYNC_DIR_ID); await _llaveBorrar(SYNC_KEY_ID);
   Store.del('tos-sync-salt'); Store.del('tos-sync-iter'); Store.del('tos-sync-last');
+  await _llaveBorrar(SYNC_DIR_ID); await _llaveBorrar(SYNC_KEY_ID); await _llaveBorrar(SYNC_REV_ID);
+  if(_acctKey&&!await persistVault())return false;
   announce(t('sync.unlinked'));
+  return true;
 }
 // Se llama una vez por sesión desde arrancaServicios(), cuando ya se sabe si hay invitado o
 // vault desbloqueado — antes de eso Store.get('tos-sync-on') podría estar leyendo una caja
@@ -7459,10 +7692,19 @@ async function _syncInit(){
   if(Store.get('tos-sync-on')!=='1')return;
   const handle=await _llaveLeer(SYNC_DIR_ID);
   if(!handle){ Store.set('tos-sync-on','0'); return; } // "activo" pero sin carpeta: estado roto, se apaga solo
-  _syncDirHandle=handle;
-  _syncOn=true;
-  if(!hasAccount())_syncOwnKey=await _llaveLeer(SYNC_KEY_ID);
-  _syncCheckRemote(true);
+  _syncDirHandle=handle; _syncPaused=true;
+  try{
+    _syncOwnKey=await _llaveLeer(SYNC_KEY_ID);
+    _syncRevision=await _llaveLeer(SYNC_REV_ID);
+    if(!_syncRevision)_syncRevision=undefined;
+    if(!_syncSaltIter()){
+      const info=accountInfo(), remoto=await _syncLeerRemoto();
+      if(!info||!_acctKey||(remoto&&(remoto.salt!==info.salt||(remoto.iter||200000)!==(info.iter||200000)))||!await _syncGuardarIdentidad(_acctKey,info.salt,info.iter||200000))return;
+    }
+    if(!await _syncKey())return;
+    _syncOn=true; _syncPaused=false;
+    await _syncCheckRemote(true);
+  }catch(e){ _syncPaused=true; _ignora(e); }
 }
 // ---------- DESBLOQUEO RÁPIDO: PIN Y HUELLA ----------
 // Escribir una contraseña larga cada vez que abres el móvil empuja a activar el login
@@ -7499,10 +7741,10 @@ async function _abreConLlaveLocal(){
   const key=await _llaveLeer(PIN_ID);
   if(!key)return false;
   const blob=localStorage.getItem('tos-vault');
-  if(blob==null){ _acctKey=key; _vault={}; return true; }
+  if(blob==null){ _vaultBeginSession(key,{},true); return true; }
   try{
     const v=await _decJSON(key,blob);
-    _acctKey=key; _vault=(v&&typeof v==='object')?v:{};
+    _vaultBeginSession(key,(v&&typeof v==='object')?v:{});
     return true;
   }catch(e){
     await pinQuitar(); await bioQuitar(); // la llave ya no abre la caja: fuera los cerrojos
@@ -7605,13 +7847,33 @@ async function bioIntenta(){
 }
 // Arranque rápido: sin animación de inicio ni pantalla de bienvenida
 function arranqueRapido(){ try{ return localStorage.getItem('tos-fastboot')==='1'; }catch(e){ return false; } }
-function lockAccount(){ _acctKey=null; _vault=null; clearTimeout(_vaultTmr); }
-async function removeAccount(){ // descifra: vuelca la caja a localStorage en claro y borra la cuenta
+function lockAccount(){ _vaultBeginSession(null,null); }
+async function removeAccount(){
+  if(!_vault||!_acctKey||_guestMode||!hasAccount())return false;
+  const vault=_vault, key=_acctKey, previous=new Map(), written=[];
+  try{
+    if(Store.get('tos-sync-on')==='1'&&!_syncSaltIter()){
+      const info=accountInfo();
+      if(!await _syncGuardarIdentidad(key,info.salt,info.iter||200000))return false;
+    }
+    if(!await persistVault()||vault!==_vault||key!==_acctKey)return false;
+    const keys=Object.keys(vault).filter(k=>k.indexOf('tos-')===0&&!VAULT_PLAINTEXT.has(k));
+    for(const k of keys)previous.set(k,localStorage.getItem(k));
+    previous.set('tos-account',localStorage.getItem('tos-account'));
+    previous.set('tos-vault',localStorage.getItem('tos-vault'));
+    for(const k of keys){ localStorage.setItem(k,vault[k]); written.push(k); }
+    localStorage.removeItem('tos-account'); written.push('tos-account');
+    localStorage.removeItem('tos-vault'); written.push('tos-vault');
+    lockAccount();
+  }catch(e){
+    for(const k of written.reverse()){
+      try{ const value=previous.get(k); if(value===null)localStorage.removeItem(k); else localStorage.setItem(k,value); }catch(_e){_ignora(_e);}
+    }
+    return false;
+  }
   try{ await autoLoginBorrar(); }catch(e){_ignora(e);}
-  try{ await pinQuitar(); await bioQuitar(); }catch(e){_ignora(e);} // y los cerrojos de este dispositivo
-  if(_vault){ Object.keys(_vault).forEach(k=>{ try{ localStorage.setItem(k,_vault[k]); }catch(e){_ignora(e);} }); }
-  try{ localStorage.removeItem('tos-vault'); localStorage.removeItem('tos-account'); }catch(e){_ignora(e);}
-  lockAccount();
+  try{ await pinQuitar(); await bioQuitar(); }catch(e){_ignora(e);}
+  return true;
 }
 
 const Store = {
@@ -8376,6 +8638,13 @@ function renderCalendar(){
 // ── Atajos de teclado y accesibilidad del escritorio ──
 // Ctrl+W cierra la ventana activa (cuando el navegador lo permite). Los juegos
 // gestionan sus propias teclas con su gating por ventana activa, así que no interfiere.
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&e.shiftKey&&!e.altKey&&!e.metaKey&&e.key.toLowerCase()==='f'&&!e.repeat){
+    const desk=document.getElementById('desktop');
+    if(!desk||desk.style.display!=='block'||document.querySelector('.xp-dialog-ov,#cmdk-ov'))return;
+    e.preventDefault(); e.stopImmediatePropagation(); openContentSearch();
+  }
+},true);
 document.addEventListener('keydown',(e)=>{
   if((e.ctrlKey||e.metaKey)&&(e.key==='w'||e.key==='W')){
     if(activeWindowId&&openWindows[activeWindowId]){
@@ -8677,7 +8946,7 @@ function _pinAContrasena(){
 // Sesión de invitado: caja EFÍMERA en memoria (sin clave), no se persiste nada y
 // NO se toca la caja cifrada del propietario. Al recargar, desaparece todo.
 function enterGuest(){
-  _acctKey=null; _vault={}; _guestMode=true;
+  _vaultBeginSession(null,{}); _guestMode=true;
   const scr=document.getElementById('login-screen'); if(scr)scr.hidden=true;
   _showWelcomeThenDesktop();
 }
@@ -8865,7 +9134,7 @@ async function logout(){
   try{ location.reload(); }catch(e){_ignora(e);}
 }
 function confirmRemoveAccount(){
-  xpConfirm(t('acct.title'),t('acct.removeconfirm'),async()=>{ await removeAccount(); try{ notify({icon:ico('candado'),title:t('acct.title'),body:t('acct.removed')}); }catch(e){_ignora(e);} try{ location.reload(); }catch(e){_ignora(e);} },t('acct.remove'));
+  xpConfirm(t('acct.title'),t('acct.removeconfirm'),async()=>{ if(!await removeAccount()){ xpDialog(t('acct.title'),'<div>'+escHtml(t('acct.savefail'))+'</div>'); return; } try{ notify({icon:ico('candado'),title:t('acct.title'),body:t('acct.removed')}); }catch(e){_ignora(e);} try{ location.reload(); }catch(e){_ignora(e);} },t('acct.remove'));
 }
 function openChangePassword(){
   if(!hasAccount()||!isVaultUnlocked()){ xpDialog(t('acct.title'),'<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-candado"></use></svg></div><div>'+t('acct.mustlogin')+'</div>'); return; }
@@ -10103,6 +10372,7 @@ function showBSOD(){
 // ========== SESIÓN: REABRIR LAS VENTANAS AL VOLVER ==========
 // Guarda qué ventanas hay abiertas (y dónde) y las restaura tras el arranque.
 const SESSION_OPENERS={
+  systemhealth:()=>openSystemHealth(),contentsearch:()=>openContentSearch(),
   proyectos:()=>openProyectos(),juegazos:()=>openJuegazos(),garmin:()=>openGarmin(),juegos:()=>openGamesFolder(),
   calc:()=>openCalculator(),notas:()=>openNotepad(),reloj:()=>openClock(),visor:()=>openImageViewer(),
   terminal:()=>openTerminal(),paint:()=>openPaint(),ajustes:()=>openSettings(),about:()=>openAbout(),
@@ -11855,8 +12125,9 @@ function openRecorder(){
     const wctx=wave.getContext&&wave.getContext('2d');
     const st=document.getElementById('rec-status');
     const bRec=document.getElementById('rec-rec'),bStop=document.getElementById('rec-stop'),bPlay=document.getElementById('rec-play'),bDl=document.getElementById('rec-dl');
-    let rec=null,chunks=[],stream=null,raf=null,anal=null,blobUrl='',au=null,t0=0;
+    let rec=null,stream=null,raf=null,anal=null,srcNode=null,blobUrl='',au=null,t0=0,closed=false,starting=false,reader=null;
     const drawWave=()=>{
+      if(closed||!rec||rec.state!=='recording')return;
       if(wctx){
         const W=wave.width=wave.clientWidth||300,H=wave.height=wave.clientHeight||58;
         wctx.fillStyle='#0a120a';wctx.fillRect(0,0,W,H);
@@ -11881,37 +12152,62 @@ function openRecorder(){
       }
       raf=requestAnimationFrame(drawWave);
     };
-    const stopAllRec=()=>{
-      if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){_ignora(e);}}
-      if(stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){_ignora(e);}stream=null;}
-      if(raf){cancelAnimationFrame(raf);raf=null;}
-      anal=null;
+    const stopAllRec=(discard=false)=>{
+      const current=rec;
+      if(discard&&current){
+        current.ondataavailable=current.onstop=current.onerror=null;
+        rec=null;
+      }
+      if(current&&current.state!=='inactive'){
+        try{current.stop();}catch(e){
+          current.ondataavailable=current.onstop=current.onerror=null;
+          rec=null;
+          if(!closed)st.textContent='No se pudo finalizar la grabación. Puedes reintentarlo.';
+        }
+      }
+      if(stream){stream.getTracks().forEach(t=>{try{t.stop();}catch(e){_ignora(e);}});stream=null;}
+      if(raf!==null){cancelAnimationFrame(raf);raf=null;}
+      if(srcNode){try{srcNode.disconnect();}catch(e){_ignora(e);}srcNode=null;}
+      if(anal){try{anal.disconnect();}catch(e){_ignora(e);}anal=null;}
     };
     bRec.onclick=async()=>{
+      if(closed||starting||rec)return;
       if(typeof MediaRecorder==='undefined'||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
         xpDialog('Grabadora','<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-micro"></use></svg></div><div>No hay micr&oacute;fono disponible (o el navegador no deja).<br><span class="dlg-sub">En 2004 tampoco ten&iacute;amos, as&iacute; que empate.</span></div>');
         return;
       }
+      starting=true;bRec.disabled=true;
       try{
-        stream=await navigator.mediaDevices.getUserMedia({audio:true});
-        chunks=[];
-        rec=new MediaRecorder(stream);
-        rec.ondataavailable=(e)=>{if(e.data&&e.data.size)chunks.push(e.data);};
-        rec.onstop=()=>{
-          const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});
+        const acquired=await navigator.mediaDevices.getUserMedia({audio:true});
+        if(closed){acquired.getTracks().forEach(t=>{try{t.stop();}catch(e){_ignora(e);}});return;}
+        stream=acquired;
+        if(au){try{au.pause();au.removeAttribute('src');au.load();}catch(e){_ignora(e);}}
+        const chunks=[],current=new MediaRecorder(stream);
+        rec=current;
+        current.ondataavailable=(e)=>{if(!closed&&rec===current&&e.data&&e.data.size)chunks.push(e.data);};
+        current.onerror=()=>{
+          if(closed||rec!==current)return;
+          stopAllRec(true);
+          bRec.disabled=false;bStop.disabled=true;bPlay.disabled=!blobUrl;
+          st.textContent='Error al grabar. Puedes reintentarlo.';
+        };
+        current.onstop=()=>{
+          if(closed||rec!==current)return;
+          stopAllRec(true);
+          const blob=new Blob(chunks,{type:current.mimeType||'audio/webm'});
           if(blobUrl){try{URL.revokeObjectURL(blobUrl);}catch(e){_ignora(e);}}
           try{blobUrl=URL.createObjectURL(blob);}catch(e){blobUrl='';}
           lastBlob=blob;
-          bDl.href=blobUrl;bDl.style.display='';
-          const bFs=document.getElementById('rec-savefs');if(bFs)bFs.style.display='';
-          bPlay.disabled=false;
+          bDl.href=blobUrl;bDl.style.display=blobUrl?'':'none';
+          if(bFs)bFs.style.display='';
+          bRec.disabled=false;bStop.disabled=true;bPlay.disabled=!blobUrl;
           st.textContent='Grabado ('+Math.round((Date.now()-t0)/1000)+'s). Dale al play o guárdalo.';
         };
         try{
           const ctx=getAudioCtx();
           if(ctx.createMediaStreamSource&&ctx.createAnalyser){
             anal=ctx.createAnalyser();anal.fftSize=512;
-            ctx.createMediaStreamSource(stream).connect(anal);
+            srcNode=ctx.createMediaStreamSource(stream);srcNode.connect(anal);
           }
         }catch(e){_ignora(e);}
         rec.start();
@@ -11920,27 +12216,40 @@ function openRecorder(){
         bRec.disabled=true;bStop.disabled=false;bPlay.disabled=true;
         drawWave();
       }catch(e){
+        stopAllRec(true);
+        if(closed)return;
+        bStop.disabled=true;bPlay.disabled=!blobUrl;
         xpDialog('Grabadora','<div class="dlg-icon"><svg class="ico" aria-hidden="true"><use href="#i-error"></use></svg></div><div>Sin permiso para el micr&oacute;fono.<br><span class="dlg-sub">Respetable. Aqu&iacute; nadie graba a nadie.</span></div>');
+      }finally{
+        starting=false;
+        if(!closed)bRec.disabled=!!rec;
       }
     };
     let lastBlob=null;
     const bFs=document.getElementById('rec-savefs');
     if(bFs)bFs.onclick=()=>{
-      if(!lastBlob)return;
-      const fr=new FileReader();
-      fr.onload=()=>fsSaveDialog('audio','Grabación',fr.result,null);
-      fr.readAsDataURL(lastBlob);
+      if(closed||!lastBlob||reader)return;
+      const fr=reader=new FileReader();
+      fr.onload=()=>{reader=null;if(!closed)fsSaveDialog('audio','Grabación',fr.result,null);};
+      fr.onerror=fr.onabort=()=>{reader=null;};
+      try{fr.readAsDataURL(lastBlob);}catch(e){reader=null;_ignora(e);}
     };
-    bStop.onclick=()=>{stopAllRec();bRec.disabled=false;bStop.disabled=true;};
+    bStop.onclick=()=>{
+      if(closed||starting||!rec||bStop.disabled)return;
+      stopAllRec();bRec.disabled=!!rec;bStop.disabled=true;bPlay.disabled=!blobUrl;
+    };
     bPlay.onclick=()=>{
-      if(!blobUrl)return;
+      if(closed||!blobUrl||rec)return;
       if(!au)au=document.createElement('audio');
       try{au.src=blobUrl;au.volume=masterVolume;const p=au.play();if(p&&p.catch)p.catch(()=>{});}catch(e){_ignora(e);}
     };
     (win._cleanups=win._cleanups||[]).push(()=>{
-      stopAllRec();
-      if(au){try{au.pause();}catch(e){_ignora(e);}}
-      if(blobUrl){try{URL.revokeObjectURL(blobUrl);}catch(e){_ignora(e);}}
+      closed=true;
+      stopAllRec(true);
+      if(reader){reader.onload=reader.onerror=reader.onabort=null;try{reader.abort();}catch(e){_ignora(e);}reader=null;}
+      if(au){try{au.pause();au.removeAttribute('src');au.load();}catch(e){_ignora(e);}au=null;}
+      if(blobUrl){try{URL.revokeObjectURL(blobUrl);}catch(e){_ignora(e);}blobUrl='';}
+      bDl.removeAttribute('href');lastBlob=null;
     });
   }});
 }
@@ -11983,7 +12292,22 @@ function openPhotoBooth(){
     const ctx=canvas.getContext&&canvas.getContext('2d');
     const msg=document.getElementById('booth-msg'),countEl=document.getElementById('booth-count');
     const bShot=document.getElementById('booth-shot'),bSave=document.getElementById('booth-savefs'),bDl=document.getElementById('booth-dl'),bRetry=document.getElementById('booth-retry');
-    let stream=null,raf=null,frozen=false,shotData=null;
+    let stream=null,raf=null,frozen=false,shotData=null,closed=false,starting=false,ready=false,tick=null,toneTimer=null;
+    const stopBooth=()=>{
+      ready=false;
+      if(raf!==null){cancelAnimationFrame(raf);raf=null;}
+      if(tick!==null){clearInterval(tick);tick=null;}
+      if(toneTimer!==null){clearTimeout(toneTimer);toneTimer=null;}
+      if(stream){stream.getTracks().forEach(t=>{try{t.stop();}catch(e){_ignora(e);}});stream=null;}
+      try{video.pause();video.srcObject=null;}catch(e){_ignora(e);}
+      countEl.classList.remove('show');bShot.disabled=true;
+    };
+    const failBooth=()=>{
+      stopBooth();
+      if(closed)return;
+      msg.textContent='No se pudo iniciar la cámara. Comprueba el permiso y reinténtalo.';
+      msg.style.display='';bRetry.style.display='';
+    };
     _boothFilter='normal';
 
     // Aplica el filtro dibujando el vídeo en el canvas (todo en cliente, sin librerías)
@@ -11997,42 +12321,57 @@ function openPhotoBooth(){
       ctx.restore();
       applyBoothFilter(ctx,W,H,_boothFilter);
     };
-    const loop=()=>{ if(!frozen)paint(); raf=requestAnimationFrame(loop); };
+    const loop=()=>{
+      if(closed||!ready)return;
+      try{if(!frozen)paint();raf=requestAnimationFrame(loop);}catch(e){failBooth();}
+    };
 
-    (async()=>{
+    const startBooth=async()=>{
+      if(closed||starting||stream)return;
+      bShot.disabled=true;
       if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
         msg.textContent='Este navegador no da acceso a la cámara (en 2004 tampoco, tranqui).';
-        bShot.disabled=true; return;
+        return;
       }
+      starting=true;bRetry.disabled=true;
       try{
-        stream=await navigator.mediaDevices.getUserMedia({video:{width:320,height:240,facingMode:'user'}});
+        const acquired=await navigator.mediaDevices.getUserMedia({video:{width:320,height:240,facingMode:'user'}});
+        if(closed){acquired.getTracks().forEach(t=>{try{t.stop();}catch(e){_ignora(e);}});return;}
+        stream=acquired;
         video.srcObject=stream;
-        await video.play().catch(()=>{});
+        await video.play();
+        if(closed)return;
+        ready=true;bShot.disabled=false;bRetry.style.display='none';
         msg.style.display='none';
         loop();
       }catch(e){
-        msg.textContent='Sin permiso para la cámara. Respetable: aquí nadie te graba.';
-        bShot.disabled=true;
+        failBooth();
+      }finally{
+        starting=false;
+        if(!closed)bRetry.disabled=false;
       }
-    })();
+    };
+    startBooth();
 
     win.querySelectorAll('.booth-fx').forEach(b=>{
       b.onclick=()=>{
+        if(closed)return;
         _boothFilter=b.dataset.fx;
         win.querySelectorAll('.booth-fx').forEach(x=>x.classList.toggle('active',x===b));
         if(frozen&&shotData){ // re-aplicar filtro sobre la foto congelada
           const img=new Image();
-          img.onload=()=>{ ctx.drawImage(img,0,0,canvas.width,canvas.height); };
+          img.onload=()=>{ if(!closed&&frozen&&shotData===img.src)ctx.drawImage(img,0,0,canvas.width,canvas.height); };
           img.src=shotData;
         }
       };
     });
 
     const capturar=()=>{
+      if(closed||!ready)return;
       frozen=true;
       paint(); // último frame con filtro ya aplicado
       shotData=canvas.toDataURL('image/png');
-      try{playTone(880,0.05,'square',0.4);setTimeout(()=>playTone(1200,0.08,'square',0.3),60);}catch(e){_ignora(e);}
+      try{playTone(880,0.05,'square',0.4);toneTimer=setTimeout(()=>{toneTimer=null;if(!closed)playTone(1200,0.08,'square',0.3);},60);}catch(e){_ignora(e);}
       bShot.style.display='none';
       bSave.style.display='';bDl.style.display='';bRetry.style.display='';
       // OLE: una vez hecha la foto, el canvas se puede arrastrar a otras apps
@@ -12040,30 +12379,36 @@ function openPhotoBooth(){
       announce('Foto hecha');
     };
     bShot.onclick=()=>{
-      if(frozen)return;
+      if(closed||!ready||frozen||tick!==null||!video.videoWidth)return;
       let n=3;
       bShot.disabled=true;
       countEl.textContent=n;countEl.classList.add('show');
       try{playTone(660,0.1,'sine',0.3);}catch(e){_ignora(e);}
-      const tick=setInterval(()=>{
+      tick=setInterval(()=>{
+        if(closed||!ready||tick===null)return;
         n--;
         if(n>0){ countEl.textContent=n; try{playTone(660,0.1,'sine',0.3);}catch(e){_ignora(e);} }
-        else{ clearInterval(tick); countEl.classList.remove('show'); capturar(); bShot.disabled=false; }
+        else{
+          clearInterval(tick);tick=null;countEl.classList.remove('show');
+          try{capturar();bShot.disabled=false;}catch(e){failBooth();}
+        }
       },1000);
     };
     bRetry.onclick=()=>{
+      if(closed||starting)return;
+      if(tick!==null){clearInterval(tick);tick=null;countEl.classList.remove('show');bShot.disabled=!ready;return;}
       frozen=false;shotData=null;
       bShot.style.display='';bSave.style.display='none';bDl.style.display='none';bRetry.style.display='none';
+      if(!ready)startBooth();
     };
-    bSave.onclick=()=>{ if(shotData)fsSaveDialog('png','Foto',shotData,null); };
+    bSave.onclick=()=>{ if(!closed&&shotData)fsSaveDialog('png','Foto',shotData,null); };
     bDl.onclick=()=>{
-      if(!shotData)return;
+      if(closed||!shotData)return;
       osDescarga('photobooth-'+Date.now()+'.png',shotData);
     };
 
     (win._cleanups=win._cleanups||[]).push(()=>{
-      if(raf)cancelAnimationFrame(raf);
-      if(stream){try{stream.getTracks().forEach(t=>t.stop());}catch(e){_ignora(e);}}
+      closed=true;stopBooth();shotData=null;
     });
   }});
 }
@@ -13529,9 +13874,10 @@ function openCommandPalette(){
     list.innerHTML=cur.length?cur.map((m,i)=>`<button type="button" class="cmdk-item${i===0?' sel':''}" data-i="${i}"><span class="cmdk-ic">${m.icon}</span><span class="cmdk-l">${escHtml(m.label)}</span><span class="cmdk-h">${escHtml(m.hint)}</span></button>`).join(''):'<div class="cmdk-none">'+escHtml(t('cmdk.none'))+'</div>';
     list.querySelectorAll('.cmdk-item').forEach(b=>{ b.onmousemove=()=>{ sel=+b.dataset.i; draw(); }; b.onclick=()=>run(+b.dataset.i); });
   };
-  const close=()=>ov.remove();
+  const close=()=>{ clearTimeout(searchTimer); ov.remove(); };
   const run=(i)=>{ const m=cur[i]; close(); if(m&&m.run)try{ m.run(); }catch(e){_ignora(e);} };
-  input.oninput=render;
+  let searchTimer=null;
+  input.oninput=()=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>{ if(ov.isConnected)render(); },180); };
   input.onkeydown=(e)=>{
     if(e.key==='ArrowDown'){ e.preventDefault(); sel=Math.min(cur.length-1,sel+1); draw(); }
     else if(e.key==='ArrowUp'){ e.preventDefault(); sel=Math.max(0,sel-1); draw(); }
@@ -13578,6 +13924,7 @@ function openControlPanel(){
     {ic:'&#128190;',key:'cpl.backup',run:()=>osDialogoExportar()},
     {ic:'&#127899;&#65039;',key:'cpl.gadgets',run:()=>openGadgetGallery()},
     {ic:'&#128200;',key:'cpl.tasks',run:()=>openTaskManager()},
+    {ic:ico('taskmgr'),key:'health.title',run:()=>openSystemHealth()},
     {ic:'&#128269;',key:'cpl.magnifier',run:()=>toggleMagnifier()},
     {ic:'&#10067;',key:'cpl.help',run:()=>openHelp()}
   ];
@@ -15809,7 +16156,14 @@ function openTareas(){
     render();
     setTimeout(()=>{ try{ if(window.innerWidth>600)inp.focus(); }catch(e){_ignora(e);} },60);
     _tareasHook={add:anade,all:()=>todas,reload:()=>{ todas=tkAll(); render(); },view:(v)=>{ vista=v; win.querySelectorAll('.tk-v').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); render(); },
-      toggle:(tid)=>{ const b=body.querySelector('[data-tog="'+tid+'"]'); if(b)b.click(); }, open:(tid)=>{ abierta=tid; render(); }, render};
+      toggle:(tid)=>{ const b=body.querySelector('[data-tog="'+tid+'"]'); if(b)b.click(); }, open:(tid)=>{ abierta=tid; render(); },
+      reveal:(tid)=>{
+        const x=todas.find(y=>y.id===tid); if(!x)return;
+        vista=x.done?'hechas':'todas'; filtroLista=''; abierta=tid;
+        pintaListas(); win.querySelectorAll('.tk-v').forEach(b=>b.classList.toggle('on',b.dataset.v===vista)); render();
+        const b=Array.from(body.querySelectorAll('[data-open]')).find(el=>el.dataset.open===tid);
+        if(b){ b.scrollIntoView({block:'nearest'}); b.focus(); }
+      }, render};
     const mio=_tareasHook;
     (win._cleanups=win._cleanups||[]).push(()=>{ if(_tareasHook===mio)_tareasHook=null; });
   }});
@@ -24712,6 +25066,215 @@ function _searchIndexCached(){
 // `contenido:true` que permite distinguirlos.
 const BUSCA_TOPE_FUENTE=4; // por fuente, para que ninguna se coma la lista entera
 function _bcCorta(s,n){ s=String(s==null?'':s).replace(/\s+/g,' ').trim(); n=n||52; return s.length>n?s.slice(0,n)+'…':s; }
+function osBuscaTextos(q,tope,tipo,onError){
+  const nq=_searchNorm(String(q||'').trim()), out=[];
+  if(nq.length<2||(_guestMode===false&&hasAccount()&&!isVaultUnlocked()))return out;
+  const limit=Math.min(50,Math.max(1,tope||50));
+  const str=v=>typeof v==='string'?v:'';
+  const fuente=(kind,key,fn)=>{
+    if(tipo&&tipo!==kind||out.length>=limit)return;
+    try{
+      const raw=_vault!==null?Store.get(key):localStorage.getItem(key), arr=raw?JSON.parse(raw):[];
+      if(!Array.isArray(arr))throw new Error();
+      for(const item of arr){
+        if(out.length>=limit)break;
+        try{ if(item&&typeof item==='object')fn(item); }catch(e){ if(onError)onError(); }
+      }
+    }catch(e){ if(onError)onError(); }
+  };
+  const add=(kind,id,title,body,icon,hint)=>{
+    if(typeof id!=='string')return;
+    const text=(str(title)+'\n'+str(body)).replace(/\s+/g,' ').trim(), norm=_searchNorm(text), pos=norm.indexOf(nq);
+    if(pos<0)return;
+    let start=0, count=0;
+    for(const c of text){ if(count>=Math.max(0,pos-45))break; count+=_searchNorm(c).length; start+=c.length; }
+    const snippet=(start?'…':'')+text.slice(start,start+180)+(text.length>start+180?'…':'');
+    out.push({kind,id,icon,label:_bcCorta(title||t('nt.untitled'),90),hint,snippet,contenido:true,run:()=>osAbreResultado(kind,id)});
+  };
+  fuente('notes','tos-notes',n=>add('notes',n.id,str(n.title),str(n.body),ico('notas'),t('nt.title')));
+  fuente('tasks','tos-tareas',x=>add('tasks',x.id,str(x.text),str(x.notes)+' '+(Array.isArray(x.sub)?x.sub.map(s=>str(s&&s.text)).join(' '):''),ico('tareas'),t('tk.title')));
+  fuente('docs','tos-files',f=>{
+    let text='';
+    if(f.type==='txt')text=str(f.data);
+    else if(f.type==='sheet'){
+      const sheet=JSON.parse(str(f.data)||'{}');
+      if(sheet&&sheet.cells&&typeof sheet.cells==='object')text=Object.values(sheet.cells).map(cell=>{ const v=cell&&typeof cell==='object'?cell.v:cell; return typeof v==='string'||typeof v==='number'?String(v):''; }).join(' ');
+    }else return;
+    add('docs',f.id,str(f.name),text,FS_META[f.type].icon,t('app.docs'));
+  });
+  return out;
+}
+function osAbreResultado(kind,id){
+  const missing=()=>announce(t('content.missing'));
+  if(hasAccount()&&!isVaultUnlocked()&&!_guestMode)return missing();
+  if(kind==='notes'){ if(!notesLoad().some(n=>n.id===id))return missing(); openNotes(id); }
+  else if(kind==='tasks'){
+    if(!tkAll().some(x=>x.id===id))return missing();
+    openTareas();
+    if(_tareasHook&&_tareasHook.reveal)_tareasHook.reveal(id);
+  }else if(kind==='docs'){ const f=fsGet(id); if(!f||!['txt','sheet'].includes(f.type))return missing(); fsOpen(id); }
+}
+function osHealthSpace(){
+  const groups=new Map();
+  let localBytes=null, readable=true;
+  const add=(k,v)=>{
+    const cat=osBackupCat(k), bytes=2*(k.length+String(v==null?'':v).length);
+    groups.set(cat,(groups.get(cat)||0)+bytes);
+  };
+  try{
+    localBytes=0;
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&k.startsWith('tos-')){
+        const v=localStorage.getItem(k);
+        localBytes+=2*(k.length+(v||'').length);
+        if(!_vault&&!hasAccount()&&!BACKUP_NO_EXPORTAR.includes(k))add(k,v);
+      }
+    }
+  }catch(e){ localBytes=null; readable=false; }
+  if(_vault){
+    groups.clear();
+    Object.keys(_vault).forEach(k=>{ if(k.startsWith('tos-')&&!BACKUP_NO_EXPORTAR.includes(k))add(k,_vault[k]); });
+    readable=true;
+  }else if(hasAccount())readable=false;
+  return {localBytes,groups:readable?groups:null};
+}
+function osHealthState(){
+  let save='health.unknown';
+  if(_guestMode)save='health.guest';
+  else if(hasAccount()&&!isVaultUnlocked())save='bk.crypt.locked';
+  else if(!_acctKey)save='health.direct';
+  else if(_vaultPersistPromise)save='health.busy';
+  else if(_vaultFailNotified)save='acct.savefail';
+  else save=_vaultDirty?'health.pending':'health.clean';
+  const available=!_guestMode&&(!hasAccount()||isVaultUnlocked());
+  const configured=available&&(Store.get('tos-sync-on')==='1'||_syncOn);
+  let sync=!available?'health.unknown':!configured?'health.off':_syncBusy?'health.busy':_syncDialog?'health.conflict':_syncPaused?'health.paused':!_syncOn||!_syncDirHandle?'health.unknown':_syncPending?'health.pending':'health.idle';
+  const wins=Object.entries(openWindows).filter(([id])=>document.getElementById(id));
+  let tracks=null;
+  try{
+    if(typeof MediaStream!=='undefined'){
+      const set=new Set();
+      document.querySelectorAll('audio,video').forEach(el=>{ if(el.srcObject instanceof MediaStream)el.srcObject.getTracks().forEach(tr=>{ if(tr.readyState==='live')set.add(tr); }); });
+      tracks=set.size;
+    }
+  }catch(e){ tracks=null; }
+  return {save,sync,configured,available,windows:wins.length,visible:wins.filter(([,w])=>!w.minimized).length,tracks};
+}
+function openSystemHealth(){
+  closeStartMenu();
+  if(focusExisting('health-root'))return;
+  const content=`<div id="health-root" style="height:100%;overflow:auto;padding:14px;box-sizing:border-box;overflow-wrap:anywhere">
+    <div class="color-row" style="flex-wrap:wrap"><button type="button" class="settings-btn" id="health-refresh">${escHtml(t('health.refresh'))}</button>
+    <button type="button" class="settings-btn" id="health-save">${escHtml(t('health.retrySave'))}</button>
+    <button type="button" class="settings-btn" id="health-sync">${escHtml(t('sync.now'))}</button>
+    <button type="button" class="settings-btn" id="health-backup">${escHtml(t('bk.title'))}</button></div>
+    <p id="health-action" role="status"></p><div id="health-state"></div><div id="health-space"></div>
+    <p>${escHtml(t('health.space.note'))}</p><p>${escHtml(t('health.resources.note'))}</p></div>`;
+  createWindow(t('health.title'),ico('taskmgr'),650,520,content,{session:'systemhealth',statusbar:false,onCreated:(id,win)=>{
+    const $=s=>win.querySelector(s), unknown=t('health.unknown');
+    let stopped=false, actionBusy=false, generation=0;
+    const bytes=n=>Number.isFinite(n)?(n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KiB':(n/1048576).toFixed(2)+' MiB'):unknown;
+    const row=(label,value)=>'<div class="bk-row" style="gap:12px;flex-wrap:wrap"><span>'+escHtml(label)+'</span><b>'+escHtml(value)+'</b></div>';
+    const draw=()=>{
+      if(stopped)return;
+      const s=osHealthState();
+      const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+      const worker='serviceWorker' in navigator?(navigator.serviceWorker.controller?'health.controlled':'health.uncontrolled'):'health.unknown';
+      const html=row(t('health.save'),t(s.save))+row(t('sync.title'),(s.configured?t('health.config')+' · ':'')+t(s.sync))
+        +row(t('health.network'),t(navigator.onLine?'health.online':'health.offline'))
+        +row(t('health.pwa'),t(standalone?'health.standalone':'health.tab')+' · '+t(worker))
+        +row(t('health.windows'),s.windows+' / '+s.visible)
+        +row(t('health.resources'),s.tracks===null?unknown:String(s.tracks));
+      if($('#health-state').innerHTML!==html)$('#health-state').innerHTML=html;
+      $('#health-save').disabled=actionBusy||!_acctKey||!_vault||_guestMode;
+      $('#health-sync').disabled=actionBusy||!s.available||!_syncOn||!_syncDirHandle||_syncBusy||!_syncOk()||!!_syncDialog;
+      $('#health-backup').disabled=actionBusy||!s.available;
+    };
+    const measure=async()=>{
+      const gen=++generation;
+      $('#health-refresh').disabled=true;
+      const logical=osHealthSpace();
+      const renderSpace=(estimate,persisted)=>{
+        if(stopped||gen!==generation)return;
+        const groups=logical.groups?BACKUP_CATS.filter(c=>logical.groups.has(c.id)).map(c=>row(t('bk.cat.'+c.id),bytes(logical.groups.get(c.id)))).join(''):row(t('health.groups'),unknown);
+        $('#health-space').innerHTML='<h3>'+escHtml(t('bk.storage'))+'</h3>'
+          +row(t('health.space'),estimate?bytes(estimate.usage)+' / '+bytes(estimate.quota):unknown)
+          +row(t('health.local'),bytes(logical.localBytes))
+          +row(t('bk.persist'),persisted===null?unknown:t(persisted?'bk.persist.on':'bk.persist.off'))
+          +'<h3>'+escHtml(t('health.groups'))+'</h3>'+groups;
+      };
+      renderSpace(null,null);
+      let estimate=null, persisted=null, timeout;
+      const bounded=p=>Promise.race([p,new Promise(resolve=>{ timeout=setTimeout(()=>resolve(null),2500); })]).finally(()=>clearTimeout(timeout));
+      try{
+        const result=await bounded(Promise.all([
+          Promise.resolve().then(()=>navigator.storage&&navigator.storage.estimate?navigator.storage.estimate():null).catch(()=>null),
+          Promise.resolve().then(()=>navigator.storage&&navigator.storage.persisted?navigator.storage.persisted():null).catch(()=>null)
+        ]));
+        if(result){ estimate=result[0]; persisted=typeof result[1]==='boolean'?result[1]:null; }
+      }catch(e){ estimate=null; }
+      renderSpace(estimate,persisted);
+      if(!stopped&&gen===generation)$('#health-refresh').disabled=false;
+      draw();
+    };
+    const action=async fn=>{
+      if(actionBusy)return;
+      actionBusy=true; $('#health-action').textContent=t('health.busy'); draw();
+      try{ const result=await fn(); if(!stopped)$('#health-action').textContent=t(result); }
+      catch(e){ if(!stopped)$('#health-action').textContent=t('health.failed'); }
+      finally{ actionBusy=false; if(!stopped){ draw(); measure(); } }
+    };
+    $('#health-refresh').onclick=()=>{ draw(); measure(); };
+    $('#health-save').onclick=()=>action(async()=>await persistVault()?'health.saved':'health.failed');
+    $('#health-sync').onclick=()=>action(async()=>{
+      await _syncCheckRemote(true);
+      if(_syncDialog)return 'health.conflict';
+      if(_syncPaused)return 'health.paused';
+      return await _syncFlush()?'health.idle':'health.failed';
+    });
+    $('#health-backup').onclick=()=>osDialogoExportar();
+    const tick=()=>{ if(!document.hidden)draw(); };
+    const timer=setInterval(tick,1000);
+    window.addEventListener('online',draw); window.addEventListener('offline',draw);
+    (win._cleanups=win._cleanups||[]).push(()=>{ stopped=true; generation++; clearInterval(timer); window.removeEventListener('online',draw); window.removeEventListener('offline',draw); });
+    draw(); measure();
+  }});
+}
+function openContentSearch(){
+  closeStartMenu();
+  if(focusExisting('content-root')){ document.getElementById('content-query').focus(); return; }
+  const content=`<div id="content-root" style="height:100%;overflow:auto;padding:12px;box-sizing:border-box">
+    <div class="color-row" style="flex-wrap:wrap"><input type="search" id="content-query" class="nt-search" style="flex:1;min-width:140px" maxlength="200" autocomplete="off" aria-label="${escHtml(t('content.query'))}" placeholder="${escHtml(t('content.query'))}">
+    <select id="content-type" aria-label="${escHtml(t('content.type'))}">${[['','content.all'],['notes','nt.title'],['tasks','tk.title'],['docs','app.docs']].map(([v,k])=>'<option value="'+v+'">'+escHtml(t(k))+'</option>').join('')}</select></div>
+    <p>${escHtml(t('content.scope'))}</p><p id="content-status" role="status"></p><div id="content-results"></div></div>`;
+  createWindow(t('content.title'),ico('docs'),620,470,content,{session:'contentsearch',statusbar:false,onCreated:(id,win)=>{
+    const input=win.querySelector('#content-query'), type=win.querySelector('#content-type'), list=win.querySelector('#content-results'), status=win.querySelector('#content-status');
+    let timer=null;
+    const render=()=>{
+      clearTimeout(timer); timer=null;
+      if(!win.isConnected)return;
+      let failed=false;
+      const hits=osBuscaTextos(input.value,50,type.value,()=>{failed=true;});
+      list.replaceChildren();
+      status.textContent=failed?t('content.error'):(input.value.trim().length<2?t('content.query'):t('content.count',{n:hits.length}));
+      hits.forEach(hit=>{
+        const b=document.createElement('button'); b.type='button'; b.className='settings-btn';
+        b.style.cssText='display:block;width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;margin:6px 0;padding:10px';
+        const title=document.createElement('b'), snippet=document.createElement('div');
+        title.textContent=hit.hint+' · '+hit.label; snippet.textContent=hit.snippet;
+        b.append(title,snippet); b.onclick=hit.run; list.appendChild(b);
+      });
+    };
+    input.oninput=()=>{ clearTimeout(timer); list.replaceChildren(); status.textContent=''; timer=setTimeout(render,220); };
+    type.onchange=render;
+    input.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); render(); const b=list.querySelector('button'); if(b)b.focus(); } };
+    const refresh=()=>{ if(!document.hidden)render(); };
+    window.addEventListener('focus',refresh); window.addEventListener('storage',refresh);
+    (win._cleanups=win._cleanups||[]).push(()=>{ clearTimeout(timer); window.removeEventListener('focus',refresh); window.removeEventListener('storage',refresh); });
+    render(); if(window.innerWidth>600)input.focus();
+  }});
+}
 function osBuscaContenido(q,tope){
   const nq=_searchNorm(String(q||'').trim());
   if(nq.length<2)return []; // con una sola letra saldría media casa
@@ -24722,16 +25285,7 @@ function osBuscaContenido(q,tope){
   const add=(icon,label,hint,run)=>{ out.push({icon:icon,label:label,hint:hint,run:run,contenido:true}); };
   const trozo=(arr,fn)=>{ let n=0; for(let i=0;i<arr.length&&n<BUSCA_TOPE_FUENTE;i++){ if(fn(arr[i]))n++; } };
 
-  fuente(()=>trozo(notesLoad().slice().sort((a,b)=>(b.ts||0)-(a.ts||0)),(n)=>{
-    if(!casa(n.title,n.body))return false;
-    add('&#128221;',_bcCorta(n.title||n.body||t('nt.untitled')),t('nt.title'),()=>openNotes(n.id));
-    return true;
-  }));
-  fuente(()=>trozo(tkAll().slice().sort((a,b)=>(a.done?1:0)-(b.done?1:0)),(x)=>{
-    if(!casa(x.text,x.notes))return false;
-    add(x.done?'&#9989;':'&#9744;',_bcCorta(x.text),t('tk.title')+(x.due?' · '+x.due:''),()=>openTareas());
-    return true;
-  }));
+  ['notes','tasks','docs'].forEach(tipo=>fuente(()=>out.push(...osBuscaTextos(q,BUSCA_TOPE_FUENTE,tipo))));
   fuente(()=>trozo(cpLista(),(i)=>{
     if(!casa(i.name))return false;
     add('&#128722;',_bcCorta(((+i.qty>1)?(i.qty+' × '):'')+i.name),t('cp.title'),()=>openCompra());
@@ -24748,12 +25302,7 @@ function osBuscaContenido(q,tope){
     add('&#127859;',_bcCorta(r.n),t('rc.title'),()=>openRecetas());
     return true;
   }));
-  fuente(()=>trozo(fsList().slice().sort((a,b)=>(b.date||0)-(a.date||0)),(f)=>{
-    if(!casa(f.name))return false;
-    const m=FS_META[f.type]||FS_META.txt;
-    add(m.icon,_bcCorta(f.name),t('app.docs'),()=>fsOpen(f.id)); // se abre en su app, no en la carpeta
-    return true;
-  }));
+
   fuente(()=>trozo(eventsLoad().slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))),(e)=>{
     if(!casa(e.text))return false;
     add('&#128197;',_bcCorta((e.time?e.time+' ':'')+e.text),t('agenda.title')+(e.date?' · '+e.date:''),()=>openAgenda(e.date));
@@ -24764,17 +25313,14 @@ function osBuscaContenido(q,tope){
     add(h.ic||'&#127919;',_bcCorta(h.n||h.name),t('hb.title'),()=>openHabitos());
     return true;
   }));
-  // Claves: SOLO el sitio y el usuario, y solo con la caja abierta. La contraseña no
-  // entra en el buscador ni de refilón.
-  fuente(()=>{ if(!pwVaultOk())return; trozo(pwEntries(),(e)=>{
-    if(!casa(e.site,e.user,e.url))return false;
-    add('&#128273;',_bcCorta(e.site||e.url||''),t('pwm.title'),()=>openPasswords());
-    return true;
-  }); });
+
   return out.slice(0,tope||12);
 }
 function _searchIndex(){
-  const ix=[];
+  const ix=[
+    {label:t('health.title'),icon:ico('taskmgr'),hint:t('bk.storage'),run:openSystemHealth},
+    {label:t('content.title'),icon:ico('docs'),hint:'Ctrl+Shift+F',run:openContentSearch}
+  ];
   gamesApps.forEach(g=>ix.push({label:g.label,icon:g.icon,hint:'Juego',run:()=>openGame(g.key)}));
   proyectosApps.forEach(p=>ix.push({label:p.label,icon:p.icon,hint:'Proyecto',run:()=>window.open(p.link,'_blank','noopener,noreferrer')}));
   garminApps.forEach(g=>ix.push({label:g.label,icon:g.icon,hint:'App Garmin',run:()=>window.open(g.link,'_blank','noopener,noreferrer')}));
@@ -24803,7 +25349,7 @@ function startSearch(q){
   const matches=apps.concat(cont).slice(0,10);
   res._matches=matches;
   res.innerHTML=matches.length
-    ?matches.map((m,i)=>`<button type="button" class="start-item search-hit" data-i="${i}"><div class="si-icon">${m.icon}</div><div><div class="si-label">${m.label}</div><div class="si-desc">${m.hint}</div></div></button>`).join('')
+    ?matches.map((m,i)=>`<button type="button" class="start-item search-hit" data-i="${i}"><div class="si-icon">${m.icon}</div><div><div class="si-label">${escHtml(m.label)}</div><div class="si-desc">${escHtml(m.hint)}</div></div></button>`).join('')
     :'<div style="padding:10px 14px;font-size:12px;color:#888">Sin resultados. Prueba "juegos", "winamp" o "proyectos".</div>';
   res.querySelectorAll('.search-hit').forEach(el=>{
     el.onclick=()=>{const m=matches[+el.dataset.i];clearStartSearch();closeStartMenu();m.run();};
@@ -24817,9 +25363,11 @@ function clearStartSearch(){
 (function(){
   const inp=document.getElementById('start-search');
   if(!inp)return;
-  inp.addEventListener('input',()=>startSearch(inp.value));
+  let timer=null;
+  inp.addEventListener('input',()=>{ clearTimeout(timer); timer=setTimeout(()=>startSearch(inp.value),180); });
   inp.addEventListener('keydown',(e)=>{
     if(e.key==='Enter'){
+      clearTimeout(timer); startSearch(inp.value);
       const res=document.getElementById('start-search-results');
       const m=res&&res._matches&&res._matches[0];
       if(m){e.preventDefault();clearStartSearch();closeStartMenu();m.run();}
@@ -25008,7 +25556,7 @@ const desktopApps=[
 // Tamano de ventana de carpeta adaptado al dispositivo:
 // en movil ocupa el ancho util y la altura justa para ver el maximo de iconos
 function folderWindowSize(itemCount,defW,defH){
-  if(window.innerWidth>600)return{w:defW,h:defH,mobile:false};
+  if(_mobileActive||window.innerWidth>600)return{w:defW,h:defH,mobile:false};
   const availW=window.innerWidth-16;
   const perRow=Math.max(2,Math.floor((availW-20)/92)); // item 84px + gap 8px
   const rows=Math.ceil(itemCount/perRow);
@@ -25427,8 +25975,10 @@ function showContextMenu(x,y,items){
   });
   m.classList.add('show');
   const r=m.getBoundingClientRect();
-  m.style.left=Math.max(2,Math.min(x,window.innerWidth-r.width-4))+'px';
-  m.style.top=Math.max(2,Math.min(y,window.innerHeight-r.height-40))+'px';
+  const area=_mobileActive?document.getElementById('taskbar').getBoundingClientRect():null;
+  const top=_mobileActive?parseFloat(getComputedStyle(document.body).getPropertyValue('--vv-top'))||0:0;
+  m.style.left=Math.max(area?area.left:2,Math.min(x,(area?area.right:window.innerWidth)-r.width-4))+'px';
+  m.style.top=Math.max(top+2,Math.min(y,(area?area.top:window.innerHeight-36)-r.height-4))+'px';
   roving(focusables()[0]);
 }
 function hideContextMenu(){
@@ -25471,23 +26021,64 @@ document.addEventListener('click',(e)=>{
 
 // Window management
 let _pendingGameSession=null; // openGame() lo rellena para que la sesión sepa qué juego era
+function _mobileSavedPreference(){
+  const stored=Store.get('tos-mobile-layout');
+  return ['auto','on','off'].includes(stored)?stored:'auto';
+}
+let _mobilePreference=_mobileSavedPreference(),_mobileActive=false;
+const _mobileText={
+  layout:{es:'Vista móvil',en:'Mobile layout',ca:'Vista mòbil',ru:'Мобильный вид'},
+  auto:{es:'Automática',en:'Automatic',ca:'Automàtica',ru:'Автоматически'},
+  on:{es:'Siempre móvil',en:'Always mobile',ca:'Sempre mòbil',ru:'Всегда мобильный'},
+  off:{es:'Escritorio',en:'Desktop',ca:'Escriptori',ru:'Рабочий стол'},
+  hint:{es:'Se recuerda al volver a abrir la página. Automática adapta también el móvil al girarlo.',en:'Remembered when reopening the page. Automatic also adapts when rotating a phone.',ca:'Es recorda en tornar a obrir la pàgina. Automàtica també adapta el mòbil en girar-lo.',ru:'Сохраняется при повторном открытии страницы. Автоматический режим учитывает поворот телефона.'},
+  switch:{es:'Cambiar de ventana',en:'Switch window',ca:'Canviar de finestra',ru:'Переключить окно'},
+  windows:{es:'Ventanas abiertas',en:'Open windows',ca:'Finestres obertes',ru:'Открытые окна'},
+  minimized:{es:'minimizada',en:'minimized',ca:'minimitzada',ru:'свёрнуто'}
+};
+function _mobileLabel(key){return _mobileText[key][currentLang()]||_mobileText[key].es;}
+function _mobileWanted(){
+  return _mobilePreference==='on'||(_mobilePreference==='auto'&&(window.innerWidth<=768||(window.matchMedia('(pointer:coarse)').matches&&window.innerWidth<=1100&&window.innerHeight<=600)));
+}
+function _mobileSwitch(id){
+  const info=openWindows[id];
+  if(!info||!document.getElementById(id))return;
+  if((info.desktop||0)!==_curDesktop)switchDesktop(info.desktop||0);
+  if(info.minimized)restoreWindow(id);else focusWindow(id);
+}
+function _mobileUpdateSwitcher(){
+  const select=document.getElementById('mobile-window-switch');
+  if(!select)return;
+  const entries=Object.keys(openWindows).filter(id=>document.getElementById(id)).map(id=>{
+    const info=openWindows[id];
+    return [id,info.title+(info.minimized?' — '+_mobileLabel('minimized'):'')+(_desktopCount>1?' — '+t('vd.desktop')+' '+((info.desktop||0)+1):'')];
+  });
+  const signature=JSON.stringify([currentLang(),entries]);
+  if(select.dataset.signature!==signature){
+    select.dataset.signature=signature;
+    select.innerHTML='<option value="">'+escHtml(_mobileLabel('windows'))+' ('+entries.length+')</option>'+entries.map(([id,label])=>'<option value="'+id+'">'+escHtml(label)+'</option>').join('');
+    select.setAttribute('aria-label',_mobileLabel('switch'));
+  }
+  const active=openWindows[activeWindowId];
+  select.value=active&&!active.minimized&&(active.desktop||0)===_curDesktop?activeWindowId:'';
+  select.disabled=!entries.length;
+}
+function _mobileSetPreference(value){
+  if(!['auto','on','off'].includes(value))return;
+  _mobilePreference=value;
+  Store.set('tos-mobile-layout',value);
+  _mobileViewport();
+}
 function createWindow(title,icon,width,height,content,opts={}){
   const id='win-'+(++windowIdCounter);
   const win=document.createElement('div');
   win.className='window focused';
   win.id=id;
-  const isMobile=window.innerWidth<=600;
   win.style.width=width+'px';
   win.style.height=height+'px';
-  if(isMobile&&!opts.className?.includes('game-window')){
-    win.style.left='10px';
-    win.style.top='15%';
-  }else{
-    // Cascada: cada ventana nueva aparece desplazada en diagonal (estilo SO clásico)
-    const step=windowCascade++ % 8;
-    win.style.left=(60+step*26)+'px';
-    win.style.top=(28+step*24)+'px';
-  }
+  const step=windowCascade++ % 8;
+  win.style.left=(60+step*26)+'px';
+  win.style.top=(28+step*24)+'px';
   win.style.zIndex=++windowZIndex;
 
   const statusbar=opts.statusbar!==false;
@@ -25540,7 +26131,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   (win._cleanups=win._cleanups||[]).push(()=>_inertObs.disconnect());
 
   // Focus
-  win.onmousedown=()=>focusWindow(id);
+  win.onpointerdown=()=>focusWindow(id);
   focusWindow(id);
   // Accesibilidad: llevar el foco del teclado a la ventana recién abierta
   try{win.focus({preventScroll:true});}catch(e){win.focus();}
@@ -25570,7 +26161,7 @@ function openWindowSysMenu(id,anchor){
     x=r.left; y=r.bottom;
   }
   const info=openWindows[id];
-  const maximized=!!(info&&info.maximized);
+  const maximized=_mobileActive||!!(info&&info.maximized);
   const items=[];
   // Mover/Tamaño con teclado no tienen sentido maximizada (no hay a donde moverla ni que
   // redimensionar): igual que en Windows real, esas dos opciones desaparecen del menú.
@@ -25580,7 +26171,7 @@ function openWindowSysMenu(id,anchor){
     items.push({sep:true});
   }
   items.push({icon:'_',label:t('win.min'),action:()=>minimizeWindow(id)});
-  items.push({icon:'&#9723;',label:maximized?t('win.restore'):t('win.max'),action:()=>toggleMaximize(id)});
+  if(!_mobileActive)items.push({icon:'&#9723;',label:maximized?t('win.restore'):t('win.max'),action:()=>toggleMaximize(id)});
   items.push({sep:true});
   items.push({icon:'&#10005;',label:t('win.close'),action:()=>closeWindow(id)});
   showContextMenu(x,y,items);
@@ -25629,27 +26220,41 @@ function focusWindow(id){
 // propia restauracion de sesion.
 function minimizeWindow(id,inmediato){
   const win=document.getElementById(id);
+  if(!win||!openWindows[id])return;
   if(win){
+    if(win._cancelMinimize)win._cancelMinimize();
     // Encoger hacia la barra de tareas y ocultar al acabar. .minimized es display:none, asi
     // que la animacion tiene que correr ANTES; el temporizador es la red de seguridad por si
     // el navegador no dispara animationend (pestaña oculta, reduced-motion, animacion cortada).
-    if(inmediato){ win.classList.remove('win-min'); win.classList.add('minimized'); }
+    if(inmediato||_mobileActive){ win.classList.remove('win-min'); win.classList.add('minimized'); }
     else{
       win.classList.add('win-min');
-      let hecho=false;
-      const fin=()=>{ if(hecho)return; hecho=true; win.classList.remove('win-min'); win.classList.add('minimized'); };
+      const cancel=()=>{clearTimeout(timer);win.removeEventListener('animationend',fin);win._cancelMinimize=null;win.classList.remove('win-min');};
+      const fin=()=>{cancel();if(openWindows[id]?.minimized)win.classList.add('minimized');};
+      const timer=setTimeout(fin,260);
+      win._cancelMinimize=cancel;
       win.addEventListener('animationend',fin,{once:true});
-      setTimeout(fin,260);
     }
     openWindows[id].minimized=true; uiSfx('min');
   }
-  if(activeWindowId===id)activeWindowId=null;
+  if(activeWindowId===id){
+    activeWindowId=null;
+    win.classList.remove('focused');
+    if(_mobileActive){
+      const next=Object.keys(openWindows).filter(wid=>!openWindows[wid].minimized&&(openWindows[wid].desktop||0)===_curDesktop).sort((a,b)=>+(document.getElementById(b)?.style.zIndex||0)-+(document.getElementById(a)?.style.zIndex||0))[0];
+      if(next)focusWindow(next);else document.getElementById('start-btn').focus({preventScroll:true});
+    }
+    _winSetInert(win,true);
+  }
   updateTaskbar();
   saveSession();
 }
 
 function restoreWindow(id){
   const win=document.getElementById(id);
+  if(!win||!openWindows[id])return;
+  if(win._cancelMinimize)win._cancelMinimize();
+  win.style.display=(openWindows[id].desktop||0)===_curDesktop?'':'none';
   if(win){win.classList.remove('win-min');win.classList.remove('minimized');openWindows[id].minimized=false;focusWindow(id);}
   // Reanudar el bucle del juego (el motor lo pausa al minimizar)
   if(gameInstances[id]&&gameInstances[id].resume)gameInstances[id].resume();
@@ -25679,6 +26284,7 @@ function toggleShowDesktop(){
 }
 
 function toggleMaximize(id){
+  if(_mobileActive)return;
   const win=document.getElementById(id);
   if(!win)return;
   const info=openWindows[id];
@@ -25704,19 +26310,24 @@ function toggleMaximize(id){
 
 function closeWindow(id){
   const win=document.getElementById(id);
+  if(win?._cancelMinimize)win._cancelMinimize();
+  if(_wdrag.win===win){_wdrag.snap=null;_wdragEnd();}
+  if(_kbAdjust?.id===id)_kbAdjustEnd(false);
   if(win){(win._cleanups||[]).forEach(f=>{try{f();}catch(e){_ignora(e);}});win.remove();uiSfx('close');}
   if(gameInstances[id]){if(gameInstances[id].destroy)gameInstances[id].destroy();delete gameInstances[id];}
   delete openWindows[id];
   if(activeWindowId===id){
     activeWindowId=null;
-    const rest=Object.keys(openWindows).filter(wid=>!openWindows[wid].minimized);
+    const rest=Object.keys(openWindows).filter(wid=>!openWindows[wid].minimized&&(openWindows[wid].desktop||0)===_curDesktop);
     if(rest.length)focusWindow(rest[rest.length-1]);
+    else if(_mobileActive)document.getElementById('start-btn').focus({preventScroll:true});
   }
   updateTaskbar();
   saveSession();
 }
 
 function updateTaskbar(){
+  _mobileUpdateSwitcher();
   const container=document.getElementById('taskbar-items');
   container.innerHTML='';
   Object.keys(openWindows).forEach(id=>{
@@ -25780,6 +26391,7 @@ function _atClose(commit){
 // una flecha en este modo no mueve también una pala o una nave por debajo.
 let _kbAdjust=null;
 function _kbAdjustStart(id,mode){
+  if(_mobileActive)return;
   const win=document.getElementById(id);
   if(!win)return;
   focusWindow(id);
@@ -25899,6 +26511,7 @@ function applySnap(win,kind){
 // estuviera colocado en píxeles: las mitades/cuartos del snap (calculados con el
 // tamaño anterior) y cualquier ventana movida a mano cerca de un borde.
 function reflowWindows(){
+  if(_mobileActive||_mobileWanted())return;
   const W=window.innerWidth,H=window.innerHeight,TB=taskbarH();
   Object.keys(openWindows).forEach(id=>{
     const info=openWindows[id],win=document.getElementById(id);
@@ -25919,22 +26532,75 @@ function reflowWindows(){
     if(moved){ win.style.left=l+'px'; win.style.top=tp+'px'; }
   });
 }
-let _reflowRaf=null,_reflowW=0,_reflowH=0;
+let _reflowRaf=null,_reflowW=window.innerWidth,_reflowH=window.innerHeight;
+let _viewportListeners=null,_mobileViewportRaf=null;
 function _isTyping(){
   const a=document.activeElement;
   return !!a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable);
 }
-window.addEventListener('resize',()=>{
+function _mobileViewport(){
+  const wasMobile=_mobileActive;
+  _mobileActive=_mobileWanted();
+  if(_mobileActive&&!wasMobile){
+    _kbAdjustEnd(false);
+    if(_wdrag.win){_wdrag.snap=null;_wdragEnd();}
+  }
+  document.body.classList.toggle('mobile-layout',_mobileActive);
+  if(_mobileActive){
+    const vp=window.visualViewport;
+    if(!vp||Math.abs(vp.scale-1)<0.01){
+      const style=document.body.style;
+      style.setProperty('--vv-left',(vp?vp.offsetLeft:0)+'px');
+      style.setProperty('--vv-top',(vp?vp.offsetTop:0)+'px');
+      style.setProperty('--vv-width',(vp?vp.width:window.innerWidth)+'px');
+      style.setProperty('--vv-height',(vp?vp.height:window.innerHeight)+'px');
+    }
+  }
+  if(wasMobile!==_mobileActive){
+    if(_reflowRaf!==null){cancelAnimationFrame(_reflowRaf);_reflowRaf=null;}
+    _mobileUpdateSwitcher();
+  }
+  return wasMobile||_mobileActive;
+}
+function _queueMobileViewport(){
+  if(_mobileViewportRaf!==null)return;
+  _mobileViewportRaf=requestAnimationFrame(()=>{
+    _mobileViewportRaf=null;
+    _mobileViewport();
+    const a=document.activeElement;
+    if(!_mobileActive||!_isTyping()||!a.closest('.window')||window.visualViewport&&Math.abs(window.visualViewport.scale-1)>=0.01)return;
+    const body=a.closest('.window-body');
+    if(!body)return;
+    const r=a.getBoundingClientRect(),b=body.getBoundingClientRect();
+    if(r.bottom>b.bottom||r.top<b.top)a.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});
+  });
+}
+function _windowViewportResize(){
   const W=window.innerWidth,H=window.innerHeight;
-  if(!_reflowW){_reflowW=W;_reflowH=H;}
-  // El teclado del móvil también dispara resize (encoge el alto sin tocar el ancho):
-  // recolocar ahí movería la ventana justo mientras se escribe en ella.
-  const keyboard=(W===_reflowW&&H<_reflowH&&_isTyping());
+  const keyboard=W===_reflowW&&H<_reflowH&&_isTyping();
   _reflowW=W;_reflowH=H;
-  if(keyboard)return;
-  if(_reflowRaf!==null)return; // el giro dispara varios resize seguidos: uno basta
-  _reflowRaf=requestAnimationFrame(()=>{ _reflowRaf=null; reflowWindows(); saveSession(); });
-});
+  if(_mobileViewport()){_queueMobileViewport();return;}
+  if(keyboard||_reflowRaf!==null)return;
+  _reflowRaf=requestAnimationFrame(()=>{_reflowRaf=null;reflowWindows();saveSession();});
+}
+function _stopWindowViewport(){
+  if(_viewportListeners){_viewportListeners.abort();_viewportListeners=null;}
+  if(_reflowRaf!==null){cancelAnimationFrame(_reflowRaf);_reflowRaf=null;}
+  if(_mobileViewportRaf!==null){cancelAnimationFrame(_mobileViewportRaf);_mobileViewportRaf=null;}
+}
+function _startWindowViewport(){
+  if(_viewportListeners)return;
+  _viewportListeners=new AbortController();
+  const opts={passive:true,signal:_viewportListeners.signal};
+  window.addEventListener('resize',_windowViewportResize,opts);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',_queueMobileViewport,opts);
+    window.visualViewport.addEventListener('scroll',_queueMobileViewport,opts);
+  }
+  document.addEventListener('focusin',_queueMobileViewport,opts);
+  _reflowW=window.innerWidth;_reflowH=window.innerHeight;
+  _mobileViewport();
+}
 
 // ========== GESTO ÚNICO DE ARRASTRE / REDIMENSIÓN ==========
 // Antes cada ventana enganchaba 8 listeners a document (4 para mover + 4 para
@@ -25973,6 +26639,7 @@ function _wdragEnd(){
   saveSession();
 }
 function _wdragStart(win,mode,cx,cy){
+  if(_mobileActive)return;
   const d=_wdrag;
   d.win=win;d.mode=mode;d.snap=null;
   const info=openWindows[win.id];
@@ -25995,15 +26662,19 @@ function _wdragTouch(e){
 document.addEventListener('mousemove',(e)=>{ if(_wdrag.win)_wdragMove(e.clientX,e.clientY,false); });
 document.addEventListener('mouseup',_wdragEnd);
 document.addEventListener('touchend',_wdragEnd);
+document.addEventListener('touchcancel',_wdragEnd);
+window.addEventListener('pagehide',_stopWindowViewport);
+window.addEventListener('pageshow',_startWindowViewport);
+_startWindowViewport();
 
 function makeDraggable(win,handle){
   handle.onmousedown=(e)=>{
-    if(e.target.tagName==='BUTTON')return;
+    if(_mobileActive||e.target.closest('button'))return;
     _wdragStart(win,'move',e.clientX,e.clientY);
     e.preventDefault();
   };
   handle.ontouchstart=(e)=>{
-    if(e.target.tagName==='BUTTON'||!e.touches[0])return;
+    if(_mobileActive||e.target.closest('button')||!e.touches[0])return;
     _wdragStart(win,'move',e.touches[0].clientX,e.touches[0].clientY);
     e.preventDefault();
   };
@@ -26144,6 +26815,8 @@ function applyWallpaper(wpId){
 // Restaura la apariencia guardada al iniciar sesion
 // (antes solo se aplicaba al abrir la ventana de Ajustes)
 function loadSavedAppearance(){
+  _mobilePreference=_mobileSavedPreference();
+  _mobileViewport();
   const savedWP=Store.get('tos-wp');
   if(savedWP)applyWallpaper(savedWP);
   // El tema completo va primero; los colores sueltos solo aplican con el tema Luna
@@ -26233,6 +26906,11 @@ function openSettings(){
     </div>
     <div class="settings-section" id="settings-display">
       <div class="settings-group">
+        <h3><label for="mobile-layout">${_mobileLabel('layout')}</label></h3>
+        <p id="mobile-layout-hint">${_mobileLabel('hint')}</p>
+        <select id="mobile-layout" aria-describedby="mobile-layout-hint" onchange="_mobileSetPreference(this.value)">${['auto','on','off'].map(value=>'<option value="'+value+'"'+(_mobilePreference===value?' selected':'')+'>'+_mobileLabel(value)+'</option>').join('')}</select>
+      </div>
+      <div class="settings-group">
         <h3>&#127760; <span data-i18n="set.language">Idioma</span></h3>
         <p data-i18n="set.language.hint">La interfaz cambia al instante; el contenido retro se queda en español.</p>
         <div class="color-row">
@@ -26317,6 +26995,7 @@ function openSettings(){
         <h3>&#128274; <span data-i18n="bk.storage">Guardado de los datos</span></h3>
         <p data-i18n="bk.storage.d">D&oacute;nde viven tus datos y c&oacute;mo de a salvo est&aacute;n</p>
         <div class="bk-store" id="bk-store"></div>
+        <button type="button" class="settings-btn" onclick="openSystemHealth()" data-i18n="health.title">Centro de salud del sistema</button>
         <button class="settings-btn" id="bk-persist">&#128737;&#65039; <span data-i18n="bk.protect">Proteger mis datos</span></button>
       </div>
       <div class="settings-group">
@@ -26551,6 +27230,7 @@ function applyWindowColor(color){
 }
 
 function resetSettings(){
+  Store.del('tos-mobile-layout');
   Store.del('tos-wp');
   Store.del('tos-taskbar-color');
   Store.del('tos-window-color');

@@ -7,7 +7,7 @@
 Windows XP renacido en HTML: 21 juegos clásicos, ~75 aplicaciones, terminal,
 Paint y mi portfolio. Sin instalar nada, sin cuentas, sin servidor.
 
-[![Versión](https://img.shields.io/badge/versión-0.69.0-7c8cff)](#historial)
+[![Versión](https://img.shields.io/badge/versión-0.70.0-7c8cff)](#historial)
 [![PWA](https://img.shields.io/badge/PWA-instalable%20y%20sin%20conexión-2ea44f)](#instalarlo-como-app)
 [![Dependencias](https://img.shields.io/badge/dependencias-0-blue)](#cómo-está-hecho)
 [![Build](https://img.shields.io/badge/build-ninguno-lightgrey)](#cómo-está-hecho)
@@ -172,7 +172,7 @@ Para publicar: sube los archivos tal cual. Es estático.
 
 ## Historial
 
-La versión vive en `APP_VERSION`. La actual es la **0.69.0**.
+La versión vive en `APP_VERSION`. La actual es la **0.70.0**.
 
 ---
 
