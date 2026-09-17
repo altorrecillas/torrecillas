@@ -1163,9 +1163,9 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
       <div class="win-icon"><div></div><div></div><div></div><div></div></div>
       <span data-i18n="start">Inicio</span>
     </button>
+    <button id="mobile-window-switch" type="button" onclick="_mobileOpenSwitcher()" title="Ventanas abiertas" aria-label="Ventanas abiertas" aria-haspopup="menu" aria-controls="context-menu" aria-expanded="false"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
     <button id="show-desktop" onclick="toggleShowDesktop()" title="Mostrar escritorio" aria-label="Mostrar escritorio"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.4" y="3" width="13.2" height="10" rx="1.1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.15" y="10.4" width="11.7" height="2.2" rx="0.4" fill="currentColor"/></svg></button>
     <button id="taskview-btn" onclick="openTaskView()" title="Vista de tareas" aria-label="Vista de tareas"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="2" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8.5" y="9" width="6" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
-    <select id="mobile-window-switch" onchange="_mobileSwitch(this.value)"></select>
     <div id="taskbar-items"></div>
     <div id="system-tray">
       <div id="tray-icons"><span id="tray-net" role="img"><svg width="15" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect class="tn-scr" x="1" y="3.5" width="9.5" height="6.5" rx="1" fill="#c9d3e0" stroke="#5a6b80" stroke-width="1"/><rect x="2" y="4.5" width="7.5" height="4.5" fill="#2f6fd0"/><path d="M4 11.5h4.5v1.2H4z" fill="#8494a8"/><rect class="tn-scr" x="5.5" y="6" width="9.5" height="6.5" rx="1" fill="#e2e8f0" stroke="#5a6b80" stroke-width="1"/><rect x="6.5" y="7" width="7.5" height="4.5" fill="#4b8de8"/><g class="tn-x" stroke="#d40000" stroke-width="2.2" stroke-linecap="round"><path d="M10.4 9.4l4.4 4.4"/><path d="M14.8 9.4l-4.4 4.4"/></g></svg></span><span id="tray-msn" style="cursor:pointer" onclick="toggleMSNFromTray()" role="button" tabindex="0" aria-label="MSN Messenger" title="MSN Messenger — Alejandro_Virtual en l&iacute;nea"><span class="tm-buddy"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><g fill="#3b82d0"><circle cx="10.6" cy="4.4" r="2.6"/><path d="M5.6 15c0-3 2.2-5.2 5-5.2s5 2.2 5 5.2z"/></g><g fill="#7ebd2f" stroke="#fff" stroke-width="0.7"><circle cx="5.8" cy="5.2" r="2.9"/><path d="M0.7 15.6c0-3.3 2.3-5.7 5.1-5.7s5.1 2.4 5.1 5.7z"/></g></svg></span><span class="tm-balloon">&#128172;</span></span><span id="tray-volume" style="cursor:pointer" onclick="toggleVolumePopup()" role="button" tabindex="0" aria-label="Volumen">&#128266;</span> <span id="tray-clip" onclick="toggleClipHistory(event)" role="button" tabindex="0" aria-label="Portapapeles" title="Historial del portapapeles" style="cursor:pointer">&#128203;</span> <span id="tray-quick" onclick="toggleActionCenter(event)" role="button" tabindex="0" aria-label="Ajustes rápidos" title="Ajustes rápidos" style="cursor:pointer">&#9889;</span> <span id="tray-bell" onclick="toggleNotifCenter(event)" role="button" tabindex="0" aria-label="Notificaciones" title="Notificaciones">&#128276;</span> <span id="tray-lang" onclick="toggleLangMenu(event)" role="button" tabindex="0" aria-label="Idioma" title="Idioma"></span></div>
@@ -4297,21 +4297,27 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 #mobile-window-switch{display:none}
 #mobile-layout{min-height:44px;max-width:100%;padding:6px;font:inherit}
 body.mobile-layout{--tb-h:calc(48px + var(--sab));--mobile-left:calc(var(--vv-left,0px) + env(safe-area-inset-left,0px));--mobile-top:calc(var(--vv-top,0px) + env(safe-area-inset-top,0px));--mobile-width:calc(var(--vv-width,100vw) - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));--mobile-height:max(0px,calc(var(--vv-height,100dvh) - env(safe-area-inset-top,0px) - var(--tb-h)))}
-body.mobile-layout .window{position:fixed;left:var(--mobile-left)!important;top:var(--mobile-top)!important;width:var(--mobile-width)!important;height:var(--mobile-height)!important;right:auto!important;bottom:auto!important;min-width:0!important;min-height:0!important;max-width:var(--mobile-width)!important;max-height:var(--mobile-height)!important;overflow:hidden;border-radius:0}
-body.mobile-layout .window-titlebar{height:48px;flex:0 0 48px;padding:2px;gap:2px}
+body.mobile-layout .window{--mobile-margin:12px;min-width:0!important;min-height:0!important;max-width:max(1px,calc(var(--mobile-width) - 2 * var(--mobile-margin)))!important;max-height:max(1px,calc(var(--mobile-height) - 2 * var(--mobile-margin)))!important;overflow:hidden}
+body.mobile-layout .window.maximized{--mobile-margin:0px}
+body.mobile-layout .window-titlebar{height:32px;flex:0 0 32px;padding:1px 2px;gap:2px;touch-action:none}
 body.mobile-layout .window-title{min-width:0;font-size:12px}
 body.mobile-layout .window-controls{flex-shrink:0;gap:2px}
-body.mobile-layout .window-controls button,body.mobile-layout .window-title .wt-icon{width:44px;height:44px;flex:0 0 44px;font-size:16px;touch-action:manipulation}
-body.mobile-layout .window .btn-maximize,body.mobile-layout .window .resize-handle,body.mobile-layout .window-statusbar{display:none}
+body.mobile-layout .window-controls button,body.mobile-layout .window-title .wt-icon{width:30px;height:30px;flex:0 0 30px;font-size:14px;touch-action:manipulation}
+body.mobile-layout .window .resize-handle{width:22px;height:22px;touch-action:none}
 body.mobile-layout .window-body{min-height:0;min-width:0;overscroll-behavior:contain}
 body.mobile-layout .window-body :is(input,textarea,select){font-size:16px}
 body.mobile-layout #taskbar{left:var(--mobile-left);top:calc(var(--vv-top,0px) + var(--vv-height,100dvh) - var(--tb-h));bottom:auto;width:var(--mobile-width);height:var(--tb-h)}
-body.mobile-layout #taskbar-items,body.mobile-layout #taskview-btn,body.mobile-layout #tray-icons{display:none}
-body.mobile-layout #mobile-window-switch{display:block;flex:1;min-width:0;height:44px;margin:0 2px;padding:0 4px;border:1px solid #7f9db9;border-radius:3px;background:#fff;color:#123890;font-size:16px}
-body.mobile-layout #start-btn{flex-shrink:0;min-width:44px;padding-left:6px;padding-right:6px}
-body.mobile-layout #show-desktop{flex:0 0 44px;width:44px;height:44px;margin:0 2px}
-body.mobile-layout #system-tray{flex-shrink:0;padding-left:3px;padding-right:3px;gap:0}
-body.mobile-layout #clock{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+body.mobile-layout #taskbar-items,body.mobile-layout #taskview-btn{display:none}
+body.mobile-layout #mobile-window-switch{display:flex;align-items:center;justify-content:center;flex:0 0 28px;width:28px;height:36px;margin:0 1px;padding:3px;border:1px solid rgba(255,255,255,.25);border-radius:3px;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+body.mobile-layout #mobile-window-switch svg{width:18px;height:18px}
+body.mobile-layout #mobile-window-switch:disabled{opacity:.5}
+body.mobile-layout #start-btn{flex-shrink:0;min-width:44px;padding-left:4px;padding-right:4px;font-size:12px;gap:3px}
+body.mobile-layout #start-btn .win-icon{width:16px;height:16px}
+body.mobile-layout #show-desktop{flex:0 0 24px;width:24px;height:36px;margin:0 1px}
+body.mobile-layout #system-tray{flex:0 1 auto;min-width:0;margin-left:auto;justify-content:flex-end;padding-left:2px;padding-right:2px;gap:2px}
+body.mobile-layout #tray-icons{display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto;gap:2px;overflow:visible;font-size:12px}
+body.mobile-layout #tray-icons>span{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-width:20px;min-height:32px;padding:0}
+body.mobile-layout #clock{display:flex;align-items:center;justify-content:center;min-width:34px;min-height:36px;font-size:10px}
 body.mobile-layout #vd-pips{display:none}
 body.mobile-layout #start-menu{left:var(--mobile-left);right:auto;bottom:auto;top:calc(var(--mobile-top) + var(--mobile-height));transform:translateY(-100%);width:min(420px,var(--mobile-width));max-height:var(--mobile-height);overflow:auto}
 body.mobile-layout #start-menu.show{display:flex;flex-direction:column}
@@ -25985,6 +25991,8 @@ function hideContextMenu(){
   const m=document.getElementById('context-menu');
   if(!m||!m.classList.contains('show'))return; // ya estaba cerrado: nada que restaurar
   m.classList.remove('show');
+  document.getElementById('mobile-window-switch')?.setAttribute('aria-expanded','false');
+  m.setAttribute('aria-label','Menú del escritorio');
   if(_ctxReturnFocus){ try{_ctxReturnFocus.focus({preventScroll:true});}catch(e){_ignora(e);} }
   _ctxReturnFocus=null;
 }
@@ -26046,22 +26054,32 @@ function _mobileSwitch(id){
   if((info.desktop||0)!==_curDesktop)switchDesktop(info.desktop||0);
   if(info.minimized)restoreWindow(id);else focusWindow(id);
 }
-function _mobileUpdateSwitcher(){
-  const select=document.getElementById('mobile-window-switch');
-  if(!select)return;
-  const entries=Object.keys(openWindows).filter(id=>document.getElementById(id)).map(id=>{
+function _mobileWindowItems(){
+  return Object.keys(openWindows).filter(id=>document.getElementById(id)).map(id=>{
     const info=openWindows[id];
-    return [id,info.title+(info.minimized?' — '+_mobileLabel('minimized'):'')+(_desktopCount>1?' — '+t('vd.desktop')+' '+((info.desktop||0)+1):'')];
+    const label=info.title+(info.minimized?' — '+_mobileLabel('minimized'):'')+(_desktopCount>1?' — '+t('vd.desktop')+' '+((info.desktop||0)+1):'');
+    return {label:escHtml(label),action:()=>_mobileSwitch(id)};
   });
-  const signature=JSON.stringify([currentLang(),entries]);
-  if(select.dataset.signature!==signature){
-    select.dataset.signature=signature;
-    select.innerHTML='<option value="">'+escHtml(_mobileLabel('windows'))+' ('+entries.length+')</option>'+entries.map(([id,label])=>'<option value="'+id+'">'+escHtml(label)+'</option>').join('');
-    select.setAttribute('aria-label',_mobileLabel('switch'));
-  }
-  const active=openWindows[activeWindowId];
-  select.value=active&&!active.minimized&&(active.desktop||0)===_curDesktop?activeWindowId:'';
-  select.disabled=!entries.length;
+}
+function _mobileOpenSwitcher(){
+  const button=document.getElementById('mobile-window-switch');
+  const items=_mobileWindowItems();
+  if(!button||!items.length)return;
+  closeStartMenu();
+  button.focus({preventScroll:true});
+  const r=button.getBoundingClientRect();
+  showContextMenu(r.left,r.top,items);
+  document.getElementById('context-menu').setAttribute('aria-label',_mobileLabel('windows'));
+  button.setAttribute('aria-expanded','true');
+}
+function _mobileUpdateSwitcher(){
+  const button=document.getElementById('mobile-window-switch');
+  if(!button)return;
+  const count=_mobileWindowItems().length;
+  const label=_mobileLabel('windows')+' ('+count+')';
+  button.setAttribute('aria-label',label);
+  button.title=label;
+  button.disabled=!count;
 }
 function _mobileSetPreference(value){
   if(!['auto','on','off'].includes(value))return;
@@ -26137,6 +26155,7 @@ function createWindow(title,icon,width,height,content,opts={}){
   try{win.focus({preventScroll:true});}catch(e){win.focus();}
 
   openWindows[id]={title,icon,minimized:false,maximized:false,prevBounds:null,session:opts.session||_pendingGameSession||null,trayOnly:!!opts.trayOnly,desktop:_curDesktop};
+  _mobileClampWindow(win);
   _pendingGameSession=null;
   _lastWindowId=id;
   updateTaskbar();
@@ -26161,7 +26180,7 @@ function openWindowSysMenu(id,anchor){
     x=r.left; y=r.bottom;
   }
   const info=openWindows[id];
-  const maximized=_mobileActive||!!(info&&info.maximized);
+  const maximized=!!(info&&info.maximized);
   const items=[];
   // Mover/Tamaño con teclado no tienen sentido maximizada (no hay a donde moverla ni que
   // redimensionar): igual que en Windows real, esas dos opciones desaparecen del menú.
@@ -26171,7 +26190,7 @@ function openWindowSysMenu(id,anchor){
     items.push({sep:true});
   }
   items.push({icon:'_',label:t('win.min'),action:()=>minimizeWindow(id)});
-  if(!_mobileActive)items.push({icon:'&#9723;',label:maximized?t('win.restore'):t('win.max'),action:()=>toggleMaximize(id)});
+  items.push({icon:'&#9723;',label:maximized?t('win.restore'):t('win.max'),action:()=>toggleMaximize(id)});
   items.push({sep:true});
   items.push({icon:'&#10005;',label:t('win.close'),action:()=>closeWindow(id)});
   showContextMenu(x,y,items);
@@ -26284,7 +26303,6 @@ function toggleShowDesktop(){
 }
 
 function toggleMaximize(id){
-  if(_mobileActive)return;
   const win=document.getElementById(id);
   if(!win)return;
   const info=openWindows[id];
@@ -26305,6 +26323,7 @@ function toggleMaximize(id){
     win.classList.add('maximized');
     info.maximized=true;
   }
+  _mobileClampWindow(win);
   saveSession();
 }
 
@@ -26391,7 +26410,6 @@ function _atClose(commit){
 // una flecha en este modo no mueve también una pala o una nave por debajo.
 let _kbAdjust=null;
 function _kbAdjustStart(id,mode){
-  if(_mobileActive)return;
   const win=document.getElementById(id);
   if(!win)return;
   focusWindow(id);
@@ -26417,6 +26435,7 @@ function _kbAdjustStep(e){
     else return;
     win.style.width=Math.max(280,w)+'px'; win.style.height=Math.max(180,h)+'px';
   }
+  _mobileClampWindow(win);
 }
 function _kbAdjustEnd(commit){
   const a=_kbAdjust; if(!a)return;
@@ -26510,8 +26529,26 @@ function applySnap(win,kind){
 // Girar el móvil o redimensionar el navegador dejaba fuera de la pantalla lo que
 // estuviera colocado en píxeles: las mitades/cuartos del snap (calculados con el
 // tamaño anterior) y cualquier ventana movida a mano cerca de un borde.
+function _mobileClampWindow(win){
+  if(!_mobileActive||!win)return;
+  const bar=document.getElementById('taskbar').getBoundingClientRect();
+  const top=parseFloat(document.body.style.getPropertyValue('--vv-top'))||0;
+  const maximized=!!openWindows[win.id]?.maximized;
+  const margin=maximized?0:12;
+  const left=bar.left+margin,y=top+margin;
+  const maxW=Math.max(1,bar.width-margin*2),maxH=Math.max(1,bar.top-top-margin*2);
+  const w=maximized?maxW:Math.min(parseFloat(win.style.width)||win.offsetWidth||280,maxW);
+  const h=maximized?maxH:Math.min(parseFloat(win.style.height)||win.offsetHeight||180,maxH);
+  win.style.width=w+'px';
+  win.style.height=h+'px';
+  win.style.left=(maximized?left:Math.max(left,Math.min(parseFloat(win.style.left)||left,bar.right-margin-w)))+'px';
+  win.style.top=(maximized?y:Math.max(y,Math.min(parseFloat(win.style.top)||y,bar.top-margin-h)))+'px';
+}
 function reflowWindows(){
-  if(_mobileActive||_mobileWanted())return;
+  if(_mobileActive){
+    Object.keys(openWindows).forEach(id=>_mobileClampWindow(document.getElementById(id)));
+    return;
+  }
   const W=window.innerWidth,H=window.innerHeight,TB=taskbarH();
   Object.keys(openWindows).forEach(id=>{
     const info=openWindows[id],win=document.getElementById(id);
@@ -26558,8 +26595,12 @@ function _mobileViewport(){
   }
   if(wasMobile!==_mobileActive){
     if(_reflowRaf!==null){cancelAnimationFrame(_reflowRaf);_reflowRaf=null;}
+    if(!_mobileActive)document.querySelectorAll('.window.maximized').forEach(win=>{
+      win.style.left='0';win.style.top='0';win.style.width='100%';win.style.height='calc(100svh - var(--tb-h))';
+    });
     _mobileUpdateSwitcher();
   }
+  if(_mobileActive||wasMobile)reflowWindows();
   return wasMobile||_mobileActive;
 }
 function _queueMobileViewport(){
@@ -26623,11 +26664,12 @@ function _wdragMove(cx,cy,touch){
     d.win.style.left=nx+'px';
     d.win.style.top=ny+'px';
     // Snap solo con ratón (en escritorio): muestra previsualización en los bordes
-    if(!touch&&window.innerWidth>600){d.snap=snapKindFor(cx,cy);showSnapPreview(d.snap);}
+    if(!touch&&!_mobileActive&&window.innerWidth>600){d.snap=snapKindFor(cx,cy);showSnapPreview(d.snap);}
   }else{
     d.win.style.width=Math.max(280,d.ow+(cx-d.ox))+'px';
     d.win.style.height=Math.max(180,d.oh+(cy-d.oy))+'px';
   }
+  _mobileClampWindow(d.win);
 }
 function _wdragEnd(){
   const d=_wdrag;
@@ -26639,7 +26681,7 @@ function _wdragEnd(){
   saveSession();
 }
 function _wdragStart(win,mode,cx,cy){
-  if(_mobileActive)return;
+  if(openWindows[win.id]?.maximized)return;
   const d=_wdrag;
   d.win=win;d.mode=mode;d.snap=null;
   const info=openWindows[win.id];
@@ -26669,12 +26711,12 @@ _startWindowViewport();
 
 function makeDraggable(win,handle){
   handle.onmousedown=(e)=>{
-    if(_mobileActive||e.target.closest('button'))return;
+    if(e.target.closest('button'))return;
     _wdragStart(win,'move',e.clientX,e.clientY);
     e.preventDefault();
   };
   handle.ontouchstart=(e)=>{
-    if(_mobileActive||e.target.closest('button')||!e.touches[0])return;
+    if(e.target.closest('button')||!e.touches[0])return;
     _wdragStart(win,'move',e.touches[0].clientX,e.touches[0].clientY);
     e.preventDefault();
   };
