@@ -1193,10 +1193,6 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-docs"></use></svg></div>
           <div><div class="si-label" data-i18n="content.title">Búsqueda global de contenido</div><div class="si-desc">Ctrl+Shift+F</div></div>
         </button>
-        <button type="button" class="start-item" onclick="openSystemHealth()">
-          <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-taskmgr"></use></svg></div>
-          <div class="si-label" data-i18n="health.title">Centro de salud del sistema</div>
-        </button>
         <button type="button" class="start-item" id="start-games-toggle" onclick="toggleStartGames(event)">
           <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-juegos"></use></svg></div>
           <div style="flex:1"><div class="si-label" data-i18n="menu.games">Juegos</div><div class="si-desc" id="start-games-desc">juegos cl&aacute;sicos</div></div>
@@ -1376,6 +1372,10 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
           <div class="si-arrow">&#9656;</div>
         </button>
         <div id="start-utils-submenu">
+          <button type="button" class="start-item" onclick="openSystemHealth()">
+            <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-taskmgr"></use></svg></div>
+            <div class="si-label" data-i18n="health.title">Centro de salud del sistema</div>
+          </button>
           <button type="button" class="start-item" onclick="openTaskManager()">
             <div class="si-icon"><svg class="ico" aria-hidden="true"><use href="#i-taskmgr"></use></svg></div>
             <div><div class="si-label" data-i18n="app.taskmgr">Administrador de tareas</div><div class="si-desc">Ctrl+Alt+Supr</div></div>
@@ -1772,7 +1772,7 @@ button:focus-visible{outline:2px solid #ffd54f;outline-offset:-2px}
 @keyframes boothPop{0%{transform:scale(1.6);opacity:0}30%{opacity:1}100%{transform:scale(1);opacity:.85}}
 .booth-msg{position:absolute;padding:0 16px;color:#cfcfe0;font-size:12px;text-align:center;line-height:1.5}
 .booth-fxrow{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;flex-shrink:0}
-.booth-fx{font-family:Tahoma;font-size:10px;padding:3px 8px;border:1px solid #4a4a5a;border-radius:12px;background:#2a2a36;color:#c9c9dc;cursor:pointer}
+.booth-fx{font-family:Tahoma,sans-serif;font-size:10px;padding:3px 8px;border:1px solid #4a4a5a;border-radius:12px;background:#2a2a36;color:#c9c9dc;cursor:pointer}
 .booth-fx:hover{background:#34344a}
 .booth-fx.active{background:#3c8cf0;border-color:#2070d8;color:#fff;font-weight:bold}
 .booth-actions{display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;flex-shrink:0}
@@ -2098,10 +2098,10 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .props-chips{display:flex;flex-wrap:wrap;gap:5px}
 .props-chip{background:linear-gradient(180deg,#fdfdfd,#dfe7f5);border:1px solid #7da2ce;border-radius:10px;padding:2px 9px;font-size:11px;color:#1a4fa0}
 .props-foot{margin-top:14px;text-align:right}
-.props-visit{font-family:Tahoma;font-size:12px;padding:5px 14px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer}
+.props-visit{font-family:Tahoma,sans-serif;font-size:12px;padding:5px 14px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer}
 
 /* ═══════════════════  § PAPELERA  ═══════════════════ */
-.trash-btn{font-family:Tahoma;font-size:11px;padding:3px 10px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer}
+.trash-btn{font-family:Tahoma,sans-serif;font-size:11px;padding:3px 10px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer}
 .trash-btn:disabled{opacity:.45;cursor:default}
 .trash-size{font-size:9px;color:#777;margin-top:2px}
 /* DEDOS, NO RATÓN. En pantalla táctil el mínimo cómodo son 44 px y aquí las filas del menú
@@ -2135,7 +2135,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .trash-empty{width:100%;text-align:center;color:#666;font-size:12px;padding:34px 0}
 
 /* Instalar como app */
-.install-btn{font-family:Tahoma;font-size:13px;padding:7px 18px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#cfe0f7);cursor:pointer;font-weight:bold}
+.install-btn{font-family:Tahoma,sans-serif;font-size:13px;padding:7px 18px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#cfe0f7);cursor:pointer;font-weight:bold}
 .install-btn:disabled{opacity:.5;cursor:default}
 .install-hint{font-size:11px;color:#555;margin-top:8px;line-height:1.4}
 .install-steps{margin:6px 0 0 18px;padding:0;font-size:12px;line-height:1.7}
@@ -2223,7 +2223,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 /* ═══════════════════  § LECTOR DE EBOOKS  ═══════════════════ */
 .reader-root{display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;position:relative}
 .reader-toolbar{flex-shrink:0;display:flex;gap:4px;align-items:center;padding:5px 7px;background:linear-gradient(180deg,#f4f2ec,#e2ded2);border-bottom:1px solid #aca899;flex-wrap:wrap}
-.reader-btn{font-family:Tahoma;font-size:11px;padding:3px 8px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer;color:#222}
+.reader-btn{font-family:Tahoma,sans-serif;font-size:11px;padding:3px 8px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer;color:#222}
 .reader-btn:hover:not(:disabled){background:#fff}
 .reader-btn:disabled{opacity:.45;cursor:default}
 .reader-btn svg{display:block}
@@ -2569,7 +2569,7 @@ body.era-vista #start-search:focus{box-shadow:0 0 0 3px rgba(120,180,255,.45),0 
 .ag-pts em:not(:empty){width:auto;height:auto;background:none;color:#1e70cc;font-style:normal;font-size:9px;font-weight:bold}
 .ag-form{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0}
 .ag-form label{display:flex;flex-direction:column;gap:3px;font-size:11px;color:#444}
-.ag-form input,.ag-form select,.ag-form textarea{font-family:Tahoma;font-size:12px;padding:5px 6px;border:1px solid #7f9db9;border-radius:3px;background:#fff;width:100%;box-sizing:border-box}
+.ag-form input,.ag-form select,.ag-form textarea{font-family:Tahoma,sans-serif;font-size:12px;padding:5px 6px;border:1px solid #7f9db9;border-radius:3px;background:#fff;width:100%;box-sizing:border-box}
 .ag-form textarea{resize:vertical}
 .ag-f2{display:flex;gap:8px}
 .ag-f2 label{flex:1;min-width:0}
@@ -2662,21 +2662,141 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
 .cv-sel{border:1px solid #7f9db9;border-radius:5px;font-size:13px;padding:0 4px;background:#fff}
 .cv-eq{font-size:22px;color:#5a86c0;cursor:pointer;user-select:none}
 .cv-note{padding:6px 10px;font-size:10px;color:#889;text-align:center;min-height:14px}
+/* ═══════════════════  § JUEGOS DE MESA (Tres en raya · Conecta 4 · Memoria)  ═══════════════════
+   Mismo lenguaje que los arcade (fondo #0a0a1a, cajas de marcador, Orbitron en los títulos) con
+   un acento por juego en --acc. La raíz es un contenedor de tamaño: el tablero se calcula con
+   cqw/cqh para llenar la ventana sin cortarse, igual en escritorio que en el móvil. */
+.bgm-root{--acc:#36d1ff;--acc2:#2b7bff;container-type:size;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;height:100%;padding:8px 10px 10px;gap:8px;background:radial-gradient(ellipse 90% 55% at 50% 0%,color-mix(in srgb,var(--acc) 16%,transparent),transparent 70%),#0a0a1a;color:#fff;font-family:Rajdhani,sans-serif;overflow:hidden;position:relative;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.bgm-hud{display:flex;gap:6px;width:100%;flex-shrink:0}
+.bgm-stat{flex:1 1 0;min-width:0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:3px 4px;text-align:center;transition:border-color .2s,box-shadow .2s}
+.bgm-stat .bgm-l{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bgm-stat .bgm-v{font-size:17px;font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums}
+.bgm-stat.bgm-turn{border-color:color-mix(in srgb,var(--c,var(--acc)) 70%,transparent);box-shadow:0 0 10px color-mix(in srgb,var(--c,var(--acc)) 35%,transparent)}
+.bgm-stat.bgm-bump .bgm-v{animation:bgmBump .45s ease-out}
+.bgm-bar{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;width:100%;flex-shrink:0}
+.bgm-seg{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:2px}
+.bgm-seg button{font-family:Rajdhani,sans-serif;font-size:12px;font-weight:600;color:rgba(255,255,255,.62);background:transparent;border:none;border-radius:999px;padding:3px 10px;min-height:26px;cursor:pointer;white-space:nowrap}
+.bgm-seg button[aria-pressed="true"]{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#0a0a1a;box-shadow:0 1px 8px color-mix(in srgb,var(--acc) 40%,transparent)}
+.bgm-seg button:focus-visible,.bgm-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.bgm-seg[hidden]{display:none}
+.bgm-status{font-family:Orbitron,sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;min-height:18px;text-align:center;flex-shrink:0;color:rgba(255,255,255,.85);transition:color .2s}
+.bgm-status.bgm-win{color:#3dff9a;text-shadow:0 0 12px rgba(61,255,154,.55);animation:bgmPop .4s ease-out}
+.bgm-status.bgm-lose{color:#ff5a6e;text-shadow:0 0 12px rgba(255,90,110,.5);animation:bgmPop .4s ease-out}
+.bgm-status.bgm-draw{color:#ffd24a;text-shadow:0 0 12px rgba(255,210,74,.45);animation:bgmPop .4s ease-out}
+.bgm-status.bgm-think::after{content:'';display:inline-block;width:1.2em;text-align:left;animation:bgmDots 1s steps(4) infinite}
+.bgm-stage{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.bgm-actions{display:flex;gap:8px;justify-content:center;flex-shrink:0}
+.bgm-btn{font-family:Orbitron,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:8px 18px;min-height:34px;border:none;border-radius:999px;cursor:pointer;color:#0a0a1a;background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 2px 12px color-mix(in srgb,var(--acc) 35%,transparent);transition:transform .15s,box-shadow .15s}
+.bgm-btn:hover{transform:translateY(-1px)}
+.bgm-btn:active{transform:translateY(1px)}
+.bgm-btn.bgm-ghost{background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.18);box-shadow:none}
+.bgm-btn.bgm-ghost:disabled{opacity:.35;cursor:default;transform:none}
+.bgm-btn.bgm-call{animation:bgmCall 1.6s ease-in-out infinite}
+@keyframes bgmBump{0%{transform:scale(1)}35%{transform:scale(1.35);color:var(--acc)}100%{transform:scale(1)}}
+@keyframes bgmPop{0%{transform:scale(.85);opacity:.3}60%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes bgmDots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+@keyframes bgmCall{0%,100%{box-shadow:0 2px 12px color-mix(in srgb,var(--acc) 35%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 22%,transparent),0 2px 18px color-mix(in srgb,var(--acc) 55%,transparent)}}
+
+/* ── Tres en raya ── */
+.ttt-root{--acc:#36d1ff;--acc2:#7a5cff}
+.ttt-board{--sz:min(calc(100cqw - 24px),calc(100cqh - 178px),330px);width:var(--sz);height:var(--sz);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:7px;position:relative}
+.ttt-cell{position:relative;border:1px solid rgba(120,150,255,.18);border-radius:12px;background:linear-gradient(160deg,#17213f,#10172e);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.35);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s,transform .1s}
+.ttt-cell:not(.full):hover{background:linear-gradient(160deg,#1d2a52,#131c3a);border-color:rgba(120,150,255,.35)}
+.ttt-cell:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.ttt-cell:active:not(.full){transform:scale(.96)}
+.ttt-cell.full,.ttt-root.over .ttt-cell,.ttt-root.busy .ttt-cell{cursor:default}
+.ttt-cell svg{width:64%;height:64%;overflow:visible}
+.ttt-cell .ttt-ghost{opacity:0;transition:opacity .15s}
+.ttt-root:not(.over):not(.busy) .ttt-cell:not(.full):hover .ttt-ghost{opacity:.18}
+.ttt-x{stroke:#36d1ff;filter:drop-shadow(0 0 6px rgba(54,209,255,.7))}
+.ttt-o{stroke:#ff5577;filter:drop-shadow(0 0 6px rgba(255,85,119,.7))}
+.ttt-mark path,.ttt-mark circle{fill:none;stroke-width:13;stroke-linecap:round}
+.ttt-mark.draw path,.ttt-mark.draw circle{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:tttDraw .28s ease-out forwards}
+.ttt-mark.draw path:nth-child(2){animation-delay:.12s}
+.ttt-root.over .ttt-cell:not(.win) .ttt-mark:not(.ttt-ghost){opacity:.35;transition:opacity .4s}
+.ttt-cell.win{border-color:rgba(255,255,255,.35);background:linear-gradient(160deg,#223160,#172245)}
+.ttt-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+/* El tablero es siempre cuadrado, así que el grosor va en unidades del viewBox (100 = lado) */
+.ttt-line line{stroke:#fff;stroke-width:2.4;stroke-linecap:round;filter:drop-shadow(0 0 2px rgba(255,255,255,.8));stroke-dasharray:100;stroke-dashoffset:100;animation:tttLine .38s .12s ease-out forwards}
+@keyframes tttDraw{to{stroke-dashoffset:0}}
+@keyframes tttLine{to{stroke-dashoffset:0}}
+
+/* ── Conecta 4 ── */
+.c4-root{--acc:#ffcf3f;--acc2:#ff8a3d}
+.c4-wrap{--cell:min(calc((100cqw - 40px) / 7),calc((100cqh - 196px) / 7),56px);--g:calc(var(--cell) * .12);display:flex;flex-direction:column;align-items:center}
+.c4-pick{display:grid;grid-template-columns:repeat(7,var(--cell));gap:var(--g);padding:0 calc(var(--g) * 1.5);height:var(--cell);margin-bottom:calc(var(--g) * .8)}
+.c4-pick span{display:block;border-radius:50%;opacity:0;transform:translateY(-15%);transition:opacity .12s,transform .12s}
+.c4-pick span.on{opacity:.9;transform:none}
+.c4-board{position:relative;display:grid;grid-template-columns:repeat(7,var(--cell));grid-template-rows:repeat(6,var(--cell));gap:var(--g);padding:calc(var(--g) * 1.5);border-radius:calc(var(--cell) * .28);background:linear-gradient(180deg,#2d5be3,#1b3aa6 60%,#16308a);box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 26px rgba(0,0,0,.55),0 0 30px rgba(45,91,227,.25);overflow:hidden;touch-action:manipulation}
+.c4-cell{position:relative;border-radius:50%;background:radial-gradient(circle at 50% 38%,#070b18,#0e1630 70%);box-shadow:inset 0 3px 6px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.18);cursor:pointer}
+.c4-root.over .c4-cell,.c4-root.busy .c4-cell{cursor:default}
+.c4-col-hl{position:absolute;top:0;bottom:0;width:calc(var(--cell) + var(--g));border-radius:calc(var(--cell) * .3);background:rgba(255,255,255,.07);pointer-events:none;transition:left .1s;display:none}
+.c4-root:not(.over):not(.busy) .c4-col-hl.on{display:block}
+.c4-disc{position:absolute;inset:6%;border-radius:50%;z-index:1}
+.c4-R,.c4-pick .c4-R{background:radial-gradient(circle at 36% 30%,#ff9aa2,#ee2f45 45%,#a8121f 100%);box-shadow:inset 0 -3px 4px rgba(0,0,0,.35),inset 0 2px 3px rgba(255,255,255,.35)}
+.c4-Y,.c4-pick .c4-Y{background:radial-gradient(circle at 36% 30%,#fff2a6,#ffc629 45%,#c78a00 100%);box-shadow:inset 0 -3px 4px rgba(0,0,0,.3),inset 0 2px 3px rgba(255,255,255,.45)}
+.c4-disc::after{content:'';position:absolute;inset:22%;border-radius:50%;border:2px solid rgba(0,0,0,.14)}
+.c4-disc.drop{animation:c4Drop var(--t,.4s) cubic-bezier(.45,0,.9,.6) both}
+.c4-disc.last{box-shadow:inset 0 -3px 4px rgba(0,0,0,.35),inset 0 2px 3px rgba(255,255,255,.35),0 0 0 2px rgba(255,255,255,.75)}
+.c4-root.over .c4-disc:not(.win){filter:brightness(.55) saturate(.7);transition:filter .4s}
+.c4-disc.win{animation:c4Win .9s ease-in-out infinite alternate}
+@keyframes c4Drop{0%{transform:translateY(var(--from))}72%{transform:translateY(0)}84%{transform:translateY(-9%)}100%{transform:translateY(0)}}
+@keyframes c4Win{from{box-shadow:0 0 0 2px #fff,0 0 8px 2px rgba(255,255,255,.5)}to{box-shadow:0 0 0 3px #fff,0 0 18px 6px rgba(255,255,255,.75)}}
+
+/* ── Memoria ── */
+.mem-root{--acc:#b06bff;--acc2:#ff5fb7}
+.mem-board{--cell:min(calc((100cqw - 20px - (var(--cols) - 1) * var(--g)) / var(--cols)),calc((100cqh - 150px - (var(--rows) - 1) * var(--g)) / var(--rows)),96px);--g:clamp(4px,1.6cqw,9px);display:grid;grid-template-columns:repeat(var(--cols),var(--cell));grid-auto-rows:var(--cell);gap:var(--g);perspective:900px}
+.mem-card{position:relative;border:none;padding:0;background:transparent;cursor:pointer;border-radius:calc(var(--cell) * .16)}
+.mem-card:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.mem-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.3,.7,.3,1.2)}
+.mem-card.open .mem-inner,.mem-card.done .mem-inner{transform:rotateY(180deg)}
+.mem-face{position:absolute;inset:0;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;border-radius:calc(var(--cell) * .16)}
+.mem-back{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.16) 0 18%,transparent 19%),repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 6px,transparent 6px 12px),linear-gradient(145deg,#7b4dff,#c04bd8 55%,#ff5fa2);border:2px solid rgba(255,255,255,.22);box-shadow:0 4px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+.mem-back::after{content:'';width:34%;height:34%;border-radius:50%;border:2px solid rgba(255,255,255,.55);box-shadow:0 0 10px rgba(255,255,255,.35)}
+.mem-card:not(.open):not(.done):hover .mem-back{filter:brightness(1.12)}
+.mem-front{transform:rotateY(180deg);background:linear-gradient(160deg,#fdfcff,#e7e2f4);border:2px solid rgba(255,255,255,.7);box-shadow:0 4px 10px rgba(0,0,0,.4);font-size:calc(var(--cell) * .52);line-height:1}
+.mem-card.done .mem-front{background:linear-gradient(160deg,#e9fff3,#c4f5da);border-color:#3dff9a;box-shadow:0 0 14px rgba(61,255,154,.55)}
+.mem-card.done{cursor:default;animation:memMatch .5s ease-out}
+.mem-card.bad .mem-inner{animation:memBad .38s ease-in-out}
+@keyframes memMatch{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes memBad{0%,100%{transform:rotateY(180deg) translateX(0)}25%{transform:rotateY(180deg) translateX(-6%)}75%{transform:rotateY(180deg) translateX(6%)}}
+.mem-win{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(5,6,18,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:5;animation:bgmPop .35s ease-out}
+.mem-win[hidden]{display:none}
+.mem-win-card{text-align:center;padding:18px 22px;border-radius:14px;background:rgba(20,16,40,.92);border:1px solid rgba(176,107,255,.45);box-shadow:0 10px 40px rgba(0,0,0,.6),0 0 30px rgba(176,107,255,.25);max-width:88%}
+.mem-win-t{font-family:Orbitron,sans-serif;font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.mem-stars{font-size:28px;letter-spacing:4px;margin:6px 0 2px}
+.mem-stars b{color:#ffd24a;text-shadow:0 0 10px rgba(255,210,74,.6);font-weight:normal}
+.mem-stars i{color:rgba(255,255,255,.18);font-style:normal}
+.mem-win-s{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:12px}
+.mem-win-s .mem-rec{display:block;color:#3dff9a;font-weight:700;margin-top:2px}
+@media (prefers-reduced-motion:reduce){
+  .bgm-root *,.bgm-root *::before,.bgm-root *::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+}
 /* ═══════════════════  § AJEDREZ  ═══════════════════ */
-.chess-root{display:flex;flex-direction:column;align-items:center;height:100%;background:#2f2a26;font-family:Tahoma,sans-serif;padding:8px;gap:8px}
+.chess-root{display:flex;flex-direction:column;align-items:center;height:100%;background:#2f2a26;font-family:Tahoma,sans-serif;padding:8px;gap:8px;container-type:size;box-sizing:border-box}
 .chess-hud{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;justify-content:space-between;width:100%;max-width:360px;color:#f0e6d8;font-size:12px}
 #chess-status{min-width:0;flex:1 1 auto}
 .chess-lvl{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .chess-lvl select{background:#1e1a16;color:#f0e6d8;border:1px solid #6b5b47;border-radius:4px;font-size:12px;padding:4px 5px;min-height:30px;font-family:inherit}
-.chess-board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:min(360px,86vw);max-width:100%;aspect-ratio:1;border:3px solid #6b5b47;box-shadow:0 6px 18px rgba(0,0,0,.5)}
-.chess-sq{border:none;padding:0;margin:0;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;box-sizing:border-box;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:min(30px,7vw);line-height:1}
+/* El alto que no es tablero (HUD + capturas + botones + huecos) ronda los 150px: el tablero se
+   queda con lo que sobre, para que nada se corte ni en la ventana por defecto ni en el móvil. */
+.chess-board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:min(360px,86vw,100cqw,calc(100cqh - 150px));flex-shrink:0;max-width:100%;aspect-ratio:1;border:3px solid #6b5b47;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.chess-sq{border:none;padding:0;margin:0;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;box-sizing:border-box;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:min(32px,7vw,9cqh);line-height:1;font-family:'Segoe UI Symbol','DejaVu Sans','Noto Sans Symbols 2','Arial Unicode MS',serif}
 .chess-sq.light{background:#eeded0}.chess-sq.dark{background:#a9825f}
+.chess-sq.last.light{background:#f3e28a}.chess-sq.last.dark{background:#cdb04e}
+.chess-sq.chk{background:radial-gradient(circle,#ff5a4a 0,#e0302a 40%,transparent 75%),#a9825f!important}
 .chess-sq.sel{background:#f6d67b!important}
+.chess-board{position:relative}
+.chess-promo-veil{position:absolute;inset:0;background:rgba(20,14,8,.45);z-index:2}
+.chess-promo{position:absolute;top:0;width:12.5%;height:50%;display:flex;flex-direction:column;z-index:3;background:#fbf7ef;border-radius:0 0 6px 6px;box-shadow:0 6px 16px rgba(0,0,0,.55);overflow:hidden;animation:chessPromoIn .14s ease-out}
+.chess-promo button{flex:1;border:none;margin:0;padding:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:min(32px,7vw,9cqh);line-height:1;font-family:'Segoe UI Symbol','DejaVu Sans','Noto Sans Symbols 2','Arial Unicode MS',serif}
+.chess-promo button:hover,.chess-promo button:focus-visible{background:#f6d67b;outline:none}
+@keyframes chessPromoIn{from{transform:translateY(-8%);opacity:0}to{transform:none;opacity:1}}
 .chess-sq.mv::after{content:'';position:absolute;width:26%;height:26%;border-radius:50%;background:rgba(40,120,40,.5)}
 .chess-sq.cap{box-shadow:inset 0 0 0 3px rgba(200,50,50,.7)}
 .chess-pc{pointer-events:none;text-shadow:0 1px 1px rgba(0,0,0,.35)}
-.chess-pc.w{color:#fff;-webkit-text-stroke:.5px #555}
-.chess-pc.b{color:#1a1a1a}
+.chess-pc.w{color:#fbf7ef;-webkit-text-stroke:1.2px #3a2f25;paint-order:stroke fill;text-shadow:0 2px 2px rgba(0,0,0,.4)}
+.chess-pc.b{color:#1d1a17;-webkit-text-stroke:.6px #000;text-shadow:0 1px 1px rgba(255,255,255,.25),0 2px 2px rgba(0,0,0,.35)}
 .chess-captures{width:min(360px,86vw);max-width:100%;display:flex;flex-direction:column;gap:2px}
 .chess-cap-row{display:flex;align-items:center;gap:6px;min-height:22px;background:#e8dcc8;border:1px solid #6b5b47;border-radius:5px;padding:2px 6px}
 .chess-cap-lbl{font-size:10px;font-weight:bold;color:#6b5b47;width:24px;flex-shrink:0}
@@ -2685,7 +2805,7 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
 .chess-cap-pc.w{color:#fff;-webkit-text-stroke:.7px #6b5b47;text-shadow:0 0 1px #6b5b47}
 .chess-cap-pc.b{color:#1a1a1a}
 .chess-adv{color:#2c8a2c;font-size:11px;font-weight:bold;margin-left:6px;font-family:Tahoma,sans-serif}
-.chess-actions{display:flex;align-items:center;gap:10px;color:#f0e6d8;font-size:12px}
+.chess-actions{display:flex;align-items:center;gap:10px;color:#f0e6d8;font-size:12px;flex-shrink:0}
 /* Pausa común de los juegos de acción: el botón vive en la barra de título (la única
    forma de pausar sin teclado) y el velo es un ::after sobre el contenedor del juego,
    así que ningún juego necesita marcado propio. OJO: el velo NO puede ir sobre el
@@ -2749,11 +2869,9 @@ body.night-mode #desktop img,body.night-mode #desktop video,body.night-mode #des
 #tray-msn .tm-balloon{display:none}
 #tray-msn.unread.alt .tm-buddy{display:none}
 #tray-msn.unread.alt .tm-balloon{display:inline}
-/* En móvil, que la barra de escritura no quede pegada a la barra de tareas.
-   --tb-h ya incluye la zona segura del sistema: un solo sitio donde mirar. */
-@media (max-width:600px){
-  .msn-inputrow{padding-bottom:calc(var(--tb-h) - 2px)}
-}
+/* (Antes aquí se sumaba --tb-h al padding de la barra de escritura en móvil. Ahora la vista
+   móvil ya encoge las ventanas por encima de la barra de tareas y ese relleno dejaba una
+   franja vacía bajo la caja de texto: la ventana parecía partida en dos.) */
 
 /* ═══════════════════  § NETSCAPE  ═══════════════════ */
 svg.ns-logo{width:1em;height:1em;vertical-align:-0.12em}
@@ -2834,7 +2952,7 @@ svg.di{width:1em;height:1em;vertical-align:-0.14em;display:inline-block}
 .pl-item.active{color:#fff;text-shadow:0 0 4px rgba(255,255,255,.4)}
 
 /* ═══════════════════  § WORDART  ═══════════════════ */
-.wart-style{font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer}
+.wart-style{font-family:Tahoma,sans-serif;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer}
 .wart-style.active{border-color:#0054e3;background:linear-gradient(180deg,#e8f0fd,#cfe0f7);font-weight:bold}
 
 /* ═══════════════════  § REPRODUCTOR DE VIDEO  ═══════════════════ */
@@ -2977,7 +3095,7 @@ body.theme-aero .g-btn,body.theme-aero .game-btn{box-shadow:0 0 0 1px rgba(255,2
 /* Globo de bienvenida (primera visita) */
 #welcome-tip{position:fixed;left:10px;bottom:calc(var(--tb-h) + 10px);z-index:9600;width:min(280px,80vw);max-height:calc(100svh - var(--tb-h) - 18px);overflow-y:auto;background:#ffffe1;border:1px solid #888;border-radius:6px;box-shadow:2px 3px 10px rgba(0,0,0,.35);padding:10px 12px;font-family:Tahoma,sans-serif;font-size:12px;color:#222;line-height:1.5;animation:tipIn .3s ease}
 #welcome-tip::after{content:'';position:absolute;bottom:-9px;left:26px;border:9px solid transparent;border-top-color:#ffffe1;border-bottom:none}
-#welcome-tip b{display:block;margin-bottom:3px}
+#welcome-tip b:first-of-type{display:block;margin-bottom:3px}
 #welcome-tip .tip-close{position:absolute;top:4px;right:7px;cursor:pointer;font-weight:bold;color:#666}
 /* En móvil el menú Inicio ocupa casi todo el ancho (z-index:5001): por debajo de él para
    que si coinciden sea el menú el que gane, no el globo tapándolo (mismo caso que #ach-toast). */
@@ -4892,7 +5010,7 @@ body.mobile-layout .window.win-open,body.mobile-layout .window.win-min{animation
 .gs-in span{font-size:10px;color:#8a919c}
 .gs-ia{font-weight:bold;color:#c0533f;white-space:nowrap}
 .gs-ia.pos{color:#2f7d4b}
-.gs-mas{display:block;width:100%;margin:8px 0 2px;padding:9px;border:1px solid #aca899;border-radius:4px;background:linear-gradient(180deg,#fff,#ece9d8);font-family:Tahoma;font-size:12px;cursor:pointer}
+.gs-mas{display:block;width:100%;margin:8px 0 2px;padding:9px;border:1px solid #aca899;border-radius:4px;background:linear-gradient(180deg,#fff,#ece9d8);font-family:Tahoma,sans-serif;font-size:12px;cursor:pointer}
 .gs-mas:hover{background:linear-gradient(180deg,#fff,#f6f4ec)}
 .gs-mini{border:1px solid #d5d9e0;border-radius:3px;background:#f6f7f9;cursor:pointer;font-size:10px;padding:1px 4px;color:#5a6472}
 .gs-mini:hover{background:#e8eefc;border-color:#5a8fd6}
@@ -5351,7 +5469,7 @@ body.mobile-layout .window.win-open,body.mobile-layout .window.win-min{animation
 .hb-map{width:100%;display:block}
 .hb-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .hb-rec{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#5a6b62}
-.hb-rec-h{font-family:Tahoma;font-size:11px;padding:2px 4px;border:1px solid #bcd3c6;border-radius:3px}
+.hb-rec-h{font-family:Tahoma,sans-serif;font-size:11px;padding:2px 4px;border:1px solid #bcd3c6;border-radius:3px}
 .hb-rec-h:disabled{opacity:.5}
 .hb-stats{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}
 .hb-stats div{flex:1;min-width:64px;display:flex;flex-direction:column;align-items:center;background:#f3f7f4;border-radius:5px;padding:5px}
@@ -5402,7 +5520,7 @@ body.mobile-layout .window.win-open,body.mobile-layout .window.win-min{animation
 // ========== SYSTEM ==========
 // Versión única de la app. Súbela en cada despliegue Y en sw.js (mismo número):
 // el cambio de bytes del sw dispara la actualización, y un test verifica que coinciden.
-const APP_VERSION = '0.70.0';
+const APP_VERSION = '0.71.0';
 
 // ========== FALLOS QUE SE IGNORAN A PROPÓSITO ==========
 // El sistema está lleno de try/catch mudos, y es deliberado: una API que este navegador no
@@ -8437,7 +8555,7 @@ function showSystemError(msg){
       </div>
     </div>
     <div style="padding:0 16px 14px;text-align:right">
-      <button id="sys-error-ok" style="font-family:Tahoma;font-size:12px;padding:4px 18px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer">Aceptar</button>
+      <button id="sys-error-ok" style="font-family:Tahoma,sans-serif;font-size:12px;padding:4px 18px;border:1px solid #0054e3;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer">Aceptar</button>
     </div>
   </div>`;
   document.body.appendChild(ov);
@@ -9017,7 +9135,7 @@ function openCreateAccount(){
   ov.querySelectorAll('.acct-av').forEach(b=>b.onclick=()=>{ avatar=b.dataset.av; ov.querySelectorAll('.acct-av').forEach(x=>x.classList.toggle('sel',x===b)); });
   attachPwHelpers(p1,ov.querySelector('#acct-pass-eye'),ov.querySelector('#acct-caps'));
   p1.addEventListener('input',()=>{ const b=pwEntropyBits(p1.value); const pct=Math.min(100,Math.round(b/1.28)); bar.style.width=pct+'%'; bar.style.background=b<40?'#d05a5a':b<70?'#d0a05a':'#4ca85a'; });
-  const mk=(label,primary,fn)=>{ const el=document.createElement('button'); el.textContent=label; el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer'; el.onclick=fn; btns.appendChild(el); return el; };
+  const mk=(label,primary,fn)=>{ const el=document.createElement('button'); el.textContent=label; el.style.cssText='font-family:Tahoma,sans-serif;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer'; el.onclick=fn; btns.appendChild(el); return el; };
   const create=mk(t('acct.create'),true,async()=>{
     const user=u.value.trim();
     if(user.length<2){ errEl.textContent=t('acct.baduser'); return; }
@@ -9157,7 +9275,7 @@ function openChangePassword(){
   </div>`;
   const btns=ov.querySelector('.xp-dialog-btns'); const np=ov.querySelector('#acct-np'), np2=ov.querySelector('#acct-np2'), er=ov.querySelector('#acct-nperr');
   attachPwHelpers(np,ov.querySelector('#acct-np-eye'),ov.querySelector('#acct-np-caps'));
-  const mk=(label,primary,fn)=>{ const el=document.createElement('button'); el.textContent=label; el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer'; el.onclick=fn; btns.appendChild(el); return el; };
+  const mk=(label,primary,fn)=>{ const el=document.createElement('button'); el.textContent=label; el.style.cssText='font-family:Tahoma,sans-serif;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer'; el.onclick=fn; btns.appendChild(el); return el; };
   const ok=mk(t('btn.ok'),true,async()=>{
     if(np.value.length<4){ er.textContent=t('acct.badpass'); return; }
     if(np.value!==np2.value){ er.textContent=t('acct.mismatch'); return; }
@@ -9384,7 +9502,7 @@ function shutDown(){
     const msg=document.createElement('div');
     msg.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;gap:22px;align-items:center;justify-content:center;color:#fff;font-size:20px;z-index:99999';
     msg.innerHTML='<div>Puede apagar el equipo con seguridad.</div>'+
-      '<button id="restart-btn" style="font-family:Tahoma;font-size:14px;padding:8px 22px;border:1px solid #3a8fd4;border-radius:5px;background:linear-gradient(180deg,#3c9a3c,#1e651e);color:#fff;cursor:pointer">&#8635; Reiniciar</button>';
+      '<button id="restart-btn" style="font-family:Tahoma,sans-serif;font-size:14px;padding:8px 22px;border:1px solid #3a8fd4;border-radius:5px;background:linear-gradient(180deg,#3c9a3c,#1e651e);color:#fff;cursor:pointer">&#8635; Reiniciar</button>';
     document.body.appendChild(msg);
     const rb=msg.querySelector('#restart-btn');
     rb.onclick=()=>location.reload();
@@ -10061,7 +10179,7 @@ function xpDialog(title,bodyHTML,buttons){
   (buttons&&buttons.length?buttons:[{label:t('btn.ok'),primary:true}]).forEach(b=>{
     const el=document.createElement('button');
     el.textContent=b.label;
-    el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(b.primary?'#0054e3':'#aca899')+';border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer';
+    el.style.cssText='font-family:Tahoma,sans-serif;font-size:12px;padding:4px 16px;border:1px solid '+(b.primary?'#0054e3':'#aca899')+';border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#dfe7f5);cursor:pointer';
     el.onclick=()=>{ov.remove();if(b.action)b.action();};
     btns.appendChild(el);
   });
@@ -10082,7 +10200,7 @@ function xpPrompt(title,label,defaultValue,onOk){
     <div style="background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">${escHtml(title)}</div>
     <div style="padding:14px 16px 6px;font-size:12px;color:#222;line-height:1.5">
       <label for="xp-prompt-input" style="display:block;margin-bottom:6px">${escHtml(label)}</label>
-      <input id="xp-prompt-input" type="text" style="width:100%;font-family:Tahoma;font-size:13px;padding:5px 7px;border:1px solid #7f9db9;border-radius:2px;box-sizing:border-box">
+      <input id="xp-prompt-input" type="text" style="width:100%;font-family:Tahoma,sans-serif;font-size:13px;padding:5px 7px;border:1px solid #7f9db9;border-radius:2px;box-sizing:border-box">
     </div>
     <div class="xp-dialog-btns" style="padding:0 16px 12px;display:flex;gap:8px;justify-content:flex-end"></div>
   </div>`;
@@ -10092,7 +10210,7 @@ function xpPrompt(title,label,defaultValue,onOk){
   const mk=(label,primary,fn)=>{
     const el=document.createElement('button');
     el.textContent=label;
-    el.style.cssText='font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer';
+    el.style.cssText='font-family:Tahoma,sans-serif;font-size:12px;padding:4px 16px;border:1px solid '+(primary?'#0054e3':'#aca899')+';border-radius:3px;background:'+(primary?'linear-gradient(180deg,#fdfdfd,#e6e2d6)':'#f4f2ec')+';cursor:pointer';
     el.onclick=fn; btns.appendChild(el); return el;
   };
   const aceptar=()=>{ const v=inp.value.trim(); ov.remove(); if(onOk)onOk(v); };
@@ -10479,8 +10597,10 @@ const RECORD_DEFS=[
   {icon:GAME_ICONS.sudoku,label:'Sudoku · difícil',key:'tos-sudoku-best-dificil',unit:'s'},
   {icon:GAME_ICONS.pong,label:'Pong · racha',key:'tos-pong-best',unit:'seguidas'},
   {icon:GAME_ICONS.connect4,label:'Conecta 4 · racha',key:'tos-c4-best',unit:'seguidas'},
-  {icon:GAME_ICONS.ttt,label:'Tres en raya',key:'tos-ttt-best',unit:'sin perder'},
-  {icon:GAME_ICONS.memory,label:'Memoria',key:'tos-memory-best',unit:'movimientos'},
+  {icon:GAME_ICONS.ttt,label:'Tres en raya · imposible',key:'tos-ttt-best',unit:'sin perder'},
+  {icon:GAME_ICONS.memory,label:'Memoria · fácil',key:'tos-memory-best-facil',unit:'movimientos'},
+  {icon:GAME_ICONS.memory,label:'Memoria · normal',key:'tos-memory-best',unit:'movimientos'},
+  {icon:GAME_ICONS.memory,label:'Memoria · difícil',key:'tos-memory-best-dificil',unit:'movimientos'},
   {icon:GAME_ICONS.solitaire,label:'Solitario',key:'tos-solitaire-best',unit:'victorias'},
   {icon:GAME_ICONS.chess,label:'Ajedrez',key:'tos-chess-best',unit:'victorias'},
   {icon:GAME_ICONS.mahjong,label:'Mahjong · tortuga',key:'tos-mahjong-best-tortuga',unit:'s'},
@@ -10558,8 +10678,7 @@ function unlock(id){
   st[id]=Date.now();
   Store.set('tos-achievements',JSON.stringify(st));
   const a=ACHIEVEMENTS.find(x=>x.id===id);
-  announce('Logro desbloqueado: '+a.label);
-  achToast(a);
+  achToast(a); // el aviso para lectores de pantalla lo da notify()
   return true;
 }
 // Registra que se ha jugado a un juego y comprueba los logros de variedad
@@ -10583,7 +10702,7 @@ function checkScoreAchievements(){
 }
 // Globo de aviso al desbloquear, estilo XP
 function achToast(a){
-  notify({icon:a.icon,title:'🎉 Logro desbloqueado',body:a.label,sound:false}); // al centro de notificaciones
+  notify({icon:a.icon,title:'🎉 Logro desbloqueado',body:a.label,sound:false,silent:true}); // solo al historial: el globo propio va abajo (antes salían dos a la vez)
   const old=document.getElementById('ach-toast');
   if(old)old.remove();
   const t=document.createElement('div');
@@ -10706,6 +10825,7 @@ function shareRecords(){
 }
 
 // ========== GLOBO DE BIENVENIDA (solo la primera visita) ==========
+let _welcomeTipDone=null; // createWindow lo llama: quien ya ha abierto algo no necesita el aviso
 function maybeShowWelcomeTip(){
   if(Store.get('tos-tour')==='done')return;
   const tip=document.createElement('div');
@@ -10714,7 +10834,8 @@ function maybeShowWelcomeTip(){
     <b>&#128075; ¡Bienvenido a Torrecillas OS!</b>
     Esto es un escritorio de verdad: pulsa <b>Inicio</b> para descubrir ${gamesApps.length} juegos, Paint, el terminal y mis proyectos. Los iconos se pueden arrastrar.`;
   document.body.appendChild(tip);
-  const done=()=>{Store.set('tos-tour','done');if(tip.parentNode)tip.remove();};
+  const done=()=>{Store.set('tos-tour','done');if(tip.parentNode)tip.remove();_welcomeTipDone=null;};
+  _welcomeTipDone=done;
   tip.querySelector('.tip-close').onclick=done;
   tip.querySelector('.tip-close').addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();done();}});
   const sb=document.getElementById('start-btn');
@@ -12079,7 +12200,7 @@ function openLoquendo(){
   const content=`<div id="loq-root" style="display:flex;flex-direction:column;height:100%;background:#ece9d8;font-family:Tahoma,sans-serif;font-size:11px;padding:9px;gap:8px">
     <textarea id="loq-text" aria-label="Texto a leer" style="flex:1;min-height:0;border:1px solid #7da2ce;border-radius:3px;padding:7px;font-family:inherit;font-size:13px;resize:none;outline:none">hola soy loquendo y voy a narrar tu partida del buscaminas</textarea>
     <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-      <select id="loq-voice" aria-label="Voz" style="font-family:Tahoma;font-size:11px;padding:3px;max-width:150px"></select>
+      <select id="loq-voice" aria-label="Voz" style="font-family:Tahoma,sans-serif;font-size:11px;padding:3px;max-width:150px"></select>
       <label style="display:flex;align-items:center;gap:4px">Velocidad <input type="range" id="loq-rate" min="50" max="200" value="100" style="width:70px"></label>
       <label style="display:flex;align-items:center;gap:4px">Tono <input type="range" id="loq-pitch" min="50" max="200" value="100" style="width:70px"></label>
     </div>
@@ -13642,7 +13763,7 @@ function openGadgetGallery(){
     <div style="background:var(--xp-titulo);box-shadow:var(--xp-titulo-relieve);text-shadow:1px 1px 1px rgba(0,0,0,.4);color:#fff;padding:6px 10px;font-weight:bold;font-size:13px">&#129513; ${escHtml(t('gad.title'))}</div>
     <div style="padding:10px 14px;font-size:12px;color:#333">${escHtml(t('gad.intro'))}</div>
     <div class="gad-gallery">${Object.keys(GADGET_DEFS).map(k=>'<button type="button" class="gad-card" data-g="'+k+'"><span class="gad-ic">'+({clock:'&#128368;',calendar:'&#128197;',agenda:'&#128467;',notes:'&#128221;',monitor:'&#128200;',luz:'&#128161;',tiempo:'&#9925;',radar:'&#127783;'}[k])+'</span><span>'+escHtml(t(GADGET_DEFS[k].key))+'</span></button>').join('')}</div>
-    <div class="xp-dialog-btns" style="padding:6px 16px 12px;display:flex;justify-content:flex-end"><button type="button" id="gad-close" style="font-family:Tahoma;font-size:12px;padding:4px 16px;border:1px solid #aca899;border-radius:3px;background:#f4f2ec;cursor:pointer">${escHtml(t('btn.close'))}</button></div>
+    <div class="xp-dialog-btns" style="padding:6px 16px 12px;display:flex;justify-content:flex-end"><button type="button" id="gad-close" style="font-family:Tahoma,sans-serif;font-size:12px;padding:4px 16px;border:1px solid #aca899;border-radius:3px;background:#f4f2ec;cursor:pointer">${escHtml(t('btn.close'))}</button></div>
   </div>`;
   ov.querySelectorAll('.gad-card').forEach(b=>b.onclick=()=>addGadget(b.dataset.g));
   ov.querySelector('#gad-close').onclick=()=>ov.remove();
@@ -22494,13 +22615,14 @@ function _chAttacked(st,r,c,byWhite){
   return false;
 }
 function _chKing(st,white){ const K=white?'K':'k'; for(let i=0;i<8;i++)for(let j=0;j<8;j++)if(st.board[i][j]===K)return [i,j]; return null; }
-function _chApply(st,from,to){
+// promo: 'q' | 'r' | 'b' | 'n' (por defecto dama; la IA y la búsqueda siempre usan dama)
+function _chApply(st,from,to,promo){
   const s=_chClone(st), [fr,fc]=from,[tr,tc]=to, p=s.board[fr][fc], white=_chIsWhite(p), type=p.toLowerCase();
   s.ep=null;
   if(type==='p'&&fc!==tc&&s.board[tr][tc]==='')s.board[white?tr+1:tr-1][tc]=''; // en passant
   s.board[tr][tc]=p; s.board[fr][fc]='';
   if(type==='p'&&Math.abs(tr-fr)===2)s.ep=[(fr+tr)/2,fc];
-  if(type==='p'&&(tr===0||tr===7))s.board[tr][tc]=white?'Q':'q';
+  if(type==='p'&&(tr===0||tr===7)){ const q='qrbn'.includes(promo)&&promo?promo:'q'; s.board[tr][tc]=white?q.toUpperCase():q; }
   if(type==='k'&&Math.abs(tc-fc)===2){ if(tc===6){ s.board[tr][5]=s.board[tr][7]; s.board[tr][7]=''; } else { s.board[tr][3]=s.board[tr][0]; s.board[tr][0]=''; } }
   if(type==='k'){ if(white){s.castle.K=false;s.castle.Q=false;} else {s.castle.k=false;s.castle.q=false;} }
   const clr=(rr,cc)=>{ if(rr===7&&cc===0)s.castle.Q=false; if(rr===7&&cc===7)s.castle.K=false; if(rr===0&&cc===0)s.castle.q=false; if(rr===0&&cc===7)s.castle.k=false; };
@@ -22656,9 +22778,12 @@ const CH_NIVELES=[
 ];
 function _chNivel(id){ return CH_NIVELES.find(n=>n.id===id)||CH_NIVELES[2]; }
 // `nivel` admite un número (profundidad pelada, como antes) o una ficha de CH_NIVELES.
-function _chBestMove(st,forWhite,nivel){
+// excluir(m): opcional, descarta jugadas de la raíz (p.ej. las que repiten posición cuando
+// se va ganando). Si las descartara todas, se ignora: siempre hay que devolver algo.
+function _chBestMove(st,forWhite,nivel,excluir){
   const cfg=(typeof nivel==='number'||nivel==null)?{prof:nivel||2,ms:0,ruido:0,quies:false}:nivel;
-  const moves=_chLegal(st,forWhite); if(!moves.length)return null;
+  let moves=_chLegal(st,forWhite); if(!moves.length)return null;
+  if(excluir){ const quedan=moves.filter(m=>!excluir(m)); if(quedan.length)moves=quedan; }
   for(let i=moves.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=moves[i]; moves[i]=moves[j]; moves[j]=t; }
   _chOrdena(st,moves);
   _chFin=cfg.ms?Date.now()+cfg.ms:0;
@@ -22682,7 +22807,9 @@ function _chBestMove(st,forWhite,nivel){
   return mejor;
 }
 function initChess(){
-  const G={K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙',k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+  // Silueta rellena para los dos bandos (el color lo pone el CSS) y U+FE0E detrás de cada una:
+  // sin él, ♟ sale como emoji en Android e iOS y rompe el tablero.
+  const G={}; Object.entries({k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'}).forEach(([k,g])=>{ G[k]=g+'\uFE0E'; G[k.toUpperCase()]=g+'\uFE0E'; });
   const content=`<div id="chess-game" class="chess-root">
     <div class="chess-hud"><span id="chess-status">Tu turno (blancas)</span><label class="chess-lvl">Nivel <select id="chess-lvl" aria-label="Nivel de la máquina">${CH_NIVELES.map(n=>`<option value="${n.id}">${n.label}</option>`).join('')}</select></label></div>
     <div class="chess-board" id="chess-board"></div>
@@ -22692,9 +22819,21 @@ function initChess(){
     </div>
     <div class="chess-actions"><button type="button" class="g-btn g-btn-alt" id="chess-undo">&#8630; ${t('btn.undo')}</button><button type="button" class="g-btn" id="chess-new">${t('btn.newgame')}</button><span id="chess-msg"></span></div>
   </div>`;
-  createWindow('Ajedrez','♟️',372,452,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+  createWindow('Ajedrez','♟️',380,540,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
     const boardEl=win.querySelector('#chess-board'), statusEl=win.querySelector('#chess-status'), msgEl=win.querySelector('#chess-msg');
-    let st, sel=null, legal=[], over=false, thinking=false, capW=[], capB=[];
+    let st, sel=null, legal=[], over=false, thinking=false, capW=[], capB=[], ultima=null, promoAbierta=false, cierraPromo=null;
+    // Tablas por repetición y por la regla de los 50 movimientos: el motor no guarda historia,
+    // así que se lleva aquí. La clave de posición solo incluye la casilla de captura al paso
+    // si de verdad hay un peón que pueda comerla (si no, dos posiciones idénticas no contarían).
+    let reps=new Map(), medio=0;
+    const clavePos=(s)=>{
+      let ep='-';
+      if(s.ep){ const [er,ec]=s.ep, P=s.turn==='w'?'P':'p', fr=s.turn==='w'?er+1:er-1;
+        if([ec-1,ec+1].some(c=>c>=0&&c<8&&s.board[fr]&&s.board[fr][c]===P))ep=er+''+ec; }
+      const c=s.castle;
+      return s.board.map(f=>f.map(x=>x||'.').join('')).join('/')+' '+s.turn+' '+(c.K?'K':'')+(c.Q?'Q':'')+(c.k?'k':'')+(c.q?'q':'')+' '+ep;
+    };
+    const anotaPos=()=>{ const k=clavePos(st); reps.set(k,(reps.get(k)||0)+1); };
     // Deshacer: `_chApply` devuelve un estado NUEVO (no muta), así que basta guardar la
     // referencia antes de tu jugada. Cada paso atrás retira tu jugada Y la respuesta de
     // la IA, que es lo que espera quien se ha equivocado de casilla.
@@ -22714,21 +22853,74 @@ function initChess(){
       for(let r=0;r<8;r++)for(let c=0;c<8;c++){ const sq=document.createElement('button'); sq.type='button'; sq.className='chess-sq '+((r+c)%2?'dark':'light'); sq.dataset.r=r; sq.dataset.c=c;
         const p=st.board[r][c]; if(p)sq.innerHTML='<span class="chess-pc '+(_chIsWhite(p)?'w':'b')+'">'+G[p]+'</span>';
         sq.setAttribute('aria-label',casilla(r,c)+(p?', '+PIEZA[p.toLowerCase()]+' '+(_chIsWhite(p)?'blanco':'negro'):', vacía'));
+        if(ultima&&((ultima.from[0]===r&&ultima.from[1]===c)||(ultima.to[0]===r&&ultima.to[1]===c)))sq.classList.add('last');
         if(sel&&sel[0]===r&&sel[1]===c)sq.classList.add('sel');
         if(legal.some(m=>m.to[0]===r&&m.to[1]===c))sq.classList.add(p?'cap':'mv');
         sq.onclick=()=>onSquare(r,c); boardEl.appendChild(sq);
       }
+      // Rey en jaque: su casilla se tiñe de rojo, como en cualquier tablero de verdad
+      const wt=st.turn==='w', k=_chKing(st,wt);
+      if(k&&_chAttacked(st,k[0],k[1],!wt))boardEl.children[k[0]*8+k[1]].classList.add('chk');
     };
     const statusOf=(forWhite)=>{ const mv=_chLegal(st,forWhite), k=_chKing(st,forWhite), chk=k&&_chAttacked(st,k[0],k[1],!forWhite);
       if(mv.length===0){ over=true; if(chk)return forWhite?'¡Jaque mate! Gana la IA':'¡Jaque mate! Ganas 🎉'; return 'Tablas (rey ahogado)'; }
+      const resto=st.board.flat().filter(p=>p&&p.toLowerCase()!=='k');
+      if(resto.length===0||(resto.length===1&&/[bn]/i.test(resto[0]))){ over=true; return 'Tablas (material insuficiente)'; }
+      if((reps.get(clavePos(st))||0)>=3){ over=true; return 'Tablas (triple repetición)'; }
+      if(medio>=100){ over=true; return 'Tablas (regla de los 50 movimientos)'; }
       return chk?(forWhite?'¡Jaque! Te toca':'Jaque a la IA'):(forWhite?'Tu turno (blancas)':'La IA piensa…'); };
     const finish=(s)=>{ over=true; if(/Ganas/.test(s)){ try{ const r=useRecord('tos-chess-best'); r.submit(r.value+1); msgEl.textContent='Victorias: '+r.value; }catch(e){_ignora(e);} } };
     const onSquare=(r,c)=>{
       if(over||thinking||st.turn!=='w')return;
-      if(sel){ const mv=legal.find(m=>m.to[0]===r&&m.to[1]===c); if(mv){ historia.push({st:st,capW:capW.slice(),capB:capB.slice()}); const cap=_chCaptured(st,sel,[r,c]); if(cap)capW.push(cap); st=_chApply(st,sel,[r,c]); sel=null; legal=[]; render(); renderCaps(); const s=statusOf(false); statusEl.textContent=s; if(over){ finish(s); return; } aiMove(); return; } }
+      if(promoAbierta)return;
+      if(sel){ const mv=legal.find(m=>m.to[0]===r&&m.to[1]===c); if(mv){
+        const from=sel, to=[r,c];
+        if(st.board[from[0]][from[1]]==='P'&&r===0){ abrePromo(from,to); return; }
+        jugar(from,to); return; } }
       const p=st.board[r][c];
       if(p&&_chIsWhite(p)){ sel=[r,c]; legal=_chLegal(st,true).filter(m=>m.from[0]===r&&m.from[1]===c); } else { sel=null; legal=[]; }
       render();
+    };
+    // Aplica una jugada (de quien sea) llevando capturas, última jugada, reloj de 50 y repeticiones
+    const aplica=(from,to,promo,blancas)=>{
+      const p=st.board[from[0]][from[1]], cap=_chCaptured(st,from,to);
+      if(cap)(blancas?capW:capB).push(cap);
+      medio=(cap||p.toLowerCase()==='p')?0:medio+1;
+      ultima={from,to}; st=_chApply(st,from,to,promo); anotaPos();
+    };
+    const jugar=(from,to,promo)=>{
+      historia.push({st:st,capW:capW.slice(),capB:capB.slice(),reps:new Map(reps),medio:medio,ultima:ultima});
+      aplica(from,to,promo,true);
+      if(promo&&promo!=='q')announce('Coronas '+PIEZA[promo]);
+      sel=null; legal=[]; render(); renderCaps();
+      const s=statusOf(false); statusEl.textContent=s; if(over){ finish(s); return; }
+      aiMove();
+    };
+    // Selector de coronación: una columna con dama, torre, alfil y caballo que cuelga de la
+    // casilla de destino, como en cualquier tablero online. Esc o tocar fuera lo cancela.
+    const abrePromo=(from,to)=>{
+      promoAbierta=true;
+      const veil=document.createElement('div'); veil.className='chess-promo-veil';
+      const col=document.createElement('div'); col.className='chess-promo'; col.style.left=(to[1]*12.5)+'%';
+      col.setAttribute('role','group'); col.setAttribute('aria-label','Elige pieza para coronar');
+      const cierra=()=>{ promoAbierta=false; cierraPromo=null; veil.remove(); col.remove(); boardEl.removeEventListener('keydown',teclas,true); };
+      cierraPromo=cierra;
+      const teclas=(e)=>{
+        const bs=[...col.querySelectorAll('button')], i=bs.indexOf(document.activeElement);
+        if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); cierra(); sel=null; legal=[]; render(); }
+        else if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); bs[(i+(e.key==='ArrowDown'?1:3))%4].focus(); }
+      };
+      ['q','r','b','n'].forEach(k=>{
+        const b=document.createElement('button'); b.type='button';
+        b.innerHTML='<span class="chess-pc w">'+G[k.toUpperCase()]+'</span>';
+        b.setAttribute('aria-label','Coronar '+PIEZA[k]);
+        b.onclick=(e)=>{ e.stopPropagation(); cierra(); jugar(from,to,k); };
+        col.appendChild(b);
+      });
+      veil.onclick=()=>{ cierra(); sel=null; legal=[]; render(); };
+      boardEl.appendChild(veil); boardEl.appendChild(col);
+      boardEl.addEventListener('keydown',teclas,true);
+      col.querySelector('button').focus();
     };
     const nivelSel=win.querySelector('#chess-lvl');
     const nivelAct=()=>_chNivel(nivelSel.value);
@@ -22739,17 +22931,20 @@ function initChess(){
       // El motor es síncrono: se le da un respiro al navegador para que pinte el aviso
       // antes de bloquear el hilo (en Experto es casi un par de segundos).
       setTimeout(()=>{
-        const m=_chBestMove(st,false,n);
-        if(m){ const cap=_chCaptured(st,m.from,m.to); if(cap)capB.push(cap); st=_chApply(st,m.from,m.to); }
+        // Si la IA va por delante en material, no se deja arrastrar a unas tablas por repetición
+        const mat=st.board.flat().reduce((a,p)=>p&&p.toLowerCase()!=='k'?a+(_chIsWhite(p)?-1:1)*_CH_VAL[p.toLowerCase()]:a,0);
+        const m=_chBestMove(st,false,n,mat>=150?(mv=>(reps.get(clavePos(_chApply(st,mv.from,mv.to)))||0)>=2):null);
+        if(m)aplica(m.from,m.to,'q',false);
         thinking=false; render(); renderCaps();
         const s=statusOf(true); statusEl.textContent=s; if(over)finish(s);
       },n.ms>=900?60:240);
     };
-    const reset=()=>{ st={board:_chessInitBoard(),turn:'w',castle:{K:true,Q:true,k:true,q:true},ep:null}; sel=null; legal=[]; over=false; thinking=false; capW=[]; capB=[]; historia=[]; msgEl.textContent=''; statusEl.textContent='Tu turno (blancas)'; render(); renderCaps(); };
+    const reset=()=>{ if(cierraPromo)cierraPromo(); st={board:_chessInitBoard(),turn:'w',castle:{K:true,Q:true,k:true,q:true},ep:null}; sel=null; legal=[]; over=false; thinking=false; capW=[]; capB=[]; historia=[]; ultima=null; promoAbierta=false; reps=new Map(); medio=0; anotaPos(); msgEl.textContent=''; statusEl.textContent='Tu turno (blancas)'; render(); renderCaps(); };
     const deshacer=()=>{
       if(thinking)return;                      // la IA tiene una jugada en el aire
+      if(cierraPromo)cierraPromo();
       const h=historia.pop(); if(!h)return;
-      st=h.st; capW=h.capW; capB=h.capB;
+      st=h.st; capW=h.capW; capB=h.capB; ultima=h.ultima; reps=h.reps; medio=h.medio; promoAbierta=false;
       sel=null; legal=[]; over=false; msgEl.textContent='';
       statusEl.textContent='Tu turno (blancas)';
       render(); renderCaps();
@@ -26163,6 +26358,10 @@ function createWindow(title,icon,width,height,content,opts={}){
   uiSfx('open');
   if(!_restoringSession)announce(title+' abierto');
 
+  // El globo de bienvenida señala el botón Inicio; si ya has abierto algo, sobra (y en el
+  // móvil tapaba los controles táctiles de los juegos). Restaurar la sesión no cuenta.
+  if(_welcomeTipDone&&!_restoringSession)_welcomeTipDone();
+
   if(opts.onCreated)opts.onCreated(id,win);
   return id;
 }
@@ -26956,7 +27155,7 @@ function openSettings(){
         <h3>&#127760; <span data-i18n="set.language">Idioma</span></h3>
         <p data-i18n="set.language.hint">La interfaz cambia al instante; el contenido retro se queda en español.</p>
         <div class="color-row">
-          <select id="lang-select" aria-label="Idioma del sistema" style="font-family:Tahoma;font-size:12px;padding:4px 8px;border:1px solid #7f9db9;border-radius:3px">${I18N_LANGS.map(l=>'<option value="'+l[0]+'"'+(currentLang()===l[0]?' selected':'')+'>'+l[1]+'</option>').join('')}</select>
+          <select id="lang-select" aria-label="Idioma del sistema" style="font-family:Tahoma,sans-serif;font-size:12px;padding:4px 8px;border:1px solid #7f9db9;border-radius:3px">${I18N_LANGS.map(l=>'<option value="'+l[0]+'"'+(currentLang()===l[0]?' selected':'')+'>'+l[1]+'</option>').join('')}</select>
         </div>
       </div>
       <div class="settings-group">
@@ -26983,7 +27182,7 @@ function openSettings(){
         <p>Un cielo de estrellas tras un rato sin actividad</p>
         <div class="color-row">
           <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="scrsv-on"> Activado</label>
-          <select id="scrsv-min" aria-label="Minutos de espera" style="font-family:Tahoma;font-size:11px;padding:2px">
+          <select id="scrsv-min" aria-label="Minutos de espera" style="font-family:Tahoma,sans-serif;font-size:11px;padding:2px">
             <option value="1">1 min</option><option value="3">3 min</option><option value="5">5 min</option><option value="10">10 min</option>
           </select>
           <button class="settings-btn" id="scrsv-test" style="margin-left:auto">Probar</button>
@@ -27457,7 +27656,7 @@ function openNotepad(opts){
     if(_notepadLoad){_notepadLoad(opts);focusExisting('notepad-area');return;}
   }
   if(!opts.fileId&&opts.text===undefined&&focusExisting('notepad-area'))return;
-  const btn='font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer';
+  const btn='font-family:Tahoma,sans-serif;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fdfdfd,#e6e2d6);cursor:pointer';
   const content=`<div style="display:flex;flex-direction:column;height:100%;background:#ece9d8">
     <div style="flex-shrink:0;display:flex;gap:5px;align-items:center;padding:4px 6px;border-bottom:1px solid #aca899;flex-wrap:wrap">
       <button id="np-new" style="${btn}" title="Vaciar el documento">&#128196; ${t('btn.new')}</button>
@@ -27817,15 +28016,15 @@ function openImageViewer(){
   if(focusExisting('imgviewer-area'))return;
   const content=`<div style="display:flex;flex-direction:column;height:100%;background:#2b2b2b">
     <div style="flex-shrink:0;display:flex;gap:5px;align-items:center;padding:5px 7px;background:#ece9d8;border-bottom:1px solid #aca899;flex-wrap:wrap">
-      <button id="iv-open" style="font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fff,#e6e2d6);cursor:pointer">&#128193; Abrir imagen</button>
-      <button id="iv-zin" data-i18n-aria="btn.zoomin" aria-label="Acercar" style="font-family:Tahoma;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">+</button>
-      <button id="iv-zout" data-i18n-aria="btn.zoomout" aria-label="Alejar" style="font-family:Tahoma;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">&minus;</button>
-      <button id="iv-fit" style="font-family:Tahoma;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">Ajustar</button>
+      <button id="iv-open" style="font-family:Tahoma,sans-serif;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:linear-gradient(180deg,#fff,#e6e2d6);cursor:pointer">&#128193; Abrir imagen</button>
+      <button id="iv-zin" data-i18n-aria="btn.zoomin" aria-label="Acercar" style="font-family:Tahoma,sans-serif;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">+</button>
+      <button id="iv-zout" data-i18n-aria="btn.zoomout" aria-label="Alejar" style="font-family:Tahoma,sans-serif;font-size:13px;width:26px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">&minus;</button>
+      <button id="iv-fit" style="font-family:Tahoma,sans-serif;font-size:11px;padding:3px 9px;border:1px solid #aca899;border-radius:3px;background:#fff;cursor:pointer">Ajustar</button>
       <span id="iv-zoom" style="font-size:11px;color:#444;margin-left:auto">100%</span>
       <input type="file" id="iv-file" accept="image/*" aria-label="Abrir una imagen" style="display:none">
     </div>
     <div id="imgviewer-area" style="flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;position:relative">
-      <div id="iv-empty" style="color:#999;font-family:Tahoma;font-size:13px;text-align:center;padding:20px">&#128247;<br>Abre una imagen para verla aquí</div>
+      <div id="iv-empty" style="color:#999;font-family:Tahoma,sans-serif;font-size:13px;text-align:center;padding:20px">&#128247;<br>Abre una imagen para verla aquí</div>
       <img id="iv-img" alt="" style="display:none;transform-origin:center;max-width:none">
     </div>
   </div>`;
@@ -28980,194 +29179,584 @@ function initSudoku(){
   }});
 }
 
+// ========== JUEGOS DE MESA: PIEZAS COMUNES ==========
+// Tres en raya, Conecta 4 y Memoria comparten marcador, control segmentado, línea de estado y
+// sonidos. Todo lo visual vive en el CSS (§ JUEGOS DE MESA); aquí solo el comportamiento.
+function _bgmStat(id,label,color,cssColor){
+  return `<div class="bgm-stat" id="${id}-s"${cssColor?` style="--c:${cssColor}"`:''}><div class="bgm-l" id="${id}-l">${label}</div><div class="bgm-v" id="${id}-v"${color?` style="color:${color}"`:''}>0</div></div>`;
+}
+// Cambia el número y lo hace "saltar" (reinicia la animación aunque ya estuviera puesta)
+function _bgmSet(root,id,v,bump){
+  const el=root.querySelector('#'+id+'-v'); if(!el)return;
+  el.textContent=v;
+  if(bump){ const s=el.parentNode; s.classList.remove('bgm-bump'); void s.offsetWidth; s.classList.add('bgm-bump'); }
+}
+function _bgmStatus(el,txt,kind){
+  el.className='bgm-status'+(kind?' bgm-'+kind:'');
+  el.textContent=txt;
+}
+// Control segmentado: botones con data-v; marca el elegido con aria-pressed
+function _bgmSeg(el,val,onPick){
+  const pinta=(v)=>el.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===v)));
+  pinta(val);
+  el.querySelectorAll('button').forEach(b=>b.onclick=()=>{ if(b.getAttribute('aria-pressed')==='true')return; pinta(b.dataset.v); onPick(b.dataset.v); });
+  return pinta;
+}
+const _bgmSnd={
+  a:()=>playTone(660,0.07,'sine',0.32),
+  b:()=>playTone(440,0.07,'sine',0.32),
+  clack:(k)=>{ playTone(150+k*14,0.05,'triangle',0.45); setTimeout(()=>playTone(110+k*10,0.04,'triangle',0.25),45); },
+  flip:()=>playTone(820,0.035,'triangle',0.22),
+  match:()=>{ playTone(784,0.07,'sine',0.35); setTimeout(()=>playTone(1175,0.1,'sine',0.3),70); },
+  miss:()=>playTone(196,0.09,'triangle',0.3),
+  win:()=>[523.25,659.25,783.99,1046.5].forEach((f,i)=>setTimeout(()=>playTone(f,0.13,'triangle',0.4),i*95)),
+  lose:()=>[392,329.63,261.63].forEach((f,i)=>setTimeout(()=>playTone(f,0.17,'triangle',0.38),i*130)),
+  draw:()=>{ playTone(440,0.1,'triangle',0.32); setTimeout(()=>playTone(440,0.14,'triangle',0.28),140); }
+};
+// ¿La tecla viene de un botón que ya la va a atender él solo (Enter/Espacio)?
+function _bgmKeyEnBoton(e){ return (e.key==='Enter'||e.key===' ')&&e.target&&e.target.tagName==='BUTTON'; }
+
 // ========== TRES EN RAYA ==========
+// Tres niveles: Fácil (despistado), Normal (juega bien pero a veces se equivoca) e Imposible
+// (minimax completo). Quién empieza se alterna en cada partida. El récord es la racha SIN
+// PERDER contra Imposible, que es el único nivel donde empatar tiene mérito.
 function initTicTacToe(){
-  const content=`<div id="ttt-game" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0d1326;color:#fff;padding:14px;gap:14px;font-family:Rajdhani,sans-serif">
-    <div id="ttt-status" style="font-size:20px;font-weight:700;letter-spacing:.5px;min-height:24px">Tu turno (X)</div>
-    <div id="ttt-board" style="display:grid;grid-template-columns:repeat(3,80px);grid-template-rows:repeat(3,80px);gap:6px"></div>
-    <div style="display:flex;gap:14px;align-items:center">
-      <label style="font-size:13px;display:flex;align-items:center;gap:5px;cursor:pointer"><input type="checkbox" id="ttt-cpu" checked> vs CPU</label>
-      <button id="ttt-reset" class="g-btn">${t('btn.newgame')}</button>
+  const content=`<div id="ttt-game" class="bgm-root ttt-root">
+    <div class="bgm-hud">${_bgmStat('ttt-x','Tú · X','#36d1ff','#36d1ff')}${_bgmStat('ttt-d','Empates','#ffd24a')}${_bgmStat('ttt-o','CPU · O','#ff5577','#ff5577')}${_bgmStat('ttt-r','Récord','#3dff9a')}</div>
+    <div class="bgm-bar">
+      <div class="bgm-seg" id="ttt-mode" role="group" aria-label="Modo de juego"><button type="button" data-v="cpu">1 jugador</button><button type="button" data-v="2p">2 jugadores</button></div>
+      <div class="bgm-seg" id="ttt-lvl" role="group" aria-label="Dificultad"><button type="button" data-v="facil">Fácil</button><button type="button" data-v="normal">Normal</button><button type="button" data-v="imposible">Imposible</button></div>
     </div>
+    <div class="bgm-status" id="ttt-status" role="status" aria-live="polite"></div>
+    <div class="bgm-stage"><div class="ttt-board" id="ttt-board" role="group" aria-label="Tablero de tres en raya"></div></div>
+    <div class="bgm-actions"><button type="button" class="bgm-btn" id="ttt-reset">${t('btn.newgame')}</button></div>
   </div>`;
-  createWindow('Tres en raya','&#11093;',320,400,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
-    const boardEl=document.getElementById('ttt-board'),statusEl=document.getElementById('ttt-status'),cpuChk=document.getElementById('ttt-cpu');
+  createWindow('Tres en raya','&#11093;',360,500,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const root=win.querySelector('#ttt-game'),boardEl=root.querySelector('#ttt-board'),statusEl=root.querySelector('#ttt-status'),resetBtn=root.querySelector('#ttt-reset');
     const WIN=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-    // La CPU juega minimax (imbatible), asi que el record es la racha SIN PERDER:
-    // ganar en 2 jugadores o empatar contra la maquina la mantiene; perder la corta.
     const rec=useRecord('tos-ttt-best');
-    let board,turn,over,racha=0;
-    const winner=(b)=>{for(const[a,c,d]of WIN)if(b[a]&&b[a]===b[c]&&b[a]===b[d])return b[a];return b.every(x=>x)?'draw':null;};
-    function reset(){board=Array(9).fill('');turn='X';over=false;statusEl.textContent='Tu turno (X)';render();}
-    function render(){
-      boardEl.innerHTML='';
-      board.forEach((v,i)=>{
-        const c=document.createElement('div');
-        c.textContent=v;c.setAttribute('role','button');c.tabIndex=0;c.setAttribute('aria-label','Casilla '+(i+1)+(v?', '+v:', vacía'));
-        c.style.cssText='display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;background:#16213e;border:2px solid #2a3a6a;border-radius:8px;cursor:pointer;color:'+(v==='X'?'#36d1ff':'#ff5577');
-        c.onclick=()=>play(i);
-        c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();play(i);}});
-        boardEl.appendChild(c);
-      });
+    let modo=Store.get('tos-ttt-mode')==='2p'?'2p':'cpu';
+    let nivel=['facil','normal','imposible'].includes(Store.get('tos-ttt-lvl'))?Store.get('tos-ttt-lvl'):'normal';
+    let board,turn,over,busy,starter='O',cur=4,racha=0,token=0;
+    let marcador={X:0,O:0,D:0};
+    const otro=p=>p==='X'?'O':'X';
+    const winLine=(b)=>{ for(const l of WIN){ const[a,c,d]=l; if(b[a]&&b[a]===b[c]&&b[a]===b[d])return l; } return null; };
+    const winner=(b)=>{ const l=winLine(b); return l?b[l[0]]:(b.every(x=>x)?'draw':null); };
+    const later=(ms,fn)=>{ const k=token; setTimeout(()=>{ if(k===token&&document.body.contains(root))fn(); },ms); };
+    // ---- dibujo: las marcas son SVG que se trazan solas (stroke-dashoffset) ----
+    const SVG={
+      X:(cls)=>`<svg viewBox="0 0 100 100" class="ttt-mark ttt-x ${cls}" style="--len:80" aria-hidden="true"><path d="M22 22L78 78"/><path d="M78 22L22 78"/></svg>`,
+      O:(cls)=>`<svg viewBox="0 0 100 100" class="ttt-mark ttt-o ${cls}" style="--len:189" aria-hidden="true"><circle cx="50" cy="50" r="30" transform="rotate(-90 50 50)"/></svg>`
+    };
+    const cells=[];
+    for(let i=0;i<9;i++){
+      const c=document.createElement('button'); c.type='button'; c.className='ttt-cell'; c.tabIndex=i===cur?0:-1;
+      c.onclick=()=>{ if(over){ reset(); return; } play(i); };
+      c.onfocus=()=>{ cur=i; cells.forEach((x,j)=>x.tabIndex=j===i?0:-1); };
+      boardEl.appendChild(c); cells.push(c);
+    }
+    const nombre=(p)=>modo==='cpu'?(p==='X'?'tuya':'de la CPU'):'de '+p;
+    const pintaCelda=(i,anim)=>{
+      const c=cells[i],v=board[i];
+      c.classList.toggle('full',!!v);
+      c.innerHTML=v?SVG[v](anim?'draw':''):SVG[turn]('ttt-ghost');
+      c.setAttribute('aria-label','Casilla '+(i+1)+(v?', '+v:', vacía'));
+    };
+    const pintaFantasmas=()=>{ for(let i=0;i<9;i++)if(!board[i])pintaCelda(i,false); };
+    const pintaHud=()=>{
+      root.querySelector('#ttt-x-l').textContent=modo==='cpu'?'Tú · X':'Jugador X';
+      root.querySelector('#ttt-o-l').textContent=modo==='cpu'?'CPU · O':'Jugador O';
+      _bgmSet(root,'ttt-x',marcador.X); _bgmSet(root,'ttt-o',marcador.O); _bgmSet(root,'ttt-d',marcador.D); _bgmSet(root,'ttt-r',rec.value);
+      root.querySelector('#ttt-r-s').title='Mejor racha sin perder contra la CPU en Imposible';
+      root.querySelector('#ttt-lvl').hidden=modo!=='cpu';
+    };
+    const pintaTurno=()=>{
+      root.querySelector('#ttt-x-s').classList.toggle('bgm-turn',!over&&turn==='X');
+      root.querySelector('#ttt-o-s').classList.toggle('bgm-turn',!over&&turn==='O');
+      if(modo==='cpu')_bgmStatus(statusEl,turn==='X'?'Tu turno':'La CPU piensa',turn==='X'?'':'think');
+      else _bgmStatus(statusEl,'Turno de '+turn,'');
+    };
+    function reset(){
+      token++; board=Array(9).fill(''); over=false; busy=false;
+      starter=otro(starter); turn=starter;      // se alterna quién abre
+      root.classList.remove('over','busy'); resetBtn.classList.remove('bgm-call');
+      const l=boardEl.querySelector('.ttt-line'); if(l)l.remove();
+      cells.forEach(c=>c.classList.remove('win'));
+      for(let i=0;i<9;i++)pintaCelda(i,false);
+      pintaHud(); pintaTurno();
+      if(modo==='cpu'&&turn==='O'){ busy=true; root.classList.add('busy'); later(520,cpuMove); }
     }
     function play(i){
-      if(over||board[i])return;
-      if(cpuChk.checked&&turn!=='X')return;
-      board[i]=turn;advance();
-      if(!over&&cpuChk.checked&&turn==='O')setTimeout(cpuMove,260);
+      if(over||busy||board[i])return;
+      if(modo==='cpu'&&turn!=='X')return;
+      mover(i);
+      if(!over&&modo==='cpu'){ busy=true; root.classList.add('busy'); later(380+Math.random()*260,cpuMove); }
     }
-    function advance(){
-      const w=winner(board);render();
-      if(w){
-        over=true;
-        statusEl.textContent=w==='draw'?'Empate':(w==='X'?'¡Ganaste! (X)':(cpuChk.checked?'Gana la CPU (O)':'Gana O'));
-        if(w==='O'){racha=0;}                       // has perdido: se corta la racha
-        else{
-          if(w==='draw'&&cpuChk.checked)unlock('ttt-tablas'); // empatar a la maquina es el techo
-          racha++;
-          if(rec.submit(racha))announce('Nuevo récord en Tres en raya: '+racha+' sin perder');
-        }
-        return;
+    function mover(i){
+      board[i]=turn; (turn==='X'?_bgmSnd.a:_bgmSnd.b)();
+      pintaCelda(i,true);
+      const w=winner(board);
+      if(w){ fin(w); return; }
+      turn=otro(turn); pintaFantasmas(); pintaTurno();
+    }
+    function fin(w){
+      over=true; busy=false; root.classList.remove('busy'); root.classList.add('over'); resetBtn.classList.add('bgm-call');
+      for(let i=0;i<9;i++)if(!board[i])cells[i].innerHTML='';   // fuera las marcas fantasma
+      root.querySelector('#ttt-x-s').classList.remove('bgm-turn'); root.querySelector('#ttt-o-s').classList.remove('bgm-turn');
+      if(w==='draw'){ marcador.D++; _bgmSet(root,'ttt-d',marcador.D,true); _bgmStatus(statusEl,'Empate','draw'); _bgmSnd.draw(); }
+      else{
+        marcador[w]++; _bgmSet(root,'ttt-'+w.toLowerCase(),marcador[w],true);
+        const pierdes=modo==='cpu'&&w==='O';
+        _bgmStatus(statusEl,modo==='cpu'?(pierdes?'Gana la CPU':'¡Has ganado!'):'¡Gana '+w+'!',pierdes?'lose':'win');
+        (pierdes?_bgmSnd.lose:_bgmSnd.win)();
+        trazaLinea(winLine(board));
       }
-      turn=turn==='X'?'O':'X';
-      statusEl.textContent=cpuChk.checked?(turn==='X'?'Tu turno (X)':'Pensando…'):'Turno de '+turn;
+      if(modo==='cpu'&&nivel==='imposible'){
+        if(w==='O')racha=0;
+        else{
+          if(w==='draw')unlock('ttt-tablas');
+          racha++;
+          if(rec.submit(racha)){ _bgmSet(root,'ttt-r',rec.value,true); statusEl.textContent+=' · ¡récord: '+racha+' sin perder!'; }
+        }
+      }
+      announce(statusEl.textContent);
     }
-    function cpuMove(){if(over)return;const i=minimax(board.slice(),'O').i;if(i!=null){board[i]='O';advance();}}
-    function minimax(b,p){
+    // Línea ganadora: SVG en % del tablero (sobrevive a redimensionar la ventana). Sin
+    // vector-effect: con él Chrome ignora pathLength y el trazo animado se quedaba a medias.
+    function trazaLinea(l){
+      cells.forEach((c,i)=>c.classList.toggle('win',l.includes(i)));
+      const br=boardEl.getBoundingClientRect(),ra=cells[l[0]].getBoundingClientRect(),rb=cells[l[2]].getBoundingClientRect();
+      if(!br.width)return;
+      let x1=(ra.left+ra.width/2-br.left)/br.width*100,y1=(ra.top+ra.height/2-br.top)/br.height*100;
+      let x2=(rb.left+rb.width/2-br.left)/br.width*100,y2=(rb.top+rb.height/2-br.top)/br.height*100;
+      const ex=(x2-x1)*.16,ey=(y2-y1)*.16; x1-=ex; y1-=ey; x2+=ex; y2+=ey;   // que sobresalga un poco
+      boardEl.insertAdjacentHTML('beforeend',`<svg class="ttt-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" pathLength="100"/></svg>`);
+    }
+    // ---- CPU ----
+    // Negamax completo (el árbol del tres en raya es diminuto). Prefiere ganar pronto y perder
+    // tarde, y entre jugadas igual de buenas elige al azar para no repetir siempre la partida.
+    function nm(b,p,prof){
       const w=winner(b);
-      if(w==='O')return{score:10};if(w==='X')return{score:-10};if(w==='draw')return{score:0};
-      const moves=[];
-      for(let i=0;i<9;i++)if(!b[i]){b[i]=p;const r=minimax(b,p==='O'?'X':'O');moves.push({i,score:r.score});b[i]='';}
-      return p==='O'?moves.reduce((a,m)=>m.score>a.score?m:a):moves.reduce((a,m)=>m.score<a.score?m:a);
+      if(w==='draw')return 0;
+      if(w)return w===p?10-prof:prof-10;
+      let best=-99;
+      for(let i=0;i<9;i++)if(!b[i]){ b[i]=p; const v=-nm(b,otro(p),prof+1); b[i]=''; if(v>best)best=v; }
+      return best;
     }
-    document.getElementById('ttt-reset').onclick=reset;
-    cpuChk.onchange=reset;
-    mountGame(id,{rootId:'ttt-game',restart:reset});
+    function mejores(b,p){
+      let best=-99,out=[];
+      for(let i=0;i<9;i++)if(!b[i]){ b[i]=p; const v=-nm(b,otro(p),1); b[i]=''; if(v>best){best=v;out=[i];} else if(v===best)out.push(i); }
+      return out;
+    }
+    const alAzar=a=>a[Math.floor(Math.random()*a.length)];
+    const remata=(b,p)=>{ for(let i=0;i<9;i++)if(!b[i]){ b[i]=p; const g=winner(b)===p; b[i]=''; if(g)return i; } return -1; };
+    function eligeCpu(){
+      const b=board.slice(),libres=b.map((v,i)=>v?-1:i).filter(i=>i>=0);
+      if(nivel==='imposible')return alAzar(mejores(b,'O'));
+      const gana=remata(b,'O');
+      if(nivel==='normal'){
+        if(gana>=0)return gana;
+        return Math.random()<0.25?alAzar(libres):alAzar(mejores(b,'O'));
+      }
+      // Fácil: ve sus victorias a menudo, tapa las tuyas a veces y si no, juega a lo loco
+      if(gana>=0&&Math.random()<0.7)return gana;
+      const tapa=remata(b,'X');
+      if(tapa>=0&&Math.random()<0.45)return tapa;
+      return alAzar(libres);
+    }
+    function cpuMove(){
+      if(over)return;
+      busy=false; root.classList.remove('busy');
+      mover(eligeCpu());
+    }
+    // ---- controles ----
+    const setModo=(v)=>{ modo=v; Store.set('tos-ttt-mode',v); marcador={X:0,O:0,D:0}; racha=0; starter='O'; reset(); };
+    _bgmSeg(root.querySelector('#ttt-mode'),modo,setModo);
+    _bgmSeg(root.querySelector('#ttt-lvl'),nivel,(v)=>{ nivel=v; Store.set('tos-ttt-lvl',v); marcador={X:0,O:0,D:0}; racha=0; starter='O'; reset(); });
+    resetBtn.onclick=reset;
+    // Teclado: flechas por el tablero, 1-9 como el teclado numérico (7 8 9 arriba), N nueva partida
+    const NUMPAD={7:0,8:1,9:2,4:3,5:4,6:5,1:6,2:7,3:8};
+    mountGame(id,{rootId:'ttt-game',restart:reset,keydown:(e)=>{
+      const k=e.key;
+      if(k.startsWith('Arrow')){
+        e.preventDefault();
+        const r=Math.floor(cur/3),c=cur%3;
+        const n=k==='ArrowUp'?((r+2)%3)*3+c:k==='ArrowDown'?((r+1)%3)*3+c:k==='ArrowLeft'?r*3+(c+2)%3:r*3+(c+1)%3;
+        cells[n].focus(); return;
+      }
+      if(NUMPAD[k]!==undefined){ e.preventDefault(); cells[NUMPAD[k]].focus(); if(over)reset(); else play(NUMPAD[k]); return; }
+      if((k==='n'||k==='N'||k==='r'||k==='R')&&!e.ctrlKey&&!e.metaKey){ e.preventDefault(); reset(); }
+    }});
     reset();
   }});
 }
 
 // ========== CONECTA 4 ==========
+// IA de verdad: negamax con poda alfa-beta, profundización iterativa con tope de tiempo y una
+// evaluación por ventanas de cuatro casillas. Fácil ve poco y se despista, Normal mira 5
+// jugadas y Difícil hasta 9 (con un límite de ~0,9 s para no congelar la ventana).
+function _c4Motor(){
+  const C=7,R=6,B=new Int8Array(42),H=new Int8Array(7),ORDEN=[3,2,4,1,5,0,6];
+  // las 69 líneas posibles de cuatro, precalculadas una vez
+  const VENT=[];
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++)for(const[dr,dc]of[[0,1],[1,0],[1,1],[1,-1]]){
+    const er=r+dr*3,ec=c+dc*3; if(er<0||er>=R||ec<0||ec>=C)continue;
+    VENT.push([0,1,2,3].map(k=>(r+dr*k)*C+(c+dc*k)));
+  }
+  let fin=0,corte=false,nodos=0;
+  const gana=(r,c,p)=>{
+    for(const[dr,dc]of[[0,1],[1,0],[1,1],[1,-1]]){
+      let n=1;
+      for(let s=-1;s<=1;s+=2){ let rr=r+dr*s,cc=c+dc*s; while(rr>=0&&rr<R&&cc>=0&&cc<C&&B[rr*C+cc]===p){ n++; rr+=dr*s; cc+=dc*s; } }
+      if(n>=4)return true;
+    }
+    return false;
+  };
+  // Evaluación: control del centro, líneas de dos abiertas y, sobre todo, AMENAZAS (casillas
+  // vacías que completarían cuatro). Una amenaza vale más si su fila tiene la paridad buena
+  // para su dueño: al llenarse el tablero, quien empezó acaba cayendo en las filas impares
+  // (contando desde abajo) y el segundo en las pares — es lo que decide las partidas reñidas.
+  const AMP=new Uint8Array(42),AMO=new Uint8Array(42);
+  const evalua=(p,llenas)=>{
+    const o=3-p; let s=0;
+    AMP.fill(0); AMO.fill(0);
+    for(let r=0;r<R;r++){ const v=B[r*C+3]; if(v===p)s+=3; else if(v===o)s-=3; }
+    for(const w of VENT){
+      let a=0,b=0,hueco=-1; for(const i of w){ const v=B[i]; if(v===p)a++; else if(v===o)b++; else hueco=i; }
+      if(a&&b)continue;
+      if(a===3)AMP[hueco]=1; else if(a===2)s+=2;
+      else if(b===3)AMO[hueco]=1; else if(b===2)s-=2;
+    }
+    // ¿p es quien empezó? Le toca mover a p: si hay un número par de fichas, sí.
+    const pImpar=(llenas&1)===0;
+    for(let i=0;i<42;i++){
+      if(!AMP[i]&&!AMO[i])continue;
+      const impar=((R-Math.floor(i/C))&1)===1;          // fila contada desde abajo (1..6)
+      if(AMP[i])s+=(impar===pImpar)?14:6;
+      if(AMO[i])s-=(impar!==pImpar)?14:6;
+    }
+    return s;
+  };
+  function nm(prof,alfa,beta,p,ply,llenas){
+    if((++nodos&1023)===0&&fin&&Date.now()>fin){ corte=true; return 0; }
+    if(llenas===42)return 0;
+    if(prof===0)return evalua(p,llenas);
+    let best=-1e9;
+    for(const c of ORDEN){
+      if(H[c]>=R)continue;
+      const r=R-1-H[c]; B[r*C+c]=p; H[c]++;
+      const v=gana(r,c,p)?100000-ply:-nm(prof-1,-beta,-alfa,3-p,ply+1,llenas+1);
+      H[c]--; B[r*C+c]=0;
+      if(corte)return 0;
+      if(v>best)best=v;
+      if(best>alfa)alfa=best;
+      if(alfa>=beta)break;
+    }
+    return best;
+  }
+  return {
+    // g[r][c] con r=0 arriba; p: 1 rojo, 2 amarillo
+    elige(g,p,profMax,ms){
+      let llenas=0;
+      for(let c=0;c<C;c++){ H[c]=0; for(let r=0;r<R;r++){ const v=g[r][c]; B[r*C+c]=v; if(v){ llenas++; } } for(let r=R-1;r>=0&&B[r*C+c];r--)H[c]++; }
+      const libres=ORDEN.filter(c=>H[c]<R);
+      if(!libres.length)return -1;
+      fin=ms?Date.now()+ms:0; corte=false; nodos=0;
+      let elegida=libres[0];
+      for(let d=1;d<=profMax;d++){
+        let best=-1e9,cand=[],alfa=-1e9;
+        for(const c of libres){
+          const r=R-1-H[c]; B[r*C+c]=p; H[c]++;
+          // Ventana abierta un punto por debajo de alfa: con poda "fail-soft" una jugada peor
+          // puede devolver justo alfa y parecer empatada con la mejor (y el sorteo entre
+          // empates la elegiría). Así solo empatan los empates de verdad.
+          const v=gana(r,c,p)?100000:-nm(d-1,-1e9,-(alfa-1),3-p,1,llenas+1);
+          H[c]--; B[r*C+c]=0;
+          if(corte)break;
+          if(v>best){ best=v; cand=[c]; } else if(v===best)cand.push(c);
+          if(best>alfa)alfa=best;
+        }
+        if(corte)break;                            // iteración a medias: vale la anterior
+        elegida=cand[Math.floor(Math.random()*cand.length)];
+        if(best>90000||best<-90000)break;           // victoria o derrota ya vistas
+      }
+      fin=0;
+      return elegida;
+    }
+  };
+}
 function initConnect4(){
   const COLS=7,ROWS=6;
-  const content=`<div id="c4-game" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0d1326;color:#fff;padding:12px;gap:10px;font-family:Rajdhani,sans-serif">
-    <div id="c4-status" style="font-size:18px;font-weight:700;min-height:22px">Tu turno (rojo)</div>
-    <div id="c4-board" style="display:grid;grid-template-columns:repeat(7,38px);gap:4px;background:#1b3a8a;padding:8px;border-radius:10px"></div>
-    <button id="c4-reset" class="g-btn">${t('btn.newgame')}</button>
+  const NIVELES={facil:{prof:2,despiste:0.3,ms:0},normal:{prof:5,despiste:0,ms:0},dificil:{prof:9,despiste:0,ms:900}};
+  const content=`<div id="c4-game" class="bgm-root c4-root">
+    <div class="bgm-hud">${_bgmStat('c4-r','Tú · rojo','#ff5a6e','#ff5a6e')}${_bgmStat('c4-d','Empates','#9fb4ff')}${_bgmStat('c4-y','CPU · amarillo','#ffcf3f','#ffcf3f')}${_bgmStat('c4-k','Racha récord','#3dff9a')}</div>
+    <div class="bgm-bar">
+      <div class="bgm-seg" id="c4-mode" role="group" aria-label="Modo de juego"><button type="button" data-v="cpu">1 jugador</button><button type="button" data-v="2p">2 jugadores</button></div>
+      <div class="bgm-seg" id="c4-lvl" role="group" aria-label="Dificultad"><button type="button" data-v="facil">Fácil</button><button type="button" data-v="normal">Normal</button><button type="button" data-v="dificil">Difícil</button></div>
+    </div>
+    <div class="bgm-status" id="c4-status" role="status" aria-live="polite"></div>
+    <div class="bgm-stage"><div class="c4-wrap">
+      <div class="c4-pick" id="c4-pick" aria-hidden="true">${'<span></span>'.repeat(COLS)}</div>
+      <div class="c4-board" id="c4-board" tabindex="0" role="application" aria-label="Tablero de Conecta 4. Flechas para elegir columna, Intro o flecha abajo para soltar, o números del 1 al 7."><div class="c4-col-hl" id="c4-hl"></div></div>
+    </div></div>
+    <div class="bgm-actions"><button type="button" class="bgm-btn" id="c4-reset">${t('btn.newgame')}</button></div>
   </div>`;
-  createWindow('Conecta 4','&#128313;',360,430,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
-    const boardEl=document.getElementById('c4-board'),statusEl=document.getElementById('c4-status');
-    // Record: racha de victorias contra la CPU (perder o empatar la reinicia)
-    const rec=useRecord('tos-c4-best');
-    let grid,over,busy,racha=0;
-    const lowest=(g,c)=>{for(let r=ROWS-1;r>=0;r--)if(!g[r][c])return r;return -1;};
-    const place=(g,c,p)=>{const r=lowest(g,c);if(r<0)return -1;g[r][c]=p;return r;};
-    const full=(g)=>g[0].every(x=>x);
-    function checkWin(g,p){
-      for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-        if(g[r][c]!==p)continue;
-        for(const[dr,dc]of[[0,1],[1,0],[1,1],[1,-1]]){
-          let k=1,rr=r+dr,cc=c+dc;
-          while(rr>=0&&rr<ROWS&&cc>=0&&cc<COLS&&g[rr][cc]===p){k++;rr+=dr;cc+=dc;}
-          if(k>=4)return true;
+  createWindow('Conecta 4','&#128313;',420,560,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const root=win.querySelector('#c4-game'),boardEl=root.querySelector('#c4-board'),statusEl=root.querySelector('#c4-status'),resetBtn=root.querySelector('#c4-reset');
+    const pickEls=[...root.querySelectorAll('#c4-pick span')],hl=root.querySelector('#c4-hl');
+    const motor=_c4Motor();
+    const rec=useRecord('tos-c4-best');   // racha de victorias contra la CPU en Normal o Difícil
+    let modo=Store.get('tos-c4-mode')==='2p'?'2p':'cpu';
+    let nivel=NIVELES[Store.get('tos-c4-lvl')]?Store.get('tos-c4-lvl'):'normal';
+    let grid,turn,over,busy,starter=2,cur=3,hover=-1,racha=0,token=0;
+    let marcador={1:0,2:0,D:0};
+    const COLOR={1:'R',2:'Y'},NOMBRE={1:'rojo',2:'amarillo'};
+    const later=(ms,fn)=>{ const k=token; setTimeout(()=>{ if(k===token&&document.body.contains(root))fn(); },ms); };
+    const cells=[];
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      const d=document.createElement('div'); d.className='c4-cell'; d.dataset.c=c;
+      boardEl.appendChild(d); cells.push(d);
+    }
+    const cell=(r,c)=>cells[r*COLS+c];
+    const lowest=(c)=>{ for(let r=ROWS-1;r>=0;r--)if(!grid[r][c])return r; return -1; };
+    const lleno=()=>grid[0].every(x=>x);
+    const cuatro=(r,c,p)=>{
+      for(const[dr,dc]of[[0,1],[1,0],[1,1],[1,-1]]){
+        const linea=[[r,c]];
+        for(let s=-1;s<=1;s+=2){ let rr=r+dr*s,cc=c+dc*s; while(rr>=0&&rr<ROWS&&cc>=0&&cc<COLS&&grid[rr][cc]===p){ linea.push([rr,cc]); rr+=dr*s; cc+=dc*s; } }
+        if(linea.length>=4)return linea;
+      }
+      return null;
+    };
+    const esHumano=()=>modo==='2p'||turn===1;
+    // Indicador de columna: la ficha fantasma de arriba y la franja clara en el tablero
+    function pintaPick(){
+      const c=hover>=0?hover:cur, ver=!over&&!busy&&esHumano();
+      pickEls.forEach((s,i)=>{ s.className=(i===c&&ver?'on c4-'+COLOR[turn]:''); });
+      hl.classList.toggle('on',ver&&hover>=0);
+      if(hover>=0)hl.style.left=`calc(var(--g) * 1 + ${hover} * (var(--cell) + var(--g)))`;
+    }
+    const pintaHud=()=>{
+      root.querySelector('#c4-r-l').textContent=modo==='cpu'?'Tú · rojo':'Rojo';
+      root.querySelector('#c4-y-l').textContent=modo==='cpu'?'CPU · amarillo':'Amarillo';
+      _bgmSet(root,'c4-r',marcador[1]); _bgmSet(root,'c4-y',marcador[2]); _bgmSet(root,'c4-d',marcador.D); _bgmSet(root,'c4-k',rec.value);
+      root.querySelector('#c4-k-s').title='Mejor racha de victorias seguidas contra la CPU (Normal o Difícil)';
+      root.querySelector('#c4-lvl').hidden=modo!=='cpu';
+    };
+    const pintaTurno=()=>{
+      root.querySelector('#c4-r-s').classList.toggle('bgm-turn',!over&&turn===1);
+      root.querySelector('#c4-y-s').classList.toggle('bgm-turn',!over&&turn===2);
+      if(modo==='cpu')_bgmStatus(statusEl,turn===1?'Tu turno':'La CPU piensa',turn===1?'':'think');
+      else _bgmStatus(statusEl,'Turno de '+NOMBRE[turn],'');
+      pintaPick();
+    };
+    function reset(){
+      token++; grid=Array.from({length:ROWS},()=>Array(COLS).fill(0)); over=false; busy=false;
+      starter=3-starter; turn=starter;
+      root.classList.remove('over','busy'); resetBtn.classList.remove('bgm-call');
+      cells.forEach(d=>d.innerHTML='');
+      pintaHud(); pintaTurno();
+      if(modo==='cpu'&&turn===2)turnoCpu();
+    }
+    // Suelta una ficha con caída animada; la jugada "cuenta" cuando la ficha aterriza
+    function soltar(c,p,luego){
+      const r=lowest(c); if(r<0)return false;
+      grid[r][c]=p;
+      boardEl.querySelectorAll('.c4-disc.last').forEach(x=>x.classList.remove('last'));
+      const d=cell(r,c),pitch=d.offsetHeight+(parseFloat(getComputedStyle(boardEl).rowGap)||4);
+      const t=Math.min(0.55,0.2*Math.sqrt(r+1));
+      d.innerHTML=`<div class="c4-disc c4-${COLOR[p]} drop last" style="--from:${-(r+1)*pitch-pitch*.2}px;--t:${t}s"></div>`;
+      busy=true; root.classList.add('busy'); pintaPick();
+      later(t*720,()=>_bgmSnd.clack(ROWS-r));
+      later(t*1000+30,()=>{ busy=false; root.classList.remove('busy'); luego(r); });
+      return true;
+    }
+    function jugar(c){
+      if(over||busy||!esHumano()||lowest(c)<0)return;
+      const p=turn;
+      soltar(c,p,(r)=>despues(r,c,p));
+    }
+    function despues(r,c,p){
+      announce(NOMBRE[p]+' en la columna '+(c+1));
+      const linea=cuatro(r,c,p);
+      if(linea){ fin(p,linea); return; }
+      if(lleno()){ fin(0,null); return; }
+      turn=3-p; pintaTurno();
+      if(modo==='cpu'&&turn===2)turnoCpu();
+    }
+    function turnoCpu(){
+      busy=true; root.classList.add('busy'); pintaTurno();
+      // respiro para que se pinte "La CPU piensa" antes del cálculo (síncrono)
+      later(nivel==='dificil'?120:320+Math.random()*200,()=>{
+        const n=NIVELES[nivel];
+        let c=motor.elige(grid,2,n.prof,n.ms);
+        if(n.despiste&&Math.random()<n.despiste){ const libres=[...Array(COLS).keys()].filter(x=>lowest(x)>=0); c=libres[Math.floor(Math.random()*libres.length)]; }
+        busy=false;
+        if(c<0)return;
+        soltar(c,2,(r)=>despues(r,c,2));
+      });
+    }
+    function fin(p,linea){
+      over=true; root.classList.add('over'); resetBtn.classList.add('bgm-call');
+      root.querySelector('#c4-r-s').classList.remove('bgm-turn'); root.querySelector('#c4-y-s').classList.remove('bgm-turn');
+      if(!p){ marcador.D++; _bgmSet(root,'c4-d',marcador.D,true); _bgmStatus(statusEl,'Empate','draw'); _bgmSnd.draw(); if(modo==='cpu')racha=0; }
+      else{
+        linea.forEach(([r,c])=>{ const d=cell(r,c).firstChild; if(d)d.classList.add('win'); });
+        marcador[p]++; _bgmSet(root,p===1?'c4-r':'c4-y',marcador[p],true);
+        const pierdes=modo==='cpu'&&p===2;
+        _bgmStatus(statusEl,modo==='cpu'?(pierdes?'Gana la CPU':'¡Has ganado!'):'¡Gana el '+NOMBRE[p]+'!',pierdes?'lose':'win');
+        (pierdes?_bgmSnd.lose:_bgmSnd.win)();
+        if(modo==='cpu'){
+          if(pierdes)racha=0;
+          else{
+            unlock('c4-victoria');
+            if(nivel!=='facil'){ racha++; if(rec.submit(racha)){ _bgmSet(root,'c4-k',rec.value,true); statusEl.textContent+=' · ¡récord: '+racha+' seguidas!'; } }
+          }
         }
       }
-      return false;
+      pintaPick();
+      announce(statusEl.textContent);
     }
-    function reset(){grid=Array.from({length:ROWS},()=>Array(COLS).fill(''));over=false;busy=false;statusEl.textContent='Tu turno (rojo)';render();}
-    function render(){
-      boardEl.innerHTML='';
-      for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-        const v=grid[r][c],cell=document.createElement('div');
-        cell.style.cssText='width:38px;height:38px;border-radius:50%;cursor:pointer;box-shadow:inset 0 2px 4px rgba(0,0,0,.4);background:'+(v==='R'?'radial-gradient(circle at 35% 30%,#ff8088,#d8222f)':v==='Y'?'radial-gradient(circle at 35% 30%,#ffe27a,#e0a800)':'#0d1326');
-        if(r===0){cell.setAttribute('role','button');cell.tabIndex=0;cell.setAttribute('aria-label','Soltar en columna '+(c+1));}
-        cell.onclick=()=>drop(c);
-        cell.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();drop(c);}});
-        boardEl.appendChild(cell);
-      }
-    }
-    function drop(c){
-      if(over||busy||lowest(grid,c)<0)return;
-      place(grid,c,'R');render();
-      if(checkWin(grid,'R')){over=true;statusEl.textContent='¡Ganaste! 🔴';racha++;unlock('c4-victoria');if(rec.submit(racha))announce('Nuevo récord en Conecta 4: '+racha+' seguidas');else announce('¡Has ganado al Conecta 4!');return;}
-      if(full(grid)){over=true;statusEl.textContent='Empate';racha=0;return;}
-      busy=true;statusEl.textContent='Pensando…';setTimeout(cpu,320);
-    }
-    function cpu(){
-      const c=choose();place(grid,c,'Y');render();busy=false;
-      if(checkWin(grid,'Y')){over=true;statusEl.textContent='Gana la CPU 🟡';racha=0;announce('Conecta 4: gana la CPU');return;}
-      if(full(grid)){over=true;statusEl.textContent='Empate';return;}
-      statusEl.textContent='Tu turno (rojo)';
-    }
-    function choose(){
-      const valid=[];for(let c=0;c<COLS;c++)if(lowest(grid,c)>=0)valid.push(c);
-      for(const c of valid){const g=grid.map(r=>r.slice());place(g,c,'Y');if(checkWin(g,'Y'))return c;}
-      for(const c of valid){const g=grid.map(r=>r.slice());place(g,c,'R');if(checkWin(g,'R'))return c;}
-      const center=valid.filter(c=>Math.abs(3-c)<=1);const pool=center.length?center:valid;
-      return pool[Math.floor(Math.random()*pool.length)];
-    }
-    document.getElementById('c4-reset').onclick=reset;
-    mountGame(id,{rootId:'c4-game',restart:reset});
+    // ---- entrada ----
+    boardEl.addEventListener('click',(e)=>{
+      const d=e.target.closest('.c4-cell'); if(!d)return;
+      if(over){ reset(); return; }
+      jugar(+d.dataset.c);
+    });
+    boardEl.addEventListener('pointermove',(e)=>{
+      if(e.pointerType==='touch')return;          // en el móvil no hay "pasar por encima"
+      const d=e.target.closest('.c4-cell'); const c=d?+d.dataset.c:-1;
+      if(c!==hover){ hover=c; if(c>=0)cur=c; pintaPick(); }
+    });
+    boardEl.addEventListener('pointerleave',()=>{ hover=-1; pintaPick(); });
+    const setModo=(v)=>{ modo=v; Store.set('tos-c4-mode',v); marcador={1:0,2:0,D:0}; racha=0; starter=2; reset(); };
+    _bgmSeg(root.querySelector('#c4-mode'),modo,setModo);
+    _bgmSeg(root.querySelector('#c4-lvl'),nivel,(v)=>{ nivel=v; Store.set('tos-c4-lvl',v); marcador={1:0,2:0,D:0}; racha=0; starter=2; reset(); });
+    resetBtn.onclick=reset;
+    mountGame(id,{rootId:'c4-game',restart:reset,keydown:(e)=>{
+      if(_bgmKeyEnBoton(e))return;
+      const k=e.key;
+      if(k==='ArrowLeft'||k==='ArrowRight'){ e.preventDefault(); hover=-1; cur=(cur+(k==='ArrowLeft'?COLS-1:1))%COLS; pintaPick(); announce('Columna '+(cur+1)); return; }
+      if(k==='Enter'||k===' '||k==='ArrowDown'){ e.preventDefault(); if(over)reset(); else jugar(cur); return; }
+      if(k>='1'&&k<='7'){ e.preventDefault(); cur=+k-1; if(over)reset(); else jugar(cur); return; }
+      if((k==='n'||k==='N'||k==='r'||k==='R')&&!e.ctrlKey&&!e.metaKey){ e.preventDefault(); reset(); }
+    }});
     reset();
   }});
 }
 
 // ========== MEMORIA (PAREJAS) ==========
+// Cartas que giran en 3D, tres tamaños de tablero con récord propio (menos movimientos es
+// mejor) y juego rápido: si hay dos cartas sin pareja boca arriba, tocar otra las tapa al
+// instante en vez de obligarte a esperar.
 function initMemoryGame(){
-  const EMO=['🍎','🚀','🐱','🌟','🎵','⚽','🎲','🍕'];
-  const content=`<div id="mem-game" style="display:flex;flex-direction:column;align-items:center;height:100%;background:#0d1326;color:#fff;padding:12px;gap:10px;font-family:Rajdhani,sans-serif">
-    <div style="display:flex;gap:18px;font-size:14px;font-weight:600"><span id="mem-moves">Movimientos: 0</span><span id="mem-pairs">Parejas: 0/8</span></div>
-    <div id="mem-status" style="min-height:20px;font-size:16px;font-weight:700;color:#ffd24a"></div>
-    <div id="mem-board" style="display:grid;grid-template-columns:repeat(4,64px);grid-template-rows:repeat(4,64px);gap:6px"></div>
-    <button id="mem-reset" class="g-btn">${t('btn.newgame')}</button>
+  const EMO=['🍎','🚀','🐱','🌟','🎵','⚽','🎲','🍕','🦊','🐙','🌈','🍉','🎸','🚲','🌵','🐢','🍩','🎈','🦋','🍄','🐳','🌻','🍒','👾'];
+  const NIV={
+    facil:{cols:4,rows:3,key:'tos-memory-best-facil',label:'Fácil'},
+    normal:{cols:4,rows:4,key:'tos-memory-best',label:'Normal'},
+    dificil:{cols:6,rows:6,key:'tos-memory-best-dificil',label:'Difícil'}
+  };
+  const content=`<div id="mem-game" class="bgm-root mem-root">
+    <div class="bgm-hud">${_bgmStat('mem-m','Movimientos','#fff')}${_bgmStat('mem-p','Parejas','#3dff9a')}${_bgmStat('mem-t','Tiempo','#ffd24a')}${_bgmStat('mem-b','Récord','#ff5fb7')}</div>
+    <div class="bgm-bar"><div class="bgm-seg" id="mem-lvl" role="group" aria-label="Tamaño del tablero"><button type="button" data-v="facil">Fácil · 4×3</button><button type="button" data-v="normal">Normal · 4×4</button><button type="button" data-v="dificil">Difícil · 6×6</button></div></div>
+    <div class="bgm-stage"><div class="mem-board" id="mem-board" role="group" aria-label="Cartas"></div></div>
+    <div class="bgm-actions"><button type="button" class="bgm-btn" id="mem-reset">${t('btn.newgame')}</button></div>
+    <div class="mem-win" id="mem-win" hidden><div class="mem-win-card" role="dialog" aria-labelledby="mem-win-t">
+      <div class="mem-win-t" id="mem-win-t">¡Completado!</div>
+      <div class="mem-stars" id="mem-stars"></div>
+      <div class="mem-win-s" id="mem-win-s"></div>
+      <button type="button" class="bgm-btn" id="mem-again">Otra partida</button>
+    </div></div>
   </div>`;
-  createWindow('Memoria','&#129504;',330,440,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
-    const boardEl=document.getElementById('mem-board'),movesEl=document.getElementById('mem-moves'),pairsEl=document.getElementById('mem-pairs'),statusEl=document.getElementById('mem-status');
-    // Record: menos movimientos para completar (aqui menos es mejor)
-    const rec=useRecord('tos-memory-best',{lowerIsBetter:true});
-    let cards,flipped,matched,moves,lock;
-    function updHdr(){movesEl.textContent='Movimientos: '+moves;pairsEl.textContent='Parejas: '+matched+'/8';}
+  createWindow('Memoria','&#129504;',420,560,content,{className:'game-window',statusbar:false,onCreated:(id,win)=>{
+    const root=win.querySelector('#mem-game'),boardEl=root.querySelector('#mem-board'),winEl=root.querySelector('#mem-win');
+    let nivel=NIV[Store.get('tos-memory-lvl')]?Store.get('tos-memory-lvl'):'normal';
+    let cartas,abiertas,parejas,movs,t0,reloj=null,tapar=null,cur=0,total,token=0;
+    const recDe=()=>useRecord(NIV[nivel].key,{lowerIsBetter:true});
+    const mmss=(s)=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+    const segs=()=>t0?Math.floor((Date.now()-t0)/1000):0;
+    const paraReloj=()=>{ if(reloj){ clearInterval(reloj); reloj=null; } };
+    const pintaHud=(bump)=>{
+      _bgmSet(root,'mem-m',movs,bump==='m'); _bgmSet(root,'mem-p',parejas+'/'+total,bump==='p'); _bgmSet(root,'mem-t',mmss(segs()));
+      const r=recDe().value; _bgmSet(root,'mem-b',r?r:'—');
+    };
     function reset(){
-      const deck=EMO.concat(EMO).map(e=>({e,r:Math.random()})).sort((a,b)=>a.r-b.r);
-      cards=deck.map(d=>({e:d.e,open:false,done:false}));
-      flipped=[];matched=0;moves=0;lock=false;statusEl.textContent='';updHdr();render();
-    }
-    function render(){
+      token++; paraReloj(); if(tapar){ clearTimeout(tapar.t); tapar=null; }
+      const n=NIV[nivel]; total=n.cols*n.rows/2;
+      const emo=EMO.slice().sort(()=>Math.random()-.5).slice(0,total);
+      const mazo=emo.concat(emo);
+      for(let i=mazo.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [mazo[i],mazo[j]]=[mazo[j],mazo[i]]; }
+      cartas=mazo.map(e=>({e,open:false,done:false}));
+      abiertas=[]; parejas=0; movs=0; t0=0; cur=0;
+      boardEl.style.setProperty('--cols',n.cols); boardEl.style.setProperty('--rows',n.rows);
       boardEl.innerHTML='';
-      cards.forEach((card,i)=>{
-        const c=document.createElement('div');
-        const shown=card.open||card.done;
-        c.textContent=shown?card.e:'';
-        c.setAttribute('role','button');c.tabIndex=0;c.setAttribute('aria-label',shown?'Carta '+card.e:'Carta oculta');
-        c.style.cssText='display:flex;align-items:center;justify-content:center;font-size:34px;border-radius:8px;cursor:pointer;transition:transform .1s;background:'+(card.done?'#1c7a4a':shown?'#23355f':'linear-gradient(135deg,#3a8fd4,#1f5fa8)')+';border:2px solid '+(card.done?'#2fd47a':'#2a3a6a');
-        c.onclick=()=>flip(i);
-        c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(i);}});
-        boardEl.appendChild(c);
+      cartas.forEach((c,i)=>{
+        const b=document.createElement('button'); b.type='button'; b.className='mem-card'; b.tabIndex=i===0?0:-1;
+        b.innerHTML=`<div class="mem-inner"><div class="mem-face mem-back"></div><div class="mem-face mem-front" aria-hidden="true">${c.e}</div></div>`;
+        b.setAttribute('aria-label','Carta '+(i+1)+', boca abajo');
+        b.onclick=()=>voltea(i);
+        b.onfocus=()=>{ cur=i; boardEl.querySelectorAll('.mem-card').forEach((x,j)=>x.tabIndex=j===i?0:-1); };
+        boardEl.appendChild(b);
       });
+      winEl.hidden=true; root.querySelector('#mem-reset').classList.remove('bgm-call');
+      pintaHud();
     }
-    function flip(i){
-      if(lock)return;const card=cards[i];
-      if(card.open||card.done)return;
-      card.open=true;flipped.push(i);render();
-      if(flipped.length===2){
-        moves++;updHdr();
-        const[a,b]=flipped;
-        if(cards[a].e===cards[b].e){
-          cards[a].done=cards[b].done=true;matched++;flipped=[];updHdr();render();
-          if(matched===8){
-            const nuevo=rec.submit(moves);
-            statusEl.textContent='¡Completado en '+moves+' movimientos!'+(nuevo?' ¡Récord! 🏆':' 🎉');
-            if(moves<=14)unlock('memoria-aguda');
-            announce('Memoria completada en '+moves+' movimientos'+(nuevo?', nuevo récord':''));
-          }
-        }else{
-          lock=true;
-          setTimeout(()=>{cards[a].open=cards[b].open=false;flipped=[];lock=false;render();},750);
-        }
+    const el=(i)=>boardEl.children[i];
+    function cierraPendientes(){
+      if(!tapar)return;
+      clearTimeout(tapar.t);
+      tapar.ids.forEach(i=>{ cartas[i].open=false; el(i).classList.remove('open','bad'); el(i).setAttribute('aria-label','Carta '+(i+1)+', boca abajo'); });
+      tapar=null;
+    }
+    function voltea(i){
+      const c=cartas[i];
+      if(!winEl.hidden||c.done||c.open)return;
+      cierraPendientes();
+      if(!t0){ t0=Date.now(); const k=token; reloj=setInterval(()=>{ if(k!==token||!document.body.contains(root)){ clearInterval(reloj); return; } _bgmSet(root,'mem-t',mmss(segs())); },1000); }
+      c.open=true; el(i).classList.add('open'); el(i).setAttribute('aria-label','Carta '+(i+1)+', '+c.e); _bgmSnd.flip();
+      abiertas.push(i);
+      if(abiertas.length<2)return;
+      const [a,b]=abiertas; abiertas=[]; movs++;
+      if(cartas[a].e===cartas[b].e){
+        cartas[a].done=cartas[b].done=true; parejas++;
+        const k=token;
+        setTimeout(()=>{ if(k!==token)return; [a,b].forEach(x=>{ el(x).classList.add('done'); el(x).setAttribute('aria-label','Carta '+(x+1)+', '+cartas[x].e+', emparejada'); }); _bgmSnd.match(); },260);
+        pintaHud('p'); _bgmSet(root,'mem-m',movs,true);
+        if(parejas===total)setTimeout(()=>{ if(k===token)gana(); },700);
+      }else{
+        _bgmSet(root,'mem-m',movs,true);
+        const k=token;
+        setTimeout(()=>{ if(k!==token||!tapar||tapar.ids[0]!==a)return; el(a).classList.add('bad'); el(b).classList.add('bad'); _bgmSnd.miss(); },330);
+        tapar={ids:[a,b],t:setTimeout(()=>{ if(k===token)cierraPendientes(); },1050)};
       }
     }
-    document.getElementById('mem-reset').onclick=reset;
-    mountGame(id,{rootId:'mem-game',restart:reset});
+    function gana(){
+      paraReloj();
+      const s=segs(),rec=recDe(),nuevo=rec.submit(movs);
+      if(nivel==='normal'&&movs<=14)unlock('memoria-aguda');
+      // estrellas: con memoria perfecta harían falta `total` movimientos
+      const est=movs<=Math.round(total*1.5)?3:movs<=Math.round(total*2.2)?2:1;
+      root.querySelector('#mem-stars').innerHTML='<b>★</b>'.repeat(est)+'<i>★</i>'.repeat(3-est);
+      root.querySelector('#mem-stars').setAttribute('aria-label',est+' de 3 estrellas');
+      root.querySelector('#mem-win-s').innerHTML=movs+' movimientos · '+mmss(s)+(nuevo?'<span class="mem-rec">¡Nuevo récord en '+NIV[nivel].label+'!</span>':(rec.value?'<span style="display:block;opacity:.6">Récord: '+rec.value+'</span>':''));
+      winEl.hidden=false; pintaHud(); root.querySelector('#mem-reset').classList.add('bgm-call');
+      _bgmSnd.win();
+      announce('Memoria completada en '+movs+' movimientos y '+mmss(s)+(nuevo?', nuevo récord':''));
+      setTimeout(()=>{ try{ root.querySelector('#mem-again').focus({preventScroll:true}); }catch(e){_ignora(e);} },60);
+    }
+    root.querySelector('#mem-again').onclick=reset;
+    root.querySelector('#mem-reset').onclick=reset;
+    _bgmSeg(root.querySelector('#mem-lvl'),nivel,(v)=>{ nivel=v; Store.set('tos-memory-lvl',v); reset(); });
+    mountGame(id,{rootId:'mem-game',restart:reset,onDestroy:paraReloj,keydown:(e)=>{
+      const k=e.key;
+      if(k.startsWith('Arrow')&&winEl.hidden){
+        e.preventDefault();
+        const cols=NIV[nivel].cols,n=cartas.length;
+        const d=k==='ArrowLeft'?-1:k==='ArrowRight'?1:k==='ArrowUp'?-cols:cols;
+        el((cur+d+n)%n).focus(); return;
+      }
+      if((k==='n'||k==='N'||k==='r'||k==='R')&&!e.ctrlKey&&!e.metaKey){ e.preventDefault(); reset(); }
+    }});
     reset();
   }});
 }
@@ -29392,7 +29981,7 @@ function initSnakeGame(){
     </div>
   `;
   
-  createWindow('Snake','&#127807;',w,h,content,{className:'game-window',statusbar:true,onCreated:(id)=>{
+  createWindow('Snake','&#127807;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     // === NEW SNAKE GAME LOGIC ===
     const isMobileGame = window.innerWidth <= 600;
     const COLS = isMobileGame ? 20 : 30;
@@ -29985,7 +30574,7 @@ function initTetrisGame(){
         </div>
       </div>
     </div>`;
-  createWindow('Tetris','&#127922;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('Tetris','&#127922;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('tetris-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -30384,7 +30973,7 @@ function initFlappyGame(){
         </div>
       </div>
     </div>`;
-  createWindow('Flappy Bird','&#128038;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('Flappy Bird','&#128038;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('flappy-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -30624,7 +31213,7 @@ function initArkanoidGame(){
         <div class="ark-btn" id="ark-right-btn">&#9654;</div>
       </div>
     </div>`;
-  createWindow('Arkanoid','&#129521;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('Arkanoid','&#129521;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('arkanoid-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -30974,7 +31563,7 @@ function initSpaceInvadersGame(){
       </div>
     </div>`;
 
-  createWindow('Space Invaders','&#128126;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('Space Invaders','&#128126;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('invaders-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -31436,7 +32025,7 @@ function initMinesweeperGame(){
       </div>
     </div>`;
 
-  createWindow('Buscaminas','&#128163;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('Buscaminas','&#128163;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('ms-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -31711,7 +32300,7 @@ function initPongGame(){
         <div class="pong-btn-touch" id="pong-down-btn">&#9660;</div>
       </div>
     </div>`;
-  createWindow('Pong','&#127955;',w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('Pong','&#127955;',w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('pong-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
@@ -31940,7 +32529,7 @@ function init2048Game(){
         </div>
       </div>
     </div>`;
-  createWindow('2048',ico('gadgets'),w,h,content,{className:'game-window',onCreated:(id)=>{
+  createWindow('2048',ico('gadgets'),w,h,content,{className:'game-window',statusbar:false,onCreated:(id)=>{
     const canvas=document.getElementById('g2048-canvas');
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
