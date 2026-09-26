@@ -7,7 +7,7 @@
 Windows XP renacido en HTML: 21 juegos clásicos, ~75 aplicaciones, terminal,
 Paint y mi portfolio. Sin instalar nada, sin cuentas, sin servidor.
 
-[![Versión](https://img.shields.io/badge/versión-0.72.0-7c8cff)](#historial)
+[![Versión](https://img.shields.io/badge/versión-0.72.1-7c8cff)](#historial)
 [![PWA](https://img.shields.io/badge/PWA-instalable%20y%20sin%20conexión-2ea44f)](#instalarlo-como-app)
 [![Dependencias](https://img.shields.io/badge/dependencias-0-blue)](#cómo-está-hecho)
 [![Build](https://img.shields.io/badge/build-ninguno-lightgrey)](#cómo-está-hecho)
@@ -166,13 +166,65 @@ python3 -m http.server 8000
 
 Para publicar: sube los archivos tal cual. Es estático.
 
+### Añadir un juego AAA o un proyecto
+
+Las fichas de las carpetas **Juegos AAA** y **Proyectos** salen de dos arrays de
+`index.html`: `juegazosApps` y `proyectosApps`. Para añadir una, hay que tocar
+**tres sitios** (búscalos por el nombre):
+
+1. **La ficha**, al final de `juegazosApps` o `proyectosApps`:
+
+   ```js
+   {id:'tekken',label:'Puños de Barrio',icon:LINK_ICONS.tekken,link:'https://tekken.torrecillas.cat'}
+   ```
+
+   Pon como `label` el título que muestra la propia web del juego o proyecto.
+   Un proyecto lleva además `type`, `loc`, `tech` y `desc`, que salen en su
+   ficha de Propiedades (copia los de una ficha que ya exista).
+
+2. **Su icono**, en `LINK_ICONS`, justo encima de `proyectosApps`. **Nada de
+   emoji**: cada dispositivo los pinta a su manera, y sin fuente de emoji salen
+   como un cuadrado vacío (a 🪖 y 🪪 les pasaba hasta en Windows 10). Se dibuja
+   en SVG con `GI('…')`, siguiendo el mismo estilo que los iconos de los 21 juegos
+   (`GAME_ICONS`):
+   - lienzo `viewBox="0 0 32 32"`, con un fondo `<rect width="32" height="32" rx="5">`
+     de color saturado;
+   - formas planas, un contorno oscuro fino (`stroke-width` entre .6 y .9) y un
+     brillo blanco semitransparente arriba;
+   - nada pegado a los bordes del lienzo, porque las esquinas del fondo son redondas;
+   - pocos detalles, para que se reconozca a 16 px en el buscador del menú Inicio.
+
+   Antes de darlo por bueno, míralo a 128, 48 y 16 px. Las fichas que ya traen
+   el logo del cliente en PNG (Miami Lounge, SolutionCar, VeloxFinder) lo llevan
+   incrustado como `<img src="data:image/png;base64,…">`, que también vale.
+
+3. **Los datos estructurados** (JSON-LD) al principio del `<head>`: añade la
+   misma entrada a la lista `#juegos-aaa` o a la de proyectos, con el siguiente
+   `position`. Tienen que cuadrar una a una con los arrays.
+
+Después, sube `APP_VERSION` (ver abajo) para que a quien tenga la web abierta
+o instalada le salga el aviso de actualización.
+
+### Subirlo a GitHub
+
+Los commits los haces tú, a tu nombre:
+
+```bash
+bash subir_a_github.sh
+```
+
+El script hace el commit con tu identidad y lo sube a GitHub, y GitHub Pages
+publica torrecillas.cat. Si GitHub tiene cambios que no están en tu carpeta,
+te pregunta qué hacer. Si eliges unirlos, en los ficheros que chocan gana tu
+versión local.
+
 > [!IMPORTANT]
 > Al desplegar, sube `APP_VERSION` **en los dos sitios a la vez**:
 > `index.html` y `sw.js`. Si no coinciden, el aviso de actualización no salta.
 
 ## Historial
 
-La versión vive en `APP_VERSION`. La actual es la **0.72.0**.
+La versión vive en `APP_VERSION`. La actual es la **0.72.1**.
 
 ---
 
