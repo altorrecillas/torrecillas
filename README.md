@@ -7,7 +7,7 @@
 Windows XP renacido en HTML: 21 juegos clásicos, ~75 aplicaciones, terminal,
 Paint y mi portfolio. Sin instalar nada, sin cuentas, sin servidor.
 
-[![Versión](https://img.shields.io/badge/versión-0.72.1-7c8cff)](#historial)
+[![Versión](https://img.shields.io/badge/versión-0.72.2-7c8cff)](#historial)
 [![PWA](https://img.shields.io/badge/PWA-instalable%20y%20sin%20conexión-2ea44f)](#instalarlo-como-app)
 [![Dependencias](https://img.shields.io/badge/dependencias-0-blue)](#cómo-está-hecho)
 [![Build](https://img.shields.io/badge/build-ninguno-lightgrey)](#cómo-está-hecho)
@@ -166,21 +166,22 @@ python3 -m http.server 8000
 
 Para publicar: sube los archivos tal cual. Es estático.
 
-### Añadir un juego AAA o un proyecto
+### Añadir un juego AAA, un proyecto o una app de Garmin
 
-Las fichas de las carpetas **Juegos AAA** y **Proyectos** salen de dos arrays de
-`index.html`: `juegazosApps` y `proyectosApps`. Para añadir una, hay que tocar
-**tres sitios** (búscalos por el nombre):
+Las fichas de las carpetas **Juegos AAA**, **Proyectos** y **Aplicaciones Garmin**
+salen de tres arrays de `index.html`: `juegazosApps`, `proyectosApps` y
+`garminApps`. Para añadir una, hay que tocar **tres sitios** (búscalos por el
+nombre):
 
-1. **La ficha**, al final de `juegazosApps` o `proyectosApps`:
+1. **La ficha**, al final de su array:
 
    ```js
    {id:'tekken',label:'Puños de Barrio',icon:LINK_ICONS.tekken,link:'https://tekken.torrecillas.cat'}
    ```
 
    Pon como `label` el título que muestra la propia web del juego o proyecto.
-   Un proyecto lleva además `type`, `loc`, `tech` y `desc`, que salen en su
-   ficha de Propiedades (copia los de una ficha que ya exista).
+   Un proyecto o una app de Garmin llevan además los datos de su ficha de
+   Propiedades (`type`, `tech`, `desc`…): copia los de una ficha que ya exista.
 
 2. **Su icono**, en `LINK_ICONS`, justo encima de `proyectosApps`. **Nada de
    emoji**: cada dispositivo los pinta a su manera, y sin fuente de emoji salen
@@ -199,7 +200,7 @@ Las fichas de las carpetas **Juegos AAA** y **Proyectos** salen de dos arrays de
    incrustado como `<img src="data:image/png;base64,…">`, que también vale.
 
 3. **Los datos estructurados** (JSON-LD) al principio del `<head>`: añade la
-   misma entrada a la lista `#juegos-aaa` o a la de proyectos, con el siguiente
+   misma entrada a su lista (`#juegos-aaa`, proyectos o Garmin), con el siguiente
    `position`. Tienen que cuadrar una a una con los arrays.
 
 Después, sube `APP_VERSION` (ver abajo) para que a quien tenga la web abierta
@@ -224,7 +225,7 @@ versión local.
 
 ## Historial
 
-La versión vive en `APP_VERSION`. La actual es la **0.72.1**.
+La versión vive en `APP_VERSION`. La actual es la **0.72.2**.
 
 ---
 
