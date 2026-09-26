@@ -1,0 +1,6 @@
+# Torrecillas OS — https://torrecillas.cat/
+# Todo el sitio es una sola página; no hay nada que ocultar a los rastreadores.
+User-agent: *
+Allow: /
+
+Sitemap: https://torrecillas.cat/sitemap.xml
